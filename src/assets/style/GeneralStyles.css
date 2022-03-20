@@ -1,0 +1,127 @@
+.lightText {
+  font-family: "Nunito", sans-serif;
+  font-weight: 200;
+}
+.regularText {
+  font-family: "Nunito", sans-serif;
+  font-weight: 400;
+}
+.mediumText {
+  font-family: "Nunito", sans-serif;
+  font-weight: 500;
+}
+.semiBoldText {
+  font-family: "Nunito", sans-serif;
+  font-weight: 600;
+}
+.boldText {
+  font-family: "Nunito", sans-serif;
+  font-weight: 700;
+}
+.f10 {
+  font-size: 0.625rem;
+}
+.f11 {
+  font-size: 0.688rem;
+}
+.f12 {
+  font-size: 0.75rem;
+}
+.f14 {
+  font-size: 0.875rem;
+}
+.f16 {
+  font-size: 1rem;
+}
+.f18 {
+  font-size: 1.125rem;
+}
+.f20 {
+  font-size: 1.25rem;
+}
+.f22 {
+  font-size: 1.375rem;
+}
+.f24 {
+  font-size: 1.5rem;
+}
+.f26 {
+  font-size: 1.625rem;
+}
+.f28 {
+  font-size: 1.75rem;
+}
+.f30 {
+  font-size: 1.875rem;
+}
+.f32 {
+  font-size: 2rem;
+}
+
+.f34 {
+  font-size: 2.125rem;
+}
+
+.f36 {
+  font-size: 2.25rem;
+}
+
+.f38 {
+  font-size: 2.375rem;
+}
+
+.f40 {
+  font-size: 2.5rem;
+}
+
+.f42 {
+  font-size: 1.875rem;
+}
+
+.f44 {
+  font-size: 1.875rem;
+}
+
+.f46 {
+  font-size: 1.875rem;
+}
+.f48 {
+  font-size: 1.875rem;
+}
+.f50 {
+  font-size: 1.875rem;
+}
+.f52 {
+  font-size: 1.875rem;
+}
+.f54 {
+  font-size: 1.875rem;
+}
+
+.f55 {
+  font-size: 3.438rem;
+}
+.f56 {
+  font-size: 1.875rem;
+}
+.f58 {
+  font-size: 1.875rem;
+}
+.f60 {
+  font-size: 1.875rem;
+}
+.f62 {
+  font-size: 1.875rem;
+}
+
+/* colors */
+
+.white {
+  color: #fff;
+}
+.black {
+  color: #000;
+}
+.headerColor {
+  color: #484848;
+}

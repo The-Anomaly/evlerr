@@ -1,0 +1,148 @@
+.cardContainer {
+  margin: 0 10px;
+}
+.cardImage {
+  position: relative;
+  border-radius: 6px;
+  /* width: 330px; */
+  /* height: 215px; */
+}
+.cardImage img {
+  width: 100%;
+  border-radius: 6px;
+}
+.cardImageOverlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  border-radius: 6px;
+  padding: 10px;
+  display: flex;
+  background: rgba(15, 21, 31, 0.5);
+  flex-direction: column;
+  justify-content: space-between;
+}
+.cardControlsContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 10px;
+}
+.cardTagContainer {
+  display: flex;
+}
+.cardLeaseTag {
+  margin-right: 5px;
+  height: 25px;
+  padding: 0 10px;
+  text-transform: capitalize;
+  background-color: #3e4c66;
+  border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cardTypeTag {
+  margin-right: 5px;
+  height: 25px;
+  padding: 0 10px;
+  text-transform: capitalize;
+  background-color: #ff5a5f;
+  border-radius: 3px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.cardControls {
+  display: flex;
+}
+.cardControls span {
+  background-color: rgba(15, 21, 31, 0.5);
+  border-radius: 6px;
+  transition: all 0.3s ease-in-out 0s;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 8px;
+  color: #fff;
+}
+.cardDetails {
+  padding: 20px 0;
+}
+.cardDetailsHeader p {
+  color: #ff5a5f;
+  padding: 0 0 10px 0;
+}
+.cardDetails h2,
+.cardDetailsLocation p,
+.cardPropertyDetails li,
+.agentCardDetailsHeader p,
+.agentCardDetailsHeader h2 {
+  color: #484848;
+  padding: 0 0 10px 0;
+}
+.cardPropertyDetails ul {
+  display: flex;
+  list-style: none;
+}
+.cardPropertyDetails li {
+  margin-right: 30px;
+}
+
+.citiesCardImage {
+  height: 350px;
+  border-radius: 6px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 100%;
+  position: relative;
+}
+.citiesCardOverlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  border-radius: 6px;
+  background: rgba(15, 21, 31, 0.4);
+}
+
+.agentsCardContainer {
+  margin: 0 10px;
+  transition: all 0.3s ease-in-out 0s;
+}
+.agentsCardContainer:hover .agentsCardOverlay {
+  display: block;
+  transition: all 0.3s ease-in-out 0s;
+}
+.agentsCardOverlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  border-radius: 6px;
+  padding: 10px;
+  background: rgba(15, 21, 31, 0.7);
+  flex-direction: column;
+  display: none;
+  transition: all 0.3s ease-in-out 0s;
+}
+.agentsCardOverlay ul {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-end;
+  list-style: none;
+  height: 100%;
+}
+.agentsCardOverlay ul li {
+  color: #fff;
+}
