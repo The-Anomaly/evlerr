@@ -4,7 +4,6 @@ import '../../assets/style/LandingPageStyles.css';
 import '../../assets/style/GeneralStyles.css';
 import SearchComponent from '../../components/landingPage/SearchComponent';
 import SearchSelector from '../../components/landingPage/SearchSelector';
-import FeaturedPropertiesSlider from '../../components/landingPage/FeaturePropertiesSlider';
 import FeaturedCarousel from '../../components/landingPage/FeaturePropertiesSlider';
 import CitiesCard from '../../components/cards/CitiesCard';
 import Florida from '../../assets/images/florida.jpeg';

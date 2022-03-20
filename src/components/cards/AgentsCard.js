@@ -1,4 +1,4 @@
-import { Facebook, FacebookOutlined, Star } from '@mui/icons-material';
+import { Star } from '@mui/icons-material';
 import React from 'react';
 import { FaDribbble, FaFacebookF, FaLinkedinIn, FaTwitter } from 'react-icons/fa';
 import './Cards.css';

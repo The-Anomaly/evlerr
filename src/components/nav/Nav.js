@@ -3,7 +3,6 @@ import Logo from '../../assets/images/logo.svg';
 import CustomButton from '../../utils/CustomButton';
 import './Nav.css';
 import '../../assets/style/GeneralStyles.css';
-import { HdrPlus, PlusOne } from '@mui/icons-material';
 import { BsPlusLg } from 'react-icons/bs';
 import { AiOutlineUser } from 'react-icons/ai';
 

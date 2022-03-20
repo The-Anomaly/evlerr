@@ -1,8 +1,7 @@
 import React from 'react';
 import './Contact.css';
 import '../../assets/style/GeneralStyles.css';
-import { FaArrowAltCircleRight, FaArrowRight, FaDribbble, FaFacebookF, FaGoogle, FaInstagram, FaLinkedinIn, FaPinterest, FaTwitter } from 'react-icons/fa';
-import CustomButton from '../../utils/CustomButton';
+import { FaDribbble, FaFacebookF, FaGoogle, FaInstagram, FaPinterest, FaTwitter } from 'react-icons/fa';
 import { IoIosArrowForward } from 'react-icons/io';
 
 const ContactComponent = () => {
