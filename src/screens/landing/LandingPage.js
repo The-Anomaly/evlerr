@@ -5,7 +5,7 @@ import '../../assets/style/GeneralStyles.css';
 import SearchComponent from '../../components/landingPage/SearchComponent';
 import SearchSelector from '../../components/landingPage/SearchSelector';
 import FeaturedCarousel from '../../components/landingPage/FeaturePropertiesSlider';
-import CitiesCard from '../../components/cards/CitiesCard';
+// import CitiesCard from '../../components/cards/CitiesCard';
 import Florida from '../../assets/images/new.jpeg';
 import Miami from '../../assets/images/new2.jpeg';
 import NewYork from '../../assets/images/new3.jpeg';
