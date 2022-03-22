@@ -146,3 +146,31 @@
 .agentsCardOverlay ul li {
   color: #fff;
 }
+
+.alteCardContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  border-radius: 13px;
+  border: 0.5px solid #f5f5f5;
+}
+.alteCardImage {
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 150px;
+  border-top-left-radius: 13px;
+  border-bottom-left-radius: 13px;
+}
+.alteCardContainer p {
+  color: #484848;
+}
+.alteCardContainer:hover {
+  box-shadow: 0 0 0 1px #ebebeb;
+}
+.alteCardText {
+  padding: 20px 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

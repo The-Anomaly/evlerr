@@ -6,13 +6,19 @@ import SearchComponent from '../../components/landingPage/SearchComponent';
 import SearchSelector from '../../components/landingPage/SearchSelector';
 import FeaturedCarousel from '../../components/landingPage/FeaturePropertiesSlider';
 import CitiesCard from '../../components/cards/CitiesCard';
-import Florida from '../../assets/images/florida.jpeg';
+import Florida from '../../assets/images/new.jpeg';
+import Miami from '../../assets/images/new2.jpeg';
+import NewYork from '../../assets/images/new3.jpeg';
+import Cali from '../../assets/images/new4.jpeg';
+import Mali from '../../assets/images/new5.jpeg';
+import Pali from '../../assets/images/new6.jpeg';
 import CustomButton from '../../utils/CustomButton';
 import PropertyCards from '../../components/cards/PropertyCards';
 import Home from '../../assets/images/home.jpeg';
 import Agent from '../../assets/images/agent.jpeg';
 import AgentsCard from '../../components/cards/AgentsCard';
 import ContactComponent from '../../components/contact/ContactComponent';
+import AlteCitiesCard from '../../components/cards/AlteCitiesCard';
 
 const LandingPage = () => {
     return (
@@ -52,11 +58,13 @@ const LandingPage = () => {
                         <p className={'regularText f16 headerColor'}>Handpicked properties by our team</p>
                     </div>
                     <section className='citiesGrid'>
-                        <CitiesCard cityImage={`url(${Florida})`} city={'Miami'} propertyAmount={'2'} />
-                        <CitiesCard cityImage={`url(${Florida})`} city={'Los Angeles'} propertyAmount={'2'} />
-                        <CitiesCard cityImage={`url(${Florida})`} city={'New York'} propertyAmount={'9'} />
-                        <CitiesCard cityImage={`url(${Florida})`} city={'Florida'} propertyAmount={'1'} />
-                        <CitiesCard cityImage={`url(${Florida})`} city={'Orlando'} propertyAmount={'0'} />
+                        <AlteCitiesCard cityImage={`url(${Florida})`} city={'Lefkosa'} propertyAmount={'2'} />
+                        <AlteCitiesCard cityImage={`url(${Miami})`} city={'Kyrenia'} propertyAmount={'2'} />
+                        <AlteCitiesCard cityImage={`url(${Cali})`} city={'Lefke'} propertyAmount={'2'} />
+                        <AlteCitiesCard cityImage={`url(${Pali})`} city={'Gazimagusa'} propertyAmount={'2'} />
+                        <AlteCitiesCard cityImage={`url(${Mali})`} city={'Nicosia'} propertyAmount={'2'} />
+                        <AlteCitiesCard cityImage={`url(${NewYork})`} city={'Iskele'} propertyAmount={'2'} />
+
                     </section>
                 </section>
 

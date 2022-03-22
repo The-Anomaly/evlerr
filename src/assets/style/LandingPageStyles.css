@@ -13,7 +13,7 @@
   margin: 70px 0;
 }
 .heroContainer {
-  background-image: url("../images/hero.jpeg");
+  background-image: url("../images/hero2.jpeg");
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
@@ -93,10 +93,13 @@
 }
 
 .citiesGrid {
-  padding: 30px 0;
+  padding: 30px 124px;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
+}
+.FindPropertiesHeader {
+  text-align: center;
 }
 
 .searchNowContainer {

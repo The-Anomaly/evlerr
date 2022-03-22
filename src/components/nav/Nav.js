@@ -1,5 +1,5 @@
 import React from 'react';
-import Logo from '../../assets/images/logo.svg';
+import Logo from '../../assets/images/logo2.svg';
 import CustomButton from '../../utils/CustomButton';
 import './Nav.css';
 import '../../assets/style/GeneralStyles.css';
