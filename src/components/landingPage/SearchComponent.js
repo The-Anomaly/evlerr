@@ -1,4 +1,4 @@
-import { MenuItem, TextField } from '@mui/material'
+import { MenuItem, OutlinedInput, } from '@mui/material'
 import React from 'react'
 import MiniDropDown from './MiniDropDown';
 import '../../assets/style/LandingPageStyles.css';
@@ -12,7 +12,7 @@ const SearchComponent = () => {
         <>
             <section className='transparentContainer'>
                 <div className='searchBox'>
-                    <TextField id="outlined-basic" label="Enter Keyword..." variant="outlined" />
+                    <OutlinedInput placeholder="Please enter text" className='f16 regularText' style={{ color: '#006C70' }} />
                     <MiniDropDown label={'Property Type'} >
                         <MenuItem value={10}>Apartment</MenuItem>
                         <MenuItem value={20}>Condo</MenuItem>
@@ -43,7 +43,7 @@ const SearchComponent = () => {
 
                     <CustomButton title={'Search'} customStyle={{
                         backgroundColor: '#3E4C66', color: '#fff', padding: '10px 30px',
-                        borderRadius: '6px'
+                        borderRadius: '6px', display: 'flex', justifyContent: 'center'
                     }} />
 
                 </div>

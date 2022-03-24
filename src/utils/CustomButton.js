@@ -2,15 +2,11 @@ import React from 'react';
 import './Utils.css';
 import '../assets/style/GeneralStyles.css'
 
-const CustomButton = ({ icon, title, customStyle }) => {
+const CustomButton = ({ icon, title, customStyle, color }) => {
     return (
         <>
             <div className='btnContainer' style={customStyle}>
-                <span style={{
-                    marginRight: '10px', display: 'flex',
-                    alignItems: 'center', justifyContent: 'center'
-                }}>{icon}</span>
-                <p className={'semiBoldText f16'}>{title}</p>
+                <p className={'semiBoldText f16'} style={{ color: color }}>{title}</p>
             </div>
         </>
     )

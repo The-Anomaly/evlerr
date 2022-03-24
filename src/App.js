@@ -1,8 +1,9 @@
-import LandingPage from './screens/landing/LandingPage';
+import RoutesContainer from './route/Routes';
+
 
 function App() {
   return (
-    <LandingPage />
+    <RoutesContainer />
   );
 }
 

@@ -1,0 +1,73 @@
+.containerBackground {
+  background-color: #fff;
+  /* padding: 40px 0; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+.authContainer {
+  max-width: 810px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(45%, 1fr));
+  gap: 20px;
+  padding: 15px;
+  border-radius: 6px;
+  transition: all 0.3s ease-in-out 0s;
+  box-shadow: 0px 0px 50px 0px rgba(0 0 0 / 15%);
+}
+.authContainer img {
+  width: 100%;
+  border-radius: 6px;
+}
+.authHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0 20px 0;
+  color: #006c70;
+}
+.authFormContainer {
+  padding: 0 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.authIcon {
+  color: #006c70;
+  font-size: 21px;
+}
+.recoveryContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+}
+.rememberMe {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.rememberMe input {
+  margin: 0 6px 0 0;
+}
+.rememberMe label {
+  color: #6e6e6e;
+}
+.forgotPassword {
+  color: #8b91dd;
+  transition: color 0.3s ease;
+}
+.forgotPassword:hover {
+  color: #8b91dd;
+}
+.redirectSignUp:hover {
+  color: inherit;
+}
+.authFooter {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  align-self: center;
+  height: 100%;
+}

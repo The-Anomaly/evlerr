@@ -47,7 +47,8 @@
   position: absolute;
   left: 0;
   right: 0;
-  bottom: -75px;
+  bottom: -90px;
+  transition: all 3s;
 }
 .transparentContainer {
   background-color: rgba(255, 255, 255, 0.2);
@@ -60,7 +61,7 @@
   grid-template-columns: 21% 14% 14% 14% 14% 14%;
   gap: 20px;
   background-color: #fff;
-  padding: 10px;
+  padding: 20px;
   border-radius: 6px;
 }
 .advancedDrop {
@@ -81,6 +82,7 @@
   border-radius: 6px;
   margin-left: 15px;
   position: relative;
+  cursor: pointer;
 }
 .selectorContainer span {
   position: absolute;
@@ -137,13 +139,12 @@
 
 @media screen and (max-width: 1000px) {
   .heroSearchContainer {
-    bottom: -400px;
+    bottom: -350px;
   }
   .heroContent {
     /* width: 100%; */
-    align-items: flex-start;
     justify-content: flex-start;
-    padding: 30px 10px;
+    padding: 50px 10px 30px 10px;
   }
   .searchBox {
     grid-template-columns: 100%;
@@ -151,5 +152,14 @@
   .heroContainer {
     height: 400px;
     margin-bottom: 400px;
+  }
+  .heroContainer h2 {
+    font-size: 2.25rem;
+  }
+  .searchNowOverlay {
+    text-align: center;
+  }
+  .citiesGrid {
+    padding: 20px 10px;
   }
 }

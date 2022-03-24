@@ -1,4 +1,27 @@
 .btnContainer {
   display: flex;
   align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  padding: 12px 30px;
+  transition: all 0.3s ease-in-out 0s;
+}
+
+.inputContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px solid #d8d8d8;
+  border-radius: 6px;
+  padding: 12px 30px;
+  transition: all 0.3s ease-in-out;
+  background-color: #fff;
+  margin-bottom: 20px;
+}
+.inputBox {
+  border: none;
+  height: 100%;
+  outline: none;
+  width: 90%;
+  color: #484848;
 }

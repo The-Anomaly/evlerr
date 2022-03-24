@@ -1,11 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import NavBar from '../../components/nav/Nav';
 import '../../assets/style/LandingPageStyles.css';
 import '../../assets/style/GeneralStyles.css';
 import SearchComponent from '../../components/landingPage/SearchComponent';
 import SearchSelector from '../../components/landingPage/SearchSelector';
 import FeaturedCarousel from '../../components/landingPage/FeaturePropertiesSlider';
-// import CitiesCard from '../../components/cards/CitiesCard';
 import Florida from '../../assets/images/new.jpeg';
 import Miami from '../../assets/images/new2.jpeg';
 import NewYork from '../../assets/images/new3.jpeg';
@@ -19,8 +18,26 @@ import Agent from '../../assets/images/agent.jpeg';
 import AgentsCard from '../../components/cards/AgentsCard';
 import ContactComponent from '../../components/contact/ContactComponent';
 import AlteCitiesCard from '../../components/cards/AlteCitiesCard';
+import 'animate.css';
+
 
 const LandingPage = () => {
+
+
+    const [state, setState] = useState({
+        rentSearch: true, saleSearch: false, activeBg: '#ff5a5f', inactiveBg: '#fff'
+    })
+
+    const showRentSearchBox = () => {
+        setState((prevState) => ({ ...prevState, rentSearch: true, saleSearch: false, }))
+    }
+
+    const showSaleSearchBox = () => {
+        setState((prevState) => ({ ...prevState, saleSearch: true, rentSearch: false }))
+    }
+
+
+
     return (
         <>
             <NavBar />
@@ -34,10 +51,25 @@ const LandingPage = () => {
                             </div>
                             <div className='heroSearchContainer'>
                                 <div className='selectorBox'>
-                                    <SearchSelector title={'Rent'} textColor={'#fff'} backgroundColor={'#ff5a5f'} arrowDown={true} color={'#ff5a5f'} size={'40px'} />
-                                    <SearchSelector title={'Sale'} backgroundColor={'#fff'} arrowDown={true} color={'#fff'} size={'40px'} />
+                                    <SearchSelector title={'Rent'} textColor={state.rentSearch ? '#fff' : '#000'} backgroundColor={state.rentSearch ? state.activeBg : state.inactiveBg}
+                                        arrowDown={state.rentSearch ? true : false} color={state.rentSearch ? state.activeBg : state.inactiveBg} size={'40px'}
+                                        onClick={showRentSearchBox}
+                                    />
+                                    <SearchSelector title={'Sale'} backgroundColor={state.saleSearch ? state.activeBg : state.inactiveBg}
+                                        arrowDown={state.saleSearch ? true : false}
+                                        color={state.saleSearch ? state.activeBg : state.inactiveBg}
+                                        size={'40px'} onClick={showSaleSearchBox} textColor={state.saleSearch ? '#fff' : '#000'} />
                                 </div>
-                                <SearchComponent />
+                                {state.rentSearch &&
+                                    <div className="animate__animated animate__fadeIn">
+                                        <SearchComponent />
+                                    </div>
+
+                                }
+                                {state.saleSearch && <div className="animate__animated animate__fadeIn">
+                                    <SearchComponent />
+                                </div>}
+
                             </div>
                         </div>
                     </div>

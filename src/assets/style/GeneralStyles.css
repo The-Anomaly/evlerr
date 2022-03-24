@@ -125,3 +125,34 @@
 .headerColor {
   color: #484848;
 }
+
+.arrowLeft,
+.arrowRight {
+  display: flex;
+  background: #fff;
+  height: 35px;
+  width: 35px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  z-index: 10;
+  position: absolute;
+  top: 150px;
+  opacity: 0.5;
+}
+.arrowLeft:hover,
+.arrowRight:hover {
+  opacity: 10;
+}
+.arrowRight {
+  right: 0;
+}
+
+a {
+  text-decoration: none;
+  color: #484848;
+  transition: all 0.3s ease-in-out 0s;
+}
+a:hover {
+  color: #ff5a5f;
+}
