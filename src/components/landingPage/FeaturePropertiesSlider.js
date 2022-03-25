@@ -8,7 +8,7 @@ import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import EastIcon from '@mui/icons-material/East';
 
 function NextArrow(props) {
-    const { className, style, onClick } = props;
+    const { onClick } = props;
     return (
         <div
             className="arrowRight"
@@ -20,7 +20,7 @@ function NextArrow(props) {
 }
 
 function PrevArrow(props) {
-    const { className, style, onClick } = props;
+    const { onClick } = props;
     return (
         <div className='arrowLeft' onClick={onClick} >
             <KeyboardBackspaceIcon />
