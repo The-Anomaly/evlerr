@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Logo from '../../assets/images/logo2.svg';
 import './Nav.css';
 import '../../assets/style/GeneralStyles.css';
@@ -6,8 +6,22 @@ import { BsPlusLg } from 'react-icons/bs';
 import { AiOutlineUser } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import CustomIconButton from '../../utils/CustomIconButton';
+import HoverCard from '../cards/HoverCard';
 
 const NavBar = () => {
+
+    const [state, setState] = useState({
+        membersDrop: false,
+    })
+
+    const showMembersDrop = () => {
+        if (state.membersDrop) {
+            setState((prevState) => ({ ...prevState, membersDrop: false }))
+        } else {
+            setState((prevState) => ({ ...prevState, membersDrop: true }))
+        }
+
+    }
     return (
         <>
             <nav className='navContainer'>
@@ -17,17 +31,17 @@ const NavBar = () => {
                 <div>
                     <ul>
                         <li className={'regularText f16'}>
-                            <Link to={'/'}>
+                            <Link to={'/'} className={'selected'}>
                                 Home
                             </Link>
                         </li>
                         <li className={'regularText f16'}>
-                            <Link to={'/'}>
+                            <Link to={'properties'} className={'selected'}>
                                 Properties
                             </Link>
                         </li>
-                        <li className={'regularText f16'}>
-                            <Link to={'/'}>
+                        <li className={'regularText f16'} style={{ position: 'relative' }}>
+                            <Link to={'properties'} className={'selected'}>
                                 Members
                             </Link>
                         </li>
@@ -74,6 +88,7 @@ const NavBar = () => {
                 </div>
 
             </nav>
+
         </>
     )
 }

@@ -156,3 +156,9 @@ a {
 a:hover {
   color: #ff5a5f;
 }
+a:current {
+  color: #ff5a5f;
+}
+a:focus {
+  color: #ff5a5f;
+}

@@ -40,7 +40,6 @@ const LandingPage = () => {
 
     return (
         <>
-            <NavBar />
             <main className='landingContainer'>
                 <section className='heroContainer'>
                     <div className='heroOverlay'>

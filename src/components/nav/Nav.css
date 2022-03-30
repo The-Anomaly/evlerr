@@ -3,6 +3,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 20px;
+  position: relative;
 }
 .logoContainer {
   width: 450px;
@@ -28,4 +29,7 @@
 #authLinks {
   width: 130px;
   justify-content: center;
+}
+a:active {
+  color: blue;
 }
