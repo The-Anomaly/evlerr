@@ -24,6 +24,19 @@
   flex-direction: column;
   justify-content: space-between;
 }
+.cardListImageOverlay {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  border-radius: 6px;
+  padding: 10px;
+  display: flex;
+  background: rgba(15, 21, 31, 0.5);
+  flex-direction: column;
+  justify-content: flex-end;
+}
 .cardControlsContainer {
   display: flex;
   justify-content: space-between;
@@ -185,6 +198,59 @@
   top: 100%;
 }
 
+.listCardContainer {
+  transition: all 0.3s ease-in-out 0s;
+  border-radius: 6px;
+  border: 1px solid #ebebeb;
+  background-color: #fff;
+}
+.whiteBg {
+  background-color: #fff;
+  border-radius: 6px;
+}
+.listCardContainer:hover {
+  box-shadow: 0 0 50px 0 rgb(0 0 0 / 12%);
+}
+
+.cardFooter {
+  border-top: 1px solid #ebebeb;
+}
+.cardFooterImage {
+  border-radius: 50%;
+  height: 40px;
+  width: 40px;
+  overflow: hidden;
+  margin-right: 10px;
+}
+.sortCardContainer {
+  transition: all 0.3s ease-in-out 0s;
+  border-radius: 6px;
+  border: 1px solid #ebebeb;
+  margin-bottom: 30px;
+}
+.sortDropContainer {
+  position: relative;
+}
+.dropContent {
+  position: absolute;
+  top: 30px;
+  box-shadow: 0 0 50px 0 rgb(0 0 0 / 12%);
+  transition: all 0.3s ease-in-out 0s;
+  z-index: 10;
+  border-radius: 6px;
+  border: 1px solid #ebebeb;
+  min-width: 150px;
+}
+
+.dashBCardsContainer {
+  background: #fff;
+  border: 1px solid #ebebeb;
+  border-radius: 6px;
+  padding: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 @media screen and (max-width: 1000px) {
   .cardContainer {
     margin: 0 5px;

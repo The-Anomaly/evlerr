@@ -42,8 +42,11 @@ const Login = () => {
                             </div>
 
                             <div>
-                                <CustomButton title={'Login'} customStyle={{ backgroundColor: '#ff5a5f', marginTop: '20px' }}
-                                    color={'#fff'} />
+                                <Link to={'/dashboard'}>
+                                    <CustomButton title={'Login'} customStyle={{ backgroundColor: '#ff5a5f', marginTop: '20px' }}
+                                        color={'#fff'} />
+                                </Link>
+
                             </div>
                         </form>
                         <div className='authFooter'>

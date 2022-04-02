@@ -1,0 +1,72 @@
+.propertiesGridFull {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  justify-content: center;
+  align-items: center;
+  gap: 50px 30px;
+}
+
+/* @media screen and (min-width: 1200px) {
+  .propertiesHomeContainer {
+    width: 1170px;
+  }
+}
+
+@media screen and (min-width: 992px) {
+  .propertiesHomeContainer {
+    width: 960px;
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .propertiesHomeContainer {
+    padding: 50px;
+    margin: auto;
+  }
+} */
+
+.propertiesHomeContainer {
+  padding: 50px 120px;
+}
+
+.saveLink:hover {
+  color: #ff5a5f;
+}
+
+.searchGridContainer {
+  display: grid;
+  grid-template-columns: 18% 60% 17%;
+  gap: 20px;
+  /* align-items: center; */
+}
+.propertiesMapContainers {
+  display: grid;
+  grid-template-columns: 40% 60%;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+}
+.mapContainer {
+  height: 100%;
+}
+.propertiesDisplay {
+  overflow: scroll;
+  padding-bottom: 200px;
+}
+
+.listGrid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: 20px;
+}
+.columnsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+@media screen and (min-width: 280px) and (max-width: 786px) {
+  .propertiesHomeContainer {
+    padding: 50px;
+  }
+}

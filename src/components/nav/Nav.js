@@ -4,11 +4,14 @@ import './Nav.css';
 import '../../assets/style/GeneralStyles.css';
 import { BsPlusLg } from 'react-icons/bs';
 import { AiOutlineUser } from 'react-icons/ai';
-import { Link } from 'react-router-dom';
+import { Link, } from 'react-router-dom';
 import CustomIconButton from '../../utils/CustomIconButton';
-import HoverCard from '../cards/HoverCard';
 
-const NavBar = () => {
+import CustomLink from './CustomLink';
+import { IoMdArrowDropdown, IoMdArrowDropright, IoMdArrowDropup } from 'react-icons/io';
+
+
+const NavBar = ({ boxShadow, logo }) => {
 
     const [state, setState] = useState({
         membersDrop: false,
@@ -22,38 +25,58 @@ const NavBar = () => {
         }
 
     }
+
+
+
     return (
         <>
-            <nav className='navContainer'>
-                <div className='logoContainer'>
-                    <img src={Logo} alt='logo' style={{ width: '100px', height: '50px' }} />
-                </div>
+            <nav className='navContainer' style={{ boxShadow: boxShadow }}>
+                {logo &&
+                    <div className='logoContainer'>
+                        <img src={Logo} alt='logo' style={{ width: '100px', height: '50px' }} />
+                    </div>}
                 <div>
                     <ul>
                         <li className={'regularText f16'}>
-                            <Link to={'/'} className={'selected'}>
+                            <CustomLink to={'/'} >
                                 Home
-                            </Link>
+                            </CustomLink>
                         </li>
-                        <li className={'regularText f16'}>
-                            <Link to={'properties'} className={'selected'}>
-                                Properties
-                            </Link>
+                        <li className={'regularText f16'} id='properties'>
+                            <CustomLink to={'/properties'}>
+                                Properties <span style={{ marginTop: '5px' }}> <IoMdArrowDropdown size={16} /></span>
+                            </CustomLink>
+                            <div className='navDropDownContentContainer' >
+                                <IoMdArrowDropup size={32} color={'#FFF'} className='dropArrow' />
+                                <div className={'borderBottom f16 menuItemColor pb10'} >
+                                    <CustomLink to={'/properties'}>
+                                        Properties-List
+                                        <IoMdArrowDropright size={20} />
+                                    </CustomLink>
+                                </div>
+
+                                <div className={'borderBottom f16 menuItemColor pb10 pt20'} >
+                                    <CustomLink to={'/properties-map'}>
+                                        Properties-Map
+                                        <IoMdArrowDropright size={20} />
+                                    </CustomLink>
+                                </div>
+                            </div>
                         </li>
                         <li className={'regularText f16'} style={{ position: 'relative' }}>
-                            <Link to={'properties'} className={'selected'}>
-                                Members
-                            </Link>
+
+                            Members
+
                         </li>
                         <li className={'regularText f16'}>
-                            <Link to={'/'}>
-                                Pages
-                            </Link>
+
+                            Pages
+
                         </li>
                         <li className={'regularText f16'}>
-                            <Link to={'/'}>
-                                Contact
-                            </Link>
+
+                            Contact
+
                         </li>
 
                     </ul>
@@ -65,9 +88,9 @@ const NavBar = () => {
                             <AiOutlineUser size={24} color={'#046971'} style={{ marginRight: '5px' }} />
                         </li>
                         <li className={'regularText f16'}>
-                            <Link to={'login'}>
-                                login
-                            </Link>
+                            <CustomLink to={'/login'}>
+                                Login
+                            </CustomLink>
                         </li>
                         <li className={'regularText f16'} style={{ margin: '0 5px' }}>
                             /
