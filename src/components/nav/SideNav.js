@@ -51,7 +51,7 @@ const SideNav = () => {
                         </Link>
                     </li>
                     <li>
-                        <Link to={'/submission'} className='navLinks'>
+                        <Link to={'/'} className='navLinks'>
                             <AiOutlinePlus />
                             <span className={'f14 regularText white'}>Submission</span>
                         </Link>
@@ -63,7 +63,7 @@ const SideNav = () => {
                         </Link>
                     </li>
                     <li>
-                        <Link to={'/logout'} className='navLinks'>
+                        <Link to={'/'} className='navLinks'>
                             <AiOutlineLogout />
                             <span className={'f14 regularText white'}>Logout</span>
                         </Link>

@@ -9,8 +9,8 @@ const ContactComponent = () => {
         <>
             <section className='contactContainer'>
                 <div className='aboutSiteContainer'>
-                    <h2 className={'f30 boldText headerColor'}>About Site</h2>
-                    <p className={'f16 regularText headerColor'}>
+                    <h2 className={'f30 boldText white'}>About Site</h2>
+                    <p className={'f16 regularText white'}>
                         We're branding how you buy, sell, and rent.
                         It's now easier to get into a place you love.
                         So let's do this together.
@@ -18,47 +18,48 @@ const ContactComponent = () => {
                 </div>
 
                 <div className='quickLinksContainer'>
-                    <h2 className={'f30 boldText headerColor'}>Quick Links</h2>
+                    <h2 className={'f30 boldText white'}>Quick Links</h2>
                     <ul>
-                        <li className={'f16 regularText headerColor'}>About Us</li>
-                        <li className={'f16 regularText headerColor'}>Terms and Conditions</li>
-                        <li className={'f16 regularText headerColor'}>User's Guide</li>
-                        <li className={'f16 regularText headerColor'}>Support Center</li>
-                        <li className={'f16 regularText headerColor'}>Press Info</li>
+                        <li className={'f16 regularText white'}>About Us</li>
+                        <li className={'f16 regularText white'}>Terms and Conditions</li>
+                        <li className={'f16 regularText white'}>User's Guide</li>
+                        <li className={'f16 regularText white'}>Support Center</li>
+                        <li className={'f16 regularText white'}>Press Info</li>
                     </ul>
                 </div>
 
                 <div className='contactUsContainer'>
-                    <h2 className={'f30 boldText headerColor'}>Contact Us</h2>
+                    <h2 className={'f30 boldText white'}>Contact Us</h2>
                     <ul>
-                        <li className={'f16 regularText headerColor'}>info@findhouse.com</li>
-                        <li className={'f16 regularText headerColor'}>Collins Street West, Victoria 8007, Australia</li>
-                        <li className={'f16 regularText headerColor'}>+1246-345-0695</li>
+                        <li className={'f16 regularText white'}>info@findhouse.com</li>
+                        <li className={'f16 regularText white'}>Collins Street West, Victoria 8007, Australia</li>
+                        <li className={'f16 regularText white'}>+1246-345-0695</li>
                     </ul>
                 </div>
 
                 <div className='socialLinksContainer'>
-                    <h2 className={'f30 boldText headerColor'}>Follow Us</h2>
+                    <h2 className={'f30 boldText white'}>Follow Us</h2>
                     <ul>
-                        <li className={'f16 regularText headerColor'}><FaFacebookF /></li>
-                        <li className={'f16 regularText headerColor'}><FaTwitter /></li>
-                        <li className={'f16 regularText headerColor'}><FaInstagram /></li>
-                        <li className={'f16 regularText headerColor'}><FaPinterest /></li>
-                        <li className={'f16 regularText headerColor'}><FaDribbble /></li>
-                        <li className={'f16 regularText headerColor'}><FaGoogle /></li>
+                        <li className={'f16 regularText white'}><FaFacebookF /></li>
+                        <li className={'f16 regularText white'}><FaTwitter /></li>
+                        <li className={'f16 regularText white'}><FaInstagram /></li>
+                        <li className={'f16 regularText white'}><FaPinterest /></li>
+                        <li className={'f16 regularText white'}><FaDribbble /></li>
+                        <li className={'f16 regularText white'}><FaGoogle /></li>
                     </ul>
-                </div>
+                    <div className='subscribeContainer'>
+                        <h2 className={'f30 boldText white'}>Subscribe</h2>
+                        <div className='searchInputContainer'>
+                            <input placeholder='Your email' />
+                            <button>
+                                <IoIosArrowForward size={16} />
+                            </button>
 
-                <div className='subscribeContainer'>
-                    <h2 className={'f30 boldText headerColor'}>Subscribe</h2>
-                    <div className='searchInputContainer'>
-                        <input placeholder='Your email' />
-                        <button>
-                            <IoIosArrowForward size={16} />
-                        </button>
-
+                        </div>
                     </div>
                 </div>
+
+
             </section>
         </>
     )

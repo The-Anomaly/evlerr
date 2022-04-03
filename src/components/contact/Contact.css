@@ -1,8 +1,10 @@
 .contactContainer {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  padding: 30px 0;
+  padding: 30px;
   gap: 30px;
+  background-color: #202040;
+  color: #fff;
 }
 .contactContainer ul,
 .contactContainer p,

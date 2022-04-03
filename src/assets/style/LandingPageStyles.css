@@ -111,6 +111,7 @@
   border-radius: 10px;
   height: 420px;
   position: relative;
+  width: 100%;
 }
 .searchNowOverlay {
   position: absolute;

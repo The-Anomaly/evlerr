@@ -65,8 +65,84 @@
   gap: 20px;
 }
 
+.propertyDetailsLayout {
+  display: grid;
+  grid-template-columns: 65% 35%;
+  padding: 50px 200px;
+  gap: 20px;
+}
+.tabsCard {
+  border-radius: 6px;
+  padding: 5px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f7f7f7;
+  margin-left: 10px;
+}
+.doubleGridTemplate {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px 100px;
+  padding-left: 10px;
+}
+.tripleGridTemplate {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 20px;
+  padding-left: 10px;
+}
+.attachmentIcon {
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  font-size: 25px;
+  text-align: center;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f7f7f7;
+  color: #ff5a5f;
+  margin-right: 10px;
+}
+.agentImageContainer {
+  width: 70px;
+  height: 70px;
+  /* border-radius: 50%; */
+}
+.latestPropertiesImage {
+  width: 100px;
+  height: 100px;
+  margin-right: 20px;
+  /* border-radius: 50%; */
+}
+.controlTabs {
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 35px;
+  height: 35px;
+  color: #fff;
+  border-radius: 6px;
+  background-color: #006a70;
+  margin-right: 10px;
+  transition: all 0.3s ease-in-out 0s;
+}
+.controlTabs:hover {
+  background-color: #ff5a5f;
+}
 @media screen and (min-width: 280px) and (max-width: 786px) {
   .propertiesHomeContainer {
     padding: 50px;
+  }
+  .propertiesMapContainers {
+    grid-template-columns: 100%;
+  }
+
+  .propertyDetailsLayout {
+    grid-template-columns: 100%;
+    padding: 50px 20px;
   }
 }

@@ -260,7 +260,9 @@
 }
 
 /* colors */
-
+.redText {
+  color: #ff5a5f;
+}
 .white {
   color: #fff;
 }
@@ -295,6 +297,9 @@
 .border {
   border: 1px solid #ebebeb;
 }
+hr {
+  border: 0.5px solid #ebebeb;
+}
 .btRadius {
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;
@@ -313,6 +318,7 @@
   position: absolute;
   top: 150px;
   opacity: 0.5;
+  transition: all 0.3s ease-in-out 0s;
 }
 .arrowLeft:hover,
 .arrowRight:hover {
@@ -334,4 +340,30 @@
   border-radius: 6px;
   /* width: 100%; */
   margin-bottom: 20px;
+}
+
+.arrowLeftP,
+.arrowRightP {
+  display: flex;
+  background: #fff;
+  height: 70px;
+  width: 35px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 6px;
+  z-index: 10;
+  position: absolute;
+  top: 220px;
+  opacity: 0.5;
+  transition: all 0.3s ease-in-out 0s;
+}
+.arrowLeftP:hover,
+.arrowRightP:hover {
+  opacity: 10;
+}
+.arrowLeftP {
+  left: 10px;
+}
+.arrowRightP {
+  right: 10px;
 }

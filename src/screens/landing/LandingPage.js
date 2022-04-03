@@ -164,9 +164,10 @@ const LandingPage = () => {
                         </section>
                     </section>
 
-                    <section className='contactsSection'>
-                        <ContactComponent />
-                    </section>
+
+                </section>
+                <section className='contactsSection'>
+                    <ContactComponent />
                 </section>
             </RenderNav>
 
