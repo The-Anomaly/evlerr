@@ -1,7 +1,6 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Layout from '../components/dashboard/Layout'
-import NavBar from '../components/nav/Nav'
 import Login from '../screens/auth/Login'
 import Register from '../screens/auth/Register'
 import ChangePassword from '../screens/dashboard/ChangePassword'
@@ -18,6 +17,7 @@ import Submission from '../screens/dashboard/Submission'
 import LandingPage from '../screens/landing/LandingPage'
 import PropertiesDisplay from '../screens/properties/PropertiesDisplay'
 import PropertiesMap from '../screens/properties/PropertiesMap'
+import PropertyDetails from '../screens/properties/PropertyDetails'
 
 const RoutesContainer = () => {
     return (
@@ -28,6 +28,7 @@ const RoutesContainer = () => {
                 <Route path='signup' element={<Register />} />
                 <Route path='properties' element={<PropertiesDisplay />} />
                 <Route path='properties-map' element={<PropertiesMap />} />
+                <Route path='properties-details' element={<PropertyDetails />} />
 
                 <Route element={<Layout />} >
                     <Route path='dashboard' element={<Dashboard />} />

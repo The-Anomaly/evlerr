@@ -18,7 +18,68 @@
 }
 
 .tableCells {
-  display: flex;
-  justify-content: space-evenly;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  /* justify-content: space-between; */
   align-items: center;
+}
+.membersCard {
+  background: #fff;
+  border: 1px solid #ebebeb;
+  border-radius: 6px;
+  padding: 30px;
+}
+.memberImage {
+  width: 70px;
+  height: 70px;
+  margin-right: 15px;
+}
+.deleteContainer {
+  height: 34px;
+  text-align: center;
+  width: 34px;
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fd6d6d;
+  background-color: #f7f7f7;
+  transition: all 0.3s ease-in-out 0s;
+  font-size: 14px;
+  position: relative;
+}
+.deleteContainer:hover {
+  background-color: #fd6d6d;
+  color: #f7f7f7;
+}
+.uploadBtn {
+  background-color: #f7f7f7;
+  padding: 20px 35px;
+  border: solid 1px #ebebeb;
+  border-radius: 4px;
+  transition: all 0.3s ease-in-out 0s;
+  cursor: pointer;
+}
+.upload__image-wrapper {
+  position: relative;
+}
+.clearImage {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  background-color: #ff5a5f;
+  border: none;
+  padding: 5px;
+  position: absolute;
+  top: -20px;
+}
+.addNetwork {
+  background: #79b530;
+  color: #fff;
+  border: none;
+  transition: all 0.3s ease-in-out 0s;
+  padding: 8px 20px;
+  border-radius: 2px;
+  width: 150px;
 }

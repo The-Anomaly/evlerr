@@ -6,8 +6,6 @@ import CustomInput from '../../utils/CustomInput';
 import './Modals.css';
 import InputRange from 'react-input-range';
 import 'react-input-range/lib/css/index.css';
-import MiniDropDown from '../landingPage/MiniDropDown';
-import { MenuItem } from '@mui/material';
 import CustomInputDrop from '../../utils/CustomInputDrop';
 import { IoMdArrowDropup, IoMdArrowDropdown } from 'react-icons/io'
 import CustomButton from '../../utils/CustomButton';

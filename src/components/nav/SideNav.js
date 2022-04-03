@@ -4,8 +4,8 @@ import './Nav.css';
 import Logo from '../../assets/images/logo2.svg';
 import { IoLayersOutline } from 'react-icons/io5';
 import { AiOutlineLogout, AiOutlinePlus, AiOutlineUser } from 'react-icons/ai';
-import { GoMail, GoPackage } from 'react-icons/go';
-import { BsChatDots, BsHouseDoor, BsSearch } from 'react-icons/bs';
+import { GoPackage } from 'react-icons/go';
+import { BsHouseDoor, } from 'react-icons/bs';
 import { FiUsers } from 'react-icons/fi';
 import { RiLockPasswordLine } from 'react-icons/ri';
 

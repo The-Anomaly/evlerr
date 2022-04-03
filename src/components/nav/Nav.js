@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Logo from '../../assets/images/logo2.svg';
 import './Nav.css';
 import '../../assets/style/GeneralStyles.css';
@@ -6,25 +6,24 @@ import { BsPlusLg } from 'react-icons/bs';
 import { AiOutlineUser } from 'react-icons/ai';
 import { Link, } from 'react-router-dom';
 import CustomIconButton from '../../utils/CustomIconButton';
-
 import CustomLink from './CustomLink';
 import { IoMdArrowDropdown, IoMdArrowDropright, IoMdArrowDropup } from 'react-icons/io';
 
 
 const NavBar = ({ boxShadow, logo }) => {
 
-    const [state, setState] = useState({
-        membersDrop: false,
-    })
+    // const [state, setState] = useState({
+    //     membersDrop: false,
+    // })
 
-    const showMembersDrop = () => {
-        if (state.membersDrop) {
-            setState((prevState) => ({ ...prevState, membersDrop: false }))
-        } else {
-            setState((prevState) => ({ ...prevState, membersDrop: true }))
-        }
+    // const showMembersDrop = () => {
+    //     if (state.membersDrop) {
+    //         setState((prevState) => ({ ...prevState, membersDrop: false }))
+    //     } else {
+    //         setState((prevState) => ({ ...prevState, membersDrop: true }))
+    //     }
 
-    }
+    // }
 
 
 
@@ -58,6 +57,13 @@ const NavBar = ({ boxShadow, logo }) => {
                                 <div className={'borderBottom f16 menuItemColor pb10 pt20'} >
                                     <CustomLink to={'/properties-map'}>
                                         Properties-Map
+                                        <IoMdArrowDropright size={20} />
+                                    </CustomLink>
+                                </div>
+
+                                <div className={'borderBottom f16 menuItemColor pb10 pt20'} >
+                                    <CustomLink to={'/properties-details'}>
+                                        Properties-Details
                                         <IoMdArrowDropright size={20} />
                                     </CustomLink>
                                 </div>

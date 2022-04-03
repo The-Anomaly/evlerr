@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-import NavBar from '../../components/nav/Nav';
+import React, { useState } from 'react';
 import '../../assets/style/LandingPageStyles.css';
 import '../../assets/style/GeneralStyles.css';
 import SearchComponent from '../../components/landingPage/SearchComponent';
