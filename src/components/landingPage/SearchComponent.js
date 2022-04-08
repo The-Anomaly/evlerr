@@ -7,7 +7,7 @@ import { FaEllipsisV } from 'react-icons/fa';
 import CustomButton from '../../utils/CustomButton';
 
 
-const SearchComponent = () => {
+const SearchComponent = ({ advancedClick }) => {
     return (
         <>
             <section className='transparentContainer'>
@@ -36,7 +36,7 @@ const SearchComponent = () => {
                         <MenuItem value={50}>5+</MenuItem>
                         <MenuItem value={60}>6+</MenuItem>
                     </MiniDropDown>
-                    <div className='advancedDrop'>
+                    <div className='advancedDrop' onClick={advancedClick}>
                         <p className={'f16 semiBoldText'} style={{ color: '' }}>Advanced</p>
                         <span><FaEllipsisV /></span>
                     </div>

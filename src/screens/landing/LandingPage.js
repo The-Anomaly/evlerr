@@ -19,13 +19,14 @@ import 'animate.css';
 import RenderNav from '../../components/nav/RenderNav';
 import BestPropertyCarousel from '../../components/landingPage/BestPropertySlider';
 import { useNavigate } from 'react-router-dom';
+import FilterModal from '../../components/modals/FilterModal';
 
 
 const LandingPage = () => {
 
 
     const [state, setState] = useState({
-        rentSearch: true, saleSearch: false, shortLease: false, activeBg: '#ff5a5f', inactiveBg: '#fff'
+        rentSearch: true, saleSearch: false, shortLease: false, activeBg: '#ff5a5f', inactiveBg: '#fff', visible: false,
     })
 
     const showRentSearchBox = () => {
@@ -44,7 +45,12 @@ const LandingPage = () => {
     const goToAgentDetails = () => {
         navigate('/agent-details')
     }
-
+    const showFilterModal = () => {
+        setState((prevState) => ({ ...prevState, visible: true }))
+    }
+    const closeFilterModal = () => {
+        setState((prevState) => ({ ...prevState, visible: false }))
+    }
 
 
     return (
@@ -76,16 +82,16 @@ const LandingPage = () => {
                                     </div>
                                     {state.rentSearch &&
                                         <div className="animate__animated animate__fadeIn">
-                                            <SearchComponent />
+                                            <SearchComponent advancedClick={showFilterModal} />
                                         </div>
 
                                     }
                                     {state.saleSearch && <div className="animate__animated animate__fadeIn">
-                                        <SearchComponent />
+                                        <SearchComponent advancedClick={showFilterModal} />
                                     </div>}
 
                                     {state.shortLease && <div className="animate__animated animate__fadeIn">
-                                        <SearchComponent />
+                                        <SearchComponent advancedClick={showFilterModal} />
                                     </div>}
 
 
@@ -175,6 +181,7 @@ const LandingPage = () => {
                     <ContactComponent />
                 </section>
             </RenderNav>
+            <FilterModal visible={state.visible} closeModal={closeFilterModal} />
 
         </>
     )

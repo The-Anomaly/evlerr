@@ -52,10 +52,11 @@ a:hover {
   background-color: #fff;
   position: absolute;
   top: 80px;
-  left: 0;
+  left: -40px;
   right: 0;
   padding: 20px;
-  width: 100%;
+  width: 600px;
+  height: 270px;
   /* transition: all 0.3s ease-in-out; */
   border-radius: 6px;
   box-shadow: 0 0 20px 0 rgb(62 28 131 / 10%);
@@ -79,6 +80,13 @@ a:hover {
   display: block;
 }
 
+#forSale:hover .navDropDownContentContainer {
+  display: block;
+}
+
+#forProjects:hover .navDropDownContentContainer {
+  display: block;
+}
 .sideNavContainer {
   background-color: #24324a;
   height: 100vh;
