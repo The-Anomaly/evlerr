@@ -7,7 +7,7 @@ import { AiOutlineUser } from 'react-icons/ai';
 import { Link, } from 'react-router-dom';
 import CustomIconButton from '../../utils/CustomIconButton';
 import CustomLink from './CustomLink';
-import { IoMdArrowDropdown, IoMdArrowDropright, IoMdArrowDropup } from 'react-icons/io';
+import { IoMdArrowDropdown } from 'react-icons/io';
 
 
 const NavBar = ({ boxShadow, logo }) => {
