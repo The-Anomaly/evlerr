@@ -4,6 +4,10 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import PropertyCards from "../cards/PropertyCards";
 import Home from '../../assets/images/home.jpeg';
+import HomeTwo from '../../assets/images/hometwo.jpeg';
+import HomeThree from '../../assets/images/homethree.jpeg';
+import HomeFour from '../../assets/images/homefour.jpeg';
+
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import EastIcon from '@mui/icons-material/East';
 
@@ -83,7 +87,35 @@ export default class BestPropertyCarousel extends Component {
                     </div>
                     <div>
                         <PropertyCards
+                            leaseType={'For Rent'} price={'$3000'} background={HomeTwo}
+                            sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Arlo Apartment'}
+                            detailsTitle={'Apartment'}
+                        />
+                    </div>
+                    <div>
+                        <PropertyCards
+                            leaseType={'For Sale'} price={'$3000'} background={HomeThree}
+                            sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Arlo Apartment'}
+                            detailsTitle={'Apartment'}
+                        />
+                    </div>
+                    <div>
+                        <PropertyCards
                             leaseType={'For Rent'} price={'$3000'} background={Home}
+                            sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Arlo Apartment'}
+                            detailsTitle={'Apartment'}
+                        />
+                    </div>
+                    <div>
+                        <PropertyCards
+                            leaseType={'For Sale'} price={'$3000'} background={HomeFour}
+                            sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Arlo Apartment'}
+                            detailsTitle={'Apartment'}
+                        />
+                    </div>
+                    <div>
+                        <PropertyCards
+                            leaseType={'For Rent'} price={'$3000'} background={HomeTwo}
                             sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Arlo Apartment'}
                             detailsTitle={'Apartment'}
                         />
@@ -97,35 +129,7 @@ export default class BestPropertyCarousel extends Component {
                     </div>
                     <div>
                         <PropertyCards
-                            leaseType={'For Rent'} price={'$3000'} background={Home}
-                            sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Arlo Apartment'}
-                            detailsTitle={'Apartment'}
-                        />
-                    </div>
-                    <div>
-                        <PropertyCards
-                            leaseType={'For Sale'} price={'$3000'} background={Home}
-                            sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Arlo Apartment'}
-                            detailsTitle={'Apartment'}
-                        />
-                    </div>
-                    <div>
-                        <PropertyCards
-                            leaseType={'For Rent'} price={'$3000'} background={Home}
-                            sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Arlo Apartment'}
-                            detailsTitle={'Apartment'}
-                        />
-                    </div>
-                    <div>
-                        <PropertyCards
-                            leaseType={'For Sale'} price={'$3000'} background={Home}
-                            sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Arlo Apartment'}
-                            detailsTitle={'Apartment'}
-                        />
-                    </div>
-                    <div>
-                        <PropertyCards
-                            leaseType={'For Rent'} price={'$3000'} background={Home}
+                            leaseType={'For Rent'} price={'$3000'} background={HomeThree}
                             sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Arlo Apartment'}
                             detailsTitle={'Apartment'}
                         />

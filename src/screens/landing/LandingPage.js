@@ -12,6 +12,9 @@ import Mali from '../../assets/images/new5.jpeg';
 import Pali from '../../assets/images/new6.jpeg';
 import CustomButton from '../../utils/CustomButton';
 import Agent from '../../assets/images/agent.jpeg';
+import AgentThree from '../../assets/images/agenttwo.jpeg';
+import AgentTwo from '../../assets/images/agentthree.jpeg';
+
 import AgentsCard from '../../components/cards/AgentsCard';
 import ContactComponent from '../../components/contact/ContactComponent';
 import AlteCitiesCard from '../../components/cards/AlteCitiesCard';
@@ -167,11 +170,11 @@ const LandingPage = () => {
 
                         <section className='agentsGridContainer'>
                             <AgentsCard agentName={'Agent Pakulla'} agentRating={'3'} agentRole={'Marketing'} background={Agent} agentClick={goToAgentDetails} />
-                            <AgentsCard agentName={'Agent Pakulla'} agentRating={'3'} agentRole={'Marketing'} background={Agent} agentClick={goToAgentDetails} />
-                            <AgentsCard agentName={'Agent Pakulla'} agentRating={'3'} agentRole={'Marketing'} background={Agent} agentClick={goToAgentDetails} />
-                            <AgentsCard agentName={'Agent Pakulla'} agentRating={'3'} agentRole={'Marketing'} background={Agent} agentClick={goToAgentDetails} />
-                            <AgentsCard agentName={'Agent Pakulla'} agentRating={'3'} agentRole={'Marketing'} background={Agent} agentClick={goToAgentDetails} />
-                            <AgentsCard agentName={'Agent Pakulla'} agentRating={'3'} agentRole={'Marketing'} background={Agent} agentClick={goToAgentDetails} />
+                            <AgentsCard agentName={'Agent Marlen'} agentRating={'3'} agentRole={'Sales'} background={AgentThree} agentClick={goToAgentDetails} />
+                            <AgentsCard agentName={'Agent Jane'} agentRating={'3'} agentRole={'Valuating'} background={AgentTwo} agentClick={goToAgentDetails} />
+                            <AgentsCard agentName={'Agent Paul'} agentRating={'3'} agentRole={'Sales'} background={Agent} agentClick={goToAgentDetails} />
+                            <AgentsCard agentName={'Agent Kadosh'} agentRating={'3'} agentRole={'Inspecting'} background={AgentTwo} agentClick={goToAgentDetails} />
+                            <AgentsCard agentName={'Agent Prince'} agentRating={'3'} agentRole={'Marketing'} background={Agent} agentClick={goToAgentDetails} />
                         </section>
                     </section>
 

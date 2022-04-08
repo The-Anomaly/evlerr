@@ -39,9 +39,9 @@ const NavBar = ({ boxShadow, logo }) => {
                 <div>
                     <ul>
                         <li className={'regularText f16'} id='forSale'>
-                            <CustomLink to={'/properties'} >
+                            <p className={'flex alignCenter'}>
                                 For Sale  <span style={{ marginTop: '5px' }}> <IoMdArrowDropdown size={16} /></span>
-                            </CustomLink>
+                            </p>
                             <div className='navDropDownContentContainer' >
 
                                 <ul className={'flex justifyBetween alignCenter'} style={{ width: '100%', height: '100%' }}>
@@ -93,9 +93,9 @@ const NavBar = ({ boxShadow, logo }) => {
 
                         </li>
                         <li className={'regularText f16'} id='properties'>
-                            <CustomLink to={'/properties'}>
+                            <p className={'flex alignCenter'}>
                                 To Rent <span style={{ marginTop: '5px' }}> <IoMdArrowDropdown size={16} /></span>
-                            </CustomLink>
+                            </p>
                             <div className='navDropDownContentContainer' >
 
                                 <ul className={'flex justifyBetween alignCenter'} style={{ width: '100%', height: '100%' }}>
@@ -146,9 +146,9 @@ const NavBar = ({ boxShadow, logo }) => {
                             </div>
                         </li>
                         <li className={'regularText f16'} style={{ position: 'relative' }} id='forProjects'>
-                            <CustomLink to={'/properties'}>
+                            <p className={'flex alignCenter'}>
                                 Projects <span style={{ marginTop: '5px' }}> <IoMdArrowDropdown size={16} /></span>
-                            </CustomLink>
+                            </p>
                             <div className='navDropDownContentContainer' >
 
                                 <ul className={'flex justifyBetween alignCenter'} style={{ width: '100%', height: '100%' }}>
