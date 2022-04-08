@@ -68,6 +68,11 @@
   justify-content: center;
   align-items: center;
 }
+.propertyDetailsLink:hover {
+  color: #ff5a5f;
+  transition: all 0.3s ease-in-out 0s;
+  cursor: pointer;
+}
 .cardControls {
   display: flex;
 }
@@ -198,7 +203,8 @@
   top: 100%;
 }
 
-.listCardContainer {
+.listCardContainer,
+.agentTitleCard {
   transition: all 0.3s ease-in-out 0s;
   border-radius: 6px;
   border: 1px solid #ebebeb;
@@ -230,6 +236,9 @@
 }
 .sortDropContainer {
   position: relative;
+}
+.sortDropContainer p {
+  cursor: pointer;
 }
 .dropContent {
   position: absolute;

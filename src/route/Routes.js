@@ -15,6 +15,8 @@ import Reviews from '../screens/dashboard/Reviews'
 import SavedSaearch from '../screens/dashboard/SavedSaearch'
 import Submission from '../screens/dashboard/Submission'
 import LandingPage from '../screens/landing/LandingPage'
+import AgencyDetails from '../screens/members/AgencyDetails'
+import AgentDetails from '../screens/members/AgentDetails'
 import PropertiesDisplay from '../screens/properties/PropertiesDisplay'
 import PropertiesMap from '../screens/properties/PropertiesMap'
 import PropertyDetails from '../screens/properties/PropertyDetails'
@@ -29,6 +31,9 @@ const RoutesContainer = () => {
                 <Route path='properties' element={<PropertiesDisplay />} />
                 <Route path='properties-map' element={<PropertiesMap />} />
                 <Route path='properties-details' element={<PropertyDetails />} />
+                <Route path='agent-details' element={<AgentDetails />} />
+                <Route path='agency-details' element={<AgencyDetails />} />
+
 
                 <Route element={<Layout />} >
                     <Route path='dashboard' element={<Dashboard />} />

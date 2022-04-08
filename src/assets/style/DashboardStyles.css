@@ -83,3 +83,9 @@
   border-radius: 2px;
   width: 150px;
 }
+
+@media screen and (min-width: 280px) and (max-width: 786px) {
+  .membersCard {
+    padding: 10px;
+  }
+}

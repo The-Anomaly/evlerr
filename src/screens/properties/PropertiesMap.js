@@ -10,10 +10,12 @@ import SortCardTwo from '../../components/cards/SortCardTwo'
 import PropertyListCards from '../../components/cards/PropertyListCard'
 import PropertyGridCards from '../../components/cards/PropertyGridCards'
 import Home from '../../assets/images/home.jpeg';
+import { useNavigate } from 'react-router-dom'
 
 const PropertiesMap = () => {
 
 
+    const navigate = useNavigate()
     const [state, setState] = useState({
         menuDrop: false, grid: true, list: false
     })
@@ -33,6 +35,14 @@ const PropertiesMap = () => {
 
     const showList = () => {
         setState((prevState) => ({ ...prevState, grid: false, list: true }))
+    }
+
+    const goToAgentDetails = () => {
+        navigate('/agent-details')
+    }
+
+    const goToPropertyDetails = () => {
+        navigate('/properties-details')
     }
 
 
@@ -71,32 +81,38 @@ const PropertiesMap = () => {
                         <PropertyGridCards
                             type={'Featured'} leaseType={'For Sale'} price={'$6500'} background={Home}
                             sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
-                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'}
+                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onAgentClick={goToAgentDetails}
+                            onClick={goToPropertyDetails}
                         />
                         <PropertyGridCards
                             type={'Featured'} leaseType={'For Sale'} price={'$6500'} background={Home}
                             sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
-                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'}
+                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onAgentClick={goToAgentDetails}
+                            onClick={goToPropertyDetails}
                         />
                         <PropertyGridCards
                             type={'Featured'} leaseType={'For Sale'} price={'$6500'} background={Home}
                             sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
-                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'}
+                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onAgentClick={goToAgentDetails}
+                            onClick={goToPropertyDetails}
                         />
                         <PropertyGridCards
                             type={'Featured'} leaseType={'For Sale'} price={'$6500'} background={Home}
                             sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
-                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'}
+                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onAgentClick={goToAgentDetails}
+                            onClick={goToPropertyDetails}
                         />
                         <PropertyGridCards
                             type={'Featured'} leaseType={'For Sale'} price={'$6500'} background={Home}
                             sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
-                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'}
+                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onAgentClick={goToAgentDetails}
+                            onClick={goToPropertyDetails}
                         />
                         <PropertyGridCards
                             type={'Featured'} leaseType={'For Sale'} price={'$6500'} background={Home}
                             sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
-                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'}
+                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onAgentClick={goToAgentDetails}
+                            onClick={goToPropertyDetails}
                         />
                     </section>}
 
@@ -105,27 +121,33 @@ const PropertiesMap = () => {
                         <PropertyListCards
                             type={'Featured'} leaseType={'For Sale'} price={'$6500'} background={Home}
                             sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
-                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'}
+                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onAgentClick={goToAgentDetails}
+                            onClick={goToPropertyDetails}
                         />   <PropertyListCards
                             type={'Featured'} leaseType={'For Sale'} price={'$6500'} background={Home}
                             sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
-                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'}
+                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onAgentClick={goToAgentDetails}
+                            onClick={goToPropertyDetails}
                         />   <PropertyListCards
                             type={'Featured'} leaseType={'For Sale'} price={'$6500'} background={Home}
                             sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
-                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'}
+                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onAgentClick={goToAgentDetails}
+                            onClick={goToPropertyDetails}
                         />   <PropertyListCards
                             type={'Featured'} leaseType={'For Sale'} price={'$6500'} background={Home}
                             sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
-                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'}
+                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onAgentClick={goToAgentDetails}
+                            onClick={goToPropertyDetails}
                         />   <PropertyListCards
                             type={'Featured'} leaseType={'For Sale'} price={'$6500'} background={Home}
                             sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
-                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'}
+                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onAgentClick={goToAgentDetails}
+                            onClick={goToPropertyDetails}
                         />   <PropertyListCards
                             type={'Featured'} leaseType={'For Sale'} price={'$6500'} background={Home}
                             sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
-                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'}
+                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onAgentClick={goToAgentDetails}
+                            onClick={goToPropertyDetails}
                         />
                     </section>}
                 </section>

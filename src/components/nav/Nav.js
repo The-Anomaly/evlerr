@@ -32,18 +32,20 @@ const NavBar = ({ boxShadow, logo }) => {
             <nav className='navContainer' style={{ boxShadow: boxShadow }}>
                 {logo &&
                     <div className='logoContainer'>
-                        <img src={Logo} alt='logo' style={{ width: '100px', height: '50px' }} />
+                        <CustomLink to={'/'}>
+                            <img src={Logo} alt='logo' style={{ width: '100px', height: '50px' }} />
+                        </CustomLink>
                     </div>}
                 <div>
                     <ul>
                         <li className={'regularText f16'}>
                             <CustomLink to={'/'} >
-                                Home
+                                For Sale
                             </CustomLink>
                         </li>
                         <li className={'regularText f16'} id='properties'>
                             <CustomLink to={'/properties'}>
-                                Properties <span style={{ marginTop: '5px' }}> <IoMdArrowDropdown size={16} /></span>
+                                To Rent <span style={{ marginTop: '5px' }}> <IoMdArrowDropdown size={16} /></span>
                             </CustomLink>
                             <div className='navDropDownContentContainer' >
                                 <IoMdArrowDropup size={32} color={'#FFF'} className='dropArrow' />
@@ -71,7 +73,7 @@ const NavBar = ({ boxShadow, logo }) => {
                         </li>
                         <li className={'regularText f16'} style={{ position: 'relative' }}>
 
-                            Members
+                            Projects
 
                         </li>
                         <li className={'regularText f16'}>

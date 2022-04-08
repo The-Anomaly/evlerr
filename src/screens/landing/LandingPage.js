@@ -11,36 +11,45 @@ import Cali from '../../assets/images/new4.jpeg';
 import Mali from '../../assets/images/new5.jpeg';
 import Pali from '../../assets/images/new6.jpeg';
 import CustomButton from '../../utils/CustomButton';
-import PropertyCards from '../../components/cards/PropertyCards';
-import Home from '../../assets/images/home.jpeg';
 import Agent from '../../assets/images/agent.jpeg';
 import AgentsCard from '../../components/cards/AgentsCard';
 import ContactComponent from '../../components/contact/ContactComponent';
 import AlteCitiesCard from '../../components/cards/AlteCitiesCard';
 import 'animate.css';
 import RenderNav from '../../components/nav/RenderNav';
+import BestPropertyCarousel from '../../components/landingPage/BestPropertySlider';
+import { useNavigate } from 'react-router-dom';
 
 
 const LandingPage = () => {
 
 
     const [state, setState] = useState({
-        rentSearch: true, saleSearch: false, activeBg: '#ff5a5f', inactiveBg: '#fff'
+        rentSearch: true, saleSearch: false, shortLease: false, activeBg: '#ff5a5f', inactiveBg: '#fff'
     })
 
     const showRentSearchBox = () => {
-        setState((prevState) => ({ ...prevState, rentSearch: true, saleSearch: false, }))
+        setState((prevState) => ({ ...prevState, rentSearch: true, saleSearch: false, shortLease: false }))
     }
 
     const showSaleSearchBox = () => {
-        setState((prevState) => ({ ...prevState, saleSearch: true, rentSearch: false }))
+        setState((prevState) => ({ ...prevState, saleSearch: true, rentSearch: false, shortLease: false }))
+    }
+    const showShortLeaseSearchBox = () => {
+        setState((prevState) => ({ ...prevState, saleSearch: false, rentSearch: false, shortLease: true }))
+    }
+
+
+    const navigate = useNavigate()
+    const goToAgentDetails = () => {
+        navigate('/agent-details')
     }
 
 
 
     return (
         <>
-            <RenderNav>
+            <RenderNav >
                 <section className='landingContainer'>
                     <section className='heroContainer'>
                         <div className='heroOverlay'>
@@ -59,6 +68,11 @@ const LandingPage = () => {
                                             arrowDown={state.saleSearch ? true : false}
                                             color={state.saleSearch ? state.activeBg : state.inactiveBg}
                                             size={'40px'} onClick={showSaleSearchBox} textColor={state.saleSearch ? '#fff' : '#000'} />
+
+                                        <SearchSelector title={'Short lease'} backgroundColor={state.shortLease ? state.activeBg : state.inactiveBg}
+                                            arrowDown={state.shortLease ? true : false}
+                                            color={state.shortLease ? state.activeBg : state.inactiveBg}
+                                            size={'40px'} onClick={showShortLeaseSearchBox} textColor={state.shortLease ? '#fff' : '#000'} />
                                     </div>
                                     {state.rentSearch &&
                                         <div className="animate__animated animate__fadeIn">
@@ -69,6 +83,11 @@ const LandingPage = () => {
                                     {state.saleSearch && <div className="animate__animated animate__fadeIn">
                                         <SearchComponent />
                                     </div>}
+
+                                    {state.shortLease && <div className="animate__animated animate__fadeIn">
+                                        <SearchComponent />
+                                    </div>}
+
 
                                 </div>
                             </div>
@@ -125,22 +144,8 @@ const LandingPage = () => {
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                             </p>
                         </div>
-                        <section className='bestPropertyGrid'>
-                            <PropertyCards
-                                type={'Featured'} leaseType={'For Sale'} price={'$6500'} background={Home}
-                                sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
-                                detailsTitle={'Apartment'}
-                            />
-                            <PropertyCards
-                                leaseType={'For Sale'} price={'$6500'} background={Home}
-                                sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
-                                detailsTitle={'Apartment'}
-                            />
-                            <PropertyCards
-                                leaseType={'For Rent'} price={'$6500'} background={Home}
-                                sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
-                                detailsTitle={'Apartment'}
-                            />
+                        <section >
+                            <BestPropertyCarousel />
                         </section>
                     </section>
 
@@ -155,12 +160,12 @@ const LandingPage = () => {
                         </div>
 
                         <section className='agentsGridContainer'>
-                            <AgentsCard agentName={'Agent Pakulla'} agentRating={'3'} agentRole={'Marketing'} background={Agent} />
-                            <AgentsCard agentName={'Agent Pakulla'} agentRating={'3'} agentRole={'Marketing'} background={Agent} />
-                            <AgentsCard agentName={'Agent Pakulla'} agentRating={'3'} agentRole={'Marketing'} background={Agent} />
-                            <AgentsCard agentName={'Agent Pakulla'} agentRating={'3'} agentRole={'Marketing'} background={Agent} />
-                            <AgentsCard agentName={'Agent Pakulla'} agentRating={'3'} agentRole={'Marketing'} background={Agent} />
-                            <AgentsCard agentName={'Agent Pakulla'} agentRating={'3'} agentRole={'Marketing'} background={Agent} />
+                            <AgentsCard agentName={'Agent Pakulla'} agentRating={'3'} agentRole={'Marketing'} background={Agent} agentClick={goToAgentDetails} />
+                            <AgentsCard agentName={'Agent Pakulla'} agentRating={'3'} agentRole={'Marketing'} background={Agent} agentClick={goToAgentDetails} />
+                            <AgentsCard agentName={'Agent Pakulla'} agentRating={'3'} agentRole={'Marketing'} background={Agent} agentClick={goToAgentDetails} />
+                            <AgentsCard agentName={'Agent Pakulla'} agentRating={'3'} agentRole={'Marketing'} background={Agent} agentClick={goToAgentDetails} />
+                            <AgentsCard agentName={'Agent Pakulla'} agentRating={'3'} agentRole={'Marketing'} background={Agent} agentClick={goToAgentDetails} />
+                            <AgentsCard agentName={'Agent Pakulla'} agentRating={'3'} agentRole={'Marketing'} background={Agent} agentClick={goToAgentDetails} />
                         </section>
                     </section>
 

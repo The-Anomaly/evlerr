@@ -1,29 +1,16 @@
 import React from 'react';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import SyncAltIcon from '@mui/icons-material/SyncAlt';
 import './Cards.css';
 import '../../assets/style/GeneralStyles.css';
 import { GrLocation } from 'react-icons/gr'
 
-const PropertyListCards = ({ background, price, leaseType, type, baths, beds, detailsSubTitle, detailsTitle, location, sqft, years, agentName, agentImage }) => {
+const PropertyListCards = ({ background, price, leaseType, type, baths, beds, detailsSubTitle, detailsTitle, location, sqft, years, agentName, agentImage, onClick, onAgentClick }) => {
     return (
         <>
             <section className={'listCardContainer flex alignCenter'}>
                 <section className={'whiteBg pt10 pl10 pr10 pb10'} style={{ width: '40%' }}>
                     <div className={'cardImage'} style={{ backgroundImage: background, height: '250px' }}>
                         <img src={background} alt='property' style={{ width: '100%', height: '100%' }} />
-                        <div className='cardListImageOverlay'>
-                            <div className='cardControlsContainer'>
-                                <div className='cardControls'>
-                                    <span>
-                                        <FavoriteBorderIcon />
-                                    </span>
-                                    <span>
-                                        <SyncAltIcon />
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
+                        <div className='cardListImageOverlay'></div>
                     </div>
                 </section>
                 <section className={'pl20 pr20 pt20 pb20'} style={{ width: '60%' }}>
@@ -46,7 +33,7 @@ const PropertyListCards = ({ background, price, leaseType, type, baths, beds, de
                     <div className={'pt15'}>
                         <div>
                             <p className={'regularText f14 pb10 '}>{detailsTitle}</p>
-                            <h2 className={'boldText f18 pb10'}>{detailsSubTitle}</h2>
+                            <h2 className={'boldText f18 pb10 propertyDetailsLink'} onClick={onClick}>{detailsSubTitle}</h2>
                         </div>
                         <div className={'cardDetailsLocation pb15'}>
                             <p className={'regularText f12'}>
@@ -68,7 +55,7 @@ const PropertyListCards = ({ background, price, leaseType, type, baths, beds, de
                                 <img src={agentImage} alt='poster' style={{ width: '100%', height: '100%' }} />
                             </div>
                             <div>
-                                <p className={'f14 regularText headerColor'}>{agentName}</p>
+                                <p className={'f14 regularText headerColor propertyDetailsLink'} onClick={onAgentClick}>{agentName}</p>
                             </div>
                         </div>
                         <div>

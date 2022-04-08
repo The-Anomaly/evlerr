@@ -135,7 +135,7 @@
 }
 @media screen and (min-width: 280px) and (max-width: 786px) {
   .propertiesHomeContainer {
-    padding: 50px;
+    padding: 50px 20px;
   }
   .propertiesMapContainers {
     grid-template-columns: 100%;

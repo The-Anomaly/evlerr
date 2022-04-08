@@ -1,11 +1,9 @@
 import React from 'react';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import SyncAltIcon from '@mui/icons-material/SyncAlt';
 import './Cards.css';
 import '../../assets/style/GeneralStyles.css';
 import { GrLocation } from 'react-icons/gr'
 
-const PropertyCards = ({ background, price, leaseType, type, baths, beds, detailsSubTitle, detailsTitle, location, sqft }) => {
+const PropertyCards = ({ background, price, leaseType, type, baths, beds, detailsSubTitle, detailsTitle, location, sqft, onClick, }) => {
     return (
         <>
             <section className='cardContainer'>
@@ -24,21 +22,14 @@ const PropertyCards = ({ background, price, leaseType, type, baths, beds, detail
                         </div>
                         <div className='cardControlsContainer'>
                             <h2 className={'BoldText white f16'}>{price}</h2>
-                            <div className='cardControls'>
-                                <span>
-                                    <FavoriteBorderIcon />
-                                </span>
-                                <span>
-                                    <SyncAltIcon />
-                                </span>
-                            </div>
+
                         </div>
                     </div>
                 </div>
                 <div className='cardDetails'>
                     <div className='cardDetailsHeader'>
                         <p className={'regularText f14'}>{detailsTitle}</p>
-                        <h2 className={'boldText f18'}>{detailsSubTitle}</h2>
+                        <h2 className={'boldText f18 propertyDetailsLink'} onClick={onClick}>{detailsSubTitle}</h2>
                     </div>
                     <div className='cardDetailsLocation'>
                         <p className={'regularText f12'}>

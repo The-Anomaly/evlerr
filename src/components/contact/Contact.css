@@ -1,8 +1,8 @@
 .contactContainer {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   padding: 30px;
-  gap: 30px;
+  gap: 40px;
   background-color: #202040;
   color: #fff;
 }
@@ -16,12 +16,6 @@
   padding-bottom: 15px;
 }
 
-.quickLinksContainer,
-.contactUsContainer,
-.socialLinksContainer,
-.subscribeContainer {
-  justify-self: center;
-}
 .socialLinksContainer ul {
   display: flex;
   justify-content: space-between;

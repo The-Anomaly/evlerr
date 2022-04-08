@@ -1,13 +1,12 @@
-import React, { useState } from 'react'
+import React, { Suspense, useState } from 'react'
 import RenderNav from '../../components/nav/RenderNav'
 // import Breadcrumbs from '../../utils/Breadcrumb'
 import '../../assets/style/PropertyStyles.css';
 import Home from '../../assets/images/home.jpeg';
 import SortCard from '../../components/cards/SortCard';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
-import ShowFilterButton from '../../utils/ShowFilterButton';
 import FilterModal from '../../components/modals/FilterModal';
 import PropertyGridCards from '../../components/cards/PropertyGridCards';
+import { useNavigate } from 'react-router-dom';
 
 
 const PropertiesDisplay = () => {
@@ -16,8 +15,8 @@ const PropertiesDisplay = () => {
     const [state, setState] = useState({
         sortDrop: false,
         sortItem: [{ id: 1, name: 'Default' }, { id: 2, name: 'Newest' }, { id: 3, name: 'Oldest' },
-        { id: 4, name: 'Lowest Price' }, { id: 5, name: 'Highest Price' }, { id: 6, name: 'Random' }],
-        selected: 'Default', visible: false
+        { id: 4, name: 'Lowest Price' }, { id: 5, name: 'Highest Price' }, { id: 6, name: 'Random' }], filter: 'All', filterDrop: false,
+        selected: 'Default', visible: false, filterItem: [{ id: 1, name: 'All' }, { id: 2, name: 'Rent' }, { id: 2, name: 'Sale' },],
     })
 
     const showSortDropDown = () => {
@@ -28,17 +27,38 @@ const PropertiesDisplay = () => {
         }
     }
 
+    const showFilterDropDown = () => {
+        if (state.filterDrop) {
+            setState((prevState) => ({ ...prevState, filterDrop: false }))
+        } else {
+            setState((prevState) => ({ ...prevState, filterDrop: true }))
+        }
+    }
+
 
     function selectSortType(val) {
         setState((prevState) => ({ ...prevState, selected: val.name, sortDrop: false }))
         // console.log(val)
     }
-
-    const showFilterModal = () => {
-        setState((prevState) => ({ ...prevState, visible: true }))
+    function selectFilterType(val) {
+        setState((prevState) => ({ ...prevState, filter: val.name, filterDrop: false }))
+        // console.log(val)
     }
+
+    // const showFilterModal = () => {
+    //     setState((prevState) => ({ ...prevState, visible: true }))
+    // }
     const closeFilterModal = () => {
         setState((prevState) => ({ ...prevState, visible: false }))
+    }
+
+    const navigate = useNavigate()
+
+    const goToPropertyDetails = () => {
+        navigate('/properties-details')
+    }
+    const goToAgentDetails = () => {
+        navigate('/agent-details')
     }
 
     return (
@@ -52,7 +72,7 @@ const PropertiesDisplay = () => {
                                 <div>
                                     <p className={'f30 headerColor boldText'}>Properties</p>
                                 </div>
-                                <div className={'flex alignCenter'}>
+                                {/* <div className={'flex alignCenter'}>
                                     <div>
                                         <p className={'flex alignCenter saveLink headerColor f14'}>
                                             <span style={{ marginRight: '5px' }}><FavoriteBorderIcon /></span>
@@ -62,65 +82,212 @@ const PropertiesDisplay = () => {
                                     <div>
                                         <ShowFilterButton onClick={showFilterModal} />
                                     </div>
-                                </div>
+                                </div> */}
                             </div>
                             <div className={'pt20'}>
-                                <SortCard result={'14'} onClick={showSortDropDown} dropDown={state.sortDrop} value={state.selected} >
-                                    {state.sortItem.map((item) =>
-                                        <p key={item.id} className={'f14 regularText headerColor pb10'} onClick={() => selectSortType(item)}>{item.name}</p>
-                                    )}
+                                <SortCard result={'14'} onClick={showSortDropDown} dropDown={state.sortDrop} value={state.selected} onClickFilter={showFilterDropDown}
+                                    filterValue={state.filter} filterDropDown={state.filterDrop} filterList={state.filterItem}
+                                    selectFilterType={selectFilterType} sortList={state.sortItem} selectSortType={selectSortType}
+                                >
+                                    {/* <div className={'pt10 pb10 pl10 pr10 bgWhite dropContent animate__animated animate__fadeIn'}>
+                                        {state.filterItem.map((item) =>
+                                            <p key={item.id} className={'f14 regularText headerColor pb10'} onClick={() => selectFilterType(item)}>{item.name}</p>
+                                        )}
+                                    </div>
+                                    <div>
+                                        {state.sortItem.map((item) =>
+                                            <p key={item.id} className={'f14 regularText headerColor pb10'} onClick={() => selectSortType(item)}>{item.name}</p>
+                                        )}
+                                    </div> */}
+
                                 </SortCard>
                             </div>
                         </div>
                     </section>
-                    <section className='propertiesGridFull'>
-                        <PropertyGridCards
-                            type={'Featured'} leaseType={'For Sale'} price={'$6500'} background={Home}
-                            sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
-                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'}
-                        />
-                        <PropertyGridCards
-                            type={'Featured'} leaseType={'For Sale'} price={'$6500'} background={Home}
-                            sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
-                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'}
-                        />
-                        <PropertyGridCards
-                            type={'Featured'} leaseType={'For Sale'} price={'$6500'} background={Home}
-                            sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
-                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'}
-                        />
-                        <PropertyGridCards
-                            type={'Featured'} leaseType={'For Sale'} price={'$6500'} background={Home}
-                            sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
-                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'}
-                        />
-                        <PropertyGridCards
-                            type={'Featured'} leaseType={'For Sale'} price={'$6500'} background={Home}
-                            sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
-                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'}
-                        />
-                        <PropertyGridCards
-                            type={'Featured'} leaseType={'For Sale'} price={'$6500'} background={Home}
-                            sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
-                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'}
-                        />
-                        <PropertyGridCards
-                            type={'Featured'} leaseType={'For Sale'} price={'$6500'} background={Home}
-                            sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
-                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'}
-                        />
-                        <PropertyGridCards
-                            type={'Featured'} leaseType={'For Sale'} price={'$6500'} background={Home}
-                            sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
-                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'}
-                        />
-                        <PropertyGridCards
-                            type={'Featured'} leaseType={'For Sale'} price={'$6500'} background={Home}
-                            sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
-                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'}
-                        />
+                    <Suspense fallback={'Loading...'}>
 
-                    </section>
+                        {state.filter === 'All' &&
+
+                            <section className='propertiesGridFull'>
+
+                                <PropertyGridCards
+                                    type={'Featured'} leaseType={'For Sale'} price={'$6500'} background={Home}
+                                    sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
+                                    detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onClick={goToPropertyDetails}
+                                    onAgentClick={goToAgentDetails}
+                                />
+                                <PropertyGridCards
+                                    type={'Featured'} leaseType={'For Rent'} price={'$6500'} background={Home}
+                                    sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
+                                    detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onClick={goToPropertyDetails}
+                                    onAgentClick={goToAgentDetails}
+                                />
+                                <PropertyGridCards
+                                    type={'Featured'} leaseType={'For Sale'} price={'$6500'} background={Home}
+                                    sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
+                                    detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onClick={goToPropertyDetails}
+                                    onAgentClick={goToAgentDetails}
+                                />
+                                <PropertyGridCards
+                                    type={'Featured'} leaseType={'For Rent'} price={'$6500'} background={Home}
+                                    sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
+                                    detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onClick={goToPropertyDetails}
+                                    onAgentClick={goToAgentDetails}
+                                />
+                                <PropertyGridCards
+                                    type={'Featured'} leaseType={'For Sale'} price={'$6500'} background={Home}
+                                    sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
+                                    detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onClick={goToPropertyDetails}
+                                    onAgentClick={goToAgentDetails}
+                                />
+                                <PropertyGridCards
+                                    type={'Featured'} leaseType={'For Rent'} price={'$6500'} background={Home}
+                                    sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
+                                    detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onClick={goToPropertyDetails}
+                                    onAgentClick={goToAgentDetails}
+                                />
+                                <PropertyGridCards
+                                    type={'Featured'} leaseType={'For Sale'} price={'$6500'} background={Home}
+                                    sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
+                                    detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onClick={goToPropertyDetails}
+                                    onAgentClick={goToAgentDetails}
+                                />
+                                <PropertyGridCards
+                                    type={'Featured'} leaseType={'For Rent'} price={'$6500'} background={Home}
+                                    sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
+                                    detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onClick={goToPropertyDetails}
+                                    onAgentClick={goToAgentDetails}
+                                />
+                                <PropertyGridCards
+                                    type={'Featured'} leaseType={'For Sale'} price={'$6500'} background={Home}
+                                    sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
+                                    detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onClick={goToPropertyDetails}
+                                    onAgentClick={goToAgentDetails}
+                                />
+
+                            </section>}
+                        {state.filter === 'Rent' &&
+
+                            <section className='propertiesGridFull'>
+
+                                <PropertyGridCards
+                                    type={'Featured'} leaseType={'For Rent'} price={'$6500'} background={Home}
+                                    sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
+                                    detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onClick={goToPropertyDetails}
+                                    onAgentClick={goToAgentDetails}
+                                />
+                                <PropertyGridCards
+                                    type={'Featured'} leaseType={'For Rent'} price={'$6500'} background={Home}
+                                    sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
+                                    detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onClick={goToPropertyDetails}
+                                    onAgentClick={goToAgentDetails}
+                                />
+                                <PropertyGridCards
+                                    type={'Featured'} leaseType={'For Rent'} price={'$6500'} background={Home}
+                                    sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
+                                    detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onClick={goToPropertyDetails}
+                                    onAgentClick={goToAgentDetails}
+                                />
+                                <PropertyGridCards
+                                    type={'Featured'} leaseType={'For Rent'} price={'$6500'} background={Home}
+                                    sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
+                                    detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onClick={goToPropertyDetails}
+                                    onAgentClick={goToAgentDetails}
+                                />
+                                <PropertyGridCards
+                                    type={'Featured'} leaseType={'For Rent'} price={'$6500'} background={Home}
+                                    sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
+                                    detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onClick={goToPropertyDetails}
+                                    onAgentClick={goToAgentDetails}
+                                />
+                                <PropertyGridCards
+                                    type={'Featured'} leaseType={'For Rent'} price={'$6500'} background={Home}
+                                    sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
+                                    detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onClick={goToPropertyDetails}
+                                    onAgentClick={goToAgentDetails}
+                                />
+                                <PropertyGridCards
+                                    type={'Featured'} leaseType={'For Rent'} price={'$6500'} background={Home}
+                                    sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
+                                    detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onClick={goToPropertyDetails}
+                                    onAgentClick={goToAgentDetails}
+                                />
+                                <PropertyGridCards
+                                    type={'Featured'} leaseType={'For Rent'} price={'$6500'} background={Home}
+                                    sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
+                                    detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onClick={goToPropertyDetails}
+                                    onAgentClick={goToAgentDetails}
+                                />
+                                <PropertyGridCards
+                                    type={'Featured'} leaseType={'For Rent'} price={'$6500'} background={Home}
+                                    sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
+                                    detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onClick={goToPropertyDetails}
+                                    onAgentClick={goToAgentDetails}
+                                />
+
+                            </section>}
+                        {state.filter === 'Sale' &&
+
+                            <section className='propertiesGridFull'>
+
+                                <PropertyGridCards
+                                    type={'Featured'} leaseType={'For Sale'} price={'$6500'} background={Home}
+                                    sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
+                                    detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onClick={goToPropertyDetails}
+                                    onAgentClick={goToAgentDetails}
+                                />
+                                <PropertyGridCards
+                                    type={'Featured'} leaseType={'For Sale'} price={'$6500'} background={Home}
+                                    sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
+                                    detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onClick={goToPropertyDetails}
+                                    onAgentClick={goToAgentDetails}
+                                />
+                                <PropertyGridCards
+                                    type={'Featured'} leaseType={'For Sale'} price={'$6500'} background={Home}
+                                    sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
+                                    detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onClick={goToPropertyDetails}
+                                    onAgentClick={goToAgentDetails}
+                                />
+                                <PropertyGridCards
+                                    type={'Featured'} leaseType={'For Sale'} price={'$6500'} background={Home}
+                                    sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
+                                    detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onClick={goToPropertyDetails}
+                                    onAgentClick={goToAgentDetails}
+                                />
+                                <PropertyGridCards
+                                    type={'Featured'} leaseType={'For Sale'} price={'$6500'} background={Home}
+                                    sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
+                                    detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onClick={goToPropertyDetails}
+                                    onAgentClick={goToAgentDetails}
+                                />
+                                <PropertyGridCards
+                                    type={'Featured'} leaseType={'For Sale'} price={'$6500'} background={Home}
+                                    sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
+                                    detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onClick={goToPropertyDetails}
+                                    onAgentClick={goToAgentDetails}
+                                />
+                                <PropertyGridCards
+                                    type={'Featured'} leaseType={'For Sale'} price={'$6500'} background={Home}
+                                    sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
+                                    detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onClick={goToPropertyDetails}
+                                    onAgentClick={goToAgentDetails}
+                                />
+                                <PropertyGridCards
+                                    type={'Featured'} leaseType={'For Sale'} price={'$6500'} background={Home}
+                                    sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
+                                    detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onClick={goToPropertyDetails}
+                                    onAgentClick={goToAgentDetails}
+                                />
+                                <PropertyGridCards
+                                    type={'Featured'} leaseType={'For Sale'} price={'$6500'} background={Home}
+                                    sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
+                                    detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onClick={goToPropertyDetails}
+                                    onAgentClick={goToAgentDetails}
+                                />
+
+                            </section>}
+                    </Suspense>
+
                 </section>
 
             </RenderNav>

@@ -367,3 +367,15 @@ hr {
 .arrowRightP {
   right: 10px;
 }
+
+@media screen and (min-width: 280px) and (max-width: 786px) {
+  .flexResponsive {
+    flex-direction: column;
+  }
+  .paddingResponsive {
+    padding: 20px;
+  }
+  .flexStart {
+    align-items: flex-start;
+  }
+}
