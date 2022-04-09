@@ -7,7 +7,7 @@ import HomeTwo from '../../assets/images/homesix.jpeg';
 import HomeThree from '../../assets/images/hometwo.jpeg';
 import HomeFour from '../../assets/images/homethree.jpeg';
 import HomeFive from '../../assets/images/homefour.jpeg';
-import HomeSix from '../../assets/images/homefive.jpeg';
+
 
 import SortCard from '../../components/cards/SortCard';
 import FilterModal from '../../components/modals/FilterModal';
