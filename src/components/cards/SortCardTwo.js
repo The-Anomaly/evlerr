@@ -2,7 +2,6 @@ import React from 'react';
 import './Cards.css';
 import { IoMdArrowDropup, IoMdArrowDropdown } from 'react-icons/io';
 import { FiGrid } from 'react-icons/fi';
-import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import { BsListTask } from 'react-icons/bs';
 
 
@@ -34,14 +33,7 @@ const SortCardTwo = ({ result, dropDown, value, children, onClick, gridClick, li
                             <BsListTask onClick={listClick} />
                         </div>
                     </div>
-                    <div>
-                        <div>
-                            <p className={'flex alignCenter saveLink headerColor f14'}>
-                                <span style={{ marginRight: '5px' }}><FavoriteBorderIcon /></span>
-                                Save Search
-                            </p>
-                        </div>
-                    </div>
+
                 </section>
 
             </section>

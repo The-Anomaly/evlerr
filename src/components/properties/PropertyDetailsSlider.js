@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -30,69 +30,71 @@ function PrevArrow(props) {
     );
 }
 
-export default class PropertyDetailsSlider extends Component {
+const PropertyDetailsSlider = (props) => {
 
+    // const  {images} = props
 
-    render() {
-        var settings = {
-            dots: false,
-            infinite: true,
-            speed: 4000,
-            autoplay: true,
-            autoplaySpeed: 4000,
-            slidesToShow: 3,
-            slidesToScroll: 3,
-            initialSlide: 0,
-            nextArrow: <NextArrow />,
-            prevArrow: <PrevArrow />,
-            responsive: [
-                {
-                    breakpoint: 1024,
-                    settings: {
-                        slidesToShow: 2,
-                        slidesToScroll: 2,
-                        infinite: true,
-                        dots: true
-                    }
-                },
-                {
-                    breakpoint: 600,
-                    settings: {
-                        slidesToShow: 1,
-                        slidesToScroll: 1,
-                        initialSlide: 2
-                    }
-                },
-                {
-                    breakpoint: 480,
-                    settings: {
-                        slidesToShow: 1,
-                        slidesToScroll: 1
-                    }
+    var settings = {
+        dots: false,
+        infinite: true,
+        speed: 4000,
+        autoplay: true,
+        autoplaySpeed: 4000,
+        slidesToShow: 3,
+        slidesToScroll: 3,
+        initialSlide: 0,
+        nextArrow: <NextArrow />,
+        prevArrow: <PrevArrow />,
+        responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 2,
+                    infinite: true,
+                    dots: true
                 }
-            ]
-        };
-        return (
-            <div style={{ paddingTop: '30px' }}>
+            },
+            {
+                breakpoint: 600,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    initialSlide: 2
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1
+                }
+            }
+        ]
+    };
+    return (
+        <div style={{ paddingTop: '30px' }}>
 
-                <Slider {...settings}>
-                    <div>
-                        <img src={SlideOne} alt='slide1' style={{ width: '100%' }} />
-                    </div>
-                    <div>
-                        <img src={SlideTwo} alt='slide1' style={{ width: '100%' }} />
-                    </div>
-                    <div>
-                        <img src={SlideThree} alt='slide1' style={{ width: '100%' }} />
-                    </div>
-                    <div>
-                        <img src={SlideFour} alt='slide1' style={{ width: '100%' }} />
-                    </div>
-                    <div>
-                        <img src={SlideThree} alt='slide1' style={{ width: '100%' }} />
-                    </div>
-                </Slider>
-            </div>
-        );
-    }
+            <Slider {...settings}>
+
+                <div>
+                    <img src={SlideOne} alt='slide1' style={{ width: '100%' }} />
+                </div>
+                <div>
+                    <img src={SlideTwo} alt='slide1' style={{ width: '100%' }} />
+                </div>
+                <div>
+                    <img src={SlideThree} alt='slide1' style={{ width: '100%' }} />
+                </div>
+                <div>
+                    <img src={SlideFour} alt='slide1' style={{ width: '100%' }} />
+                </div>
+                <div>
+                    <img src={SlideThree} alt='slide1' style={{ width: '100%' }} />
+                </div>
+            </Slider>
+        </div>
+    );
+
 }
+export default PropertyDetailsSlider

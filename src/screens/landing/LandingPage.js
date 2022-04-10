@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import '../../assets/style/LandingPageStyles.css';
 import '../../assets/style/GeneralStyles.css';
 import SearchComponent from '../../components/landingPage/SearchComponent';
@@ -23,14 +23,20 @@ import RenderNav from '../../components/nav/RenderNav';
 import BestPropertyCarousel from '../../components/landingPage/BestPropertySlider';
 import { useNavigate } from 'react-router-dom';
 import FilterModal from '../../components/modals/FilterModal';
+import { getProperties } from '../../redux/actions/PropertiesAction';
+import { connect } from 'react-redux';
+import Loading from '../../utils/Loading';
 
 
-const LandingPage = () => {
+const LandingPage = (props) => {
 
 
     const [state, setState] = useState({
-        rentSearch: true, saleSearch: false, shortLease: false, activeBg: '#ff5a5f', inactiveBg: '#fff', visible: false,
+        rentSearch: true, saleSearch: false, shortLease: false, activeBg: '#ff5a5f', inactiveBg: '#fff', visible: false, loading: false
     })
+
+    const { properties } = props
+    console.log('hello', properties)
 
     const showRentSearchBox = () => {
         setState((prevState) => ({ ...prevState, rentSearch: true, saleSearch: false, shortLease: false }))
@@ -55,10 +61,43 @@ const LandingPage = () => {
         setState((prevState) => ({ ...prevState, visible: false }))
     }
 
+    // const { wallet } = useSelector((state) => state.wallet);
+
+    const renderLoading = () => {
+        if (state.loading) {
+            return (
+                <Loading />
+            )
+        }
+    }
+
+    const submit = async () => {
+        setState({ ...state, loading: true, })
+        try {
+            const res = await props.getProperties()
+            console.log(res)
+            localStorage.setItem('properties', JSON.stringify(res))
+            setState({ ...state, loading: false, })
+        } catch (error) {
+            // returnError(error)
+            console.log('catched error ', error)
+        }
+
+    }
+
+    useEffect(() => {
+        const savedProperties = localStorage.getItem('properties')
+        const showSaved = JSON.parse(savedProperties)
+        console.log('saved', showSaved)
+
+        submit()
+    }, [getProperties])
+
 
     return (
         <>
             <RenderNav >
+                {renderLoading()}
                 <section className='landingContainer'>
                     <section className='heroContainer'>
                         <div className='heroOverlay'>
@@ -66,6 +105,9 @@ const LandingPage = () => {
                                 <div>
                                     <h2 className={'boldText f55 white'} style={{ paddingBottom: '10px' }}>Your property, Our priority.</h2>
                                     <p className='regularText f18 white'>From as low as $10 per day with limited time offer discounts</p>
+                                    {properties.map((item) => {
+                                        console.log(item)
+                                    })}
                                 </div>
                                 <div className='heroSearchContainer'>
                                     <div className='selectorBox'>
@@ -109,7 +151,7 @@ const LandingPage = () => {
                             <p className={'regularText f16 headerColor'}>Handpicked properties by our team</p>
                         </div>
                         <section>
-                            <FeaturedCarousel />
+                            <FeaturedCarousel properties={properties} />
                         </section>
                     </section>
                     <section>
@@ -154,7 +196,9 @@ const LandingPage = () => {
                             </p>
                         </div>
                         <section >
-                            <BestPropertyCarousel />
+                            <Suspense fallback={<Loading />}>
+                                <BestPropertyCarousel properties={properties} />
+                            </Suspense>
                         </section>
                     </section>
 
@@ -189,5 +233,11 @@ const LandingPage = () => {
         </>
     )
 }
+const mapStateToProps = state => {
+    const { properties } = state.properties;
+    return { properties }
+}
 
-export default LandingPage
+export default connect(mapStateToProps, { getProperties })(LandingPage)
+
+// export default LandingPage

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import RenderNav from '../../components/nav/RenderNav';
 import { AiOutlineDownload, AiOutlineFilePdf, AiOutlinePrinter, AiOutlineShareAlt } from 'react-icons/ai';
 import PropertyDetailsSlider from '../../components/properties/PropertyDetailsSlider';
@@ -20,13 +20,27 @@ import 'react-input-range/lib/css/index.css';
 import CustomInputDrop from '../../utils/CustomInputDrop';
 import { AiOutlineSearch } from 'react-icons/ai';
 import { BiCurrentLocation } from 'react-icons/bi';
+import { useLocation } from 'react-router-dom';
+import Loading from '../../utils/Loading';
+import http from '../../Utils';
 
 
 const PropertyDetails = () => {
 
     const [state, setState] = useState({
-        value: 10, menuDrop: false, priceValue: { min: 0, max: 8000 }
+        value: 10, menuDrop: false, priceValue: { min: 0, max: 8000 }, loading: false, title: '', price: '', description: '',
+        address: '', images: null,
     })
+    //     friendlyAddress: "Lapta, Kyrenia, Kyrenia"
+    // gallery: (7) ["'https://velesproperty.com/wp-content/uploads/2022/03/Velesproperty-SA-2811-1-1170x600.jpg'", " 'https://velesproperty.com/wp-content/uploads/2022/03/Velesproperty-SA-2813-1-1170x600.jpg'", " 'https://velesproperty.com/wp-content/uploads/2022/03/Velesproperty-SA-2814-1-1170x600.jpg'", " 'https://velesproperty.com/wp-content/uploads/2022/03/Velesproperty-SA-2815-1-1170x600.jpg'", " 'https://velesproperty.com/wp-content/uploads/2022/03/Velesproperty-SA-2816-1-1170x600.jpg'", " 'https://velesproperty.com/wp-content/uploads/2022/03/Velesproperty-SA-2817-1-1170x600.jpg'", " 'https://velesproperty.com/wp-content/uploads/2022/03/Velesproperty-SA-2818-1-1170x600.jpg'"]
+    // price: "1.500 Â£/m2"
+    // propertyDescription: "Description\n\nShopping area in Lapta is a super opportunity for those who are used to investing in non-residential fund! If you are interested in the option of investing in Northern CyprusÂ stores, then this offer will definitely interest you! And also, if you are considering investing in commercial real estate in Northern Cyprus, you should definitely take a closer look at this store.\nIt should be noted that the cost of commercial real estate for rent is high. In addition, the payback of such real estate is 10 years. Therefore, investing in commercial real estate in Northern Cyprus is a long-term project. Moreover, this option is perfect for different types of commercial delivery.\nIf you want to deal with flowers, open a pharmacy, office, travel agency, this option is very good. Or do you dream of opening a cafe, restaurant, shop, etc.\nThe retail space is located in a complex in Lapta in the suburbs of Kyrenia. The complex consists of three blocks of buildings. However, the complex has apartments 2 + 1 and 1 + 1 to choose from. In addition, on the ground floor there are shops for sale.\nSo, the shopping area in Lapta is waiting for you!\nWhen purchasing this area â Veles Property provides assistance not only in obtaining a residence permit, but a bank account, driverâs license and health insurance in Northern Cyprus!\nYou can find our videos onÂ YOUTUBE VELES.\nSubscribe to our TELEGRAM and INSTAGRAM and be the first to receive information about new objects, services, changes in legislation."
+    // propertyTitle: "SC-011 Shopping area in Lapta"
+    // region: "Kyrenia"
+
+    const property = useLocation()
+    console.log(property?.state.propertyId);
+    const propertyId = property?.state.propertyId
 
     const showDropMenu = () => {
         if (state.menuDrop) {
@@ -37,14 +51,48 @@ const PropertyDetails = () => {
 
     }
 
+    const renderLoading = () => {
+        if (state.loading) {
+            return (
+                <Loading />
+            )
+        }
+
+    }
+
+
+
+
+    const getPropertyDetails = async () => {
+        setState((prevState) => ({ ...prevState, loading: true }))
+        try {
+            // https://evlerr-api.herokuapp.com/api/v1/
+            const res = await http.get(`user/view-property/${propertyId}`)
+            const data = res.data
+            console.log('Wallet activities ', res)
+            setState((prevState) => ({
+                ...prevState, loading: false, address: data.friendlyAddress, price: data.price,
+                title: data.propertyTitle, description: data.propertyDescription, images: data.gallery
+            }))
+        } catch (error) {
+            console.log('Error ', error)
+            setState((prevState) => ({ ...prevState, loading: false }))
+        }
+    }
+
+    useEffect(() => {
+        getPropertyDetails()
+    }, [getPropertyDetails])
+
     return (
         <>
             <RenderNav boxShadow={'0px 1px 4px 0px rgb(0 0 0 / 9%)'}>
+                {renderLoading()}
                 <main>
                     <section className={'pt40 pb40 flex justifyBetween alignCenter pl70 pr70 flexResponsive paddingResponsive flexStart'}>
                         <div className={'pl50 paddingResponsive'}>
-                            <p className={'f32 headerColor boldText pb10'}>Skyper Pool Apartment</p>
-                            <p className={'f14 headerColor regularText'}>318 E 84th St, New York</p>
+                            <p className={'f32 headerColor boldText pb10'}>{state.title}</p>
+                            <p className={'f14 headerColor regularText'}>{state.address}</p>
                         </div>
                         <div className={'pr50 flex alignCenter flexResponsive paddingResponsive flexStart'}>
                             <div>
@@ -58,12 +106,12 @@ const PropertyDetails = () => {
                                 </ul>
                             </div>
                             <div>
-                                <p className={'f32 headerColor boldText '}>$1200<span className={'f20 headerColor regularText '}>/mo</span></p>
+                                <p className={'f32 headerColor boldText '}>{state.price}</p>
                             </div>
                         </div>
                     </section>
                     <section>
-                        <PropertyDetailsSlider />
+                        <PropertyDetailsSlider image={state.images} />
                     </section>
 
                     <section className='propertyDetailsLayout'>
@@ -78,22 +126,9 @@ const PropertyDetails = () => {
                                 <article>
                                     <p className={'f20 headerColor boldText pl10 pt30 pb30'}>Overview</p>
                                     <p className={'f14 headerColor mediumText pb30 pl10'}>
-                                        Evans Tower very high demand corner junior one bedroom plus a large balcony boasting full open NYC views.
-                                        You need to see the views to believe them. Mint condition with new hardwood floors.
-                                        Lots of closets plus washer and dryer.
+                                        {state.description}
                                     </p>
-                                    <p className={'f14 headerColor mediumText pb30 pl10'}>
-                                        Fully furnished. Elegantly appointed condominium unit situated on premier location. PS6.
-                                        The wide entry hall leads to a large living room with dining area. This expansive 2 bedroom and 2 renovated marble bathroom apartment has great windows.
-                                        Despite the interior views, the apartments Southern and Eastern exposures allow for lovely natural light to fill every room.
-                                        The master suite is surrounded by handcrafted milkwork and features incredible walk-in closet and storage space.
-                                    </p>
-                                    <p className={'f14 headerColor mediumText pb30 pl10'}>
-                                        The second bedroom is a corner room with double windows. The kitchen has fabulous space, new appliances, and a laundry area.
-                                        Other features include rich herringbone floors, crown moldings and coffered ceilings throughout the apartment.
-                                        1049 5th Avenue is a classic pre-war building located across from Central Park, the reservoir and The Metropolitan Museum.
-                                        Elegant lobby and 24 hours doorman. This is a pet-friendly building.
-                                    </p>
+
                                 </article>
                                 <hr />
                                 <div>

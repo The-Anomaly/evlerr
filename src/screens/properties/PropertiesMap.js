@@ -11,6 +11,7 @@ import PropertyListCards from '../../components/cards/PropertyListCard'
 import PropertyGridCards from '../../components/cards/PropertyGridCards'
 import Home from '../../assets/images/home.jpeg';
 import { useNavigate } from 'react-router-dom'
+// import { useSelector } from 'react-redux'
 
 const PropertiesMap = () => {
 
@@ -19,6 +20,7 @@ const PropertiesMap = () => {
     const [state, setState] = useState({
         menuDrop: false, grid: true, list: false
     })
+    // const { properties } = useSelector(state => state.properties)
 
     const showDropMenu = () => {
         if (state.menuDrop) {
@@ -77,6 +79,7 @@ const PropertiesMap = () => {
 
                     {/* <PropertyListCards /> */}
                     {state.grid && <section className='columnsGrid'>
+
 
                         <PropertyGridCards
                             type={'Featured'} leaseType={'For Sale'} price={'$6500'} background={Home}
