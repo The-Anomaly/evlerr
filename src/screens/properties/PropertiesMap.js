@@ -60,7 +60,7 @@ const PropertiesMap = (props) => {
         console.log('saved', showSaved.gallery)
 
         submit()
-    })
+    }, [submit])
 
     const showGrid = () => {
         setState((prevState) => ({ ...prevState, grid: true, list: false }))

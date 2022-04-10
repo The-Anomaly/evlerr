@@ -91,7 +91,7 @@ const LandingPage = (props) => {
         console.log('saved', showSaved.gallery)
 
         submit()
-    })
+    }, [getProperties])
 
 
     return (

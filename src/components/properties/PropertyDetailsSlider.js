@@ -72,7 +72,7 @@ const PropertyDetailsSlider = (props) => {
         <div style={{ paddingTop: '30px' }}>
 
             <Slider {...settings}>
-                {image.map((item) => (
+                {image && image.map((item) => (
                     <div>
                         <img src={item} alt='slide1' style={{ width: '100%' }} />
                     </div>

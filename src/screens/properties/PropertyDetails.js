@@ -23,6 +23,7 @@ import { BiCurrentLocation } from 'react-icons/bi';
 import { useLocation } from 'react-router-dom';
 import Loading from '../../utils/Loading';
 import http from '../../Utils';
+import { getProperties } from '../../redux/actions/PropertiesAction';
 // import { getProperties } from '../../redux/actions/PropertiesAction';
 
 
@@ -84,7 +85,7 @@ const PropertyDetails = () => {
 
     useEffect(() => {
         getPropertyDetails()
-    })
+    }, [propertyId])
 
     return (
         <>
