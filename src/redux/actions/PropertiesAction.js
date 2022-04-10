@@ -1,4 +1,4 @@
-import axios from "axios";
+
 import http from "../../Utils";
 import { GETTING_PROPERTIES, PROPERTIES_FAIL, PROPERTIES_SUCCESS } from "../Types";
 

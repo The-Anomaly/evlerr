@@ -5,8 +5,6 @@ import RoutesContainer from './route/Routes';
 
 function App() {
 
-
-
   return (
     <Provider store={store}>
       <RoutesContainer />
