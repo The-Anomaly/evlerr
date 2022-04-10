@@ -36,6 +36,7 @@ const FeaturedCarousel = (props) => {
     const [data, setData] = useState({
         _id: '',
     })
+    console.log(data)
 
     var settings = {
         dots: false,

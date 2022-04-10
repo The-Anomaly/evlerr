@@ -24,6 +24,7 @@ const PropertiesDisplay = () => {
     const [data, setData] = useState({
         _id: ''
     })
+    console.log(data)
 
     const showSortDropDown = () => {
         if (state.sortDrop) {

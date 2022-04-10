@@ -11,7 +11,7 @@ import PropertyListCards from '../../components/cards/PropertyListCard'
 import PropertyGridCards from '../../components/cards/PropertyGridCards'
 import Home from '../../assets/images/home.jpeg';
 import { useNavigate } from 'react-router-dom'
-import { connect, useSelector } from 'react-redux';
+import { connect } from 'react-redux';
 import Loading from '../../utils/Loading'
 import { getProperties } from '../../redux/actions/PropertiesAction'
 
@@ -60,7 +60,7 @@ const PropertiesMap = (props) => {
         console.log('saved', showSaved.gallery)
 
         submit()
-    }, [getProperties])
+    })
 
     const showGrid = () => {
         setState((prevState) => ({ ...prevState, grid: true, list: false }))
