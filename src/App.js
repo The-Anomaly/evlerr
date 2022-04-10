@@ -7,11 +7,7 @@ import Loading from './utils/Loading';
 
 function App() {
 
-  useEffect(() => {
-    setTimeout(() => {
-      <Loading />
-    }, 7000)
-  }, [<Loading />])
+  
 
 
   return (
