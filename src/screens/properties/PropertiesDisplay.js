@@ -3,10 +3,6 @@ import RenderNav from '../../components/nav/RenderNav'
 // import Breadcrumbs from '../../utils/Breadcrumb'
 import '../../assets/style/PropertyStyles.css';
 import Home from '../../assets/images/home.jpeg';
-import HomeThree from '../../assets/images/hometwo.jpeg';
-import HomeFive from '../../assets/images/homefour.jpeg';
-
-
 import SortCard from '../../components/cards/SortCard';
 import FilterModal from '../../components/modals/FilterModal';
 import PropertyGridCards from '../../components/cards/PropertyGridCards';
@@ -25,6 +21,9 @@ const PropertiesDisplay = () => {
     })
     const { properties } = useSelector(state => state.properties)
     // console.log(properties);
+    const [data, setData] = useState({
+        _id: ''
+    })
 
     const showSortDropDown = () => {
         if (state.sortDrop) {
@@ -61,8 +60,18 @@ const PropertiesDisplay = () => {
 
     const navigate = useNavigate()
 
-    const goToPropertyDetails = () => {
-        navigate('/properties-details')
+    // const goToPropertyDetails = () => {
+    //     navigate('/properties-details')
+    // }
+
+    function selectResourceType(val) {
+        setData((prevState) => ({ ...prevState, _id: val._id }))
+        // console.log(state.value)÷
+        console.log(val._id)
+        if (val) {
+            navigate('/properties-details', { replace: true, state: { propertyId: val._id } })
+        }
+
     }
     const goToAgentDetails = () => {
         navigate('/agent-details')
@@ -120,9 +129,9 @@ const PropertiesDisplay = () => {
                                 {properties.map((item) => (
                                     <div key={item._id}>
                                         <PropertyGridCards
-                                            type={'Featured'} leaseType={'For Rent'} price={item.price} background={Home}
+                                            type={'Featured'} leaseType={'For Rent'} price={item.price} background={item.gallery[2]}
                                             sqft={'480'} baths={'4'} beds={'4'} location={item.friendlyAddress} detailsSubTitle={item.propertyTitle}
-                                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onClick={goToPropertyDetails}
+                                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onClick={() => selectResourceType(item)}
                                             onAgentClick={goToAgentDetails}
                                         />
                                     </div>
@@ -135,9 +144,9 @@ const PropertiesDisplay = () => {
                                 {properties.map((item) => (
                                     <div key={item._id}>
                                         <PropertyGridCards
-                                            type={'Featured'} leaseType={'For Rent'} price={item.price} background={HomeThree}
+                                            type={'Featured'} leaseType={'For Rent'} price={item.price} background={item.gallery[1]}
                                             sqft={'480'} baths={'4'} beds={'4'} location={item.friendlyAddress} detailsSubTitle={item.propertyTitle}
-                                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onClick={goToPropertyDetails}
+                                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onClick={() => selectResourceType(item)}
                                             onAgentClick={goToAgentDetails}
                                         />
                                     </div>
@@ -150,9 +159,9 @@ const PropertiesDisplay = () => {
                                 {properties.map((item) => (
                                     <div key={item._id}>
                                         <PropertyGridCards
-                                            type={'Featured'} leaseType={'For Rent'} price={item.price} background={HomeFive}
+                                            type={'Featured'} leaseType={'For Rent'} price={item.price} background={item.gallery[0]}
                                             sqft={'480'} baths={'4'} beds={'4'} location={item.friendlyAddress} detailsSubTitle={item.propertyTitle}
-                                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onClick={goToPropertyDetails}
+                                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onClick={() => selectResourceType(item)}
                                             onAgentClick={goToAgentDetails}
                                         />
                                     </div>

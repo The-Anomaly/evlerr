@@ -2,10 +2,6 @@ import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import SlideOne from '../../assets/images/slider1.jpeg';
-import SlideTwo from '../../assets/images/slide2.jpeg';
-import SlideThree from '../../assets/images/slider3.jpeg';
-import SlideFour from '../../assets/images/slider4.jpeg';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import EastIcon from '@mui/icons-material/East';
 
@@ -32,7 +28,7 @@ function PrevArrow(props) {
 
 const PropertyDetailsSlider = (props) => {
 
-    // const  {images} = props
+    const { image } = props
 
     var settings = {
         dots: false,
@@ -76,10 +72,12 @@ const PropertyDetailsSlider = (props) => {
         <div style={{ paddingTop: '30px' }}>
 
             <Slider {...settings}>
-
-                <div>
-                    <img src={SlideOne} alt='slide1' style={{ width: '100%' }} />
-                </div>
+                {image.map((item) => (
+                    <div>
+                        <img src={item} alt='slide1' style={{ width: '100%' }} />
+                    </div>
+                ))}
+                {/*               
                 <div>
                     <img src={SlideTwo} alt='slide1' style={{ width: '100%' }} />
                 </div>
@@ -91,7 +89,7 @@ const PropertyDetailsSlider = (props) => {
                 </div>
                 <div>
                     <img src={SlideThree} alt='slide1' style={{ width: '100%' }} />
-                </div>
+                </div> */}
             </Slider>
         </div>
     );

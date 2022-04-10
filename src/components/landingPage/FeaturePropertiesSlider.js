@@ -3,7 +3,6 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import PropertyCards from "../cards/PropertyCards";
-import Home from '../../assets/images/home.jpeg';
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import EastIcon from '@mui/icons-material/East';
 import { useNavigate } from "react-router-dom";
@@ -100,7 +99,7 @@ const FeaturedCarousel = (props) => {
                 {properties.map((item) => (
                     <div key={item._id}>
                         <PropertyCards
-                            type={'Featured'} leaseType={'For Rent'} price={item.price} background={Home}
+                            type={'Featured'} leaseType={'For Rent'} price={item.price} background={item.gallery[0]}
                             sqft={'480'} baths={'4'} beds={'4'} location={item.friendlyAddress} detailsSubTitle={item.propertyTitle}
                             detailsTitle={'Apartment'} onClick={() => selectResourceType(item)}
                         />

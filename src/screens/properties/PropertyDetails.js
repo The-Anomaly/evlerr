@@ -23,6 +23,7 @@ import { BiCurrentLocation } from 'react-icons/bi';
 import { useLocation } from 'react-router-dom';
 import Loading from '../../utils/Loading';
 import http from '../../Utils';
+import { getProperties } from '../../redux/actions/PropertiesAction';
 
 
 const PropertyDetails = () => {
@@ -78,11 +79,12 @@ const PropertyDetails = () => {
             console.log('Error ', error)
             setState((prevState) => ({ ...prevState, loading: false }))
         }
+        setState((prevState) => ({ ...prevState, loading: false }))
     }
 
     useEffect(() => {
         getPropertyDetails()
-    }, [getPropertyDetails])
+    }, [getProperties])
 
     return (
         <>

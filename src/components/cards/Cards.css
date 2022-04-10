@@ -210,6 +210,9 @@
   border: 1px solid #ebebeb;
   background-color: #fff;
 }
+.listCardContainer {
+  height: 450px;
+}
 .whiteBg {
   background-color: #fff;
   border-radius: 6px;

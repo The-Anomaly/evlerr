@@ -36,7 +36,7 @@ const LandingPage = (props) => {
     })
 
     const { properties } = props
-    console.log('hello', properties)
+    // console.log('hello', properties)
 
     const showRentSearchBox = () => {
         setState((prevState) => ({ ...prevState, rentSearch: true, saleSearch: false, shortLease: false }))
@@ -75,7 +75,7 @@ const LandingPage = (props) => {
         setState({ ...state, loading: true, })
         try {
             const res = await props.getProperties()
-            console.log(res)
+            console.log('hey', res[0].gallery)
             localStorage.setItem('properties', JSON.stringify(res))
             setState({ ...state, loading: false, })
         } catch (error) {
@@ -88,7 +88,7 @@ const LandingPage = (props) => {
     useEffect(() => {
         const savedProperties = localStorage.getItem('properties')
         const showSaved = JSON.parse(savedProperties)
-        console.log('saved', showSaved)
+        console.log('saved', showSaved.gallery)
 
         submit()
     }, [getProperties])
@@ -105,9 +105,7 @@ const LandingPage = (props) => {
                                 <div>
                                     <h2 className={'boldText f55 white'} style={{ paddingBottom: '10px' }}>Your property, Our priority.</h2>
                                     <p className='regularText f18 white'>From as low as $10 per day with limited time offer discounts</p>
-                                    {properties.map((item) => {
-                                        console.log(item)
-                                    })}
+
                                 </div>
                                 <div className='heroSearchContainer'>
                                     <div className='selectorBox'>

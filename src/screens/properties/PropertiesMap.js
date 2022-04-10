@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { IoMdArrowDropdown, IoMdArrowDropup } from 'react-icons/io'
 import RenderNav from '../../components/nav/RenderNav'
 import CustomButton from '../../utils/CustomButton'
@@ -11,17 +11,19 @@ import PropertyListCards from '../../components/cards/PropertyListCard'
 import PropertyGridCards from '../../components/cards/PropertyGridCards'
 import Home from '../../assets/images/home.jpeg';
 import { useNavigate } from 'react-router-dom'
-// import { useSelector } from 'react-redux'
+import { connect, useSelector } from 'react-redux';
+import Loading from '../../utils/Loading'
+import { getProperties } from '../../redux/actions/PropertiesAction'
 
-const PropertiesMap = () => {
+const PropertiesMap = (props) => {
 
 
     const navigate = useNavigate()
     const [state, setState] = useState({
-        menuDrop: false, grid: true, list: false
+        menuDrop: false, grid: true, list: false, loading: false,
     })
-    // const { properties } = useSelector(state => state.properties)
 
+    const { properties } = props
     const showDropMenu = () => {
         if (state.menuDrop) {
             setState((prevState) => ({ ...prevState, menuDrop: false }))
@@ -30,6 +32,35 @@ const PropertiesMap = () => {
         }
 
     }
+    const renderLoading = () => {
+        if (state.loading) {
+            return (
+                <Loading />
+            )
+        }
+    }
+
+    const submit = async () => {
+        setState({ ...state, loading: true, })
+        try {
+            const res = await props.getProperties()
+            console.log('hey', res[0].gallery)
+            localStorage.setItem('properties', JSON.stringify(res))
+            setState({ ...state, loading: false, })
+        } catch (error) {
+            // returnError(error)
+            console.log('catched error ', error)
+        }
+
+    }
+
+    useEffect(() => {
+        const savedProperties = localStorage.getItem('properties')
+        const showSaved = JSON.parse(savedProperties)
+        console.log('saved', showSaved.gallery)
+
+        submit()
+    }, [getProperties])
 
     const showGrid = () => {
         setState((prevState) => ({ ...prevState, grid: true, list: false }))
@@ -50,6 +81,7 @@ const PropertiesMap = () => {
 
     return (
         <RenderNav boxShadow={'0px 1px 4px 0px rgb(0 0 0 / 9%)'}>
+            {renderLoading()}
             <main className={'propertiesMapContainers'}>
                 <section className='mapContainer'>
                     <SimpleMap />
@@ -80,8 +112,16 @@ const PropertiesMap = () => {
                     {/* <PropertyListCards /> */}
                     {state.grid && <section className='columnsGrid'>
 
+                        {properties.map((item) => (
+                            <PropertyGridCards
+                                type={'Featured'} leaseType={'For Sale'} price={item.price} background={item.gallery[0]}
+                                sqft={'480'} baths={'4'} beds={'4'} location={item.friendlyAddress} detailsSubTitle={item.propertyTitle}
+                                detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onAgentClick={goToAgentDetails}
+                                onClick={goToPropertyDetails}
+                            />
+                        ))}
 
-                        <PropertyGridCards
+                        {/* <PropertyGridCards
                             type={'Featured'} leaseType={'For Sale'} price={'$6500'} background={Home}
                             sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
                             detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onAgentClick={goToAgentDetails}
@@ -110,18 +150,20 @@ const PropertiesMap = () => {
                             sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
                             detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onAgentClick={goToAgentDetails}
                             onClick={goToPropertyDetails}
-                        />
-                        <PropertyGridCards
-                            type={'Featured'} leaseType={'For Sale'} price={'$6500'} background={Home}
-                            sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
-                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onAgentClick={goToAgentDetails}
-                            onClick={goToPropertyDetails}
-                        />
+                        /> */}
                     </section>}
 
                     {state.list && <section className='listGrid'>
 
-                        <PropertyListCards
+                        {properties.map((item) => (
+                            <PropertyListCards
+                                type={'Featured'} leaseType={'For Sale'} price={item.price} background={item.gallery[0]}
+                                sqft={'480'} baths={'4'} beds={'4'} location={item.friendlyAddress} detailsSubTitle={item.propertyTitle}
+                                detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onAgentClick={goToAgentDetails}
+                                onClick={goToPropertyDetails}
+                            />
+                        ))}
+                        {/* <PropertyListCards
                             type={'Featured'} leaseType={'For Sale'} price={'$6500'} background={Home}
                             sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
                             detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onAgentClick={goToAgentDetails}
@@ -151,7 +193,7 @@ const PropertiesMap = () => {
                             sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Diamond Manor Apartment'}
                             detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onAgentClick={goToAgentDetails}
                             onClick={goToPropertyDetails}
-                        />
+                        /> */}
                     </section>}
                 </section>
             </main>
@@ -159,4 +201,9 @@ const PropertiesMap = () => {
     )
 }
 
-export default PropertiesMap
+const mapStateToProps = state => {
+    const { properties } = state.properties;
+    return { properties }
+}
+
+export default connect(mapStateToProps, { getProperties })(PropertiesMap)
