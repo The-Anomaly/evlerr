@@ -45,7 +45,7 @@ a:hover {
   color: #ff5a5f;
 }
 .selected {
-  color: #ff5a5f;
+  font-weight: bold;
 }
 
 .navDropDownContentContainer {
