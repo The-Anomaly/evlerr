@@ -9,7 +9,7 @@ const PropertyListCards = ({ background, price, leaseType, type, baths, beds, de
             <section className={'listCardContainer flex alignCenter'}>
                 <section className={'whiteBg pt10 pl10 pr10 pb10'} style={{ width: '40%' }}>
                     <div className={'cardImage'} style={{ backgroundImage: background, height: '250px' }}>
-                        <img src={background} alt='property' style={{ width: '100%', height: '100%' }} />
+                        <img src={background} alt='property' style={{ width: '100%', height: '100%' }} loading={'eager'} />
                         <div className='cardListImageOverlay'></div>
                     </div>
                 </section>

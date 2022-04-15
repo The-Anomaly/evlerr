@@ -7,7 +7,6 @@ import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import EastIcon from '@mui/icons-material/East';
 import { useNavigate } from "react-router-dom";
 
-
 function NextArrow(props) {
     const { onClick } = props;
     return (
@@ -29,10 +28,9 @@ function PrevArrow(props) {
     );
 }
 
-const FeaturedCarousel = (props) => {
+const MostViewedPropertyCarousel = (props) => {
 
     const { properties } = props
-
     const [data, setData] = useState({
         _id: '',
     })
@@ -77,9 +75,7 @@ const FeaturedCarousel = (props) => {
         ]
     };
 
-    const navigate = useNavigate()
-
-
+    const navigate = useNavigate();
     function selectResourceType(val) {
         setData((prevState) => ({ ...prevState, _id: val._id }))
         // console.log(state.value)÷
@@ -89,18 +85,14 @@ const FeaturedCarousel = (props) => {
         }
 
     }
-
-
-
-
     return (
-        <div style={{ paddingTop: '30px' }}  >
+        <div style={{ paddingTop: '30px' }}>
 
             <Slider {...settings}>
                 {properties.map((item) => (
                     <div key={item._id}>
                         <PropertyCards
-                            type={'Featured'} leaseType={'For Rent'} price={item.price} background={item.gallery[0]}
+                            type={'Most Viewed'} leaseType={'For Rent'} price={item.price} background={item.gallery[0]}
                             sqft={'480'} baths={'4'} beds={'4'} location={item.friendlyAddress} detailsSubTitle={item.propertyTitle}
                             detailsTitle={'Apartment'} onClick={() => selectResourceType(item)}
                         />
@@ -111,4 +103,4 @@ const FeaturedCarousel = (props) => {
     );
 }
 
-export default FeaturedCarousel
+export default MostViewedPropertyCarousel;

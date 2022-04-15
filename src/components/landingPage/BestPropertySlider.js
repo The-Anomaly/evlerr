@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import PropertyCards from "../cards/PropertyCards";
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import EastIcon from '@mui/icons-material/East';
+import { useNavigate } from "react-router-dom";
 
 function NextArrow(props) {
     const { onClick } = props;
@@ -30,6 +31,10 @@ function PrevArrow(props) {
 const BestPropertyCarousel = (props) => {
 
     const { properties } = props
+    const [data, setData] = useState({
+        _id: '',
+    })
+    console.log(data)
 
     var settings = {
         dots: false,
@@ -69,6 +74,17 @@ const BestPropertyCarousel = (props) => {
             }
         ]
     };
+
+    const navigate = useNavigate();
+    function selectResourceType(val) {
+        setData((prevState) => ({ ...prevState, _id: val._id }))
+        // console.log(state.value)÷
+        console.log(val._id)
+        if (val) {
+            navigate('/properties-details', { replace: true, state: { propertyId: val._id } })
+        }
+
+    }
     return (
         <div style={{ paddingTop: '30px' }}>
 
@@ -78,7 +94,7 @@ const BestPropertyCarousel = (props) => {
                         <PropertyCards
                             type={'Featured'} leaseType={'For Rent'} price={item.price} background={item.gallery[0]}
                             sqft={'480'} baths={'4'} beds={'4'} location={item.friendlyAddress} detailsSubTitle={item.propertyTitle}
-                            detailsTitle={'Apartment'}
+                            detailsTitle={'Apartment'} onClick={() => selectResourceType(item)}
                         />
                     </div>
                 ))}

@@ -353,7 +353,7 @@ hr {
   border-radius: 6px;
   z-index: 10;
   position: absolute;
-  top: 220px;
+  top: 150px;
   opacity: 0.5;
   transition: all 0.3s ease-in-out 0s;
 }

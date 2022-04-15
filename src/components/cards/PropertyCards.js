@@ -2,13 +2,14 @@ import React from 'react';
 import './Cards.css';
 import '../../assets/style/GeneralStyles.css';
 import { GrLocation } from 'react-icons/gr'
+// import Loading from '../../utils/Loading';
 
 const PropertyCards = ({ background, price, leaseType, type, baths, beds, detailsSubTitle, detailsTitle, location, sqft, onClick, }) => {
     return (
         <>
             <section className='cardContainer'>
                 <div className='cardImage' style={{ backgroundImage: background }}>
-                    <img src={background} alt='property' />
+                    <img src={background} alt='property' loading={'eager'} />
                     <div className='cardImageOverlay'>
                         <div className='cardTagContainer'>
                             {leaseType &&

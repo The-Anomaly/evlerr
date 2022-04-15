@@ -9,7 +9,7 @@ const PropertyGridCards = ({ background, price, leaseType, type, baths, beds, de
             <section className='listCardContainer animate__animated animate__fadeIn'>
                 <section className={'whiteBg pt10 pl10 pr10'}>
                     <div className={'cardImage'} style={{ backgroundImage: background, }}>
-                        <img src={`${background}`} alt='property' />
+                        <img src={`${background}`} alt='property' loading={'eager'} />
                         <div className='cardImageOverlay'>
                             <div className='cardTagContainer'>
                                 {leaseType &&

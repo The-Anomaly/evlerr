@@ -4,7 +4,7 @@ import '../../assets/style/GeneralStyles.css';
 import SearchComponent from '../../components/landingPage/SearchComponent';
 import SearchSelector from '../../components/landingPage/SearchSelector';
 import FeaturedCarousel from '../../components/landingPage/FeaturePropertiesSlider';
-import Florida from '../../assets/images/new.jpeg';
+// import Florida from '../../assets/images/new.jpeg';
 import Miami from '../../assets/images/new2.jpeg';
 import NewYork from '../../assets/images/new3.jpeg';
 import Cali from '../../assets/images/new4.jpeg';
@@ -26,6 +26,7 @@ import FilterModal from '../../components/modals/FilterModal';
 import { getProperties } from '../../redux/actions/PropertiesAction';
 import { connect } from 'react-redux';
 import Loading from '../../utils/Loading';
+import MostViewedPropertyCarousel from '../../components/landingPage/MostViewedSlider';
 
 
 const LandingPage = (props) => {
@@ -72,7 +73,7 @@ const LandingPage = (props) => {
     }
 
     const submit = async () => {
-        setState({ ...state, loading: true, })
+        // setState({ ...state, loading: true, })
         try {
             const res = await props.getProperties()
             console.log('hey', res[0].gallery)
@@ -148,13 +149,25 @@ const LandingPage = (props) => {
                             <FeaturedCarousel properties={properties} />
                         </section>
                     </section>
+
+                    <section className='mostViewedPropertiesContainer'>
+                        <div className='featuredPropertiesHeader'>
+                            <h2 className={'boldText f30 headerColor'} style={{ margin: '15px 0' }}>Most Viewed Properties</h2>
+                            <p className={'regularText f16 headerColor'}>Properties with the highest views</p>
+                        </div>
+                        <section>
+                            {/* <FeaturedCarousel */}
+                            <MostViewedPropertyCarousel properties={properties} />
+                        </section>
+                    </section>
+
                     <section>
                         <div className='FindPropertiesHeader'>
                             <h2 className={'boldText f30 headerColor'} style={{ margin: '15px 0' }}>Find Properties in These Cities</h2>
                             <p className={'regularText f16 headerColor'}>Handpicked properties by our team</p>
                         </div>
                         <section className='citiesGrid'>
-                            <AlteCitiesCard cityImage={`url(${Florida})`} city={'Lefkosa'} propertyAmount={'2'} />
+                            {/* <AlteCitiesCard cityImage={`url(${Florida})`} city={'Lefkosa'} propertyAmount={'2'} /> */}
                             <AlteCitiesCard cityImage={`url(${Miami})`} city={'Kyrenia'} propertyAmount={'2'} />
                             <AlteCitiesCard cityImage={`url(${Cali})`} city={'Lefke'} propertyAmount={'2'} />
                             <AlteCitiesCard cityImage={`url(${Pali})`} city={'Gazimagusa'} propertyAmount={'2'} />
