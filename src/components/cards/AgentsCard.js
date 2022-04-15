@@ -8,7 +8,7 @@ const AgentsCard = ({ background, agentName, agentRole, agentRating, agentClick 
         <>
             <section className='agentsCardContainer'>
                 <div className='cardImage' style={{ backgroundImage: background }}>
-                    <img src={background} alt='property' />
+                    <img src={background} alt='property' loading='eager' />
                     <div className='agentsCardOverlay'>
                         <ul>
                             <li>

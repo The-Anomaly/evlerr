@@ -10,7 +10,7 @@ const AgencyAgentCard = ({ agentImage, agentName, department, phoneNumber, email
             <section className={'agentTitleCard flex alignCenter pb10 pr10 pl10 pt10'}>
                 <div >
                     <div style={{ width: '120px', height: '120px' }}>
-                        <img src={agentImage} alt='agent' style={{ width: '100%', height: '100%', borderRadius: '6px' }} />
+                        <img src={agentImage} alt='agent' style={{ width: '100%', height: '100%', borderRadius: '6px' }} loading={'eager'} />
                     </div>
                 </div>
                 <div className={'pl20 pr50'}>

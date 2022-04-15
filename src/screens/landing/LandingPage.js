@@ -73,7 +73,7 @@ const LandingPage = (props) => {
     }
 
     const submit = async () => {
-        // setState({ ...state, loading: true, })
+        setState({ ...state, loading: true, })
         try {
             const res = await props.getProperties()
             console.log('hey', res[0].gallery)
