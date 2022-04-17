@@ -91,6 +91,8 @@ const LandingPage = (props) => {
     }, [getProperties])
 
 
+
+
     return (
         <>
             <RenderNav >

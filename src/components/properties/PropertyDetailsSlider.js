@@ -4,7 +4,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import EastIcon from '@mui/icons-material/East';
-// import Loading from "../../utils/Loading";
+
 
 function NextArrow(props) {
     const { onClick } = props;
@@ -73,9 +73,9 @@ const PropertyDetailsSlider = (props) => {
         <div style={{ paddingTop: '30px' }}>
 
             <Slider {...settings}>
-                {image && image.map((item) => (
+                {image && image.map((item, index) => (
                     <div>
-                        <img src={item} alt='slide1' style={{ width: '100%', height: '350px' }} loading={'eager'} />
+                        <img src={item} alt='slide1' style={{ width: '100%', height: '350px' }} loading={'lazy'} />
                     </div>
                 ))}
                 {/*               
