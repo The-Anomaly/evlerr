@@ -1,14 +1,22 @@
 .cardContainer {
   margin: 0 10px;
+  transition: all 0.3s ease-in-out 0s;
+  border-radius: 6px;
+  border: 1px solid #ebebeb;
+  background-color: #fff;
+  min-height: 400px;
+  max-height: 450px;
+  padding: 10px;
 }
 .cardImage {
   position: relative;
   border-radius: 6px;
   /* width: 330px; */
-  /* height: 215px; */
+  height: 215px;
 }
 .cardImage img {
   width: 100%;
+  height: 100%;
   border-radius: 6px;
 }
 .cardImageOverlay {
@@ -68,6 +76,11 @@
   justify-content: center;
   align-items: center;
 }
+.propertyDetailsLink {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .propertyDetailsLink:hover {
   color: #ff5a5f;
   transition: all 0.3s ease-in-out 0s;
@@ -95,6 +108,11 @@
   color: #ff5a5f;
   padding: 0 0 10px 0;
 }
+.cardDetailsLocation p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 .cardDetails h2,
 .cardDetailsLocation p,
 .cardPropertyDetails li,
@@ -117,6 +135,7 @@
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
+  object-fit: contain;
   width: 100%;
   position: relative;
 }

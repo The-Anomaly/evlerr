@@ -85,6 +85,11 @@ const BestPropertyCarousel = (props) => {
         }
 
     }
+
+    const goToAgentDetails = () => {
+        navigate('/agent-details')
+    }
+
     return (
         <div style={{ paddingTop: '30px' }}>
 
@@ -94,66 +99,11 @@ const BestPropertyCarousel = (props) => {
                         <PropertyCards
                             type={'Featured'} leaseType={'For Rent'} price={item.price} background={item.gallery[0]}
                             sqft={'480'} baths={'4'} beds={'4'} location={item.friendlyAddress} detailsSubTitle={item.propertyTitle}
-                            detailsTitle={'Apartment'} onClick={() => selectResourceType(item)}
+                            detailsTitle={'Apartment'} onClick={() => selectResourceType(item)} agentImage={item.gallery[0]} agentName={'Malen'} years={'2'}
+                            onAgentClick={goToAgentDetails}
                         />
                     </div>
                 ))}
-                {/* <div>
-                        <PropertyCards
-                            leaseType={'For Sale'} price={'$3000'} background={Home}
-                            sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Arlo Apartment'}
-                            detailsTitle={'Apartment'}
-                        />
-                    </div>
-                    <div>
-                        <PropertyCards
-                            leaseType={'For Rent'} price={'$3000'} background={HomeTwo}
-                            sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Arlo Apartment'}
-                            detailsTitle={'Apartment'}
-                        />
-                    </div>
-                    <div>
-                        <PropertyCards
-                            leaseType={'For Sale'} price={'$3000'} background={HomeThree}
-                            sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Arlo Apartment'}
-                            detailsTitle={'Apartment'}
-                        />
-                    </div>
-                    <div>
-                        <PropertyCards
-                            leaseType={'For Rent'} price={'$3000'} background={Home}
-                            sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Arlo Apartment'}
-                            detailsTitle={'Apartment'}
-                        />
-                    </div>
-                    <div>
-                        <PropertyCards
-                            leaseType={'For Sale'} price={'$3000'} background={HomeFour}
-                            sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Arlo Apartment'}
-                            detailsTitle={'Apartment'}
-                        />
-                    </div>
-                    <div>
-                        <PropertyCards
-                            leaseType={'For Rent'} price={'$3000'} background={HomeTwo}
-                            sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Arlo Apartment'}
-                            detailsTitle={'Apartment'}
-                        />
-                    </div>
-                    <div>
-                        <PropertyCards
-                            leaseType={'For Sale'} price={'$3000'} background={Home}
-                            sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Arlo Apartment'}
-                            detailsTitle={'Apartment'}
-                        />
-                    </div>
-                    <div>
-                        <PropertyCards
-                            leaseType={'For Rent'} price={'$3000'} background={HomeThree}
-                            sqft={'480'} baths={'4'} beds={'4'} location={'2442 Broadway NY'} detailsSubTitle={'Arlo Apartment'}
-                            detailsTitle={'Apartment'}
-                        />
-                    </div> */}
             </Slider>
         </div>
     );

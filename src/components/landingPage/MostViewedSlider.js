@@ -40,9 +40,10 @@ const MostViewedPropertyCarousel = (props) => {
         dots: false,
         infinite: true,
         speed: 2000,
+        lazyLoad: true,
         autoplay: true,
         autoplaySpeed: 2000,
-        slidesToShow: 4,
+        slidesToShow: 3,
         slidesToScroll: 1,
         initialSlide: 0,
         nextArrow: <NextArrow />,
@@ -85,6 +86,11 @@ const MostViewedPropertyCarousel = (props) => {
         }
 
     }
+
+    const goToAgentDetails = () => {
+        navigate('/agent-details')
+    }
+
     return (
         <div style={{ paddingTop: '30px' }}>
 
@@ -94,7 +100,7 @@ const MostViewedPropertyCarousel = (props) => {
                         <PropertyCards
                             type={'Most Viewed'} leaseType={'For Rent'} price={item.price} background={item.gallery[0]}
                             sqft={'480'} baths={'4'} beds={'4'} location={item.friendlyAddress} detailsSubTitle={item.propertyTitle}
-                            detailsTitle={'Apartment'} onClick={() => selectResourceType(item)}
+                            detailsTitle={'Apartment'} onClick={() => selectResourceType(item)} agentImage={item.gallery[1]} agentName={'Papel'} years={'2'} onAgentClick={goToAgentDetails}
                         />
                     </div>
                 ))}

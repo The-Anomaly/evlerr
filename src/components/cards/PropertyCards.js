@@ -4,7 +4,7 @@ import '../../assets/style/GeneralStyles.css';
 import { GrLocation } from 'react-icons/gr'
 // import Loading from '../../utils/Loading';
 
-const PropertyCards = ({ background, price, leaseType, type, baths, beds, detailsSubTitle, detailsTitle, location, sqft, onClick, }) => {
+const PropertyCards = ({ background, price, leaseType, type, baths, beds, detailsSubTitle, detailsTitle, location, sqft, years, agentName, agentImage, onClick, onAgentClick }) => {
     return (
         <>
             <section className='cardContainer'>
@@ -46,6 +46,19 @@ const PropertyCards = ({ background, price, leaseType, type, baths, beds, detail
                         </ul>
                     </div>
                 </div>
+                <section className={'cardFooter pt10 pb10 flex justifyBetween alignCenter'}>
+                    <div className={'flex alignCenter'}>
+                        <div className='cardFooterImage'>
+                            <img src={agentImage} alt='poster' style={{ width: '100%', height: '100%' }} />
+                        </div>
+                        <div>
+                            <p className={'f14 regularText headerColor propertyDetailsLink'} onClick={onAgentClick}>{agentName}</p>
+                        </div>
+                    </div>
+                    <div>
+                        <p className={'f14 regularText headerColor'}>{years} years ago</p>
+                    </div>
+                </section>
             </section>
 
         </>

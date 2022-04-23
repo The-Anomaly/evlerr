@@ -2,10 +2,10 @@ import React from 'react';
 import '../../assets/style/GeneralStyles.css';
 import './Cards.css';
 
-const CitiesCard = ({ cityImage, propertyAmount, city }) => {
+const CitiesCard = ({ cityImage, propertyAmount, city, custom }) => {
     return (
         <>
-            <section className='citiesCardContainer'>
+            <section className='citiesCardContainer' style={custom}>
                 <div className='citiesCardImage' style={{ backgroundImage: cityImage }}>
                     <div className='citiesCardOverlay'>
                         <div>

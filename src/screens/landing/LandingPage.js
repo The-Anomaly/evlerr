@@ -10,14 +10,7 @@ import NewYork from '../../assets/images/new3.jpeg';
 import Cali from '../../assets/images/new4.jpeg';
 import Mali from '../../assets/images/new5.jpeg';
 import Pali from '../../assets/images/new6.jpeg';
-import CustomButton from '../../utils/CustomButton';
-import Agent from '../../assets/images/agent.jpeg';
-import AgentThree from '../../assets/images/agenttwo.jpeg';
-import AgentTwo from '../../assets/images/agentthree.jpeg';
-
-import AgentsCard from '../../components/cards/AgentsCard';
 import ContactComponent from '../../components/contact/ContactComponent';
-import AlteCitiesCard from '../../components/cards/AlteCitiesCard';
 import 'animate.css';
 import RenderNav from '../../components/nav/RenderNav';
 import BestPropertyCarousel from '../../components/landingPage/BestPropertySlider';
@@ -27,6 +20,22 @@ import { getProperties } from '../../redux/actions/PropertiesAction';
 import { connect } from 'react-redux';
 import Loading from '../../utils/Loading';
 import MostViewedPropertyCarousel from '../../components/landingPage/MostViewedSlider';
+import CitiesCard from '../../components/cards/CitiesCard';
+
+import BrandOne from '../../assets/images/brand1.png';
+import BrandTwo from '../../assets/images/brand2.png';
+import BrandThree from '../../assets/images/brand3.png';
+import BrandFour from '../../assets/images/brand4.png';
+import BrandFive from '../../assets/images/brand5.png';
+import ArticlesCards from '../../components/cards/ArticlesCard';
+
+import HomeOne from '../../assets/images/home.jpeg';
+import HomeTwo from '../../assets/images/hometwo.jpeg';
+import HomeThree from '../../assets/images/homethree.jpeg';
+// import HomeOne from '../../assets/images/homefour.jpeg';
+
+
+
 
 
 const LandingPage = (props) => {
@@ -152,10 +161,10 @@ const LandingPage = (props) => {
                         </section>
                     </section>
 
-                    <section className='mostViewedPropertiesContainer'>
+                    <section className='featuredPropertiesContainer'>
                         <div className='featuredPropertiesHeader'>
-                            <h2 className={'boldText f30 headerColor'} style={{ margin: '15px 0' }}>Most Viewed Properties</h2>
-                            <p className={'regularText f16 headerColor'}>Properties with the highest views</p>
+                            <h2 className={'boldText f30 headerColor textCenter'} style={{ margin: '15px 0' }}>Most Viewed Properties</h2>
+                            <p className={'regularText f16 headerColor textCenter'}>Properties with the highest views</p>
                         </div>
                         <section>
                             {/* <FeaturedCarousel */}
@@ -170,16 +179,16 @@ const LandingPage = (props) => {
                         </div>
                         <section className='citiesGrid'>
                             {/* <AlteCitiesCard cityImage={`url(${Florida})`} city={'Lefkosa'} propertyAmount={'2'} /> */}
-                            <AlteCitiesCard cityImage={`url(${Miami})`} city={'Kyrenia'} propertyAmount={'2'} />
-                            <AlteCitiesCard cityImage={`url(${Cali})`} city={'Lefke'} propertyAmount={'2'} />
-                            <AlteCitiesCard cityImage={`url(${Pali})`} city={'Gazimagusa'} propertyAmount={'2'} />
-                            <AlteCitiesCard cityImage={`url(${Mali})`} city={'Nicosia'} propertyAmount={'2'} />
-                            <AlteCitiesCard cityImage={`url(${NewYork})`} city={'Iskele'} propertyAmount={'2'} />
+                            <CitiesCard cityImage={`url(${Miami})`} city={'Kyrenia'} propertyAmount={'2'} custom={{ gridArea: 'first' }} />
+                            <CitiesCard cityImage={`url(${Cali})`} city={'Lefke'} propertyAmount={'2'} custom={{ gridArea: 'second' }} />
+                            <CitiesCard cityImage={`url(${Pali})`} city={'Gazimagusa'} propertyAmount={'2'} custom={{ gridArea: 'third' }} />
+                            <CitiesCard cityImage={`url(${Mali})`} city={'Nicosia'} propertyAmount={'2'} custom={{ gridArea: 'fourth' }} />
+                            <CitiesCard cityImage={`url(${NewYork})`} city={'Iskele'} propertyAmount={'2'} custom={{ gridArea: 'fifth' }} />
 
                         </section>
                     </section>
 
-                    <section className='searchNowContainer'>
+                    {/* <section className='searchNowContainer'>
                         <div className='searchNowOverlay'>
                             <h2 className={'boldText f30 headerColor'} style={{ margin: '15px 0' }}>
                                 Search Smarter, From Anywhere
@@ -193,14 +202,14 @@ const LandingPage = (props) => {
                                 padding: '22px 50px', margin: '30px',
                             }} />
                         </div>
-                    </section>
+                    </section> */}
 
                     <section className='bestPropertyContainer'>
-                        <div>
-                            <h2 className={'boldText f30 headerColor'} style={{ margin: '15px 0' }}>
+                        <div >
+                            <h2 className={'boldText f30 white textCenter'} style={{ margin: '15px 0 5px 0' }}>
                                 Best Property Value
                             </h2>
-                            <p className={'regularText f16 headerColor'}>
+                            <p className={'regularText f16 white textCenter'}>
                                 Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                             </p>
                         </div>
@@ -211,23 +220,54 @@ const LandingPage = (props) => {
                         </section>
                     </section>
 
-                    <section className='agentsContainer'>
-                        <div>
-                            <h2 className={'boldText f30 headerColor'} style={{ margin: '15px 0' }}>
-                                Our Agents
-                            </h2>
-                            <p className={'regularText f16 headerColor'}>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            </p>
+                    <section className='featuredPropertiesContainer'>
+                        <div className='featuredPropertiesHeader'>
+                            <h2 className={'boldText f30 headerColor textCenter'} style={{ margin: '15px 0' }}>Articles & Tips</h2>
+                            <p className={'regularText f16 headerColor textCenter'}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                        </div>
+                        <section className='articlesGrid'>
+                            <ArticlesCards background={HomeOne} agentImage={HomeOne} date={'February 28, 2022 '} detailsSubTitle={'Redfin Ranks the Most Competitive  Neighborhoods of 2022'} detailsTitle={'Family House'}
+                                custom={{ maxHeight: '370px', minHeight: '300px', }} onAgentClick={goToAgentDetails}
+                            />
+                            <ArticlesCards detailsSubTitle={'Housing Markets That Changed the  Most This Decade'} background={HomeTwo} agentImage={HomeTwo} date={'February 28, 2022 '} detailsTitle={'Apartment'}
+                                custom={{ maxHeight: '370px', minHeight: '300px', }} onAgentClick={goToAgentDetails}
+                            />
+                            <ArticlesCards detailsSubTitle={'Redfin Unveils the Best Canadian  Cities for Biking'} background={HomeThree} agentImage={HomeThree} date={'February 28, 2022 '} detailsTitle={'Town House'}
+                                custom={{ maxHeight: '370px', minHeight: '300px', }} onAgentClick={goToAgentDetails}
+                            />
+                        </section>
+
+                    </section>
+
+
+                    <section className='featuredPropertiesContainer'>
+                        <div className='featuredPropertiesHeader'>
+                            <h2 className={'boldText f30 headerColor textCenter'} style={{ margin: '15px 0' }}>Our Partners</h2>
+                            <p className={'regularText f16 headerColor textCenter'}>We only work with the best companies around the globe</p>
                         </div>
 
                         <section className='agentsGridContainer'>
-                            <AgentsCard agentName={'Agent Pakulla'} agentRating={'3'} agentRole={'Marketing'} background={Agent} agentClick={goToAgentDetails} />
+                            {/* <AgentsCard agentName={'Agent Pakulla'} agentRating={'3'} agentRole={'Marketing'} background={Agent} agentClick={goToAgentDetails} />
                             <AgentsCard agentName={'Agent Marlen'} agentRating={'3'} agentRole={'Sales'} background={AgentThree} agentClick={goToAgentDetails} />
                             <AgentsCard agentName={'Agent Jane'} agentRating={'3'} agentRole={'Valuating'} background={AgentTwo} agentClick={goToAgentDetails} />
                             <AgentsCard agentName={'Agent Paul'} agentRating={'3'} agentRole={'Sales'} background={Agent} agentClick={goToAgentDetails} />
                             <AgentsCard agentName={'Agent Kadosh'} agentRating={'3'} agentRole={'Inspecting'} background={AgentTwo} agentClick={goToAgentDetails} />
-                            <AgentsCard agentName={'Agent Prince'} agentRating={'3'} agentRole={'Marketing'} background={Agent} agentClick={goToAgentDetails} />
+                            <AgentsCard agentName={'Agent Prince'} agentRating={'3'} agentRole={'Marketing'} background={Agent} agentClick={goToAgentDetails} /> */}
+                            <div>
+                                <img src={BrandOne} alt='poster' />
+                            </div>
+                            <div>
+                                <img src={BrandTwo} alt='poster' />
+                            </div>
+                            <div>
+                                <img src={BrandThree} alt='poster' />
+                            </div>
+                            <div>
+                                <img src={BrandFour} alt='poster' />
+                            </div>
+                            <div>
+                                <img src={BrandFive} alt='poster' />
+                            </div>
                         </section>
                     </section>
 

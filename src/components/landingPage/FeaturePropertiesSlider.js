@@ -44,7 +44,7 @@ const FeaturedCarousel = (props) => {
         speed: 2000,
         autoplay: true,
         autoplaySpeed: 2000,
-        slidesToShow: 4,
+        slidesToShow: 3,
         slidesToScroll: 1,
         initialSlide: 0,
         nextArrow: <NextArrow />,
@@ -91,7 +91,9 @@ const FeaturedCarousel = (props) => {
     }
 
 
-
+    const goToAgentDetails = () => {
+        navigate('/agent-details')
+    }
 
     return (
         <div style={{ paddingTop: '30px' }}  >
@@ -102,7 +104,8 @@ const FeaturedCarousel = (props) => {
                         <PropertyCards
                             type={'Featured'} leaseType={'For Rent'} price={item.price} background={item.gallery[0]}
                             sqft={'480'} baths={'4'} beds={'4'} location={item.friendlyAddress} detailsSubTitle={item.propertyTitle}
-                            detailsTitle={'Apartment'} onClick={() => selectResourceType(item)}
+                            detailsTitle={'Apartment'} onClick={() => selectResourceType(item)} agentImage={item.gallery[1]} agentName={'Malen'} years={'2'}
+                            onAgentClick={goToAgentDetails}
                         />
                     </div>
                 ))}
