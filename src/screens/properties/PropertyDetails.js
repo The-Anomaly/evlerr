@@ -25,6 +25,7 @@ import Loading from '../../utils/Loading';
 import http from '../../Utils';
 import { getProperties } from '../../redux/actions/PropertiesAction';
 // import { getProperties } from '../../redux/actions/PropertiesAction';
+import { ImageGroup, Image } from 'react-fullscreen-image';
 
 
 const PropertyDetails = () => {
@@ -114,7 +115,19 @@ const PropertyDetails = () => {
                         </div>
                     </section>
                     <section>
-                        <PropertyDetailsSlider image={state.images} />
+                        <ImageGroup>
+                            <ul className="images">
+                                {state.images && state.images.map(i => (
+                                    <li key={i}>
+                                        <Image
+                                            src={i}
+                                            alt="nature"
+                                            style={{ width: '100%', height: '100%' }}
+                                        />
+                                    </li>
+                                ))}
+                            </ul>
+                        </ImageGroup>
                     </section>
 
                     <section className='propertyDetailsLayout'>

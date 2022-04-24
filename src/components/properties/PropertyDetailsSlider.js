@@ -12,7 +12,6 @@ const PropertyDetailsSlider = (props) => {
     return (
 
         <div >
-
             <ImageGroup>
                 <ul className="images">
                     {image.map(i => (
