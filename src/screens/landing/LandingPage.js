@@ -32,6 +32,7 @@ import ArticlesCards from '../../components/cards/ArticlesCard';
 import HomeOne from '../../assets/images/home.jpeg';
 import HomeTwo from '../../assets/images/hometwo.jpeg';
 import HomeThree from '../../assets/images/homethree.jpeg';
+import axios from 'axios';
 // import HomeOne from '../../assets/images/homefour.jpeg';
 
 
@@ -98,6 +99,7 @@ const LandingPage = (props) => {
     useEffect(() => {
         submit()
     }, [getProperties])
+
 
 
 

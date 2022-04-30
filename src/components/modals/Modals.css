@@ -11,6 +11,20 @@
   align-items: center;
   overflow: auto;
 }
+.modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background: rgba(51, 51, 51, 0.5);
+  z-index: 20;
+  /* display: flex; */
+  /* justify-content: center; */
+  padding: 40px;
+  /* align-items: center; */
+  overflow: auto;
+}
 .filterModalMenuContainer {
   background-color: #fff;
   height: 100%;

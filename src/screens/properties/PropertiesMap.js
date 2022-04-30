@@ -55,10 +55,6 @@ const PropertiesMap = (props) => {
     }
 
     useEffect(() => {
-        const savedProperties = localStorage.getItem('properties')
-        const showSaved = JSON.parse(savedProperties)
-        console.log('saved', showSaved.gallery)
-
         submit()
     }, [getProperties])
 

@@ -8,6 +8,7 @@ import { GoPackage } from 'react-icons/go';
 import { BsHouseDoor, } from 'react-icons/bs';
 import { FiUsers } from 'react-icons/fi';
 import { RiLockPasswordLine } from 'react-icons/ri';
+import SideCustomLink from './SideNavCustomLink';
 
 const SideNav = () => {
     return (
@@ -19,54 +20,53 @@ const SideNav = () => {
                 <ul>
 
                     <li>
-                        <Link to={'/dashboard'} className='navLinks'>
+                        <SideCustomLink to={'/dashboard'} >
                             <IoLayersOutline />
-                            <span className={'f14 regularText white'}>Dashboard</span>
-                        </Link>
-
+                            <span className={'f14 regularText'}>Dashboard</span>
+                        </SideCustomLink>
                     </li>
                     <li>
-                        <Link to={'/profile'} className='navLinks'>
+                        <SideCustomLink to={'/profile'} className={' sideNavInactive'}>
                             <AiOutlineUser />
-                            <span className={'f14 regularText white'}>Profile</span>
-                        </Link>
+                            <span className={'f14 regularText '}>Profile</span>
+                        </SideCustomLink>
                     </li>
                     <li>
-                        <Link to={'/myProperties'} className='navLinks'>
+                        <SideCustomLink to={'/myProperties'} className={' sideNavInactive'}>
                             <BsHouseDoor />
-                            <span className={'f14 regularText white'}>My Properties</span>
-                        </Link>
+                            <span className={'f14 regularText '}>My Properties</span>
+                        </SideCustomLink>
                     </li>
 
                     <li>
-                        <Link to={'/members'} className='navLinks'>
+                        <SideCustomLink to={'/members'} className={' sideNavInactive'}>
                             <FiUsers />
-                            <span className={'f14 regularText white'}>Members</span>
-                        </Link>
+                            <span className={'f14 regularText '}>Members</span>
+                        </SideCustomLink>
                     </li>
                     <li>
-                        <Link to={'/package'} className='navLinks'>
+                        <SideCustomLink to={'/package'} className={'  sideNavInactive'}>
                             <GoPackage />
-                            <span className={'f14 regularText white'}>My Package</span>
-                        </Link>
+                            <span className={'f14 regularText '}>My Package</span>
+                        </SideCustomLink>
                     </li>
                     <li>
-                        <Link to={'/'} className='navLinks'>
+                        <SideCustomLink to={'/submission'} className={'  sideNavInactive'}>
                             <AiOutlinePlus />
-                            <span className={'f14 regularText white'}>Submission</span>
-                        </Link>
+                            <span className={'f14 regularText '}>Submission</span>
+                        </SideCustomLink>
                     </li>
                     <li>
-                        <Link to={'/password'} className='navLinks'>
+                        <SideCustomLink to={'/password'} className={' sideNavInactive'}>
                             <RiLockPasswordLine />
-                            <span className={'f14 regularText white'}>Change Password</span>
-                        </Link>
+                            <span className={'f14 regularText '}>Change Password</span>
+                        </SideCustomLink>
                     </li>
                     <li>
-                        <Link to={'/'} className='navLinks'>
+                        <SideCustomLink to={'/'} className={'  sideNavInactive'}>
                             <AiOutlineLogout />
-                            <span className={'f14 regularText white'}>Logout</span>
-                        </Link>
+                            <span className={'f14 regularText '}>Logout</span>
+                        </SideCustomLink>
                     </li>
 
                 </ul>

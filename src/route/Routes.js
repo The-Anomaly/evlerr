@@ -3,6 +3,7 @@ import { Route, Routes } from 'react-router-dom'
 import Layout from '../components/dashboard/Layout'
 import Login from '../screens/auth/Login'
 import Register from '../screens/auth/Register'
+import AddProperty from '../screens/dashboard/AddProperty'
 import ChangePassword from '../screens/dashboard/ChangePassword'
 import Dashboard from '../screens/dashboard/Dashboard'
 import Members from '../screens/dashboard/Members'
@@ -33,6 +34,10 @@ const RoutesContainer = () => {
                 <Route path='properties-details' element={<PropertyDetails />} />
                 <Route path='agent-details' element={<AgentDetails />} />
                 <Route path='agency-details' element={<AgencyDetails />} />
+                <Route path='submission' element={<Submission />} />
+                <Route path='add-property' element={<AddProperty />} />
+
+
 
 
                 <Route element={<Layout />} >
@@ -45,16 +50,9 @@ const RoutesContainer = () => {
                     <Route path='members' element={<Members />} />
                     <Route path='myProperties' element={<MyProperties />} />
                     <Route path='package' element={<MyPackage />} />
-                    <Route path='submission' element={<Submission />} />
+                    {/* <Route path='submission' element={<Submission />} /> */}
                     <Route path='password' element={<ChangePassword />} />
-                    {/* <Route path='submission' element={<Profile />} /> */}
-
-
-
                 </Route>
-                {/* <Route/>
-                <Route/>
-                <Route/> */}
             </Routes>
 
 

@@ -1,0 +1,30 @@
+.submissionContainer {
+    padding: 50px 150px;
+}
+
+.addListingGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+.packagesGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.checkBoxBorder {
+    border: 1px solid #ebebeb;
+    padding: 2px;
+    border-radius: 4px;
+    height: 15px;
+    width: 15px;
+    margin-right: 10px;
+
+}
+
+@media screen and (min-width: 280px) and (max-width: 786px) {
+    .submissionContainer {
+        padding: 20px;
+    }
+}

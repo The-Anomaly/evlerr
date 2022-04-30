@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import RenderNav from '../../components/nav/RenderNav';
 import { AiOutlineDownload, AiOutlineFilePdf, AiOutlinePrinter, AiOutlineShareAlt } from 'react-icons/ai';
-import PropertyDetailsSlider from '../../components/properties/PropertyDetailsSlider';
+// import PropertyDetailsSlider from '../../components/properties/PropertyDetailsSlider';
 import Tabs from '../../components/properties/Tabs';
 import { IoDocumentTextOutline } from 'react-icons/io5';
-import { MdDone } from 'react-icons/md';
+import { MdClose, MdDone } from 'react-icons/md';
 import { GrLocation } from 'react-icons/gr'
 import SimpleMap from '../../utils/Map';
 import PropertyGridCards from '../../components/cards/PropertyGridCards';
@@ -23,7 +23,7 @@ import { BiCurrentLocation } from 'react-icons/bi';
 import { useLocation } from 'react-router-dom';
 import Loading from '../../utils/Loading';
 import http from '../../Utils';
-import { getProperties } from '../../redux/actions/PropertiesAction';
+// import { getProperties } from '../../redux/actions/PropertiesAction';
 // import { getProperties } from '../../redux/actions/PropertiesAction';
 import { ImageGroup, Image } from 'react-fullscreen-image';
 
@@ -32,17 +32,11 @@ const PropertyDetails = () => {
 
     const [state, setState] = useState({
         value: 10, menuDrop: false, priceValue: { min: 0, max: 8000 }, loading: false, title: '', price: '', description: '',
-        address: '', images: null,
+        address: '', images: null, showImages: false,
     })
-    //     friendlyAddress: "Lapta, Kyrenia, Kyrenia"
-    // gallery: (7) ["'https://velesproperty.com/wp-content/uploads/2022/03/Velesproperty-SA-2811-1-1170x600.jpg'", " 'https://velesproperty.com/wp-content/uploads/2022/03/Velesproperty-SA-2813-1-1170x600.jpg'", " 'https://velesproperty.com/wp-content/uploads/2022/03/Velesproperty-SA-2814-1-1170x600.jpg'", " 'https://velesproperty.com/wp-content/uploads/2022/03/Velesproperty-SA-2815-1-1170x600.jpg'", " 'https://velesproperty.com/wp-content/uploads/2022/03/Velesproperty-SA-2816-1-1170x600.jpg'", " 'https://velesproperty.com/wp-content/uploads/2022/03/Velesproperty-SA-2817-1-1170x600.jpg'", " 'https://velesproperty.com/wp-content/uploads/2022/03/Velesproperty-SA-2818-1-1170x600.jpg'"]
-    // price: "1.500 Â£/m2"
-    // propertyDescription: "Description\n\nShopping area in Lapta is a super opportunity for those who are used to investing in non-residential fund! If you are interested in the option of investing in Northern CyprusÂ stores, then this offer will definitely interest you! And also, if you are considering investing in commercial real estate in Northern Cyprus, you should definitely take a closer look at this store.\nIt should be noted that the cost of commercial real estate for rent is high. In addition, the payback of such real estate is 10 years. Therefore, investing in commercial real estate in Northern Cyprus is a long-term project. Moreover, this option is perfect for different types of commercial delivery.\nIf you want to deal with flowers, open a pharmacy, office, travel agency, this option is very good. Or do you dream of opening a cafe, restaurant, shop, etc.\nThe retail space is located in a complex in Lapta in the suburbs of Kyrenia. The complex consists of three blocks of buildings. However, the complex has apartments 2 + 1 and 1 + 1 to choose from. In addition, on the ground floor there are shops for sale.\nSo, the shopping area in Lapta is waiting for you!\nWhen purchasing this area â Veles Property provides assistance not only in obtaining a residence permit, but a bank account, driverâs license and health insurance in Northern Cyprus!\nYou can find our videos onÂ YOUTUBE VELES.\nSubscribe to our TELEGRAM and INSTAGRAM and be the first to receive information about new objects, services, changes in legislation."
-    // propertyTitle: "SC-011 Shopping area in Lapta"
-    // region: "Kyrenia"
 
     const property = useLocation()
-    console.log(property?.state.propertyId);
+    // console.log(property?.state.propertyId);
     const propertyId = property?.state.propertyId
 
     const showDropMenu = () => {
@@ -69,7 +63,6 @@ const PropertyDetails = () => {
     const getPropertyDetails = async () => {
         setState((prevState) => ({ ...prevState, loading: true }))
         try {
-            // https://evlerr-api.herokuapp.com/api/v1/
             const res = await http.get(`user/view-property/${propertyId}`)
             const data = res.data
             console.log('Wallet activities ', res)
@@ -87,6 +80,15 @@ const PropertyDetails = () => {
     useEffect(() => {
         getPropertyDetails()
     }, [propertyId])
+
+
+    const showImageGrid = () => {
+        setState((prevState) => ({ ...prevState, showImages: true }))
+    }
+
+    const closeModal = () => {
+        setState((prevState) => ({ ...prevState, showImages: false }))
+    }
 
     return (
         <>
@@ -115,19 +117,40 @@ const PropertyDetails = () => {
                         </div>
                     </section>
                     <section>
-                        <ImageGroup>
-                            <ul className="images">
-                                {state.images && state.images.map(i => (
-                                    <li key={i}>
-                                        <Image
-                                            src={i}
-                                            alt="nature"
-                                            style={{ width: '100%', height: '100%' }}
-                                        />
-                                    </li>
-                                ))}
-                            </ul>
-                        </ImageGroup>
+                        <section className='imagesContainerNew'>
+                            <div className='imagesGrid'>
+                                <img src={state.images && state.images[0]} style={{ width: '100%', height: '100%' }} alt='poster' />
+                                <img src={state.images && state.images[1]} style={{ width: '100%', height: '100%' }} alt='poster' />
+                                <img src={state.images && state.images[2]} style={{ width: '100%', height: '100%' }} alt='poster' />
+                            </div>
+                            <div className='imagesOverlayNew'>
+                                <CustomButton title={'View Photos'} customStyle={{ backgroundColor: '#fff', cursor: 'pointer' }} color={'#ff5a5f'} onClick={showImageGrid} />
+                            </div>
+                        </section>
+
+                        {state.showImages &&
+                            <section className='modal animate__animated  animate__fadeIn'>
+                                <div style={{ display: 'flex', justifyContent: 'flex-end', padding: '20px 0', }}>
+                                    <MdClose size={32} style={{ background: '#fff', borderRadius: '6px', }} onClick={closeModal} />
+                                </div>
+                                <ImageGroup>
+                                    <ul className="images">
+                                        {state.images && state.images.map(i => (
+                                            <li key={i}>
+                                                <Image
+                                                    src={i}
+                                                    alt="nature"
+                                                    style={{ width: '100%', height: '100%' }}
+                                                />
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </ImageGroup>
+
+
+                            </section>}
+
+                        {/*  */}
                     </section>
 
                     <section className='propertyDetailsLayout'>

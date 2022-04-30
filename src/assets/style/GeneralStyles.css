@@ -278,6 +278,9 @@
 .menuItemColor {
   color: #333333;
 }
+.sideNavInactive {
+  color: #8a99b3;
+}
 
 .dashBg {
   background-color: #f7f7f7;

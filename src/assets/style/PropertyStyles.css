@@ -139,14 +139,21 @@
   grid-template-columns: repeat(2, 1fr);
   align-items: center;
 }
-
-ul.images {
+.imagesGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(370px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  height: 100%;
+ 
+}
+
+.images {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   grid-gap: 0;
   list-style: none;
-  margin: 0;
+  margin: auto;
   padding: 0;
+  /* width: 100%; */
 }
 
 ul.images > li {
@@ -164,6 +171,24 @@ ul.images > li img {
   width: 100%;
   object-fit: cover;
 }
+
+.imagesContainerNew {
+  position: relative;
+  height: 400px; 
+}
+.imagesOverlayNew {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-color: rgba(0, 0,0,0.3);
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding-bottom: 30px;
+}
+
 
 @media screen and (min-width: 280px) and (max-width: 786px) {
   .propertiesHomeContainer {

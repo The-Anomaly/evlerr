@@ -282,6 +282,14 @@
   justify-content: space-between;
   align-items: center;
 }
+.packagesCard {
+  transition: all 0.3s ease-in-out 0s;
+}
+
+.packagesCard:hover {
+  box-shadow: 0 0 50px 0 rgb(0 0 0 / 12%)
+}
+
 @media screen and (max-width: 1000px) {
   .cardContainer {
     margin: 0 5px;
