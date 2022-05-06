@@ -70,7 +70,7 @@ const Login = (props) => {
                                     <input type={'checkbox'} prefix='jello' id='checkbox' />
                                     <label htmlFor='checkbox' className={'f14 regularText'}>Keep me signed in</label>
                                 </div>
-                                <Link to={'/'} className='forgotPassword'>
+                                <Link to={'/forgotPassword'} className='forgotPassword'>
                                     <p className={'f14 regularText'}>Lost Your Password?</p>
                                 </Link>
                             </div>

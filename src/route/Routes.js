@@ -1,7 +1,9 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Layout from '../components/dashboard/Layout'
+import ForgotPassword from '../screens/auth/ForgotPassword'
 import Login from '../screens/auth/Login'
+import RecoverPassword from '../screens/auth/RecoverPassword'
 import Register from '../screens/auth/Register'
 import AddProperty from '../screens/dashboard/AddProperty'
 import ChangePassword from '../screens/dashboard/ChangePassword'
@@ -29,6 +31,8 @@ const RoutesContainer = () => {
                 <Route path='/' element={<LandingPage />} />
                 <Route path='login' element={<Login />} />
                 <Route path='signup' element={<Register />} />
+                <Route path='forgotPassword' element={<ForgotPassword />} />
+                <Route path='recoverPassword' element={<RecoverPassword />} />
                 <Route path='properties' element={<PropertiesDisplay />} />
                 <Route path='properties-map' element={<PropertiesMap />} />
                 <Route path='properties-details' element={<PropertyDetails />} />

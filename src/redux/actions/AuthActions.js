@@ -3,11 +3,6 @@ import { LOADING_USER, LOGIN_FAIL, LOGIN_SUCCESS } from "../Types";
 
 
 
-
-
-
-
-
 export const login = ({ email, password }) => {
     let obj = { password, email }
 
@@ -56,3 +51,43 @@ export const signup = (obj) => {
         });
     };
 };
+
+
+export const forgotPassword = (obj) => {
+    return dispatch => {
+        dispatch({ type: LOADING_USER })
+        return new Promise(async (resolve, reject) => {
+            try {
+                const res = await http.post('auth/forgot-password', obj)
+                const data = res.data
+                dispatch({ type: LOGIN_SUCCESS, payload: data });
+                // loadResources(dispatch, data)
+                resolve(data);
+            } catch (error) {
+                console.log(error)
+                dispatch({ type: LOGIN_FAIL, payload: error });
+                reject(error);
+            }
+        })
+    }
+}
+
+
+export const recoverPassword = (obj) => {
+    return dispatch => {
+        dispatch({ type: LOADING_USER })
+        return new Promise(async (resolve, reject) => {
+            try {
+                const res = await http.post('auth/reset-password', obj)
+                const data = res.data
+                dispatch({ type: LOGIN_SUCCESS, payload: data });
+                // loadResources(dispatch, data)
+                resolve(data);
+            } catch (error) {
+                console.log(error)
+                dispatch({ type: LOGIN_FAIL, payload: error });
+                reject(error);
+            }
+        })
+    }
+}
