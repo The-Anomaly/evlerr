@@ -13,36 +13,36 @@ const apiRootUrl = 'https://evlerr-api.herokuapp.com/api/v1/'
 
 
 
-// const getUserToken = async () => {
-//     try {
-//         let token = await AsyncStorage.getItem("token");
-//         return token;
-//     } catch (error) {
-//         return error;
-//     }
-// };
+const getUserToken = async () => {
+    try {
+        let token = localStorage.getItem("token");
+        return token;
+    } catch (error) {
+        return error;
+    }
+};
 
-// const setTokenIfExists = async options => {
-//     const token = await getUserToken();
+const setTokenIfExists = async options => {
+    const token = await getUserToken();
 
-//     if (token === null) {
-//         return;
-//     }
+    if (token === null) {
+        return;
+    }
 
-//     if (!options.headers) {
-//         options.headers = {};
-//     }
+    if (!options.headers) {
+        options.headers = {};
+    }
 
-//     options.headers.Authorization = `Bearer ${token}`;
-//     // options.headers.Authorization = `Bearer ${tokenOne}`;
+    options.headers.Authorization = `Bearer ${token}`;
+    // options.headers.Authorization = `Bearer ${tokenOne}`;
 
-// };
+};
 
 const http = {
     async request(url, method, data, options = {}) {
         // const obj = { headers : { Authorization: `Bearer ${tokenOne}`}}
         return new Promise(async (resolve, reject) => {
-            // await setTokenIfExists(options);
+            await setTokenIfExists(options);
             try {
 
                 const response = await axios({
