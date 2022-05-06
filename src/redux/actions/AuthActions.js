@@ -15,7 +15,7 @@ export const login = ({ email, password }) => {
         dispatch({ type: LOADING_USER })
         return new Promise(async (resolve, reject) => {
             try {
-                const res = await http.post("auth/securelogin", obj)
+                const res = await http.post("auth/createSession", obj)
                 const data = res.data
                 // console.log('login data ', data)
                 // await setUser(data);

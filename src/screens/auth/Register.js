@@ -75,51 +75,7 @@ const Register = (props) => {
 
             }
         }
-        // Keyboard.dismiss()
-        // setAuth({ ...auth, errors: [], enableEmailError: false, enablePasswordError: false, emailErrorMessage: '', passwordErrorMessage: '' })
-        // const { email, password, firstName, lastName, newsletterOptIn } = auth
 
-        // const obj = { email: email.trim(), password, firstName, lastName, newsletterOptIn }
-        // if (auth.referralCode) {
-        //     obj.referralCode = auth.referralCode
-        // }
-        // setAuth({ ...auth, loading: true })
-        // try {
-        //     const res = await props.signup(obj)
-        //     setAuth({ ...auth, loading: false })
-        //     console.log('submit ', res)
-
-        //     // props.navigation.navigate('Auth', {screen: 'EmailVerification'})
-        //     props.navigation.navigate('Auth', { screen: 'EmailVerification', params: { email } })
-        // } catch (error) {
-        //     setAuth({ ...auth, loading: false })
-        //     console.log('catched error ', error)
-        //     returnError(error)
-
-        // }
-        // if(checkPassword()) {
-        //     props.updateAlertMessage({ type: 'error', message: "Passwords don't match"})
-        // } else {
-        //     const { email, password, firstName, lastName } = auth
-
-        //     const obj = { email: email.trim(), password, firstName, lastName }
-        //     if(auth.referralCode) {
-        //         obj.referralCode = auth.referralCode
-        //     }
-        //     setAuth({ ...auth, loading: true })
-        //     try {
-        //         const res = await props.signup(obj)
-        //         setAuth({ ...auth, loading: false })
-        //         console.log('submit ', res)
-
-        //         props.navigation.navigate('Auth', {screen: 'EmailVerification'})
-        //     } catch (error) {
-        //         setAuth({ ...auth, loading: false })
-        //         console.log('catched error ', error)
-        //         returnError(error)
-
-        //     }  
-        // }
     }
 
 
