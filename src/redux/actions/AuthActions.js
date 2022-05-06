@@ -20,9 +20,9 @@ export const login = ({ email, password }) => {
                 // console.log('login data ', data)
                 // await setUser(data);
 
-                if (!data.twofa.active && data.user.isEmailVerified) {
-                    dispatch({ type: LOGIN_SUCCESS, payload: data });
-                }
+                // if (!data.twofa.active && data.user.isEmailVerified) {
+                dispatch({ type: LOGIN_SUCCESS, payload: data });
+                // }
                 resolve(data);
             } catch (error) {
                 console.log(error)
@@ -41,10 +41,10 @@ export const signup = (obj) => {
         dispatch({ type: LOADING_USER })
         return new Promise(async (resolve, reject) => {
             try {
-                const res = await http.post("auth/signup", obj)
+                const res = await http.post("auth/create-user", obj)
                 const data = res.data
                 // await setUser(data);
-                const notificationValue = await getNotificationValue()
+                // const notificationValue = await getNotificationValue()
                 dispatch({ type: LOGIN_SUCCESS, payload: data });
                 // loadResources(dispatch, data)
                 resolve(data);

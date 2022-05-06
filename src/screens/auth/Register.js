@@ -8,28 +8,30 @@ import { FiLock } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import CustomButton from '../../utils/CustomButton';
 import CustomInputDrop from '../../utils/CustomInputDrop';
+import { signup } from '../../redux/actions/AuthActions';
+import { useDispatch, connect } from 'react-redux';
 
-const Register = () => {
+const Register = (props) => {
 
-
+    const dispatch = useDispatch()
     const [auth, setAuth] = useState({
-        username: '', email: '', password: '', dropDown: false, role: '', confirmPassword: '',
+        username: '', email: '', password: '', dropDown: false, role: '', confirmPassword: '', roles: [{ id: 1, roleType: 'Agent' }, { id: 2, roleType: 'Agency' }, { id: 3, roleType: 'user' },]
     })
 
-    const onChangeUserName = (value) => {
-        setAuth({ ...auth, username: value })
+    const onChangeUserName = (e) => {
+        setAuth({ ...auth, username: e.target.value })
     }
-    const onChangeRole = (value) => {
-        setAuth({ ...auth, role: value })
+    const onChangeRole = (e) => {
+        setAuth({ ...auth, role: e.target.value })
     }
-    const onChangeEmail = (value) => {
-        setAuth({ ...auth, email: value })
+    const onChangeEmail = (e) => {
+        setAuth({ ...auth, email: e.target.value })
     }
-    const onChangePassword = (value) => {
-        setAuth({ ...auth, password: value })
+    const onChangePassword = (e) => {
+        setAuth({ ...auth, password: e.target.value })
     }
-    const onChangeConfirmPassword = (value) => {
-        setAuth({ ...auth, confirmPassword: value })
+    const onChangeConfirmPassword = (e) => {
+        setAuth({ ...auth, confirmPassword: e.target.value })
     }
 
     const showRoles = () => {
@@ -38,6 +40,86 @@ const Register = () => {
         } else {
             setAuth((prevState) => ({ ...prevState, dropDown: true }))
         }
+    }
+
+    function selectResourceType(val) {
+        console.log(val.id)
+        setAuth((prevState) => ({ ...prevState, role: val.roleType, dropDown: false }))
+    }
+
+    const checkPassword = () => {
+        const { password, confirmPassword } = auth
+        if (password !== confirmPassword) {
+            // setAuth({ ...auth, enablePass })
+            return true
+        }
+        return false
+    }
+
+
+    const submit = async (e) => {
+
+        e.preventDefault();
+        if (checkPassword()) {
+            alert('No match')
+        } else {
+            setAuth({ ...auth, })
+            const { email, username, role, password, confirmPassword } = auth
+            const obj = { email: email.trim(), username: username.trim(), role, password, confirmPassword }
+            try {
+                const res = await props.signup(obj)
+                console.log(res);
+            } catch (error) {
+                console.log('catched error ', error)
+                //    returnError(error)
+
+            }
+        }
+        // Keyboard.dismiss()
+        // setAuth({ ...auth, errors: [], enableEmailError: false, enablePasswordError: false, emailErrorMessage: '', passwordErrorMessage: '' })
+        // const { email, password, firstName, lastName, newsletterOptIn } = auth
+
+        // const obj = { email: email.trim(), password, firstName, lastName, newsletterOptIn }
+        // if (auth.referralCode) {
+        //     obj.referralCode = auth.referralCode
+        // }
+        // setAuth({ ...auth, loading: true })
+        // try {
+        //     const res = await props.signup(obj)
+        //     setAuth({ ...auth, loading: false })
+        //     console.log('submit ', res)
+
+        //     // props.navigation.navigate('Auth', {screen: 'EmailVerification'})
+        //     props.navigation.navigate('Auth', { screen: 'EmailVerification', params: { email } })
+        // } catch (error) {
+        //     setAuth({ ...auth, loading: false })
+        //     console.log('catched error ', error)
+        //     returnError(error)
+
+        // }
+        // if(checkPassword()) {
+        //     props.updateAlertMessage({ type: 'error', message: "Passwords don't match"})
+        // } else {
+        //     const { email, password, firstName, lastName } = auth
+
+        //     const obj = { email: email.trim(), password, firstName, lastName }
+        //     if(auth.referralCode) {
+        //         obj.referralCode = auth.referralCode
+        //     }
+        //     setAuth({ ...auth, loading: true })
+        //     try {
+        //         const res = await props.signup(obj)
+        //         setAuth({ ...auth, loading: false })
+        //         console.log('submit ', res)
+
+        //         props.navigation.navigate('Auth', {screen: 'EmailVerification'})
+        //     } catch (error) {
+        //         setAuth({ ...auth, loading: false })
+        //         console.log('catched error ', error)
+        //         returnError(error)
+
+        //     }  
+        // }
     }
 
 
@@ -60,28 +142,37 @@ const Register = () => {
 
                             <CustomInput placeholder={'User Name'}
                                 icon={<AiOutlineUser className='authIcon' />}
-                                type={'text'} onChange={onChangeUserName}
+                                type={'text'} onChange={onChangeUserName} value={auth.username} name={'username'}
+
                             />
 
                             <CustomInput placeholder={'Email'}
                                 icon={<AiOutlineUser className='authIcon' />}
-                                type={'text'} onChange={onChangeEmail}
+                                type={'text'} onChange={onChangeEmail} value={auth.email} name={'email'}
                             />
 
                             <CustomInput placeholder={'Password'} type={'password'}
-                                icon={<FiLock className='authIcon' />} onChange={onChangePassword} />
+                                icon={<FiLock className='authIcon' />} onChange={onChangePassword} name={'password'}
+                                value={auth.password}
+                            />
 
                             <CustomInput placeholder={'Re-enter Password'} type={'password'}
-                                icon={<FiLock className='authIcon' />} onChange={onChangeConfirmPassword} />
+                                icon={<FiLock className='authIcon' />} onChange={onChangeConfirmPassword} name={'confirmPassword'}
+                                value={auth.confirmPassword}
+                            />
 
 
-                            <CustomInputDrop onChange={onChangeRole} menuDrop={auth.dropDown} onClick={showRoles} placeholder={'Roles'} icon={<AiOutlineUser className='authIcon' />}>
-                                <p>Hi</p>
+                            <CustomInputDrop onChange={onChangeRole} menuDrop={auth.dropDown} onClick={showRoles} placeholder={'Roles'} icon={<AiOutlineUser className='authIcon' />}
+                                value={auth.role} name={'role'}
+                            >
+                                {auth.roles && auth.roles.map((item, index) => (
+                                    <li className={'f14 regularText headerColor pb10'} key={item.id} onClick={() => selectResourceType(item)}>{item.roleType}</li>
+                                ))}
                             </CustomInputDrop>
 
                             <div>
                                 <CustomButton title={'Login'} customStyle={{ backgroundColor: '#ff5a5f', marginTop: '20px' }}
-                                    color={'#fff'} />
+                                    color={'#fff'} onClick={submit} />
                             </div>
                         </form>
                         <div className='authFooter'>
@@ -99,4 +190,4 @@ const Register = () => {
     )
 }
 
-export default Register
+export default connect(null, { signup })(Register)
