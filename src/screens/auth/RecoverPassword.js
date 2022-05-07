@@ -50,7 +50,7 @@ const RecoverPassword = (props) => {
             <section className='containerBackground'>
                 <section className='authContainer'>
                     <div>
-                        <img src={AuthHero} alt='hero' />
+                        <img src={AuthHero} alt='hero' loading='eager' />
                     </div>
                     <div className='authFormContainer'>
                         <div className='authHeader'>

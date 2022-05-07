@@ -5,6 +5,12 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
+  position: relative;
+}
+.backArrow {
+  position: absolute;
+  top: 30px;
+  left: 30px;
 }
 .authContainer {
   max-width: 810px;

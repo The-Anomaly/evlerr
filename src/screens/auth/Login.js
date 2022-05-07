@@ -1,14 +1,15 @@
-import { CloseOutlined } from '@mui/icons-material';
+import { ArrowBackIos, CloseOutlined } from '@mui/icons-material';
 import React, { useState } from 'react';
 import CustomInput from '../../utils/CustomInput';
 import '../../assets/style/AuthStyles.css';
 import AuthHero from '../../assets/images/bg-login.jpeg';
 import { AiOutlineUser } from 'react-icons/ai';
 import { FiLock } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import CustomButton from '../../utils/CustomButton';
 import { connect } from 'react-redux';
 import { login } from '../../redux/actions/AuthActions';
+import { toast } from 'react-toastify';
 
 
 
@@ -19,6 +20,8 @@ const Login = (props) => {
         email: '', password: '',
     })
 
+    const navigate = useNavigate()
+
     const onChangeEmail = (e) => {
         setAuth({ ...auth, email: e.target.value })
     }
@@ -26,6 +29,12 @@ const Login = (props) => {
         setAuth({ ...auth, password: e.target.value })
     }
 
+    const goToHomePage = () => {
+        navigate('/')
+    }
+
+    const location = useLocation()
+    const from = location.state?.from?.pathname || "/";
 
     const submit = async (e) => {
 
@@ -35,10 +44,19 @@ const Login = (props) => {
         const obj = { email, password }
         try {
             const res = await props.login(obj)
-            console.log(res);
+            if (res) {
+                toast.success('SuccessFul', {
+                    position: toast.POSITION.TOP_RIGHT
+                })
+                navigate(from, { replace: true });
+            }
+            console.log(res.message);
+
         } catch (error) {
+            toast.error(error[1].data.message, {
+                position: toast.POSITION.TOP_RIGHT
+            });
             console.log('catched error ', error)
-            //    returnError(error)
 
         }
     }
@@ -47,14 +65,17 @@ const Login = (props) => {
     return (
         <>
             <section className='containerBackground'>
+                <div className='backArrow' title='Go to HomePage' onClick={goToHomePage}>
+                    <ArrowBackIos />
+                </div>
                 <section className='authContainer'>
                     <div>
-                        <img src={AuthHero} alt='hero' />
+                        <img src={AuthHero} alt='hero' loading='eager' />
                     </div>
                     <div className='authFormContainer'>
                         <div className='authHeader'>
                             <h3 className={'f18, boldText'}>Login</h3>
-                            <CloseOutlined sx={{ fontSize: '18px' }} className={'boldText'} />
+                            {/* <CloseOutlined sx={{ fontSize: '18px' }} className={'boldText'} /> */}
                         </div>
                         <form>
                             <CustomInput placeholder={'Enter email'}

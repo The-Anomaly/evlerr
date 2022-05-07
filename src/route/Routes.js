@@ -23,6 +23,7 @@ import AgentDetails from '../screens/members/AgentDetails'
 import PropertiesDisplay from '../screens/properties/PropertiesDisplay'
 import PropertiesMap from '../screens/properties/PropertiesMap'
 import PropertyDetails from '../screens/properties/PropertyDetails'
+import RequireAuth from './RoutesAuth'
 
 const RoutesContainer = () => {
     return (
@@ -38,8 +39,8 @@ const RoutesContainer = () => {
                 <Route path='properties-details' element={<PropertyDetails />} />
                 <Route path='agent-details' element={<AgentDetails />} />
                 <Route path='agency-details' element={<AgencyDetails />} />
-                <Route path='submission' element={<Submission />} />
-                <Route path='add-property' element={<AddProperty />} />
+                <Route path='submission' element={<RequireAuth><Submission /></RequireAuth>} />
+                <Route path='add-property' element={<RequireAuth><AddProperty /></RequireAuth>} />
 
 
 

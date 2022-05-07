@@ -224,10 +224,13 @@ const NavBar = ({ boxShadow, logo }) => {
                 </div>
 
                 <div>
-                    <CustomIconButton title={'Submit Property'}
-                        customStyle={{ backgroundColor: '#0c304a', borderRadius: '50px', color: '#fff', padding: '10px 16px', }}
-                        icon={<BsPlusLg size={16} />}
-                    />
+                    <Link to={'submission'}>
+                        <CustomIconButton title={'Submit Property'}
+                            customStyle={{ backgroundColor: '#0c304a', borderRadius: '50px', color: '#fff', padding: '10px 16px', }}
+                            icon={<BsPlusLg size={16} />}
+                        />
+                    </Link>
+
                 </div>
 
             </nav >

@@ -71,20 +71,33 @@ const http = {
                             message = "You are not authorized to access this resource.";
                             // navigate('Auth', { screen: 'Landing' })
                             // store.dispatch(signOut())
+                            errors = error.response
                             break;
                         case 403:
                             message = "You are not authorized to access this resource.";
                             // navigate('Auth', { screen: 'Landing' })
                             // store.dispatch(signOut())
+                            errors = error.response
                             break;
                         case 404:
                             message = "This resource could not be found. Please check the request and try again.";
+                            errors = error.response
+                            break;
+                        case 409:
+                            message = "This resource could not be found. Please check the request and try again.";
+                            errors = error.response
+                            break;
+                        case 422:
+                            message = "This resource could not be found. Please check the request and try again.";
+                            errors = error.response
                             break;
                         case 500:
                             message = `An error occured on the server. Please try again later or contact support if error persists`;
+                            errors = error.response
                             break;
                         case 503:
                             message = 'Server down, please contact support';
+                            errors = error.response
                             break;
                         default:
                             message = "An unexpected error has occurred. Please, try again.";

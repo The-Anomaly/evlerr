@@ -10,7 +10,92 @@ import { MdDone } from 'react-icons/md';
 
 const AddProperty = () => {
 
-    const [state, setState] = useState({ loading: false, dryer: false, fridge: false, barbeque: false, air: false, tv: false, washer: false, sauna: false, wifi: false, })
+    const [state, setState] = useState({
+        loading: false, dryer: false, fridge: false, barbeque: false, air: false, tv: false, washer: false, sauna: false, wifi: false,
+        propertyTitle: "", propertyType: "", propertyDescription: "", propertyId: "", parentProperty: "",
+        status: "", label: "", material: "", rooms: "", bed: "", bath: "", garage: "", yearBuilt: "", homeArea: "", energyClass: "",
+        energyIndex: "", price: "", pricePrefix: "", priceSuffix: "", priceCustom: "", region: "", friendlyAddress: "", mapLocation: "", longtitude: "", latitude: "",
+        featuredImage: {}, gallery: [], attachment: [], videoLink: "", amenities: [], facilities: [], valuation: [], floors: []
+    })
+
+    const onChangePropertyTitle = (e) => {
+        setState({ ...state, propertyTitle: e.target.value })
+    }
+    const onChangePropertyType = (e) => {
+        setState({ ...state, propertyType: e.target.value })
+    }
+    const onChangePropertyDescription = (e) => {
+        setState({ ...state, propertyDescription: e.target.value })
+    }
+    const onChangePropertyId = (e) => {
+        setState({ ...state, propertyId: e.target.value })
+    }
+    const onChangeParentProperty = (e) => {
+        setState({ ...state, parentProperty: e.target.value })
+    }
+    const onChangeStatus = (e) => {
+        setState({ ...state, status: e.target.value })
+    }
+    const onChangeLabel = (e) => {
+        setState({ ...state, label: e.target.value })
+    }
+    const onChangeMaterial = (e) => {
+        setState({ ...state, material: e.target.value })
+    }
+
+    const onChangeRooms = (e) => {
+        setState({ ...state, rooms: e.target.value })
+    }
+
+    const onChangeBed = (e) => {
+        setState({ ...state, bed: e.target.value })
+    }
+    const onChangeBath = (e) => {
+        setState({ ...state, bath: e.target.value })
+    }
+    const onChangeGarage = (e) => {
+        setState({ ...state, garage: e.target.value })
+    }
+    const onChangeYear = (e) => {
+        setState({ ...state, yearBuilt: e.target.value })
+    }
+    const onChangeArea = (e) => {
+        setState({ ...state, homeArea: e.target.value })
+    }
+    const onChangeEnergyClass = (e) => {
+        setState({ ...state, energyClass: e.target.value })
+    }
+    const onChangeEnergyIndex = (e) => {
+        setState({ ...state, energyIndex: e.target.value })
+    }
+    const onChangePrice = (e) => {
+        setState({ ...state, price: e.target.value })
+    }
+    const onChangePricePrefix = (e) => {
+        setState({ ...state, pricePrefix: e.target.value })
+    }
+    const onChangePriceSuffix = (e) => {
+        setState({ ...state, priceSuffix: e.target.value })
+    }
+    const onChangePriceCustom = (e) => {
+        setState({ ...state, priceCustom: e.target.value })
+    }
+    const onChangeRegion = (e) => {
+        setState({ ...state, region: e.target.value })
+    }
+    const onChangeAddress = (e) => {
+        setState({ ...state, friendlyAddress: e.target.value })
+    }
+    const onChangeLocation = (e) => {
+        setState({ ...state, mapLocation: e.target.value })
+    }
+    const onChangeLongitude = (e) => {
+        setState({ ...state, longtitude: e.target.value })
+    }
+    const onChangeLatitude = (e) => {
+        setState({ ...state, latitude: e.target.value })
+    }
+
 
     const renderLoading = () => {
         if (state.loading) {
@@ -99,9 +184,9 @@ const AddProperty = () => {
                     <section className={'membersCard'}>
                         <p className={'f22 boldText headerColor pb30'}>Basic Information</p>
                         <div>
-                            <CustomInput label={'Property Title'} />
-                            <CustomInput label={'Type'} />
-                            <CustomInput label={'Property Description'} customStyle={{ height: '200px' }} />
+                            <CustomInput label={'Property Title'} value={state.propertyTitle} onChange={onChangePropertyTitle} name={'propertyTitle'} />
+                            <CustomInput label={'Type'} value={state.propertyType} onChange={onChangePropertyType} name={'propertyType'} />
+                            <CustomInput label={'Property Description'} customStyle={{ height: '200px' }} value={state.propertyDescription} onChange={onChangePropertyDescription} name={'propertyDescription'} />
                         </div>
                     </section>
 
@@ -109,20 +194,17 @@ const AddProperty = () => {
                         <p className={'f22 boldText headerColor pb30'}>Additional</p>
 
                         <div className='packagesGrid'>
-                            <CustomInput label={'Property ID'} />
-                            <CustomInput label={'Parent property'} />
-                            <CustomInput label={'Status'} />
-                            <CustomInput label={'Label'} />
-                            <CustomInput label={'Materials'} />
-                            <CustomInput label={'Rooms'} />
-                            <CustomInput label={'Beds'} />
-                            <CustomInput label={'Baths'} />
-                            <CustomInput label={'Garages'} />
-                            <CustomInput label={'Year built'} />
-                            <CustomInput label={'Home area (sqft)'} />
-                            <CustomInput label={'Lot dimensions'} />
-                            <CustomInput label={'Lot area (sqft)'} />
-
+                            <CustomInput label={'Property ID'} value={state.propertyId} onChange={onChangePropertyId} name={'propertyId'} />
+                            <CustomInput label={'Parent property'} value={state.parentProperty} onChange={onChangeParentProperty} name={'parentProperty'} />
+                            <CustomInput label={'Status'} value={state.status} onChange={onChangeStatus} name={'status'} />
+                            <CustomInput label={'Label'} value={state.value} onChange={onChangeLabel} name={'label'} />
+                            <CustomInput label={'Materials'} value={state.material} onChange={onChangeMaterial} name={'material'} />
+                            <CustomInput label={'Rooms'} value={state.rooms} onChange={onChangeRooms} name={'rooms'} />
+                            <CustomInput label={'Beds'} value={state.bed} onChange={onChangeBed} name={'bed'} />
+                            <CustomInput label={'Baths'} value={state.bath} onChange={onChangeBath} name={'bath'} />
+                            <CustomInput label={'Garages'} value={state.garage} onChange={onChangeGarage} name={'garage'} />
+                            <CustomInput label={'Year built'} value={state.yearBuilt} onChange={onChangeYear} name={'yearBuilt'} />
+                            <CustomInput label={'Home area (sqft)'} value={state.homeArea} onChange={onChangeArea} name={'homeArea'} />
                         </div>
                     </section>
 
@@ -130,8 +212,8 @@ const AddProperty = () => {
                         <p className={'f22 boldText headerColor pb30'}>Select Energy Class</p>
 
                         <div className='packagesGrid'>
-                            <CustomInput label={'Energy Class'} />
-                            <CustomInput label={'Energy Index in kWh/m2a'} />
+                            <CustomInput label={'Energy Class'} value={state.energyClass} onChange={onChangeEnergyClass} name={'energyClass'} />
+                            <CustomInput label={'Energy Index in kWh/m2a'} value={state.energyIndex} onChange={onChangeEnergyIndex} name={'energyIndex'} />
                         </div>
                     </section>
 
@@ -139,10 +221,10 @@ const AddProperty = () => {
                         <p className={'f22 boldText headerColor pb30'}>Price</p>
 
                         <div className='packagesGrid'>
-                            <CustomInput label={'Price ($)'} />
-                            <CustomInput label={'Price Prefix'} />
-                            <CustomInput label={'Price Suffix'} />
-                            <CustomInput label={'Price Custom'} />
+                            <CustomInput label={'Price ($)'} value={state.price} onChange={onChangePrice} name={'price'} />
+                            <CustomInput label={'Price Prefix'} value={state.pricePrefix} onChange={onChangePricePrefix} name={'pricePrefix'} />
+                            <CustomInput label={'Price Suffix'} value={state.priceSuffix} onChange={onChangePriceSuffix} name={'priceSuffix'} />
+                            <CustomInput label={'Price Custom'} value={state.priceCustom} onChange={onChangePriceCustom} name={'priceCustom'} />
 
                         </div>
                     </section>
@@ -151,16 +233,16 @@ const AddProperty = () => {
                         <p className={'f22 boldText headerColor pb30'}>Location</p>
 
                         <div>
-                            <CustomInput label={'Regions'} />
-                            <CustomInput label={'Friendly Address'} />
-                            <CustomInput label={'Map Location'} />
+                            <CustomInput label={'Regions'} value={state.region} onChange={onChangeRegion} name={'region'} />
+                            <CustomInput label={'Friendly Address'} value={state.friendlyAddress} onChange={onChangeAddress} name={'friendlyAddress'} />
+                            <CustomInput label={'Map Location'} value={state.mapLocation} onChange={onChangeLocation} name={'mapLocation'} />
                         </div>
                         <div style={{ height: '400px' }}>
                             <SimpleMap />
                         </div>
                         <div style={{ width: '70%', marginTop: '20px' }} className={'packagesGrid'}>
-                            <CustomInput placeholder={'Latitude'} />
-                            <CustomInput placeholder={'Longitude'} />
+                            <CustomInput placeholder={'Latitude'} value={state.latitude} onChange={onChangeLatitude} name={'latitude'} />
+                            <CustomInput placeholder={'Longitude'} value={state.longtitude} onChange={onChangeLongitude} name={'longitude'} />
                         </div>
                     </section>
                     <section className={'membersCard'} style={{ marginTop: '30px' }}>
@@ -179,8 +261,8 @@ const AddProperty = () => {
                         </div>
 
                         <div>
-                            <CustomInput label={'Video Link'} />
-                            <CustomInput label={'Virtual Tour'} customStyle={{ height: '200px' }} />
+                            <CustomInput label={'Video Link'} value={state.bed} onChange={onChangeBed} name={'bed'} />
+                            <CustomInput label={'Virtual Tour'} customStyle={{ height: '200px' }} value={state.bed} onChange={onChangeBed} name={'bed'} />
                         </div>
                     </section>
 
