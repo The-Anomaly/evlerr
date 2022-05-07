@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import CustomInput from '../../utils/CustomInput';
 import '../../assets/style/AuthStyles.css';
 import AuthHero from '../../assets/images/bg-register.jpeg';
-import { AiOutlineUser } from 'react-icons/ai';
+import { AiOutlineCaretDown, AiOutlineEye, AiOutlineEyeInvisible, AiOutlineMail, AiOutlineUser } from 'react-icons/ai';
 import { FiLock } from 'react-icons/fi';
 import { Link, useNavigate } from 'react-router-dom';
 import CustomButton from '../../utils/CustomButton';
@@ -14,9 +14,10 @@ import { toast, ToastContainer } from 'react-toastify';
 
 const Register = (props) => {
 
-    const dispatch = useDispatch()
+    // const dispatch = useDispatch()
     const [auth, setAuth] = useState({
-        username: '', email: '', password: '', dropDown: false, role: '', confirmPassword: '', roles: [{ id: 1, roleType: 'Agent' }, { id: 2, roleType: 'Agency' }, { id: 3, roleType: 'user' },]
+        username: '', email: '', password: '', dropDown: false, role: '', confirmPassword: '', roles: [{ id: 1, roleType: 'Agent' }, { id: 2, roleType: 'Agency' }, { id: 3, roleType: 'user' },],
+        loading: false, showPassword: false, showConfirmPassword: false,
     })
 
     const navigate = useNavigate()
@@ -53,6 +54,22 @@ const Register = (props) => {
         setAuth((prevState) => ({ ...prevState, role: val.roleType, dropDown: false }))
     }
 
+    const togglePassword = () => {
+        if (auth.showPassword) {
+            setAuth((prevState) => ({ ...prevState, showPassword: false }))
+        } else {
+            setAuth((prevState) => ({ ...prevState, showPassword: true }))
+        }
+    }
+
+    const toggleConfirmPassword = () => {
+        if (auth.showConfirmPassword) {
+            setAuth((prevState) => ({ ...prevState, showConfirmPassword: false }))
+        } else {
+            setAuth((prevState) => ({ ...prevState, showConfirmPassword: true }))
+        }
+    }
+
     const checkPassword = () => {
         const { password, confirmPassword } = auth
 
@@ -72,9 +89,9 @@ const Register = (props) => {
                 position: toast.POSITION.TOP_RIGHT
             });
         } else {
-            setAuth({ ...auth, })
             const { email, username, role, password, confirmPassword } = auth
             const obj = { email: email.trim(), username: username.trim(), role, password, confirmPassword }
+            setAuth({ ...auth, loading: true })
             try {
                 const res = await props.signup(obj)
                 if (res) {
@@ -84,11 +101,13 @@ const Register = (props) => {
                     navigate('login')
                 }
                 console.log(res);
+                setAuth({ ...auth, loading: false })
             } catch (error) {
                 console.log('catched error ', error)
                 toast.error(error[1].data.message, {
                     position: toast.POSITION.TOP_RIGHT
                 });
+                setAuth({ ...auth, loading: false })
             }
         }
 
@@ -120,22 +139,22 @@ const Register = (props) => {
                             />
 
                             <CustomInput placeholder={'Email'}
-                                icon={<AiOutlineUser className='authIcon' />}
+                                icon={<AiOutlineMail className='authIcon' />}
                                 type={'text'} onChange={onChangeEmail} value={auth.email} name={'email'}
                             />
 
-                            <CustomInput placeholder={'Password'} type={'password'}
-                                icon={<FiLock className='authIcon' />} onChange={onChangePassword} name={'password'}
-                                value={auth.password}
+                            <CustomInput placeholder={'Password'} type={auth.showPassword ? 'password' : 'text'}
+                                icon={auth.showPassword ? <AiOutlineEyeInvisible className='authIcon' /> : <AiOutlineEye className='authIcon' />} onChange={onChangePassword} name={'password'}
+                                value={auth.password} onIconClick={togglePassword}
                             />
 
-                            <CustomInput placeholder={'Re-enter Password'} type={'password'}
-                                icon={<FiLock className='authIcon' />} onChange={onChangeConfirmPassword} name={'confirmPassword'}
-                                value={auth.confirmPassword}
+                            <CustomInput placeholder={'Re-enter Password'} type={auth.showConfirmPassword ? 'password' : 'text'}
+                                icon={auth.showConfirmPassword ? <AiOutlineEyeInvisible className='authIcon' /> : <AiOutlineEye className='authIcon' />} onChange={onChangeConfirmPassword} name={'confirmPassword'}
+                                value={auth.confirmPassword} onIconClick={toggleConfirmPassword}
                             />
 
 
-                            <CustomInputDrop onChange={onChangeRole} menuDrop={auth.dropDown} onClick={showRoles} placeholder={'Roles'} icon={<AiOutlineUser className='authIcon' />}
+                            <CustomInputDrop onChange={onChangeRole} menuDrop={auth.dropDown} onClick={showRoles} placeholder={'Roles'} icon={<AiOutlineCaretDown className='authIcon' />}
                                 value={auth.role} name={'role'}
                             >
                                 {auth.roles && auth.roles.map((item, index) => (
@@ -145,7 +164,7 @@ const Register = (props) => {
 
                             <div>
                                 <CustomButton title={'Register'} customStyle={{ backgroundColor: '#ff5a5f', marginTop: '20px' }}
-                                    color={'#fff'} onClick={submit} />
+                                    color={'#fff'} onClick={submit} loading={auth.loading} />
                             </div>
                         </form>
                         <div className='authFooter'>

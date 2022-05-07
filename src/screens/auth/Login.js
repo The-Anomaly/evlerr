@@ -1,10 +1,9 @@
-import { ArrowBackIos, CloseOutlined } from '@mui/icons-material';
+import { ArrowBackIos } from '@mui/icons-material';
 import React, { useState } from 'react';
 import CustomInput from '../../utils/CustomInput';
 import '../../assets/style/AuthStyles.css';
 import AuthHero from '../../assets/images/bg-login.jpeg';
-import { AiOutlineUser } from 'react-icons/ai';
-import { FiLock } from 'react-icons/fi';
+import { AiOutlineEye, AiOutlineEyeInvisible, AiOutlineMail } from 'react-icons/ai';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import CustomButton from '../../utils/CustomButton';
 import { connect } from 'react-redux';
@@ -17,7 +16,7 @@ const Login = (props) => {
 
 
     const [auth, setAuth] = useState({
-        email: '', password: '',
+        email: '', password: '', loading: false, showPassword: false
     })
 
     const navigate = useNavigate()
@@ -27,6 +26,14 @@ const Login = (props) => {
     }
     const onChangePassword = (e) => {
         setAuth({ ...auth, password: e.target.value })
+    }
+
+    const togglePassword = () => {
+        if (auth.showPassword) {
+            setAuth((prevState) => ({ ...prevState, showPassword: false }))
+        } else {
+            setAuth((prevState) => ({ ...prevState, showPassword: true }))
+        }
     }
 
     const goToHomePage = () => {
@@ -39,9 +46,9 @@ const Login = (props) => {
     const submit = async (e) => {
 
         e.preventDefault();
-        setAuth({ ...auth, })
         const { email, password, } = auth
         const obj = { email, password }
+        setAuth({ ...auth, loading: true })
         try {
             const res = await props.login(obj)
             if (res) {
@@ -51,13 +58,14 @@ const Login = (props) => {
                 navigate(from, { replace: true });
             }
             console.log(res.message);
+            setAuth({ ...auth, loading: false })
 
         } catch (error) {
             toast.error(error[1].data.message, {
                 position: toast.POSITION.TOP_RIGHT
             });
             console.log('catched error ', error)
-
+            setAuth({ ...auth, loading: false })
         }
     }
 
@@ -79,12 +87,13 @@ const Login = (props) => {
                         </div>
                         <form>
                             <CustomInput placeholder={'Enter email'}
-                                icon={<AiOutlineUser className='authIcon' />}
+                                icon={<AiOutlineMail className='authIcon' />}
                                 type={'email'} onChange={onChangeEmail} value={auth.email} name={'email'}
                             />
-                            <CustomInput placeholder={'Password'} type={'password'}
-                                icon={<FiLock className='authIcon' />} onChange={onChangePassword} name={'password'}
-                                value={auth.password} />
+                            <CustomInput placeholder={'Password'} type={auth.showPassword ? 'password' : 'text'}
+                                icon={auth.showPassword ? <AiOutlineEyeInvisible className='authIcon' /> : <AiOutlineEye className='authIcon' />} onChange={onChangePassword} name={'password'}
+                                value={auth.password} onIconClick={togglePassword}
+                            />
 
                             <div className='recoveryContainer'>
                                 <div className='rememberMe'>
@@ -99,7 +108,7 @@ const Login = (props) => {
                             <div>
 
                                 <CustomButton title={'Login'} customStyle={{ backgroundColor: '#ff5a5f', marginTop: '20px' }}
-                                    color={'#fff'} onClick={submit} />
+                                    color={'#fff'} onClick={submit} loading={auth.loading} />
 
 
                             </div>
