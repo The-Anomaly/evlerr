@@ -5,6 +5,7 @@ import ForgotPassword from '../screens/auth/ForgotPassword'
 import Login from '../screens/auth/Login'
 import RecoverPassword from '../screens/auth/RecoverPassword'
 import Register from '../screens/auth/Register'
+import VerifiedPage from '../screens/auth/VerifiedPage'
 import AddProperty from '../screens/dashboard/AddProperty'
 import ChangePassword from '../screens/dashboard/ChangePassword'
 import Dashboard from '../screens/dashboard/Dashboard'
@@ -41,6 +42,8 @@ const RoutesContainer = () => {
                 <Route path='agency-details' element={<AgencyDetails />} />
                 <Route path='submission' element={<RequireAuth><Submission /></RequireAuth>} />
                 <Route path='add-property' element={<RequireAuth><AddProperty /></RequireAuth>} />
+                <Route path='verified' element={<VerifiedPage />} />
+
 
 
 
