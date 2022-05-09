@@ -1,6 +1,7 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Layout from '../components/dashboard/Layout'
+import AgentLayout from '../components/agentDashboard/Layout'
 import ForgotPassword from '../screens/auth/ForgotPassword'
 import Login from '../screens/auth/Login'
 import RecoverPassword from '../screens/auth/RecoverPassword'
@@ -8,6 +9,7 @@ import Register from '../screens/auth/Register'
 import AddProperty from '../screens/dashboard/AddProperty'
 import ChangePassword from '../screens/dashboard/ChangePassword'
 import Dashboard from '../screens/dashboard/Dashboard'
+import AgentDashboard from '../screens/agentDashboard/Dashboard'
 import Members from '../screens/dashboard/Members'
 import Messages from '../screens/dashboard/Messages'
 import MyFavorites from '../screens/dashboard/MyFavorites'
@@ -56,6 +58,10 @@ const RoutesContainer = () => {
                     <Route path='package' element={<MyPackage />} />
                     {/* <Route path='submission' element={<Submission />} /> */}
                     <Route path='password' element={<ChangePassword />} />
+                </Route>
+
+                <Route element={<AgentLayout />}>
+                    <Route path='agent-dashboard' element={<AgentDashboard />} />
                 </Route>
             </Routes>
 
