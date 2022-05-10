@@ -84,13 +84,18 @@
   width: 150px;
 }
 
+
+/******************************
+* SAVED SEARCH
+*******************************/
+
 .headerInput{
   background-color: #fff;
   border: 1px solid #e1e1e1;
   border-radius: 6px;
 }
 
-.headerInput input, .headerInput select{
+.headerInput input{
   padding: 16px 0 16px 20px;
   border-radius: 6px;
   border: none;
@@ -108,8 +113,9 @@
 }
 
 .sortInput{
-  padding: 0 16px;
+  padding: 10px 16px;
   margin-left: 25px;
+  position: relative;
 }
 
 .repeat-5{
@@ -129,6 +135,33 @@
 .del-btn:hover{
   background-color: #fd6d6d;
   color: #fff;
+}
+
+.sortDropdowncontainer{
+  position: absolute;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #e1e1e1;
+  border-radius: 6px;
+  padding: 5px 0;
+  width: 90px;
+}
+
+.sort{
+  cursor: pointer;
+}
+
+.sortDropdowncontainer > li{
+  padding: 3px 10px;
+  cursor: pointer;
+}
+
+.sortDropdowncontainer > li:hover{
+  background-color: #e1e1e1;
+}
+
+.sortDropdowncontainer > .active {
+  background-color: #e1e1e1;
 }
 
 @media screen and (min-width: 280px) and (max-width: 786px) {

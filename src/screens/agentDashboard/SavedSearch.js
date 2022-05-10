@@ -1,9 +1,27 @@
-import React from 'react'
+import React, { useState } from 'react'
 import SavedSearchRow from '../../components/agentDashboard/SavedSearchRow';
 import { FiSearch } from 'react-icons/fi'
+import { IoMdArrowDropdown } from 'react-icons/io'
 import '../../assets/style/DashboardStyles.css'
 
 const SavedSaearch = () => {
+
+    const [curSort, setCurSort] = useState('Newest')
+    const [sortDropdown, setsortDropdown] = useState(false)
+
+    const showSortDropMenu = () => {
+        if (sortDropdown) {
+            setsortDropdown(false)
+        } else {
+            setsortDropdown(true)
+        }
+    }
+
+    const setSort = (val) => {
+        setCurSort(val)
+        showSortDropMenu()
+    }
+
     return (
         <>
             <main className={'dashBg pl15 pr15 pt40 h100'}>
@@ -18,11 +36,13 @@ const SavedSaearch = () => {
                         </div>
                         <div className="headerInput sortInput">
                             <span>Sort by:</span>
-                            <select name="" id="">
-                                <option value="">Default</option>
-                                <option value="" selected>New</option>
-                                <option value="">Oldest</option>
-                            </select>
+                            <span className={"sort pl10"} onClick={showSortDropMenu}>{ curSort } <IoMdArrowDropdown size={16} /></span>
+                            {sortDropdown && 
+                                <ul className={"sortDropdowncontainer"}>
+                                    <li className={ curSort == 'Default' ? 'active' : ''} onClick={() => {setSort('Default')}}>Default</li>
+                                    <li className={ curSort == 'Newest' ? 'active' : ''} onClick={() => {setSort('Newest')}}>Newest</li>
+                                    <li className={ curSort == 'Oldest' ? 'active' : ''} onClick={() => {setSort('Oldest')}}>Oldest</li>
+                                </ul>}
                         </div>
                     </div>
                 </div>
