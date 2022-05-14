@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import SavedSearchRow from '../../components/agentDashboard/SavedSearchRow';
+import SavedSearchRow from '../../components/dashboard/SavedSearchRow';
 import { FiSearch } from 'react-icons/fi'
 import { IoMdArrowDropdown } from 'react-icons/io'
 import '../../assets/style/DashboardStyles.css'
