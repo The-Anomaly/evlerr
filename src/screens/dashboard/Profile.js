@@ -9,7 +9,7 @@ import { IoMdArrowDropdown, IoMdArrowDropup } from 'react-icons/io'
 const Profile = () => {
 
     const [state, setState] = useState({
-        url: 'https://www.demoapus-wp1.com/homeo/agency/324v-b-bggb/', edit: false, data: null, fullScreen: false, loading: false, menuDrop: false
+        url: 'https://www.demoapus-wp1.com/homeo/agent/agent-yassine/', edit: false, data: null, fullScreen: false, loading: false, menuDrop: false
     })
 
     const showEdit = () => {
@@ -50,7 +50,7 @@ const Profile = () => {
                     </div>
 
                     <div className={'pt30'}>
-                        <p className={'f14 boldText headerColor pb40'}>Feature Image</p>
+                        <p className={'f14 boldText headerColor pb40'}>Featured Image</p>
                         <div>
                             <ImagePicker />
                         </div>
@@ -59,13 +59,16 @@ const Profile = () => {
                     <div className={'pt30'}>
 
                         <div>
-                            <CustomInput label={'Full Name'} value={'Agency House'} />
+                            <CustomInput label={'Full Name'} value={'Agent Pakulla'} />
                         </div>
 
                         <div>
                             <CustomInput label={'Description'} value={'Evans Tower very high demand corner junior one bedroom plus a large balcony boasting full open NYC views. You need to see the views to believe them. Mint condition with new hardwood floors. Lots of closets plus washer and dryer.'} />
                         </div>
 
+                        <div>
+                            <CustomInput label={'Job'} value={'Marketing'} />
+                        </div>
                         <div>
                             <CustomInput label={'E-mail'} value={'agency@apus.com'} />
                         </div>

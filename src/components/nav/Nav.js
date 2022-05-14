@@ -3,11 +3,12 @@ import Logo from '../../assets/images/logo2.svg';
 import './Nav.css';
 import '../../assets/style/GeneralStyles.css';
 import { BsPlusLg } from 'react-icons/bs';
-import { AiOutlineUser } from 'react-icons/ai';
+import { AiOutlineUser, AiOutlineCaretDown } from 'react-icons/ai';
 import { Link, } from 'react-router-dom';
 import CustomIconButton from '../../utils/CustomIconButton';
 import CustomLink from './CustomLink';
 import { IoMdArrowDropdown } from 'react-icons/io';
+import agentiMG from '../../assets/images/agent.jpeg'
 
 
 const NavBar = ({ boxShadow, logo }) => {
@@ -202,25 +203,26 @@ const NavBar = ({ boxShadow, logo }) => {
                     </ul>
                 </div >
                 <div className='divider' />
-                <div>
-                    <ul id='authLinks'>
-                        <li >
-                            <AiOutlineUser size={24} color={'#046971'} style={{ marginRight: '5px' }} />
-                        </li>
-                        <li className={'regularText f16'}>
-                            <CustomLink to={'/login'}>
-                                Login
-                            </CustomLink>
-                        </li>
-                        <li className={'regularText f16'} style={{ margin: '0 5px' }}>
-                            /
-                        </li>
-                        <li className={'regularText f16'}>
-                            <Link to={'signup'}>
-                                Register
-                            </Link>
-                        </li>
-                    </ul>
+                <div id='agentdropdown'>
+                    <div>
+                        <img src={agentiMG} className={'agent-avatar'} />
+                    </div>
+                    <p className={'flex alignCenter'} style={{ padding: '8px' }}>
+                        Agent pakulla <span style={{ marginTop: '5px' }}> <IoMdArrowDropdown size={16} /></span>
+                    </p>
+                    <div className='agentDropDownContentContainer' >
+                        <ul className={'flex justifyBetween alignCenter'} style={{ height: '100%' }}>
+                            <li style={{ display: 'grid', gridTemplateColumns: '100%', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
+                                <CustomLink to={'/properties'}>Dashboard</CustomLink>
+                                <CustomLink to={'/properties'}>Profile</CustomLink>
+                                <CustomLink to={'/properties'}>Reviews</CustomLink>
+                                <CustomLink to={'/properties'}>Message</CustomLink>
+                                <CustomLink to={'/properties'}>My Properties</CustomLink>
+                                <CustomLink to={'/properties'}>My Favorite</CustomLink>
+                                <CustomLink to={'/properties'}>Saved Search</CustomLink>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
 
                 <div>

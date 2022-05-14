@@ -84,6 +84,86 @@
   width: 150px;
 }
 
+
+/******************************
+* INPUT SEARCH & SORT BY
+*******************************/
+
+.headerInput{
+  background-color: #fff;
+  border: 1px solid #e1e1e1;
+  border-radius: 6px;
+}
+
+.headerInput input{
+  padding: 16px 0 16px 20px;
+  border-radius: 6px;
+  border: none;
+  outline: none;
+}
+
+.headerInput .lens{
+  vertical-align: middle;
+  padding-right: 20px;
+}
+
+.headerInput .lens:hover{
+  color: #fd6d6d;
+  cursor: pointer;
+}
+
+.sortInput{
+  padding: 10px 16px;
+  margin-left: 25px;
+  position: relative;
+}
+
+.repeat-5{
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.del-btn{
+  padding: 10px;
+  background-color: #f7f7f7;
+  color: #fd6d6d;
+  border-radius: 10px;
+  font-size: 23px;
+  cursor: pointer;
+  transition: .5s ease;
+}
+
+.del-btn:hover{
+  background-color: #fd6d6d;
+  color: #fff;
+}
+
+.sortDropdowncontainer{
+  position: absolute;
+  right: 0;
+  background-color: #fff;
+  border: 1px solid #e1e1e1;
+  border-radius: 6px;
+  padding: 5px 0;
+  width: 90px;
+}
+
+.sort{
+  cursor: pointer;
+}
+
+.sortDropdowncontainer > li{
+  padding: 3px 10px;
+  cursor: pointer;
+}
+
+.sortDropdowncontainer > li:hover{
+  background-color: #e1e1e1;
+}
+
+.sortDropdowncontainer > .active {
+  background-color: #e1e1e1;
+}
+
 @media screen and (min-width: 280px) and (max-width: 786px) {
   .membersCard {
     padding: 10px;

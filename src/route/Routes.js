@@ -1,6 +1,7 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Layout from '../components/dashboard/Layout'
+import AgentLayout from '../components/dashboard/Layout'
 import ForgotPassword from '../screens/auth/ForgotPassword'
 import Login from '../screens/auth/Login'
 import RecoverPassword from '../screens/auth/RecoverPassword'
@@ -11,12 +12,12 @@ import ChangePassword from '../screens/dashboard/ChangePassword'
 import Dashboard from '../screens/dashboard/Dashboard'
 import Members from '../screens/dashboard/Members'
 import Messages from '../screens/dashboard/Messages'
-import MyFavorites from '../screens/dashboard/MyFavorites'
 import MyPackage from '../screens/dashboard/MyPackage'
 import MyProperties from '../screens/dashboard/MyProperties'
 import Profile from '../screens/dashboard/Profile'
+import SavedSearch from '../screens/dashboard/SavedSearch'
+import MyFavorites from '../screens/dashboard/MyFavorites'
 import Reviews from '../screens/dashboard/Reviews'
-import SavedSaearch from '../screens/dashboard/SavedSaearch'
 import Submission from '../screens/dashboard/Submission'
 import LandingPage from '../screens/landing/LandingPage'
 import AgencyDetails from '../screens/members/AgencyDetails'
@@ -53,14 +54,16 @@ const RoutesContainer = () => {
                     <Route path='profile' element={<Profile />} />
                     <Route path='reviews' element={<Reviews />} />
                     <Route path='messages' element={<Messages />} />
+                    {/* <Route path='favorites' element={<MyFavorites />} /> */}
+                    {/* <Route path='savedSearch' element={<SavedSaearch />} /> */}
                     <Route path='favorites' element={<MyFavorites />} />
-                    <Route path='savedSearch' element={<SavedSaearch />} />
-                    <Route path='members' element={<Members />} />
+                    <Route path='savedSearch' element={<SavedSearch />} />
                     <Route path='myProperties' element={<MyProperties />} />
                     <Route path='package' element={<MyPackage />} />
                     {/* <Route path='submission' element={<Submission />} /> */}
                     <Route path='password' element={<ChangePassword />} />
                 </Route>
+
             </Routes>
 
 

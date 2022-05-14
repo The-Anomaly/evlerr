@@ -5,11 +5,11 @@ import { AiOutlineEye, } from 'react-icons/ai';
 import { BsHouseDoor } from 'react-icons/bs';
 
 
-const Dashboard = () => {
+const AgentDashboard = () => {
     return (
         <main className={'dashBg pl15 pr15 pt40 h100'}>
             <div className={'pb30'}>
-                <h2 className={'f34 boldText headerColor'}>Hello Agency House</h2>
+                <h2 className={'f34 boldText headerColor'}>Hello Agent Pakulla</h2>
             </div>
             <section className='overviewGrid'>
                 <DashboardCards>
@@ -62,4 +62,4 @@ const Dashboard = () => {
     )
 }
 
-export default Dashboard
+export default AgentDashboard

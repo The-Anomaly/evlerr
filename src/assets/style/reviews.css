@@ -1,0 +1,25 @@
+
+.pb5{
+    padding-bottom: 5px;
+}
+
+.avatar{
+    padding-right: 15px;
+}
+
+.avatar img{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-right: 15px;
+}
+
+.review-row{
+    display: flex;
+    margin-top: 15px;
+}
+
+.star-rating{
+    color: #BCC52A;
+}
+
