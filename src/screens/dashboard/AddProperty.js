@@ -6,9 +6,12 @@ import '../../assets/style/SubmissionStyles.css';
 import SimpleMap from '../../utils/Map';
 import CustomButton from '../../utils/CustomButton';
 import { MdDone } from 'react-icons/md';
+import { connect } from 'react-redux';
+import { uploadProperties } from '../../redux/actions/PropertiesAction';
+import { toast } from 'react-toastify';
 
 
-const AddProperty = () => {
+const AddProperty = (props) => {
 
     const [state, setState] = useState({
         loading: false, dryer: false, fridge: false, barbeque: false, air: false, tv: false, washer: false, sauna: false, wifi: false,
@@ -171,6 +174,39 @@ const AddProperty = () => {
         }
     }
 
+    const submit = async (e) => {
+        e.preventDefault()
+
+        console.log('started')
+        const {dryer, fridge, barbeque, air, tv, washer, sauna, wifi,
+            propertyTitle, propertyType, propertyDescription, propertyId, parentProperty,
+            status, label, material, rooms, bed, bath, garage, yearBuilt, homeArea, energyClass,
+            energyIndex, price, pricePrefix, priceSuffix, priceCustom, region, friendlyAddress, mapLocation, longtitude, latitude, featuredImage, gallery, attachment, videoLink, amenities, facilities, valuation, floors} = state
+
+        const obj = {dryer, fridge, barbeque, air, tv, washer, sauna, wifi,
+            propertyTitle, propertyType, propertyDescription, propertyId, parentProperty,
+            status, label, material, rooms, bed, bath, garage, yearBuilt, homeArea, energyClass,
+            energyIndex, price, pricePrefix, priceSuffix, priceCustom, region, friendlyAddress, mapLocation, longtitude, latitude,
+            featuredImage, gallery, attachment, videoLink, amenities, facilities, valuation, floors}
+
+        try{
+            const res = await props.uploadProperties(obj)
+            if (res) {
+                toast.success('SuccessFul', {
+                    position: toast.POSITION.TOP_RIGHT
+                })
+                // navigate('/submission');
+            }
+            console.log(res.message);
+        } catch (error){
+            // toast.error(error[1].data.message, {
+            //     position: toast.POSITION.TOP_RIGHT
+            // });
+            console.log('catched error ', error)
+        }
+
+    }
+
 
     return (
         <RenderNav boxShadow={'0px 1px 4px 0px rgb(0 0 0 / 9%)'}>
@@ -330,11 +366,12 @@ const AddProperty = () => {
 
                 </section>
                 <div className={'pt40'}>
-                    <CustomButton title={'Save & Preview'} color={'#fff'} customStyle={{ backgroundColor: '#ff5a5f', width: '120px', }} />
+                    <CustomButton title={'Save & Preview'} onClick={submit} color={'#fff'} customStyle={{ backgroundColor: '#ff5a5f', width: '120px', }} />
                 </div>
             </main>
         </RenderNav>
     )
 }
 
-export default AddProperty
+// export default AddProperty
+export default connect(null, { uploadProperties })(AddProperty)
