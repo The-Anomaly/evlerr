@@ -12,11 +12,11 @@ export const login = ({ email, password }) => {
             try {
                 const res = await http.post("auth/createSession", obj)
                 const data = res.data
-                // console.log('login data ', data)
                 // await setUser(data);
-
+                
                 // if (!data.twofa.active && data.user.isEmailVerified) {
                 dispatch({ type: LOGIN_SUCCESS, payload: data });
+                console.log('login data ', data)
                 // }
                 resolve(data);
             } catch (error) {

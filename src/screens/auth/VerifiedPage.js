@@ -1,25 +1,33 @@
 import React from 'react'
-import { Link, useSearchParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import CustomButton from '../../utils/CustomButton'
 import http from "../../Utils";
+import { toast } from 'react-toastify';
 
 const VerifiedPage = () => {
 
     const [token, setToken] = useSearchParams()
+    const navigate = useNavigate()
     console.log(token.get('token'))
 
     const verify = async () => {
         try {
             const res = await http.get(`auth/verfity-token?token=${token.get('token')}`)
             const data = res.data
+            if (data) {
+                console.log('Verification response: ', data)
+                toast.success('SuccessFul', {
+                    position: toast.POSITION.TOP_RIGHT
+                })
+                navigate('/login')
+            }
             console.log('Verification response: ', data)
-            // dispatch({ type: PROPERTIES_SUCCESS, payload: data });
-            // storeCurrencies(data)
-            // resolve(data);
+            toast.success('SuccessFul', {
+                position: toast.POSITION.TOP_RIGHT
+            })
+            navigate('/login')
         } catch (error) {
             console.log("email verification err: ", error)
-            // dispatch({ type: PROPERTIES_FAIL, payload: error });
-            // reject(error);
         }
     }
 
