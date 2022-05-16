@@ -9,6 +9,8 @@ import CustomIconButton from '../../utils/CustomIconButton';
 import CustomLink from './CustomLink';
 import { IoMdArrowDropdown } from 'react-icons/io';
 import agentiMG from '../../assets/images/agent.jpeg'
+import { useDispatch } from 'react-redux';
+import { LOGOUT } from '../../redux/Types';
 
 
 const NavBar = ({ boxShadow, logo }) => {
@@ -25,6 +27,11 @@ const NavBar = ({ boxShadow, logo }) => {
     //     }
 
     // }
+    const dispatch = useDispatch()
+
+    const logoutUser = () => {
+        dispatch({ type: LOGOUT })
+    }
 
 
 
@@ -220,6 +227,7 @@ const NavBar = ({ boxShadow, logo }) => {
                                 <CustomLink to={'/properties'}>My Properties</CustomLink>
                                 <CustomLink to={'/properties'}>My Favorite</CustomLink>
                                 <CustomLink to={'/properties'}>Saved Search</CustomLink>
+                                <CustomLink to={'#'} onClick={logoutUser}>Log out</CustomLink>
                             </li>
                         </ul>
                     </div>

@@ -1,5 +1,5 @@
 import http from "../../Utils";
-import { LOADING_USER, LOGIN_FAIL, LOGIN_SUCCESS } from "../Types";
+import { LOADING_USER, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT } from "../Types";
 
 
 
@@ -12,6 +12,10 @@ export const login = ({ email, password }) => {
             try {
                 const res = await http.post("auth/createSession", obj)
                 const data = res.data
+
+                let { accessToken, refreshToken } = data;
+                sessionStorage.setItem("accessToken", accessToken);
+                localStorage.setItem("refreshToken", refreshToken);
                 // await setUser(data);
                 
                 // if (!data.twofa.active && data.user.isEmailVerified) {
@@ -28,6 +32,14 @@ export const login = ({ email, password }) => {
     };
 };
 
+export const logout = () => {
+    return dispatch => {
+        dispatch({ type: LOGOUT })
+        localStorage.removeItem('refreshToken')
+        sessionStorage.removeItem('accessToken')
+        console.log('logged out')
+    }
+}
 
 export const signup = (obj) => {
     // let obj = { password, email, password, firstName, lastName }
