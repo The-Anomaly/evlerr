@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Route, Routes } from 'react-router-dom'
+import { useDispatch } from "react-redux";
 import Layout from '../components/dashboard/Layout'
-import AgentLayout from '../components/dashboard/Layout'
 import ForgotPassword from '../screens/auth/ForgotPassword'
 import Login from '../screens/auth/Login'
 import RecoverPassword from '../screens/auth/RecoverPassword'
@@ -26,8 +26,25 @@ import PropertiesDisplay from '../screens/properties/PropertiesDisplay'
 import PropertiesMap from '../screens/properties/PropertiesMap'
 import PropertyDetails from '../screens/properties/PropertyDetails'
 import RequireAuth from './RoutesAuth'
+import { LOGIN_SUCCESS } from "../redux/Types";
 
 const RoutesContainer = () => {
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+    
+        // When component loads, we check for d access token. if present, we dispatch a
+        // login success action
+        const accessToken = sessionStorage.getItem('accessToken')
+        const refreshToken = localStorage.getItem('refreshToken')
+        if (accessToken) {
+            const data = {'accessToken': accessToken, 'refreshToken': refreshToken}
+            dispatch({ type: LOGIN_SUCCESS, payload: data });
+        }
+
+    })
+
     return (
         <>
             <Routes>

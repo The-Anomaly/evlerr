@@ -1,5 +1,5 @@
 import {
-    LOGIN_SUCCESS, LOGIN_FAIL, LOADING_USER,
+    LOGIN_SUCCESS, LOGIN_FAIL, LOADING_USER, LOGOUT
 } from '../Types';
 
 const INITIAL_STATE = {
@@ -17,6 +17,10 @@ export default (state = INITIAL_STATE, { type, payload }) => {
             return { ...state, userData: payload };
         case LOGIN_FAIL:
             return { ...state, error: payload, userData: '' };
+        case LOGOUT:
+            localStorage.removeItem('refreshToken')
+            sessionStorage.removeItem('accessToken')
+            return { ...state, userData: '', isLogged: false }
         default:
             return state;
     }
