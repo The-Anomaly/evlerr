@@ -12,6 +12,10 @@ export const login = ({ email, password }) => {
             try {
                 const res = await http.post("auth/createSession", obj)
                 const data = res.data
+                
+                let { accessToken, refreshToken } = data;
+                sessionStorage.setItem("accessToken", accessToken);
+                localStorage.setItem("refreshToken", refreshToken);
                 // await setUser(data);
                 
                 // if (!data.twofa.active && data.user.isEmailVerified) {
