@@ -39,9 +39,9 @@ const SavedSaearch = () => {
                             <span className={"sort pl10"} onClick={showSortDropMenu}>{ curSort } <IoMdArrowDropdown size={16} /></span>
                             {sortDropdown && 
                                 <ul className={"sortDropdowncontainer"}>
-                                    <li className={ curSort == 'Default' ? 'active' : ''} onClick={() => {setSort('Default')}}>Default</li>
-                                    <li className={ curSort == 'Newest' ? 'active' : ''} onClick={() => {setSort('Newest')}}>Newest</li>
-                                    <li className={ curSort == 'Oldest' ? 'active' : ''} onClick={() => {setSort('Oldest')}}>Oldest</li>
+                                    <li className={ curSort === 'Default' ? 'active' : ''} onClick={() => {setSort('Default')}}>Default</li>
+                                    <li className={ curSort === 'Newest' ? 'active' : ''} onClick={() => {setSort('Newest')}}>Newest</li>
+                                    <li className={ curSort === 'Oldest' ? 'active' : ''} onClick={() => {setSort('Oldest')}}>Oldest</li>
                                 </ul>}
                         </div>
                     </div>

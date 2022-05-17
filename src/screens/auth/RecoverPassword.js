@@ -5,7 +5,6 @@ import '../../assets/style/AuthStyles.css';
 import AuthHero from '../../assets/images/bg-login.jpeg';
 import { AiOutlineUser } from 'react-icons/ai';
 import { FiLock } from 'react-icons/fi';
-import { Link } from 'react-router-dom';
 import CustomButton from '../../utils/CustomButton';
 import { connect } from 'react-redux';
 import { recoverPassword } from '../../redux/actions/AuthActions';

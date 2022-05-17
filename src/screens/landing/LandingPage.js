@@ -33,7 +33,6 @@ import ArticlesCards from '../../components/cards/ArticlesCard';
 import HomeOne from '../../assets/images/home.jpeg';
 import HomeTwo from '../../assets/images/hometwo.jpeg';
 import HomeThree from '../../assets/images/homethree.jpeg';
-import axios from 'axios';
 // import HomeOne from '../../assets/images/homefour.jpeg';
 
 
@@ -86,21 +85,22 @@ const LandingPage = (props) => {
         }
     }
 
-    const submit = async () => {
-        setState({ ...state, loading: true, })
-        try {
-            const res = await props.getProperties()
-            console.log('hey', res[0].gallery)
-            localStorage.setItem('properties', JSON.stringify(res))
-            setState({ ...state, loading: false, })
-        } catch (error) {
-            // returnError(error)
-            console.log('catched error ', error)
-        }
-
-    }
-
+    
+    const { getProperties } = props
     useEffect(() => {
+        const submit = async () => {
+            setState((state) => ({ ...state, loading: true, }))
+            try {
+                const res = await getProperties()
+                console.log('hey', res[0].gallery)
+                localStorage.setItem('properties', JSON.stringify(res))
+                setState((state) => ({ ...state, loading: false, }))
+            } catch (error) {
+                // returnError(error)
+                console.log('catched error ', error)
+                setState((state) => ({ ...state, loading: false, }))
+            }
+        }    
         submit()
     }, [getProperties])
 

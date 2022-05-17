@@ -3,7 +3,6 @@ import Logo from '../../assets/images/logo2.svg';
 import './Nav.css';
 import '../../assets/style/GeneralStyles.css';
 import { BsPlusLg } from 'react-icons/bs';
-import { AiOutlineUser, AiOutlineCaretDown } from 'react-icons/ai';
 import { Link, } from 'react-router-dom';
 import CustomIconButton from '../../utils/CustomIconButton';
 import CustomLink from './CustomLink';
@@ -212,7 +211,7 @@ const NavBar = ({ boxShadow, logo }) => {
                 <div className='divider' />
                 <div id='agentdropdown'>
                     <div>
-                        <img src={agentiMG} className={'agent-avatar'} />
+                        <img src={agentiMG} alt={'agent avatar'} className={'agent-avatar'} />
                     </div>
                     <p className={'flex alignCenter'} style={{ padding: '8px' }}>
                         Agent pakulla <span style={{ marginTop: '5px' }}> <IoMdArrowDropdown size={16} /></span>

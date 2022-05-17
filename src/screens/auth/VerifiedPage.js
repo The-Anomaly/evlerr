@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 
 const VerifiedPage = () => {
 
-    const [token, setToken] = useSearchParams()
+    const [token] = useSearchParams()
     const navigate = useNavigate()
     console.log(token.get('token'))
 

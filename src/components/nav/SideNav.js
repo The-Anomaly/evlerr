@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import './Nav.css';
 import Logo from '../../assets/images/logo2.svg';
 import { IoLayersOutline } from 'react-icons/io5';

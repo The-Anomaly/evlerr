@@ -9,7 +9,7 @@ const INITIAL_STATE = {
     isLogged: true
 };
 
-export default (state = INITIAL_STATE, { type, payload }) => {
+const AuthReducer = (state = INITIAL_STATE, { type, payload }) => {
     switch (type) {
         case LOADING_USER:
             return { ...state, loadingUser: true, error: [] };
@@ -25,3 +25,5 @@ export default (state = INITIAL_STATE, { type, payload }) => {
             return state;
     }
 };
+
+export default AuthReducer

@@ -60,24 +60,25 @@ const PropertyDetails = () => {
 
 
 
-    const getPropertyDetails = async () => {
-        setState((prevState) => ({ ...prevState, loading: true }))
-        try {
-            const res = await http.get(`user/view-property/${propertyId}`)
-            const data = res.data
-            console.log('Wallet activities ', res)
-            setState((prevState) => ({
-                ...prevState, loading: false, address: data.friendlyAddress, price: data.price,
-                title: data.propertyTitle, description: data.propertyDescription, images: data.gallery
-            }))
-        } catch (error) {
-            console.log('Error ', error)
-            setState((prevState) => ({ ...prevState, loading: false }))
-        }
-        setState((prevState) => ({ ...prevState, loading: false }))
-    }
+    
 
     useEffect(() => {
+        const getPropertyDetails = async () => {
+            setState((prevState) => ({ ...prevState, loading: true }))
+            try {
+                const res = await http.get(`user/view-property/${propertyId}`)
+                const data = res.data
+                console.log('Wallet activities ', res)
+                setState((prevState) => ({
+                    ...prevState, loading: false, address: data.friendlyAddress, price: data.price,
+                    title: data.propertyTitle, description: data.propertyDescription, images: data.gallery
+                }))
+            } catch (error) {
+                console.log('Error ', error)
+                setState((prevState) => ({ ...prevState, loading: false }))
+            }
+            setState((prevState) => ({ ...prevState, loading: false }))
+        }
         getPropertyDetails()
     }, [propertyId])
 
