@@ -6,9 +6,13 @@ import '../../assets/style/SubmissionStyles.css';
 import SimpleMap from '../../utils/Map';
 import CustomButton from '../../utils/CustomButton';
 import { MdDone } from 'react-icons/md';
+import { connect } from 'react-redux';
+import { uploadProperties } from '../../redux/actions/PropertiesAction';
+import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 
-const AddProperty = () => {
+const AddProperty = (props) => {
 
     const [state, setState] = useState({
         loading: false, dryer: false, fridge: false, barbeque: false, air: false, tv: false, washer: false, sauna: false, wifi: false,
@@ -17,6 +21,8 @@ const AddProperty = () => {
         energyIndex: "", price: "", pricePrefix: "", priceSuffix: "", priceCustom: "", region: "", friendlyAddress: "", mapLocation: "", longtitude: "", latitude: "",
         featuredImage: {}, gallery: [], attachment: [], videoLink: "", amenities: [], facilities: [], valuation: [], floors: []
     })
+
+    const navigate = useNavigate()
 
     const onChangePropertyTitle = (e) => {
         setState({ ...state, propertyTitle: e.target.value })
@@ -169,6 +175,29 @@ const AddProperty = () => {
         } else {
             setState((prevState) => ({ ...prevState, wifi: true }))
         }
+    }
+
+    const submit = async (e) => {
+        e.preventDefault()
+
+        console.log('started')
+        
+        try{
+            const res = await props.uploadProperties(state)
+            if (res) {
+                toast.success('SuccessFul', {
+                    position: toast.POSITION.TOP_RIGHT
+                })
+                navigate('/submission');
+            }
+            console.log(res.message);
+        } catch (error){
+            toast.error(error[1].data.message, {
+                position: toast.POSITION.TOP_RIGHT
+            });
+            console.log('Upload failed: ', error)
+        }
+
     }
 
 
@@ -330,11 +359,12 @@ const AddProperty = () => {
 
                 </section>
                 <div className={'pt40'}>
-                    <CustomButton title={'Save & Preview'} color={'#fff'} customStyle={{ backgroundColor: '#ff5a5f', width: '120px', }} />
+                    <CustomButton title={'Save & Preview'} onClick={submit} color={'#fff'} customStyle={{ backgroundColor: '#ff5a5f', width: '120px', }} />
                 </div>
             </main>
         </RenderNav>
     )
 }
 
-export default AddProperty
+// export default AddProperty
+export default connect(null, { uploadProperties })(AddProperty)

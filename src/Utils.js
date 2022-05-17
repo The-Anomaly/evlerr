@@ -15,7 +15,9 @@ const apiRootUrl = 'https://evlerr-api.herokuapp.com/api/v1/'
 
 const getUserToken = async () => {
     try {
-        let token = localStorage.getItem("token");
+        let aToken = sessionStorage.getItem("accessToken");
+        let rToken = localStorage.getItem("refreshToken");
+        let token = { access: aToken, refresh: rToken };
         return token;
     } catch (error) {
         return error;
@@ -25,7 +27,7 @@ const getUserToken = async () => {
 const setTokenIfExists = async options => {
     const token = await getUserToken();
 
-    if (token === null) {
+    if (token.access === null) {
         return;
     }
 
@@ -33,7 +35,17 @@ const setTokenIfExists = async options => {
         options.headers = {};
     }
 
-    options.headers.Authorization = `Bearer ${token}`;
+    axios.interceptors.request.use((config) => {
+        if (token.access) {
+            config.headers['x-access-token'] = token.access
+            config.headers['x-refresh-token'] = token.refresh
+        }
+        return config
+    }, (error) => {
+        Promise.reject(error)
+    })
+    // options.headers.Authorization = `Bearer ${token}`;
+    // console.log('bearer token: ',token)
     // options.headers.Authorization = `Bearer ${tokenOne}`;
 
 };

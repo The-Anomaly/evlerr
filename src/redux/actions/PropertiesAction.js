@@ -25,21 +25,21 @@ export const getProperties = () => {
 }
 
 
-export const uploadProperties = () => {
+export const uploadProperties = (obj) => {
     return dispatch => {
         dispatch({ type: UPLOADING_PROPERTY })
         return new Promise(async (resolve, reject) => {
             try {
-                const res = await http.post("user/pproperty/new")
+                const res = await http.post("user/pproperty/new", obj)
                 const data = res.data
-                console.log('currencies ', data)
+                console.log('Upload response: ', data)
                 dispatch({ type: UPLOADING_PROPERTY_SUCCESSFUL, payload: data });
                 // storeCurrencies(data)
                 resolve(data);
             } catch (error) {
-                console.log('Currencies ', error)
+                // console.log('Upload failed ', error)
                 dispatch({ type: UPLOADING_PROPERTY_FAIL, payload: error });
-                // reject(error);
+                reject(error);
             }
         });
     };
