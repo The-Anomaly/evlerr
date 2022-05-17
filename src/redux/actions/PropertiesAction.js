@@ -37,9 +37,9 @@ export const uploadProperties = (obj) => {
                 // storeCurrencies(data)
                 resolve(data);
             } catch (error) {
-                console.log('Currencies ', error)
+                // console.log('Upload failed ', error)
                 dispatch({ type: UPLOADING_PROPERTY_FAIL, payload: error });
-                // reject(error);
+                reject(error);
             }
         });
     };

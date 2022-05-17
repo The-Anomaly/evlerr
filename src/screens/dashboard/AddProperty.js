@@ -9,7 +9,6 @@ import { MdDone } from 'react-icons/md';
 import { connect } from 'react-redux';
 import { uploadProperties } from '../../redux/actions/PropertiesAction';
 import { toast } from 'react-toastify';
-import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 
 
@@ -23,7 +22,7 @@ const AddProperty = (props) => {
         featuredImage: {}, gallery: [], attachment: [], videoLink: "", amenities: [], facilities: [], valuation: [], floors: []
     })
 
-    const navigate = useNavigate();
+    const navigate = useNavigate()
 
     const onChangePropertyTitle = (e) => {
         setState({ ...state, propertyTitle: e.target.value })
@@ -179,42 +178,24 @@ const AddProperty = (props) => {
     }
 
     const submit = async (e) => {
-
         e.preventDefault()
 
         console.log('started')
-        const aToken = sessionStorage.getItem('accessToken')
-        const rToken = localStorage.getItem('refreshToken')
-        
         
         try{
-
-            await axios.post('https://evlerr-api.herokuapp.com/api/v1/user/pproperty/new', state, {
-                headers: {
-                    'x-access-token': aToken,
-                    'x-refresh-token': rToken
-                }
-            }).then((res) => {
-                console.log(res.data)
-                if (res) {
-                    toast.success('SuccessFul', {
-                        position: toast.POSITION.TOP_RIGHT
-                    })
-                    navigate('/submission');
-                }
-              })
-              .catch((error) => {
-                toast.error(error.message, {
+            const res = await props.uploadProperties(state)
+            if (res) {
+                toast.success('SuccessFul', {
                     position: toast.POSITION.TOP_RIGHT
-                });
-                console.error("submission error ", error.message)
-              })
-            
+                })
+                navigate('/submission');
+            }
+            console.log(res.message);
         } catch (error){
-            toast.error(error.message, {
+            toast.error(error[1].data.message, {
                 position: toast.POSITION.TOP_RIGHT
             });
-            console.log('catched error ', error.message)
+            console.log('Upload failed: ', error)
         }
 
     }
