@@ -9,6 +9,8 @@ import { MdDone } from 'react-icons/md';
 import { connect } from 'react-redux';
 import { uploadProperties } from '../../redux/actions/PropertiesAction';
 import { toast } from 'react-toastify';
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
 
 
 const AddProperty = (props) => {
@@ -20,6 +22,8 @@ const AddProperty = (props) => {
         energyIndex: "", price: "", pricePrefix: "", priceSuffix: "", priceCustom: "", region: "", friendlyAddress: "", mapLocation: "", longtitude: "", latitude: "",
         featuredImage: {}, gallery: [], attachment: [], videoLink: "", amenities: [], facilities: [], valuation: [], floors: []
     })
+
+    const navigate = useNavigate();
 
     const onChangePropertyTitle = (e) => {
         setState({ ...state, propertyTitle: e.target.value })
@@ -175,34 +179,42 @@ const AddProperty = (props) => {
     }
 
     const submit = async (e) => {
+
         e.preventDefault()
 
         console.log('started')
-        const {dryer, fridge, barbeque, air, tv, washer, sauna, wifi,
-            propertyTitle, propertyType, propertyDescription, propertyId, parentProperty,
-            status, label, material, rooms, bed, bath, garage, yearBuilt, homeArea, energyClass,
-            energyIndex, price, pricePrefix, priceSuffix, priceCustom, region, friendlyAddress, mapLocation, longtitude, latitude, featuredImage, gallery, attachment, videoLink, amenities, facilities, valuation, floors} = state
-
-        const obj = {dryer, fridge, barbeque, air, tv, washer, sauna, wifi,
-            propertyTitle, propertyType, propertyDescription, propertyId, parentProperty,
-            status, label, material, rooms, bed, bath, garage, yearBuilt, homeArea, energyClass,
-            energyIndex, price, pricePrefix, priceSuffix, priceCustom, region, friendlyAddress, mapLocation, longtitude, latitude,
-            featuredImage, gallery, attachment, videoLink, amenities, facilities, valuation, floors}
-
+        const aToken = sessionStorage.getItem('accessToken')
+        const rToken = localStorage.getItem('refreshToken')
+        
+        
         try{
-            const res = await props.uploadProperties(obj)
-            if (res) {
-                toast.success('SuccessFul', {
+
+            await axios.post('https://evlerr-api.herokuapp.com/api/v1/user/pproperty/new', state, {
+                headers: {
+                    'x-access-token': aToken,
+                    'x-refresh-token': rToken
+                }
+            }).then((res) => {
+                console.log(res.data)
+                if (res) {
+                    toast.success('SuccessFul', {
+                        position: toast.POSITION.TOP_RIGHT
+                    })
+                    navigate('/submission');
+                }
+              })
+              .catch((error) => {
+                toast.error(error.message, {
                     position: toast.POSITION.TOP_RIGHT
-                })
-                // navigate('/submission');
-            }
-            console.log(res.message);
+                });
+                console.error("submission error ", error.message)
+              })
+            
         } catch (error){
-            // toast.error(error[1].data.message, {
-            //     position: toast.POSITION.TOP_RIGHT
-            // });
-            console.log('catched error ', error)
+            toast.error(error.message, {
+                position: toast.POSITION.TOP_RIGHT
+            });
+            console.log('catched error ', error.message)
         }
 
     }
