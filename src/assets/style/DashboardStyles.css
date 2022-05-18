@@ -137,7 +137,7 @@
   color: #fff;
 }
 
-.sortDropdowncontainer{
+.sortDropdowncontainer, .submissionDropdowncontainer{
   position: absolute;
   right: 0;
   background-color: #fff;
@@ -147,7 +147,21 @@
   width: 90px;
 }
 
+.submissionDropdowncontainer{
+  position: absolute;
+  right: 0;
+  top: 30px;
+  width: 100%;
+  padding: 15px 0;
+  z-index: 30;
+}
+
 .sort{
+  cursor: pointer;
+}
+
+.submissionDropdowncontainer > li{
+  padding: 5px 15px;
   cursor: pointer;
 }
 
@@ -156,12 +170,12 @@
   cursor: pointer;
 }
 
-.sortDropdowncontainer > li:hover{
+.sortDropdowncontainer > li:hover, .sortDropdowncontainer > .active{
   background-color: #e1e1e1;
 }
 
-.sortDropdowncontainer > .active {
-  background-color: #e1e1e1;
+.submissionDropdowncontainer > li:hover, .submissionDropdowncontainer > .active {
+  background-color: #f7f7f7;
 }
 
 @media screen and (min-width: 280px) and (max-width: 786px) {
