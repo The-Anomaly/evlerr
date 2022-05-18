@@ -20,7 +20,7 @@ const AddProperty = (props) => {
         propertyTitle: "", propertyType: "", propertyDescription: "", propertyId: "", parentProperty: "",
         status: "", label: "", material: "", rooms: "", bed: "", bath: "", garage: "", yearBuilt: "", homeArea: "", energyClass: "",
         energyIndex: "", price: "", pricePrefix: "", priceSuffix: "", priceCustom: "", region: "", friendlyAddress: "", mapLocation: "", longtitude: "", latitude: "",
-        featuredImage: {}, gallery: [], attachment: [], videoLink: "", amenities: [], facilities: [], valuation: [], floors: []
+        featuredImage: [], gallery: [], attachment: [], videoLink: "", amenities: [], facilities: [], valuation: [], floors: []
     })
 
     const navigate = useNavigate()
@@ -112,40 +112,10 @@ const AddProperty = (props) => {
         }
     }
 
-    // Image Preview Handler
-    const handleImagePreview = (e) => {
-        let image_as_base64 = URL.createObjectURL(e.target.files[0])
-        let image_as_files = e.target.files[0];
-        let name = e.target.id
-
-        setState({ ...state, [name]: { image_preview: image_as_base64, url: image_as_files } })
-    }
-
     const delUpload = (index, where) => {
-        if (where === 'featuredImage') {
-            setState((prevState) => ({ ...prevState, [where]: {} }))
-        } else {
-            setState((prevState) => ({ ...prevState, [where]: prevState[where].filter((val,id) => id !== index) }))
-        }
+        setState((prevState) => ({ ...prevState, [where]: prevState[where].filter((val,id) => id !== index) }))
     }
 
-
-    const handleMultiImagePreview = (e) => {
-        let images = [...e.target.files]
-
-        images.map((val, index) => {
-            
-            let image_as_base64 = URL.createObjectURL(e.target.files[index])
-            let image_as_files = e.target.files[index];
-            let name = e.target.id
-    
-            setState((state) => ({ ...state, [name]: [ ...state[name], { image_preview: image_as_base64, url: image_as_files }] }))
-
-            return true
-
-        })
-
-    }
 
     const toggleAir = () => {
         let str = 'air conditioning'
@@ -223,11 +193,26 @@ const AddProperty = (props) => {
 
     const submit = async (e) => {
         e.preventDefault()
+        const { propertyTitle, propertyType, propertyDescription, propertyId, parentProperty, status, label, material, rooms, bed, bath, garage, yearBuilt, homeArea, energyClass, energyIndex, price, pricePrefix, priceSuffix, priceCustom, region, friendlyAddress, mapLocation, longtitude, latitude, featuredImage, gallery, attachment, videoLink, amenities, facilities, valuation, floors } = state
+        let fImage = featuredImage[0]
 
-        console.log('started')
+        const formData = { propertyTitle, propertyType, propertyDescription, propertyId, parentProperty, status, label, material, rooms, bed, bath, garage, yearBuilt, homeArea, energyClass, energyIndex, price, pricePrefix, priceSuffix, priceCustom, region, friendlyAddress, mapLocation, longtitude, latitude, fImage, gallery, attachment, videoLink, amenities, facilities, valuation, floors }
+
+        if (!propertyTitle) {
+            toast.error('Property title cannot be empty', {
+                position: toast.POSITION.TOP_RIGHT
+            });
+            return;
+        } else if (!propertyDescription) {
+            toast.error('Property description cannot be empty', {
+                position: toast.POSITION.TOP_RIGHT
+            });
+            return;
+        }
+        console.log(formData)
         
         try{
-            const res = await props.uploadProperties(state)
+            const res = await props.uploadProperties(formData)
             if (res) {
                 toast.success('SuccessFul', {
                     position: toast.POSITION.TOP_RIGHT
@@ -257,9 +242,9 @@ const AddProperty = (props) => {
                     <section className={'membersCard'}>
                         <p className={'f22 boldText headerColor pb30'}>Basic Information</p>
                         <div>
-                            <CustomInput label={'Property Title'} value={state.propertyTitle} onChange={onChangePropertyTitle} name={'propertyTitle'} />
+                            <CustomInput label={'Property Title *'} value={state.propertyTitle} onChange={onChangePropertyTitle} name={'propertyTitle'} />
                             <CustomInput label={'Type'} value={state.propertyType} onChange={onChangePropertyType} name={'propertyType'} />
-                            <CustomInput label={'Property Description'} customStyle={{ height: '200px' }} value={state.propertyDescription} onChange={onChangePropertyDescription} name={'propertyDescription'} />
+                            <CustomInput label={'Property Description *'} customStyle={{ height: '200px' }} value={state.propertyDescription} onChange={onChangePropertyDescription} name={'propertyDescription'} />
                         </div>
                     </section>
 
@@ -324,35 +309,37 @@ const AddProperty = (props) => {
 
                         <div className={'pb30'}>
                             <p className={'f18 boldText headerColor pb10'}>Featured Image</p>
-                            { state.featuredImage.image_preview && (
-                                <span className={'fileUploadContainer'}>
-                                    <button className={'fileDelBtn'} onClick={() => delUpload(0, 'featuredImage')}>x</button>
-                                    <img src={state.featuredImage.image_preview} alt={''} style={{ maxWidth: '100%', height: '100%' }} />
-                                </span>
-                                    ) }
-                            <CustomUploadInput title={'Upload file'} id={'featuredImage'} onChange={handleImagePreview} customStyle={{ backgroundColor: '#f7f7f7', border: '1px solid #ebebeb', width: '150px' }} />
+                            { state.featuredImage &&  state.featuredImage.map((val, index) => 
+                            <span key={index} className={'fileUploadContainer'}>
+                                <button className={'fileDelBtn'} onClick={() => delUpload(index, 'featuredImage')}>x</button>    
+                                <img id={index} src={val.url} alt={''} style={{ maxWidth: '100%', height: '100%' }} />
+                            </span> 
+                            ) }
+                            <CustomUploadInput fileState={state} handleState={setState} inputName={'featuredImage'} />
                         </div>
 
 
                         <div className={'pb30'}>
                             <p className={'f18 boldText headerColor pb10'}>Gallery</p>
-                            { state.gallery &&  state.gallery.map((val, index) =>
+                            { state.gallery &&  state.gallery.map((val, index) => 
                             <span key={index} className={'fileUploadContainer'}>
                                 <button className={'fileDelBtn'} onClick={() => delUpload(index, 'gallery')}>x</button>    
-                                <img id={index} src={val.image_preview} alt={''} style={{ maxWidth: '100%', height: '100%' }} />
+                                <img id={index} src={val.url} alt={''} style={{ maxWidth: '100%', height: '100%' }} />
                             </span> 
                             ) }
-                            <CustomUploadInput title={'Upload files'} id={'gallery'} onChange={handleMultiImagePreview} multi={true} customStyle={{ backgroundColor: '#f7f7f7', border: '1px solid #ebebeb', width: '150px' }} />
+                            <CustomUploadInput fileState={state} handleState={setState} multi={true} inputName={'gallery'} />
                         </div>
+
+
                         <div className={'pb30'}>
                             <p className={'f18 boldText headerColor pb10'}>Attachments</p>
                             { state.attachment &&  state.attachment.map((val, index) => 
                             <span key={index} className={'fileUploadContainer'}>
                                 <button className={'fileDelBtn'} onClick={() => delUpload(index, 'attachment')}>x</button>    
-                                <img id={index} src={val.image_preview} alt={''} style={{ maxWidth: '100%', height: '100%' }} />
+                                <img id={index} src={val.url} alt={''} style={{ maxWidth: '100%', height: '100%' }} />
                             </span> 
                             ) }
-                            <CustomUploadInput title={'Upload files'} onChange={handleMultiImagePreview} id={'attachment'} multi={true} customStyle={{ backgroundColor: '#f7f7f7', border: '1px solid #ebebeb', width: '150px' }} />
+                            <CustomUploadInput fileState={state} handleState={setState} multi={true} inputName={'attachment'} />
                         </div>
 
                         <div>
