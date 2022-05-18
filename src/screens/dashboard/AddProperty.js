@@ -141,6 +141,8 @@ const AddProperty = (props) => {
     
             setState((state) => ({ ...state, [name]: [ ...state[name], { image_preview: image_as_base64, url: image_as_files }] }))
 
+            return true
+
         })
 
     }
@@ -325,7 +327,7 @@ const AddProperty = (props) => {
                             { state.featuredImage.image_preview && (
                                 <span className={'fileUploadContainer'}>
                                     <button className={'fileDelBtn'} onClick={() => delUpload(0, 'featuredImage')}>x</button>
-                                    <img src={state.featuredImage.image_preview} style={{ maxWidth: '100%', height: '100%' }} />
+                                    <img src={state.featuredImage.image_preview} alt={''} style={{ maxWidth: '100%', height: '100%' }} />
                                 </span>
                                     ) }
                             <CustomUploadInput title={'Upload file'} id={'featuredImage'} onChange={handleImagePreview} customStyle={{ backgroundColor: '#f7f7f7', border: '1px solid #ebebeb', width: '150px' }} />
@@ -337,7 +339,7 @@ const AddProperty = (props) => {
                             { state.gallery &&  state.gallery.map((val, index) =>
                             <span key={index} className={'fileUploadContainer'}>
                                 <button className={'fileDelBtn'} onClick={() => delUpload(index, 'gallery')}>x</button>    
-                                <img id={index} src={val.image_preview} style={{ maxWidth: '100%', height: '100%' }} />
+                                <img id={index} src={val.image_preview} alt={''} style={{ maxWidth: '100%', height: '100%' }} />
                             </span> 
                             ) }
                             <CustomUploadInput title={'Upload files'} id={'gallery'} onChange={handleMultiImagePreview} multi={true} customStyle={{ backgroundColor: '#f7f7f7', border: '1px solid #ebebeb', width: '150px' }} />
@@ -347,7 +349,7 @@ const AddProperty = (props) => {
                             { state.attachment &&  state.attachment.map((val, index) => 
                             <span key={index} className={'fileUploadContainer'}>
                                 <button className={'fileDelBtn'} onClick={() => delUpload(index, 'attachment')}>x</button>    
-                                <img id={index} src={val.image_preview} style={{ maxWidth: '100%', height: '100%' }} />
+                                <img id={index} src={val.image_preview} alt={''} style={{ maxWidth: '100%', height: '100%' }} />
                             </span> 
                             ) }
                             <CustomUploadInput title={'Upload files'} onChange={handleMultiImagePreview} id={'attachment'} multi={true} customStyle={{ backgroundColor: '#f7f7f7', border: '1px solid #ebebeb', width: '150px' }} />
