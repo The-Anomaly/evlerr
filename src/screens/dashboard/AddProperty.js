@@ -5,6 +5,7 @@ import Loading from '../../utils/Loading'
 import '../../assets/style/SubmissionStyles.css';
 import SimpleMap from '../../utils/Map';
 import CustomButton from '../../utils/CustomButton';
+import CustomUploadInput from '../../utils/CustomUploadInput';
 import { MdDone } from 'react-icons/md';
 import { connect } from 'react-redux';
 import { uploadProperties } from '../../redux/actions/PropertiesAction';
@@ -111,69 +112,110 @@ const AddProperty = (props) => {
         }
     }
 
-    const toggleAir = () => {
-        if (state.air) {
-            setState((prevState) => ({ ...prevState, air: false }))
+    // Image Preview Handler
+    const handleImagePreview = (e) => {
+        let image_as_base64 = URL.createObjectURL(e.target.files[0])
+        let image_as_files = e.target.files[0];
+        let name = e.target.id
+
+        setState({ ...state, [name]: { image_preview: image_as_base64, url: image_as_files } })
+    }
+
+    const delUpload = (index, where) => {
+        if (where === 'featuredImage') {
+            setState((prevState) => ({ ...prevState, [where]: {} }))
         } else {
-            setState((prevState) => ({ ...prevState, air: true }))
+            setState((prevState) => ({ ...prevState, [where]: prevState[where].filter((val,id) => id !== index) }))
+        }
+    }
+
+
+    const handleMultiImagePreview = (e) => {
+        let images = [...e.target.files]
+
+        images.map((val, index) => {
+            
+            let image_as_base64 = URL.createObjectURL(e.target.files[index])
+            let image_as_files = e.target.files[index];
+            let name = e.target.id
+    
+            setState((state) => ({ ...state, [name]: [ ...state[name], { image_preview: image_as_base64, url: image_as_files }] }))
+
+        })
+
+    }
+
+    const toggleAir = () => {
+        let str = 'air conditioning'
+        if (state.air) {
+            setState((prevState) => ({ ...prevState, air: false, amenities: prevState.amenities.filter(amn => amn !== str) }))
+        } else {
+            setState((prevState) => ({ ...prevState, air: true, amenities: [ ...prevState.amenities, str ] }))
         }
     }
 
 
     const toggleFridge = () => {
+        let str = 'fridge'
         if (state.fridge) {
-            setState((prevState) => ({ ...prevState, fridge: false }))
+            setState((prevState) => ({ ...prevState, fridge: false, amenities: prevState.amenities.filter(amn => amn !== str) }))
         } else {
-            setState((prevState) => ({ ...prevState, fridge: true }))
+            setState((prevState) => ({ ...prevState, fridge: true, amenities: [ ...prevState.amenities, str ] }))
         }
     }
 
     const toggleDryer = () => {
+        let str = 'dryer'
         if (state.dryer) {
-            setState((prevState) => ({ ...prevState, dryer: false }))
+            setState((prevState) => ({ ...prevState, dryer: false, amenities: prevState.amenities.filter(amn => amn !== str) }))
         } else {
-            setState((prevState) => ({ ...prevState, dryer: true }))
+            setState((prevState) => ({ ...prevState, dryer: true, amenities: [ ...prevState.amenities, str ] }))
         }
     }
 
 
     const toggleBarbeque = () => {
+        let str = 'barbeque'
         if (state.barbeque) {
-            setState((prevState) => ({ ...prevState, barbeque: false }))
+            setState((prevState) => ({ ...prevState, barbeque: false, amenities: prevState.amenities.filter(amn => amn !== str) }))
         } else {
-            setState((prevState) => ({ ...prevState, barbeque: true }))
+            setState((prevState) => ({ ...prevState, barbeque: true, amenities: [ ...prevState.amenities, str ] }))
         }
     }
 
     const toggleTV = () => {
+        let str = 'tv'
         if (state.tv) {
-            setState((prevState) => ({ ...prevState, tv: false }))
+            setState((prevState) => ({ ...prevState, tv: false, amenities: prevState.amenities.filter(amn => amn !== str) }))
         } else {
-            setState((prevState) => ({ ...prevState, tv: true }))
+            setState((prevState) => ({ ...prevState, tv: true, amenities: [ ...prevState.amenities, str ] }))
         }
     }
 
     const toggleWasher = () => {
+        let str = 'washer'
         if (state.washer) {
-            setState((prevState) => ({ ...prevState, washer: false }))
+            setState((prevState) => ({ ...prevState, washer: false, amenities: prevState.amenities.filter(amn => amn !== str) }))
         } else {
-            setState((prevState) => ({ ...prevState, washer: true }))
+            setState((prevState) => ({ ...prevState, washer: true, amenities: [ ...prevState.amenities, str ] }))
         }
     }
 
     const toggleSauna = () => {
+        let str = 'sauna'
         if (state.sauna) {
-            setState((prevState) => ({ ...prevState, sauna: false }))
+            setState((prevState) => ({ ...prevState, sauna: false, amenities: prevState.amenities.filter(amn => amn !== str) }))
         } else {
-            setState((prevState) => ({ ...prevState, sauna: true }))
+            setState((prevState) => ({ ...prevState, sauna: true, amenities: [ ...prevState.amenities, str ] }))
         }
     }
 
     const toggleWifi = () => {
+        let str = 'wifi'
         if (state.wifi) {
-            setState((prevState) => ({ ...prevState, wifi: false }))
+            setState((prevState) => ({ ...prevState, wifi: false, amenities: prevState.amenities.filter(amn => amn !== str) }))
         } else {
-            setState((prevState) => ({ ...prevState, wifi: true }))
+            setState((prevState) => ({ ...prevState, wifi: true, amenities: [ ...prevState.amenities, str ] }))
         }
     }
 
@@ -276,17 +318,39 @@ const AddProperty = (props) => {
                     </section>
                     <section className={'membersCard'} style={{ marginTop: '30px' }}>
                         <p className={'f22 boldText headerColor pb30'}>Media</p>
+
+
                         <div className={'pb30'}>
                             <p className={'f18 boldText headerColor pb10'}>Featured Image</p>
-                            <CustomButton title={'Upload Files'} customStyle={{ backgroundColor: '#f7f7f7', border: '1px solid #ebebeb', width: '150px' }} />
+                            { state.featuredImage.image_preview && (
+                                <span className={'fileUploadContainer'}>
+                                    <button className={'fileDelBtn'} onClick={() => delUpload(0, 'featuredImage')}>x</button>
+                                    <img src={state.featuredImage.image_preview} style={{ maxWidth: '100%', height: '100%' }} />
+                                </span>
+                                    ) }
+                            <CustomUploadInput title={'Upload file'} id={'featuredImage'} onChange={handleImagePreview} customStyle={{ backgroundColor: '#f7f7f7', border: '1px solid #ebebeb', width: '150px' }} />
                         </div>
+
+
                         <div className={'pb30'}>
                             <p className={'f18 boldText headerColor pb10'}>Gallery</p>
-                            <CustomButton title={'Upload Files'} customStyle={{ backgroundColor: '#f7f7f7', border: '1px solid #ebebeb', width: '150px' }} />
+                            { state.gallery &&  state.gallery.map((val, index) =>
+                            <span key={index} className={'fileUploadContainer'}>
+                                <button className={'fileDelBtn'} onClick={() => delUpload(index, 'gallery')}>x</button>    
+                                <img id={index} src={val.image_preview} style={{ maxWidth: '100%', height: '100%' }} />
+                            </span> 
+                            ) }
+                            <CustomUploadInput title={'Upload files'} id={'gallery'} onChange={handleMultiImagePreview} multi={true} customStyle={{ backgroundColor: '#f7f7f7', border: '1px solid #ebebeb', width: '150px' }} />
                         </div>
                         <div className={'pb30'}>
                             <p className={'f18 boldText headerColor pb10'}>Attachments</p>
-                            <CustomButton title={'Upload Files'} customStyle={{ backgroundColor: '#f7f7f7', border: '1px solid #ebebeb', width: '150px' }} />
+                            { state.attachment &&  state.attachment.map((val, index) => 
+                            <span key={index} className={'fileUploadContainer'}>
+                                <button className={'fileDelBtn'} onClick={() => delUpload(index, 'attachment')}>x</button>    
+                                <img id={index} src={val.image_preview} style={{ maxWidth: '100%', height: '100%' }} />
+                            </span> 
+                            ) }
+                            <CustomUploadInput title={'Upload files'} onChange={handleMultiImagePreview} id={'attachment'} multi={true} customStyle={{ backgroundColor: '#f7f7f7', border: '1px solid #ebebeb', width: '150px' }} />
                         </div>
 
                         <div>
