@@ -8,7 +8,7 @@ const initialState = {
     uploadedProperty: [],
 }
 
-export default (state = initialState, { type, payload }) => {
+const PropertiesReducer = (state = initialState, { type, payload }) => {
     switch (type) {
 
         case GETTING_PROPERTIES:
@@ -27,3 +27,5 @@ export default (state = initialState, { type, payload }) => {
             return state
     }
 }
+
+export default PropertiesReducer

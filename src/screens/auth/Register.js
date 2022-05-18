@@ -1,16 +1,15 @@
-import { ArrowBackIos, CloseOutlined } from '@mui/icons-material';
+import { ArrowBackIos } from '@mui/icons-material';
 import React, { useState } from 'react';
 import CustomInput from '../../utils/CustomInput';
 import '../../assets/style/AuthStyles.css';
 import AuthHero from '../../assets/images/bg-register.jpeg';
 import { AiOutlineCaretDown, AiOutlineEye, AiOutlineEyeInvisible, AiOutlineMail, AiOutlineUser } from 'react-icons/ai';
-import { FiLock } from 'react-icons/fi';
 import { Link, useNavigate } from 'react-router-dom';
 import CustomButton from '../../utils/CustomButton';
 import CustomInputDrop from '../../utils/CustomInputDrop';
 import { signup } from '../../redux/actions/AuthActions';
-import { useDispatch, connect } from 'react-redux';
-import { toast, ToastContainer } from 'react-toastify';
+import { connect } from 'react-redux';
+import { toast } from 'react-toastify';
 
 const Register = (props) => {
 

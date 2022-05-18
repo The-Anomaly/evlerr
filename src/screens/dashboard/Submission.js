@@ -8,7 +8,7 @@ import { useNavigate } from 'react-router-dom';
 
 const Submission = (props) => {
 
-    const [state, setState] = useState({ loading: false })
+    const [state] = useState({ loading: false })
 
     const renderLoading = () => {
         if (state.loading) {

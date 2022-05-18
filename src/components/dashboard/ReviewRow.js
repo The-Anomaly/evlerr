@@ -17,7 +17,7 @@ const ReviewRow = ({ name, date, review, starcount }) => {
   return (
     <div className='review-row'>
         <div className='avatar'>
-            <img src={agenttwo} />
+            <img src={agenttwo} alt={'avatar'} />
         </div>
         <div>
             <div className="pb10">

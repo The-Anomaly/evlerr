@@ -18,7 +18,7 @@ export const getProperties = () => {
             } catch (error) {
                 console.log('Currencies ', error)
                 dispatch({ type: PROPERTIES_FAIL, payload: error });
-                // reject(error);
+                reject(error);
             }
         });
     };
