@@ -1,6 +1,6 @@
 import React from 'react'
 
-const CustomInput = ({ type, disabled, name, value, onChange, icon, customStyle, color, placeholder, label, onIconClick }) => {
+const CustomInput = ({ type, disabled, name, value, onChange, subtitle, icon, customStyle, color, placeholder, label, onIconClick }) => {
     return (
         <>
             <section>
@@ -12,6 +12,7 @@ const CustomInput = ({ type, disabled, name, value, onChange, icon, customStyle,
                     />
                     {icon && <span style={{ color: color }} onClick={onIconClick}>{icon}</span>}
                 </div>
+                {subtitle && <span style={{ color: 'grey',  }}><em>{subtitle}</em></span>}
             </section>
 
         </>

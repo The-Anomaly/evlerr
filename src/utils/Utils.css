@@ -87,6 +87,48 @@
   animation: spin 1.5s linear infinite;
 }
 
+
+/********************
+* upload
+*********************/
+.upload-container{
+  display: block;
+  position: relative;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  margin-bottom: 40px;
+}
+
+.upload-container ~ label {
+  margin-top: 135px;
+}
+
+.upload-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.upload-icon{
+  /* border: 2px dashed #ccc; */
+  position: absolute;
+  top: 0;
+  left: 0;
+  /* height: 120px;
+  width: 170px; */
+  /* border-radius: 10px; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+}
+
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);

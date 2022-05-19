@@ -23,6 +23,26 @@
 
 }
 
+.fileDelBtn{
+    height: 25px;
+    width: 25px;
+    border: none;
+    background-color: #E51E5C;
+    color: white;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    cursor: pointer;
+}
+
+.fileUploadContainer{
+    position: relative; 
+    height: 120px; 
+    width: 180px;
+    display: inline-block;
+    margin-right: 10px;
+}
+
 @media screen and (min-width: 280px) and (max-width: 786px) {
     .submissionContainer {
         padding: 20px;
