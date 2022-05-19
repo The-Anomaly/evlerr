@@ -1,6 +1,6 @@
 
 import http from "../../Utils";
-import { GETTING_PROPERTIES, PROPERTIES_FAIL, PROPERTIES_SUCCESS, UPLOADING_PROPERTY, UPLOADING_PROPERTY_FAIL, UPLOADING_PROPERTY_SUCCESSFUL } from "../Types";
+import { DELETE_PROPERTY, GETTING_PROPERTIES, PROPERTIES_FAIL, PROPERTIES_SUCCESS, UPLOADING_PROPERTY, UPLOADING_PROPERTY_FAIL, UPLOADING_PROPERTY_SUCCESSFUL } from "../Types";
 
 
 
@@ -46,3 +46,18 @@ export const uploadProperties = (obj) => {
 }
 
 
+export const deleteProperty = (p_id) => {
+    return dispatch => {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const res = await http.delete(`user/delete-property/${p_id}`)
+                const data = res.data
+                dispatch({type: DELETE_PROPERTY, payload: p_id})
+                // console.log('deleteAction: ', data)
+                resolve(data)
+            } catch (error) {
+                reject(error);
+            }
+        })
+    }
+}

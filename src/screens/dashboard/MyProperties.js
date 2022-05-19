@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import DashboardCards from '../../components/cards/DashboardCards'
 import CustomInput from '../../utils/CustomInput'
 import { BsSearch } from 'react-icons/bs';
 import CustomInputDrop from '../../utils/CustomInputDrop';
 import { IoMdArrowDropdown, IoMdArrowDropup } from 'react-icons/io';
 import '../../assets/style/DashboardStyles.css';
+import MyPropertiesRows from '../../components/dashboard/MyPropertiesRows';
 
 const MyProperties = () => {
 
@@ -18,7 +18,6 @@ const MyProperties = () => {
         } else {
             setState((prevState) => ({ ...prevState, menuDrop: true }))
         }
-
     }
     return (
         <>
@@ -38,22 +37,16 @@ const MyProperties = () => {
 
                     </div>
                 </div>
-                <section >
-                    <DashboardCards customStyles={{ flexDirection: 'column', alignItems: 'flex-start' }}>
-                        <div className='tableHeader'>
-                            <ul className='tableCells'>
-                                <li className={'f14 semiBoldText white'}>Image</li>
-                                <li className={'f14 semiBoldText white'}>Information</li>
-                                <li className={'f14 semiBoldText white'}>Expiry</li>
-                                <li className={'f14 semiBoldText white'}>Status</li>
-                                <li className={'f14 semiBoldText white'}>View</li>
-                                <li className={'f14 semiBoldText white'}>Action</li>
-                            </ul>
-                        </div>
-                        <div className={'infoHeader pt20 pr20 pb20 pl20'}>
-                            <p className={'f14 regularText'}>You don't have any properties yet. Start by creating new one.</p>
-                        </div>
-                    </DashboardCards>
+                <section className={'membersCard'}>
+                    <div className='tableHeader'>
+                        <ul className='tableCells repeat-4'>
+                            <li className={'f14 semiBoldText white'}>Image</li>
+                            <li className={'f14 semiBoldText white'}>Information</li>
+                            <li className={'f14 semiBoldText white'}>Created on</li>
+                            <li className={'f14 semiBoldText white'}>Action</li>
+                        </ul>
+                    </div>
+                    <MyPropertiesRows />
                 </section>
             </main>
         </>
