@@ -8,6 +8,7 @@ export const LOGOUT = "logout";
 
 
 export const GETTING_PROPERTIES = "getting_properties";
+export const DELETE_PROPERTY = "delete_properties";
 export const PROPERTIES_SUCCESS = "properties_success";
 export const PROPERTIES_FAIL = "properties_fail";
 

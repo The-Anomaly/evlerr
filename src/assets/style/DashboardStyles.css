@@ -122,6 +122,11 @@
   grid-template-columns: repeat(5, 1fr);
 }
 
+
+.repeat-4{
+  grid-template-columns: repeat(4, 1fr);
+}
+
 .del-btn{
   padding: 10px;
   background-color: #f7f7f7;
