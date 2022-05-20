@@ -1,5 +1,5 @@
 import http from "../../Utils";
-import { LOADING_USER, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT } from "../Types";
+import { LOADING_USER, LOGIN_FAIL, LOGIN_SUCCESS, LOGOUT, UPDATE_USER } from "../Types";
 
 
 
@@ -12,14 +12,17 @@ export const login = ({ email, password }) => {
             try {
                 const res = await http.post("auth/createSession", obj)
                 const data = res.data
-
                 let { accessToken, refreshToken } = data;
                 sessionStorage.setItem("accessToken", accessToken);
                 localStorage.setItem("refreshToken", refreshToken);
+
+                const user = await http.get("user/me")
+                localStorage.setItem('userInfo', JSON.stringify(user.data))
                 // await setUser(data);
                 
                 // if (!data.twofa.active && data.user.isEmailVerified) {
                 dispatch({ type: LOGIN_SUCCESS, payload: data });
+                dispatch({ type: UPDATE_USER, payload: user.data });
                 console.log('login data ', data)
                 // }
                 resolve(data);
@@ -32,12 +35,38 @@ export const login = ({ email, password }) => {
     };
 };
 
+// export const getCurrentUser = () => {
+//     return () => {
+//         return new Promise(async (resolve, reject) => {
+//             try {
+//                 const res = await http.get("user/me")
+//                 const data = res.data
+//                 resolve(data);
+//             } catch (error) {
+//                 reject(error);
+//             }
+//         });
+//     }
+// }
+
 export const logout = () => {
     return dispatch => {
-        dispatch({ type: LOGOUT })
-        localStorage.removeItem('refreshToken')
-        sessionStorage.removeItem('accessToken')
-        console.log('logged out')
+        return new Promise(async (resolve, reject) => {
+            try {
+                const res = await http.delete('auth/delete-session')
+                if (res.success) {
+                    dispatch({ type: LOGOUT })
+                    localStorage.removeItem('userInfo')
+                    localStorage.removeItem('refreshToken')
+                    sessionStorage.removeItem('accessToken')
+                    // console.log('logged out')
+                }
+
+                resolve(res)
+            } catch (error) {
+                reject(error)
+            }
+        })
     }
 }
 

@@ -3,13 +3,15 @@ import Logo from '../../assets/images/logo2.svg';
 import './Nav.css';
 import '../../assets/style/GeneralStyles.css';
 import { BsPlusLg } from 'react-icons/bs';
-import { Link, } from 'react-router-dom';
+import { Link, useNavigate, } from 'react-router-dom';
 import CustomIconButton from '../../utils/CustomIconButton';
 import CustomLink from './CustomLink';
 import { IoMdArrowDropdown } from 'react-icons/io';
+import { AiOutlineUser } from 'react-icons/ai';
 import agentiMG from '../../assets/images/agent.jpeg'
-import { useDispatch } from 'react-redux';
-import { LOGOUT } from '../../redux/Types';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../../redux/actions/AuthActions';
+import { toast } from 'react-toastify';
 
 
 const NavBar = ({ boxShadow, logo }) => {
@@ -26,10 +28,26 @@ const NavBar = ({ boxShadow, logo }) => {
     //     }
 
     // }
+    const user = useSelector((state) => state.auth.userInfo)
+    const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const logoutUser = () => {
-        dispatch({ type: LOGOUT })
+    const logoutUser = async () => {
+        try {
+            const res = await dispatch(logout())
+            console.log('logout resp: ',res)
+            if(res.success){
+                toast.success("You've been logged out successfully", {
+                    position: toast.POSITION.TOP_RIGHT
+                })
+                navigate('/')
+            }
+        } catch (error) {
+            toast.error("Something went wrong, please try again", {
+                position: toast.POSITION.TOP_RIGHT
+            })
+            console.log(error)
+        }
     }
 
 
@@ -209,6 +227,7 @@ const NavBar = ({ boxShadow, logo }) => {
                     </ul>
                 </div >
                 <div className='divider' />
+                { user ? 
                 <div id='agentdropdown'>
                     <div>
                         <img src={agentiMG} alt={'agent avatar'} className={'agent-avatar'} />
@@ -219,18 +238,38 @@ const NavBar = ({ boxShadow, logo }) => {
                     <div className='agentDropDownContentContainer' >
                         <ul className={'flex justifyBetween alignCenter'} style={{ height: '100%' }}>
                             <li style={{ display: 'grid', gridTemplateColumns: '100%', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
-                                <CustomLink to={'/properties'}>Dashboard</CustomLink>
-                                <CustomLink to={'/properties'}>Profile</CustomLink>
-                                <CustomLink to={'/properties'}>Reviews</CustomLink>
-                                <CustomLink to={'/properties'}>Message</CustomLink>
-                                <CustomLink to={'/properties'}>My Properties</CustomLink>
-                                <CustomLink to={'/properties'}>My Favorite</CustomLink>
-                                <CustomLink to={'/properties'}>Saved Search</CustomLink>
+                                <CustomLink to={'/dashboard'}>Dashboard</CustomLink>
+                                <CustomLink to={'/profile'}>Profile</CustomLink>
+                                <CustomLink to={'/reviews'}>Reviews</CustomLink>
+                                <CustomLink to={'/message'}>Message</CustomLink>
+                                <CustomLink to={'/myProperties'}>My Properties</CustomLink>
+                                <CustomLink to={'/favorites'}>My Favorite</CustomLink>
+                                <CustomLink to={'/savedSearch'}>Saved Search</CustomLink>
                                 <CustomLink to={'#'} onClick={logoutUser}>Log out</CustomLink>
                             </li>
                         </ul>
                     </div>
-                </div>
+                </div> :
+                <div>
+                    <ul id='authLinks'>
+                        <li >
+                            <AiOutlineUser size={24} color={'#046971'} style={{ marginRight: '5px' }} />
+                        </li>
+                        <li className={'regularText f16'}>
+                            <CustomLink to={'/login'}>
+                                Login
+                            </CustomLink>
+                        </li>
+                        <li className={'regularText f16'} style={{ margin: '0 5px' }}>
+                            /
+                        </li>
+                        <li className={'regularText f16'}>
+                            <Link to={'signup'}>
+                                Register
+                            </Link>
+                        </li>
+                    </ul>
+                </div>}
 
                 <div>
                     <Link to={'submission'}>

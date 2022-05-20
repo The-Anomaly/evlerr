@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Route, Routes } from 'react-router-dom'
-import { useDispatch } from "react-redux";
 import Layout from '../components/dashboard/Layout'
 import ForgotPassword from '../screens/auth/ForgotPassword'
 import Login from '../screens/auth/Login'
@@ -26,24 +25,9 @@ import PropertiesDisplay from '../screens/properties/PropertiesDisplay'
 import PropertiesMap from '../screens/properties/PropertiesMap'
 import PropertyDetails from '../screens/properties/PropertyDetails'
 import RequireAuth from './RoutesAuth'
-import { LOGIN_SUCCESS } from "../redux/Types";
 
 const RoutesContainer = () => {
 
-    const dispatch = useDispatch();
-
-    useEffect(() => {
-    
-        // When component loads, we check for d access token. if present, we dispatch a
-        // login success action
-        const accessToken = sessionStorage.getItem('accessToken')
-        const refreshToken = localStorage.getItem('refreshToken')
-        if (accessToken) {
-            const data = {'accessToken': accessToken, 'refreshToken': refreshToken}
-            dispatch({ type: LOGIN_SUCCESS, payload: data });
-        }
-
-    })
 
     return (
         <>
@@ -67,16 +51,14 @@ const RoutesContainer = () => {
 
 
                 <Route element={<Layout />} >
-                    <Route path='dashboard' element={<Dashboard />} />
-                    <Route path='profile' element={<Profile />} />
-                    <Route path='reviews' element={<Reviews />} />
-                    <Route path='messages' element={<Messages />} />
-                    {/* <Route path='favorites' element={<MyFavorites />} /> */}
-                    {/* <Route path='savedSearch' element={<SavedSaearch />} /> */}
-                    <Route path='favorites' element={<MyFavorites />} />
-                    <Route path='savedSearch' element={<SavedSearch />} />
-                    <Route path='myProperties' element={<MyProperties />} />
-                    <Route path='package' element={<MyPackage />} />
+                    <Route path='dashboard' element={<RequireAuth><Dashboard /></RequireAuth>} />
+                    <Route path='profile' element={<RequireAuth><Profile /></RequireAuth>} />
+                    <Route path='reviews' element={<RequireAuth><Reviews /></RequireAuth>} />
+                    <Route path='messages' element={<RequireAuth><Messages /></RequireAuth>} />
+                    <Route path='favorites' element={<RequireAuth><MyFavorites /></RequireAuth>} />
+                    <Route path='savedSearch' element={<RequireAuth><SavedSearch /></RequireAuth>} />
+                    <Route path='myProperties' element={<RequireAuth><MyProperties /></RequireAuth>} />
+                    <Route path='package' element={<RequireAuth><MyPackage /></RequireAuth>} />
                     {/* <Route path='submission' element={<Submission />} /> */}
                     <Route path='password' element={<ChangePassword />} />
                 </Route>

@@ -5,12 +5,15 @@ import CustomInput from '../../utils/CustomInput'
 import CustomInputDrop from '../../utils/CustomInputDrop'
 import SimpleMap from '../../utils/Map'
 import { IoMdArrowDropdown, IoMdArrowDropup } from 'react-icons/io'
+import { useSelector } from 'react-redux'
 
 const Profile = () => {
 
     const [state, setState] = useState({
         url: 'https://www.demoapus-wp1.com/homeo/agent/agent-yassine/', edit: false, data: null, fullScreen: false, loading: false, menuDrop: false
     })
+
+    const user = useSelector((state) => state.auth.userInfo)
 
     const showEdit = () => {
         setState((prevState) => ({ ...prevState, edit: true }))
@@ -59,7 +62,7 @@ const Profile = () => {
                     <div className={'pt30'}>
 
                         <div>
-                            <CustomInput label={'Full Name'} value={'Agent Pakulla'} />
+                            <CustomInput label={'Full Name'} value={user.username} />
                         </div>
 
                         <div>
@@ -70,7 +73,7 @@ const Profile = () => {
                             <CustomInput label={'Job'} value={'Marketing'} />
                         </div>
                         <div>
-                            <CustomInput label={'E-mail'} value={'agency@apus.com'} />
+                            <CustomInput label={'E-mail'} value={user.email} />
                         </div>
                         <div>
                             <CustomInput label={'Web'} value={'apusthemes.com'} />
