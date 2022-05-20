@@ -1,12 +1,13 @@
 import {
-    LOGIN_SUCCESS, LOGIN_FAIL, LOADING_USER, LOGOUT
+    LOGIN_SUCCESS, LOGIN_FAIL, LOADING_USER, LOGOUT, UPDATE_USER
 } from '../Types';
 
 const INITIAL_STATE = {
     loadingUser: false,
     error: [],
     userData: '',
-    isLogged: true
+    userInfo: '',
+    isLogged: false
 };
 
 const AuthReducer = (state = INITIAL_STATE, { type, payload }) => {
@@ -14,13 +15,13 @@ const AuthReducer = (state = INITIAL_STATE, { type, payload }) => {
         case LOADING_USER:
             return { ...state, loadingUser: true, error: [] };
         case LOGIN_SUCCESS:
-            return { ...state, userData: payload };
+            return { ...state, userData: payload, isLogged: true };
         case LOGIN_FAIL:
             return { ...state, error: payload, userData: '' };
+        case UPDATE_USER:
+            return { ...state, userInfo: payload };
         case LOGOUT:
-            localStorage.removeItem('refreshToken')
-            sessionStorage.removeItem('accessToken')
-            return { ...state, userData: '', isLogged: false }
+            return { ...state, userData: '', userInfo: '', isLogged: false }
         default:
             return state;
     }
