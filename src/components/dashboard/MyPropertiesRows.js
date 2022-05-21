@@ -81,15 +81,16 @@ const MyPropertiesRows = () => {
 
     const propertiesList = properties.map((property, index) => {
         const { gallery, propertyTitle, friendlyAddress, createdAt, price, _id } = property
+        const checkGallery = gallery[0] ? typeof gallery[0] : 'string'
         return (
             <section key={index} className={'transactionRowContainer bgWhite'}>
-                <ul className={'fav-container tableCells pb10 repeat-4'}>
+                <ul className={'fav-container overviewGrid pb10'}>
                     <li className={'f14 headerColor'} >
                         <Link to={'#'}>
                             <div className='image-wrapper'>
                                 <div className="overlay"></div>
                                 <span className="property-status">For sale</span>
-                                <img src={gallery[0]} alt={''} />
+                                <img src={ checkGallery === 'string' ? gallery[0] : gallery[0].url } alt={''}  />
                             </div>
                         </Link>        
                     </li>
