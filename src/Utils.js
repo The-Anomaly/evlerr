@@ -152,6 +152,20 @@ const http = {
 
         return this.request(url, "POST", data, options);
     },
+    patch(url, data, isJson = true, options = {}) {
+        // const options = {};
+        if (!isJson) {
+            options.headers = { "Content-Type": "multipart/form-data" };
+            const formData = new FormData();
+            Object.entries(data).forEach(([key, value]) =>
+                formData.append(key, value)
+            );
+            data = formData;
+        }
+        // console.log('Got here ', data, isJson, options)
+
+        return this.request(url, "PATCH", data, options);
+    },
     put(url, data, isJson = true) {
         const options = {};
 
