@@ -3,19 +3,19 @@ import ImageUploading from "react-images-uploading";
 import '../../assets/style/DashboardStyles.css';
 import { AiOutlineClose } from 'react-icons/ai';
 
-function ImagePicker() {
+function ImagePicker({ uploader }) {
     const [images, setImages] = React.useState([]);
     const maxNumber = 69;
     const onChange = (imageList, addUpdateIndex) => {
         // data for submit
         console.log(imageList, addUpdateIndex);
         setImages(imageList);
+        uploader(imageList[0].file)
     };
 
     return (
         <div className="App">
             <ImageUploading
-                multiple
                 value={images}
                 onChange={onChange}
                 maxNumber={maxNumber}

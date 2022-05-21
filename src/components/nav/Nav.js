@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Logo from '../../assets/images/logo2.svg';
 import './Nav.css';
 import '../../assets/style/GeneralStyles.css';
@@ -12,37 +12,30 @@ import agentiMG from '../../assets/images/agent.jpeg'
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../redux/actions/AuthActions';
 import { toast } from 'react-toastify';
+import Loading from '../../utils/Loading';
 
 
 const NavBar = ({ boxShadow, logo }) => {
 
-    // const [state, setState] = useState({
-    //     membersDrop: false,
-    // })
-
-    // const showMembersDrop = () => {
-    //     if (state.membersDrop) {
-    //         setState((prevState) => ({ ...prevState, membersDrop: false }))
-    //     } else {
-    //         setState((prevState) => ({ ...prevState, membersDrop: true }))
-    //     }
-
-    // }
+    const [logoutLoading, setLogoutLoading] = useState(false)
     const user = useSelector((state) => state.auth.userInfo)
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
     const logoutUser = async () => {
+        setLogoutLoading(true)
         try {
             const res = await dispatch(logout())
-            console.log('logout resp: ',res)
+            setLogoutLoading(false)
             if(res.success){
                 toast.success("You've been logged out successfully", {
                     position: toast.POSITION.TOP_RIGHT
                 })
                 navigate('/')
             }
+            console.log('logout resp: ',res)
         } catch (error) {
+            setLogoutLoading(false)
             toast.error("Something went wrong, please try again", {
                 position: toast.POSITION.TOP_RIGHT
             })
@@ -233,7 +226,7 @@ const NavBar = ({ boxShadow, logo }) => {
                         <img src={agentiMG} alt={'agent avatar'} className={'agent-avatar'} />
                     </div>
                     <p className={'flex alignCenter'} style={{ padding: '8px' }}>
-                        Agent pakulla <span style={{ marginTop: '5px' }}> <IoMdArrowDropdown size={16} /></span>
+                        {user.username} <span style={{ marginTop: '5px' }}> <IoMdArrowDropdown size={16} /></span>
                     </p>
                     <div className='agentDropDownContentContainer' >
                         <ul className={'flex justifyBetween alignCenter'} style={{ height: '100%' }}>
@@ -245,7 +238,7 @@ const NavBar = ({ boxShadow, logo }) => {
                                 <CustomLink to={'/myProperties'}>My Properties</CustomLink>
                                 <CustomLink to={'/favorites'}>My Favorite</CustomLink>
                                 <CustomLink to={'/savedSearch'}>Saved Search</CustomLink>
-                                <CustomLink to={'#'} onClick={logoutUser}>Log out</CustomLink>
+                                <CustomLink to={'#'} onClick={logoutUser}>Log out {logoutLoading && <Loading />} </CustomLink>
                             </li>
                         </ul>
                     </div>

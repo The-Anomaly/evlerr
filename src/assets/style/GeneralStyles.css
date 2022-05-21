@@ -285,6 +285,10 @@
 .dashBg {
   background-color: #f7f7f7;
 }
+.cPointer{
+  cursor: pointer;
+}
+
 .hAuto {
   height: auto;
 }

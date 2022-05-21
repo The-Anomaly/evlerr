@@ -5,7 +5,11 @@ import CustomInput from '../../utils/CustomInput'
 import CustomInputDrop from '../../utils/CustomInputDrop'
 import SimpleMap from '../../utils/Map'
 import { IoMdArrowDropdown, IoMdArrowDropup } from 'react-icons/io'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import http from '../../Utils'
+import Dropdown from '../../utils/Dropdown'
+import { toast } from 'react-toastify';
+import { UPDATE_USER } from '../../redux/Types'
 
 const Profile = () => {
 
@@ -15,6 +19,11 @@ const Profile = () => {
 
     const user = useSelector((state) => state.auth.userInfo)
 
+    const [formData, setFormData] = useState({ location: 'Select Country', username: user.username, fullName: user.fullName, socials: [{name: 'Select Social', url: ''}] })
+    const dispatch = useDispatch()
+    
+    
+
     const showEdit = () => {
         setState((prevState) => ({ ...prevState, edit: true }))
     }
@@ -22,11 +31,77 @@ const Profile = () => {
         setState((prevState) => ({ ...prevState, edit: false }))
     }
 
-    const showDropMenu = () => {
-        if (state.menuDrop) {
-            setState((prevState) => ({ ...prevState, menuDrop: false }))
-        } else {
-            setState((prevState) => ({ ...prevState, menuDrop: true }))
+    const newNetwork = () => {
+        setFormData({ ...formData, socials: [ ...formData.socials, { name: 'Select Social', url: '' } ] })
+    }
+
+    const deleteNetwork = (index) => {
+        setFormData({ ...formData, socials: formData.socials.filter((val, ind) => ind !== index) })
+    }
+
+    
+    const handleSocialName = (val, index) => {
+        console.log('first')
+        const newSocial = formData.socials.slice()
+        newSocial[index] = { ...newSocial[index], name: val }
+        setFormData({ ...formData, socials: newSocial })
+    }
+
+    const handleSocialUrl = (val, index = 0) => {
+        console.log('first')
+        const newSocial = formData.socials.slice()
+        newSocial[index] = { ...newSocial[index], url: val }
+        setFormData({ ...formData, socials: newSocial })
+    }
+
+    const handleLocation = (val) => {
+        setFormData({ ...formData, location: val })
+    }
+
+    const uploadProfileImage = async (file) => {
+        try {
+            const res = await http.uploadFile('user/photo-uploader', file)
+            toast.success('Profile image uploaded', {
+                position: toast.POSITION.TOP_RIGHT
+            });
+            console.log('profile image update: ', res.data)
+        } catch (error) {
+            console.log(error)
+            toast.error('Unable to upload image', {
+                position: toast.POSITION.TOP_RIGHT
+            });
+        }
+    }
+
+    const submit = async (e) => {
+        e.preventDefault()
+
+        const { socials, fullName, location, username } = formData
+        const sArray = []
+        socials.map((val) => {
+            sArray.push(val.url)
+        })
+
+        const fd = { sArray, fullName, location, username }
+        // console.log(fd)
+        // return
+
+        setState({ ...state, loading: true })
+        try {
+            const res = await http.patch('user/update-profile', fd)
+            dispatch({ type: UPDATE_USER, payload: res.data })
+            localStorage.setItem('userInfo', JSON.stringify(res.data))
+            setState({ ...state, loading: false })
+            toast.success('Saved', {
+                position: toast.POSITION.TOP_RIGHT
+            });
+            console.log('profile update: ',res)
+        } catch (error) {
+            console.log(error)
+            setState({ ...state, loading: false })
+            toast.error('Something went wrong', {
+                position: toast.POSITION.TOP_RIGHT
+            });
         }
 
     }
@@ -55,14 +130,18 @@ const Profile = () => {
                     <div className={'pt30'}>
                         <p className={'f14 boldText headerColor pb40'}>Featured Image</p>
                         <div>
-                            <ImagePicker />
+                            <ImagePicker uploader={uploadProfileImage} />
                         </div>
                     </div>
 
                     <div className={'pt30'}>
 
                         <div>
-                            <CustomInput label={'Full Name'} value={user.username} />
+                            <CustomInput label={'Full Name'} onChange={(e) => {setFormData({ ...formData, fullName: e.target.value })}} value={formData.fullName} />
+                        </div>
+
+                        <div>
+                            <CustomInput label={'Username'} onChange={(e) => {setFormData({ ...formData, username: e.target.value })}} value={formData.username} />
                         </div>
 
                         <div>
@@ -97,35 +176,24 @@ const Profile = () => {
                                 <CustomInput value={'-73.952876'} />
                             </div>
                         </div>
+
+                        <Dropdown label={'Location'} curSelect={formData.location} options={['Atlanta', 'Florida', 'Los Angeles', 'Miami', 'New York', 'Orlando']} setSelect={handleLocation} />
                     </div>
 
                     <div className={'pt30'}>
                         <p className={'f14 boldText headerColor pb20'}>Socials</p>
-                        <CustomInputDrop placeholder={'Network 1'} onClick={showDropMenu} menuDrop={state.menuDrop}
-                            icon={state.menuDrop ? <IoMdArrowDropup size={22} /> : <IoMdArrowDropdown size={22} />}
-                            color={'#484848'}></CustomInputDrop>
-                        <CustomInputDrop placeholder={'Network 1'} onClick={showDropMenu} menuDrop={state.menuDrop}
-                            icon={state.menuDrop ? <IoMdArrowDropup size={22} /> : <IoMdArrowDropdown size={22} />}
-                            color={'#484848'}></CustomInputDrop>
-                        <CustomInputDrop placeholder={'Network 1'} onClick={showDropMenu} menuDrop={state.menuDrop}
-                            icon={state.menuDrop ? <IoMdArrowDropup size={22} /> : <IoMdArrowDropdown size={22} />}
-                            color={'#484848'}></CustomInputDrop>
-                        <CustomInputDrop placeholder={'Network 1'} onClick={showDropMenu} menuDrop={state.menuDrop}
-                            icon={state.menuDrop ? <IoMdArrowDropup size={22} /> : <IoMdArrowDropdown size={22} />}
-                            color={'#484848'}></CustomInputDrop>
-                        <div className='addNetwork'>
-                            <p className={'f14 regularText white'}>Add Another Network</p>
+                        { formData.socials.map((val, index) => 
+                            <CustomInputDrop placeholder={`Network ${index+1}`} inputValue={formData.socials[index]} changeUrl={handleSocialUrl} changeName={handleSocialName} index={index} delNetwork={deleteNetwork} icon={state.menuDrop ? <IoMdArrowDropup size={22} /> : <IoMdArrowDropdown size={22} />}
+                                color={'#484848'}></CustomInputDrop>
+
+                        ) }
+                        <div className='addNetwork' style={{ marginBottom: '20px' }}>
+                            <p onClick={newNetwork} className={'f14 regularText white'}>Add Another Network</p>
                         </div>
-                    </div>
-                    <div className={'pt30'}>
-                        <p className={'f14 boldText headerColor pb20'}>Location</p>
-                        <CustomInputDrop placeholder={'Select Country'} onClick={showDropMenu} menuDrop={state.menuDrop}
-                            icon={state.menuDrop ? <IoMdArrowDropup size={22} /> : <IoMdArrowDropdown size={22} />}
-                            color={'#484848'}></CustomInputDrop>
                     </div>
 
                     <div>
-                        <CustomButton title={'Save Profile'} customStyle={{ color: '#fff', backgroundColor: '#ff5a5f', borderColor: '#ff5a5f', width: '100px' }} />
+                        <CustomButton onClick={submit} title={'Save Profile'} loading={state.loading} customStyle={{ color: '#fff', backgroundColor: '#ff5a5f', borderColor: '#ff5a5f', width: '100px' }} />
                     </div>
                 </section>
             </main>

@@ -16,7 +16,6 @@
   padding: 12px 30px;
   transition: all 0.3s ease-in-out;
   background-color: #fff;
-  margin-bottom: 20px;
 }
 .inputBox {
   border: none;
@@ -55,13 +54,11 @@
 }
 .dropDownContainer {
   position: relative;
+  margin-bottom: 20px;
 }
 .dropDownContentContainer {
   background-color: #fff;
-  position: absolute;
-  top: 55px;
-  left: 0;
-  right: 0;
+  display: flex;
   padding: 20px;
   transition: all 0.3s ease-in-out;
   border-radius: 6px;
