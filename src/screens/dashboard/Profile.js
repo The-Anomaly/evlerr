@@ -58,6 +58,21 @@ const Profile = () => {
         setFormData({ ...formData, location: val })
     }
 
+    const uploadProfileImage = async (file) => {
+        try {
+            const res = await http.uploadFile('user/photo-uploader', file)
+            toast.success('Profile image uploaded', {
+                position: toast.POSITION.TOP_RIGHT
+            });
+            console.log('profile image update: ', res.data)
+        } catch (error) {
+            console.log(error)
+            toast.error('Unable to upload image', {
+                position: toast.POSITION.TOP_RIGHT
+            });
+        }
+    }
+
     const submit = async (e) => {
         e.preventDefault()
 
@@ -115,7 +130,7 @@ const Profile = () => {
                     <div className={'pt30'}>
                         <p className={'f14 boldText headerColor pb40'}>Featured Image</p>
                         <div>
-                            <ImagePicker />
+                            <ImagePicker uploader={uploadProfileImage} />
                         </div>
                     </div>
 

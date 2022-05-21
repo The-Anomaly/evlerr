@@ -9,11 +9,10 @@ function RequireAuth({ children }) {
     const dispatch = useDispatch();
     const accessToken = sessionStorage.getItem('accessToken')
     
+
     useEffect(() => {
         const refreshToken = localStorage.getItem('refreshToken')
         const userInfo = JSON.parse(localStorage.getItem('userInfo'))
-    
-        // console.log('localData ',userInfo)
         if (accessToken) {
             const data = {'accessToken': accessToken, 'refreshToken': refreshToken}
             dispatch({ type: LOGIN_SUCCESS, payload: data });
@@ -21,8 +20,8 @@ function RequireAuth({ children }) {
         }
 
     }, [dispatch, accessToken])
-    // console.log(auth.userData);
 
+    
     // used accessToken to check if user loggedin instead of auth.userData
     if (!accessToken) {
         // Redirect them to the /login page, but save the current location they were
