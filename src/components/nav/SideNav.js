@@ -1,6 +1,7 @@
 import React from 'react';
 import './Nav.css';
 import Logo from '../../assets/images/logo2.svg';
+import { Link } from "react-router-dom";
 import { IoLayersOutline } from 'react-icons/io5';
 import { AiOutlineLogout, AiOutlinePlus, AiOutlineUser } from 'react-icons/ai';
 import { GoPackage, GoMail } from 'react-icons/go';
@@ -15,7 +16,9 @@ const SideNav = () => {
         <>
             <nav className='sideNavContainer'>
                 <div className={'pt30 pl30'}>
-                    <img src={Logo} alt='logo' />
+                    <Link to={'/'}>
+                        <img src={Logo} alt='logo' />
+                    </Link>
                 </div>
                 <ul>
 

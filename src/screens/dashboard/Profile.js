@@ -78,24 +78,25 @@ const Profile = () => {
 
         const { socials, fullName, location, username } = formData
         const sArray = []
-        socials.map((val) => {
-            sArray.push(val.url)
-        })
+        socials.map((val) => sArray.push(val.url))
 
-        const fd = { sArray, fullName, location, username }
+        const fd = { sArray, fullName: fullName.trim(), location: location.trim(), username: username.trim() }
         // console.log(fd)
         // return
 
         setState({ ...state, loading: true })
         try {
+
             const res = await http.patch('user/update-profile', fd)
-            dispatch({ type: UPDATE_USER, payload: res.data })
+            
             localStorage.setItem('userInfo', JSON.stringify(res.data))
+            dispatch({ type: UPDATE_USER, payload: res.data })
             setState({ ...state, loading: false })
             toast.success('Saved', {
                 position: toast.POSITION.TOP_RIGHT
             });
             console.log('profile update: ',res)
+
         } catch (error) {
             console.log(error)
             setState({ ...state, loading: false })

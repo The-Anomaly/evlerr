@@ -3,19 +3,19 @@ import React, { useState } from 'react';
 import CustomInput from '../../utils/CustomInput';
 import '../../assets/style/AuthStyles.css';
 import AuthHero from '../../assets/images/bg-register.jpeg';
-import { AiOutlineCaretDown, AiOutlineEye, AiOutlineEyeInvisible, AiOutlineMail, AiOutlineUser } from 'react-icons/ai';
+import { AiOutlineEye, AiOutlineEyeInvisible, AiOutlineMail, AiOutlineUser } from 'react-icons/ai';
 import { Link, useNavigate } from 'react-router-dom';
 import CustomButton from '../../utils/CustomButton';
-import CustomInputDrop from '../../utils/CustomInputDrop';
 import { signup } from '../../redux/actions/AuthActions';
 import { connect } from 'react-redux';
 import { toast } from 'react-toastify';
+import Dropdown from '../../utils/Dropdown';
 
 const Register = (props) => {
 
     // const dispatch = useDispatch()
     const [auth, setAuth] = useState({
-        username: '', email: '', password: '', dropDown: false, role: '', confirmPassword: '', roles: [{ id: 1, roleType: 'Agent' }, { id: 2, roleType: 'Agency' }, { id: 3, roleType: 'user' },],
+        username: '', email: '', password: '', dropDown: false, confirmPassword: '', role: 'Role', roles: [{ id: 1, roleType: 'Agent' }, { id: 2, roleType: 'Agency' }, { id: 3, roleType: 'user' },],
         loading: false, showPassword: false, showConfirmPassword: false,
     })
 
@@ -27,9 +27,6 @@ const Register = (props) => {
     const onChangeUserName = (e) => {
         setAuth({ ...auth, username: e.target.value })
     }
-    const onChangeRole = (e) => {
-        setAuth({ ...auth, role: e.target.value })
-    }
     const onChangeEmail = (e) => {
         setAuth({ ...auth, email: e.target.value })
     }
@@ -38,19 +35,6 @@ const Register = (props) => {
     }
     const onChangeConfirmPassword = (e) => {
         setAuth({ ...auth, confirmPassword: e.target.value })
-    }
-
-    const showRoles = () => {
-        if (auth.dropDown) {
-            setAuth((prevState) => ({ ...prevState, dropDown: false }))
-        } else {
-            setAuth((prevState) => ({ ...prevState, dropDown: true }))
-        }
-    }
-
-    function selectResourceType(val) {
-        console.log(val.id)
-        setAuth((prevState) => ({ ...prevState, role: val.roleType, dropDown: false }))
     }
 
     const togglePassword = () => {
@@ -67,6 +51,10 @@ const Register = (props) => {
         } else {
             setAuth((prevState) => ({ ...prevState, showConfirmPassword: true }))
         }
+    }
+
+    const handleRole = (val) => {
+        setAuth({ ...auth, role: val })
     }
 
     const checkPassword = () => {
@@ -97,7 +85,7 @@ const Register = (props) => {
                     toast.success('SuccessFul, Verification Link Sent to mail', {
                         position: toast.POSITION.TOP_RIGHT
                     })
-                    navigate('login')
+                    navigate('/login')
                 }
                 console.log(res);
                 setAuth({ ...auth, loading: false })
@@ -152,14 +140,8 @@ const Register = (props) => {
                                 value={auth.confirmPassword} onIconClick={toggleConfirmPassword}
                             />
 
+                            <Dropdown curSelect={auth.role} options={['agency', 'agent', 'user']} setSelect={handleRole} />
 
-                            <CustomInputDrop onChange={onChangeRole} menuDrop={auth.dropDown} onClick={showRoles} placeholder={'Roles'} icon={<AiOutlineCaretDown className='authIcon' />}
-                                value={auth.role} name={'role'}
-                            >
-                                {auth.roles && auth.roles.map((item, index) => (
-                                    <li className={'f14 regularText headerColor pb10'} key={item.id} onClick={() => selectResourceType(item)}>{item.roleType}</li>
-                                ))}
-                            </CustomInputDrop>
 
                             <div>
                                 <CustomButton title={'Register'} customStyle={{ backgroundColor: '#ff5a5f', marginTop: '20px' }}
