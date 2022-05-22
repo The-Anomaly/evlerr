@@ -100,10 +100,10 @@ export const forgotPassword = (obj) => {
         return new Promise(async (resolve, reject) => {
             try {
                 const res = await http.post('auth/forgot-password', obj)
-                const data = res.data
-                dispatch({ type: LOGIN_SUCCESS, payload: data });
+                // const data = res.data
+                // dispatch({ type: LOGIN_SUCCESS, payload: data });
                 // loadResources(dispatch, data)
-                resolve(data);
+                resolve(res);
             } catch (error) {
                 console.log(error)
                 dispatch({ type: LOGIN_FAIL, payload: error });
