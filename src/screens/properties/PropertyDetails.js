@@ -14,12 +14,7 @@ import HomeThree from '../../assets/images/slider3.jpeg';
 import Agent from '../../assets/images/agent.jpeg';
 import CustomInput from '../../utils/CustomInput';
 import CustomButton from '../../utils/CustomButton';
-import { IoMdArrowDropup, IoMdArrowDropdown } from 'react-icons/io';
-import InputRange from 'react-input-range';
 import 'react-input-range/lib/css/index.css';
-import CustomInputDrop from '../../utils/CustomInputDrop';
-import { AiOutlineSearch } from 'react-icons/ai';
-import { BiCurrentLocation } from 'react-icons/bi';
 import { useLocation } from 'react-router-dom';
 import Loading from '../../utils/Loading';
 import http from '../../Utils';
@@ -39,14 +34,14 @@ const PropertyDetails = () => {
     // console.log(property?.state.propertyId);
     const propertyId = property?.state.propertyId
 
-    const showDropMenu = () => {
-        if (state.menuDrop) {
-            setState((prevState) => ({ ...prevState, menuDrop: false }))
-        } else {
-            setState((prevState) => ({ ...prevState, menuDrop: true }))
-        }
+    // const showDropMenu = () => {
+    //     if (state.menuDrop) {
+    //         setState((prevState) => ({ ...prevState, menuDrop: false }))
+    //     } else {
+    //         setState((prevState) => ({ ...prevState, menuDrop: true }))
+    //     }
 
-    }
+    // }
 
     const renderLoading = () => {
         if (state.loading) {
@@ -366,7 +361,8 @@ const PropertyDetails = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className={'membersCard'} style={{ margin: '30px 0' }}>
+                            {/* abtToUncomment && TODO: change <CustomInputDrop /> to <Dropdown /> */}
+                            {/* <div className={'membersCard'} style={{ margin: '30px 0' }}>
                                 <p className={'f20 headerColor boldText  pb20'}>Advanced Search</p>
                                 <section>
                                     <div>
@@ -443,7 +439,7 @@ const PropertyDetails = () => {
                                         <CustomButton title={'Find Property'} customStyle={{ backgroundColor: '#f53c41' }} color={'#fff'} />
                                     </div>
                                 </section>
-                            </div>
+                            </div> */}
                             <div className={'membersCard'} style={{ margin: '30px 0' }}>
                                 <p className={'f20 headerColor boldText  pb20'}>Latest Properties</p>
                                 <ul>
