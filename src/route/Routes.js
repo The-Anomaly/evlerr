@@ -60,7 +60,7 @@ const RoutesContainer = () => {
                     <Route path='myProperties' element={<RequireAuth><MyProperties /></RequireAuth>} />
                     <Route path='package' element={<RequireAuth><MyPackage /></RequireAuth>} />
                     {/* <Route path='submission' element={<Submission />} /> */}
-                    <Route path='password' element={<ChangePassword />} />
+                    <Route path='password' element={<RequireAuth><ChangePassword /></RequireAuth>} />
                 </Route>
 
             </Routes>

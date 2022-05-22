@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { IoLocationOutline } from 'react-icons/io5'
 import { VscTrash } from 'react-icons/vsc'
 import { FaDollarSign } from 'react-icons/fa'
@@ -11,19 +11,19 @@ import CustomButton from '../../utils/CustomButton'
 
 const MyPropertiesRows = () => {
 
-    const [state, setState] = useState({ loading: false, delLoading: false, selectedProperty: '', delModal: false, msg: "You don't have any properties yet. Start by creating new one." })
+    const [state, setState] = useState({ loading: false, delLoading: false, resourceId: '', selectedProperty: '', delModal: false, msg: "Loading..." })
     const dispatch = useDispatch()
-    
+    const navigate = useNavigate()
+
     useEffect(() => {
         (async () => {
             setState((state) => ({ ...state, loading: true, }))
             try {
-                // await dispatch(getProperties())
                 
                 const res = await dispatch(getProperties())
                 console.log('hey', res)
                 // localStorage.setItem('properties', JSON.stringify(res))
-                setState((state) => ({ ...state, loading: false, }))
+                setState((state) => ({ ...state, loading: false, msg: "You don't have any properties yet. Start by creating new one." }))
             } catch (error) {
                 // returnError(error)
                 setState((state) => ({ ...state, msg: error[0] }))
@@ -68,6 +68,17 @@ const MyPropertiesRows = () => {
         }
     }
 
+
+    function selectResourceType(val) {
+        setState((prevState) => ({ ...prevState, resourceId: val._id }))
+        // console.log(state.value)÷
+        // console.log(val._id)
+        if (val) {
+            navigate('/properties-details', { state: { propertyId: val._id } })
+        }
+
+    }
+
     
     window.onclick = function(event) {
 
@@ -86,20 +97,16 @@ const MyPropertiesRows = () => {
             <section key={index} className={'transactionRowContainer bgWhite'}>
                 <ul className={'fav-container overviewGrid pb10'}>
                     <li className={'f14 headerColor'} >
-                        <Link to={'#'}>
-                            <div className='image-wrapper'>
-                                <div className="overlay"></div>
-                                <span className="property-status">For sale</span>
-                                <img src={ checkGallery === 'string' ? gallery[0] : gallery[0].url } alt={''}  />
-                            </div>
-                        </Link>        
+                        <div onClick={() => selectResourceType(property)} className='cPointer image-wrapper'>
+                            <div className="overlay"></div>
+                            <span className="property-status">For sale</span>
+                            <img src={ checkGallery === 'string' ? gallery[0] : gallery[0].url } alt={''}  />
+                        </div>
                     </li>
                     <li className={'f14 headerColor'}>
                         <div className='flex alignCenter justifyBetween'>
                             <div>
-                                <Link to={'#'} className={'property-title'}>
-                                    <h3 className='headerColor'>{propertyTitle}</h3>
-                                </Link>
+                                <h3 onClick={() => selectResourceType(property)} className='headerColor cPointer'>{propertyTitle}</h3>
                                 <div className='my20'>
                                     <IoLocationOutline />
                                     <span className='pl10'>{friendlyAddress}</span>

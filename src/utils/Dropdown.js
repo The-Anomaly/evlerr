@@ -26,8 +26,8 @@ const Dropdown = ({ curSelect, options, setSelect, label }) => {
                     {!dropdown ? <IoMdArrowDropdown style={{ width: '40px' }} size={16} /> : <IoMdArrowDropdown style={{ width: '40px', transform: 'rotate(180deg)' }} size={16} /> }
                     {dropdown && 
                     <ul className={"submissionDropdowncontainer"}>
-                        { options.map((val) => 
-                            <li className={ curSelect === val ? 'active' : ''} onClick={() => {setSelect(val); showDropMenu()}}>{val}</li>) 
+                        { options.map((val, index) => 
+                            <li key={index} className={ curSelect === val ? 'active' : ''} onClick={() => {setSelect(val); showDropMenu()}}>{val}</li>) 
                         }
                     </ul>}
                 </div>
