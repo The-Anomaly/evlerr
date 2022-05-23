@@ -109,7 +109,7 @@ const Register = (props) => {
                     <ArrowBackIos />
                 </div>
                 <section className='authContainer'>
-                    <div>
+                    <div className='authImg'>
                         <img src={AuthHero} alt='hero' loading='eager' />
                     </div>
                     <div className='authFormContainer'>

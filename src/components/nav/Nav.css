@@ -183,3 +183,18 @@ a:hover {
     opacity: 1;
   }
 }
+
+.navItemResponsive{
+  display: none;
+}
+
+
+@media screen and (max-width: 800px) {
+    .navItems{
+      display: none;
+    }
+
+    .navItemResponsive{
+      display: inline-block;
+    }
+}

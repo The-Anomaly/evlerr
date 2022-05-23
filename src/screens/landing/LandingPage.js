@@ -89,7 +89,7 @@ const LandingPage = (props) => {
     const { getProperties } = props
     useEffect(() => {
         const submit = async () => {
-            setState((state) => ({ ...state, loading: true, }))
+            // setState((state) => ({ ...state, loading: true, }))
             try {
                 const res = await getProperties()
                 console.log('hey', res[0].gallery)

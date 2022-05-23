@@ -13,10 +13,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../redux/actions/AuthActions';
 import { toast } from 'react-toastify';
 import Loading from '../../utils/Loading';
+import ResponsiveSideNav from '../modals/ResponsiveSideNav';
+import { RiMenu4Line } from 'react-icons/ri';
 
 
 const NavBar = ({ boxShadow, logo }) => {
 
+    const [state, setState] = useState({ showResponsiveNav: false })
     const [logoutLoading, setLogoutLoading] = useState(false)
     const user = useSelector((state) => state.auth.userInfo)
     const navigate = useNavigate()
@@ -43,18 +46,23 @@ const NavBar = ({ boxShadow, logo }) => {
         }
     }
 
+    const toggleShowNav = () => {
+        setState({ ...state, showResponsiveNav: !state.showResponsiveNav })
+    }
+
 
 
     return (
         <>
             <nav className='navContainer' style={{ boxShadow: boxShadow }}>
+                <RiMenu4Line className='f50 pr10 navItemResponsive' onClick={toggleShowNav} />
                 {logo &&
                     <div className='logoContainer'>
                         <CustomLink to={'/'}>
                             <img src={Logo} alt='logo' style={{ width: '100px', height: '50px' }} />
                         </CustomLink>
                     </div>}
-                <div>
+                <div className='navItems'>
                     <ul>
                         <li className={'regularText f16'} id='forSale'>
                             <p className={'flex alignCenter'}>
@@ -264,7 +272,7 @@ const NavBar = ({ boxShadow, logo }) => {
                     </ul>
                 </div>}
 
-                <div>
+                <div className='navItems'>
                     <Link to={'submission'}>
                         <CustomIconButton title={'Submit Property'}
                             customStyle={{ backgroundColor: '#0c304a', borderRadius: '50px', color: '#fff', padding: '10px 16px', }}
@@ -275,6 +283,7 @@ const NavBar = ({ boxShadow, logo }) => {
                 </div>
 
             </nav >
+            <ResponsiveSideNav closeModal={toggleShowNav} visible={state.showResponsiveNav} />
 
         </>
     )

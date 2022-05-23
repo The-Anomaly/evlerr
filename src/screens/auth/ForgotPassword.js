@@ -53,7 +53,7 @@ const ForgotPassword = (props) => {
         <>
             <section className='containerBackground'>
                 <section className='authContainer'>
-                    <div>
+                    <div className='authImg'>
                         <img src={AuthHero} alt='hero' loading='eager' />
                     </div>
                     <div className='authFormContainer'>

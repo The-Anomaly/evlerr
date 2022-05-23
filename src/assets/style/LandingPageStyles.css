@@ -194,5 +194,17 @@
   }
   .citiesGrid {
     padding: 20px 10px;
+    grid-template-columns: auto;
   }
+  .divider{
+    display: none;
+  }
+  .selectorContainer{
+    padding: 10px 20px;
+  }
+  .selectorBox{
+    padding: 0;
+    margin: 0;
+  }
+
 }
