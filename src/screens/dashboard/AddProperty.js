@@ -12,6 +12,7 @@ import { connect } from 'react-redux';
 import { uploadProperties } from '../../redux/actions/PropertiesAction';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import CustomTextArea from '../../utils/CustomTextarea';
 
 
 const AddProperty = (props) => {
@@ -117,7 +118,7 @@ const AddProperty = (props) => {
     }
 
     const delUpload = (index, where) => {
-        setState((prevState) => ({ ...prevState, [where]: prevState[where].filter((val,id) => id !== index) }))
+        setState((prevState) => ({ ...prevState, [where]: prevState[where].filter((val, id) => id !== index) }))
     }
 
 
@@ -126,7 +127,7 @@ const AddProperty = (props) => {
         if (state.air) {
             setState((prevState) => ({ ...prevState, air: false, amenities: prevState.amenities.filter(amn => amn !== str) }))
         } else {
-            setState((prevState) => ({ ...prevState, air: true, amenities: [ ...prevState.amenities, str ] }))
+            setState((prevState) => ({ ...prevState, air: true, amenities: [...prevState.amenities, str] }))
         }
     }
 
@@ -136,7 +137,7 @@ const AddProperty = (props) => {
         if (state.fridge) {
             setState((prevState) => ({ ...prevState, fridge: false, amenities: prevState.amenities.filter(amn => amn !== str) }))
         } else {
-            setState((prevState) => ({ ...prevState, fridge: true, amenities: [ ...prevState.amenities, str ] }))
+            setState((prevState) => ({ ...prevState, fridge: true, amenities: [...prevState.amenities, str] }))
         }
     }
 
@@ -145,7 +146,7 @@ const AddProperty = (props) => {
         if (state.dryer) {
             setState((prevState) => ({ ...prevState, dryer: false, amenities: prevState.amenities.filter(amn => amn !== str) }))
         } else {
-            setState((prevState) => ({ ...prevState, dryer: true, amenities: [ ...prevState.amenities, str ] }))
+            setState((prevState) => ({ ...prevState, dryer: true, amenities: [...prevState.amenities, str] }))
         }
     }
 
@@ -155,7 +156,7 @@ const AddProperty = (props) => {
         if (state.barbeque) {
             setState((prevState) => ({ ...prevState, barbeque: false, amenities: prevState.amenities.filter(amn => amn !== str) }))
         } else {
-            setState((prevState) => ({ ...prevState, barbeque: true, amenities: [ ...prevState.amenities, str ] }))
+            setState((prevState) => ({ ...prevState, barbeque: true, amenities: [...prevState.amenities, str] }))
         }
     }
 
@@ -164,7 +165,7 @@ const AddProperty = (props) => {
         if (state.tv) {
             setState((prevState) => ({ ...prevState, tv: false, amenities: prevState.amenities.filter(amn => amn !== str) }))
         } else {
-            setState((prevState) => ({ ...prevState, tv: true, amenities: [ ...prevState.amenities, str ] }))
+            setState((prevState) => ({ ...prevState, tv: true, amenities: [...prevState.amenities, str] }))
         }
     }
 
@@ -173,7 +174,7 @@ const AddProperty = (props) => {
         if (state.washer) {
             setState((prevState) => ({ ...prevState, washer: false, amenities: prevState.amenities.filter(amn => amn !== str) }))
         } else {
-            setState((prevState) => ({ ...prevState, washer: true, amenities: [ ...prevState.amenities, str ] }))
+            setState((prevState) => ({ ...prevState, washer: true, amenities: [...prevState.amenities, str] }))
         }
     }
 
@@ -182,7 +183,7 @@ const AddProperty = (props) => {
         if (state.sauna) {
             setState((prevState) => ({ ...prevState, sauna: false, amenities: prevState.amenities.filter(amn => amn !== str) }))
         } else {
-            setState((prevState) => ({ ...prevState, sauna: true, amenities: [ ...prevState.amenities, str ] }))
+            setState((prevState) => ({ ...prevState, sauna: true, amenities: [...prevState.amenities, str] }))
         }
     }
 
@@ -191,45 +192,65 @@ const AddProperty = (props) => {
         if (state.wifi) {
             setState((prevState) => ({ ...prevState, wifi: false, amenities: prevState.amenities.filter(amn => amn !== str) }))
         } else {
-            setState((prevState) => ({ ...prevState, wifi: true, amenities: [ ...prevState.amenities, str ] }))
+            setState((prevState) => ({ ...prevState, wifi: true, amenities: [...prevState.amenities, str] }))
         }
     }
 
     const submit = async (e) => {
         e.preventDefault()
-        const { propertyTitle, propertyType, propertyDescription, propertyId, parentProperty, status, label, material, rooms, bed, bath, garage, yearBuilt, homeArea, energyClass, energyIndex, price, pricePrefix, priceSuffix, priceCustom, region, friendlyAddress, mapLocation, longtitude, latitude, featuredImage, gallery, attachment, videoLink, amenities, facilities, valuation, floors } = state
+        const { propertyTitle, propertyType, propertyDescription, propertyId, parentProperty, status, label,
+            material, rooms, bed, bath, garage, yearBuilt, homeArea, energyClass, energyIndex, price, pricePrefix,
+            priceSuffix, priceCustom, region, friendlyAddress, mapLocation, longtitude, latitude, featuredImage,
+            gallery, attachment, videoLink, amenities, facilities, valuation, floors } = state
+
         let fImage = featuredImage[0]
 
-        const formData = { propertyTitle, propertyType, propertyDescription, propertyId, parentProperty, status, label, material, rooms, bed, bath, garage, yearBuilt, homeArea, energyClass, energyIndex, price, pricePrefix, priceSuffix, priceCustom, region, friendlyAddress, mapLocation, longtitude, latitude, fImage, gallery, attachment, videoLink, amenities, facilities, valuation, floors }
+        const formData = {
+            propertyTitle, propertyType, propertyDescription, propertyId,
+            parentProperty, status, label, material, rooms, bed, bath, garage, yearBuilt,
+            homeArea, energyClass, energyIndex, price, pricePrefix, priceSuffix, priceCustom, region, friendlyAddress,
+            mapLocation, longtitude, latitude, fImage, gallery, attachment, videoLink, amenities, facilities, valuation, floors
+        }
 
-        if (!propertyTitle) {
-            toast.error('Property title cannot be empty', {
+        // if (!propertyTitle) {
+        //     toast.error('Property title cannot be empty', {
+        //         position: toast.POSITION.TOP_RIGHT
+        //     });
+        //     return;
+        // } else if (!propertyDescription) {
+        //     toast.error('Property description cannot be empty', {
+        //         position: toast.POSITION.TOP_RIGHT
+        //     });
+        //     return;
+        // }
+        // console.log(formData)
+
+        if (price === '' || parentProperty === '' || propertyDescription === '' || priceCustom === '' ||
+            material === '' || rooms === '' || bed === '' || garage === '' || bath === '' || garage === '' || yearBuilt === '' ||
+            homeArea === '' || energyClass === '' || energyIndex === '' || label === '' || latitude === '' || longtitude === ''
+            || floors === '' || pricePrefix === '' || priceSuffix === '' || region === '' || friendlyAddress === '' || valuation === '' ||
+            mapLocation === '' || propertyTitle === '' || propertyId === '' || propertyType === '' || videoLink === '') {
+            toast.error('All fields cannot be empty', {
                 position: toast.POSITION.TOP_RIGHT
             });
-            return;
-        } else if (!propertyDescription) {
-            toast.error('Property description cannot be empty', {
-                position: toast.POSITION.TOP_RIGHT
-            });
-            return;
-        }
-        console.log(formData)
-        
-        try{
-            const res = await props.uploadProperties(formData)
-            if (res) {
-                toast.success('SuccessFul', {
+        } else {
+            try {
+                const res = await props.uploadProperties(formData)
+                if (res) {
+                    toast.success('SuccessFul', {
+                        position: toast.POSITION.TOP_RIGHT
+                    })
+                    navigate('/submission');
+                }
+                console.log(res.message);
+            } catch (error) {
+                toast.error(error[1].data.message, {
                     position: toast.POSITION.TOP_RIGHT
-                })
-                navigate('/submission');
+                });
+                console.log('Upload failed: ', error)
             }
-            console.log(res.message);
-        } catch (error){
-            toast.error(error[1].data.message, {
-                position: toast.POSITION.TOP_RIGHT
-            });
-            console.log('Upload failed: ', error)
         }
+
 
     }
 
@@ -243,12 +264,17 @@ const AddProperty = (props) => {
                     <div>
                         <h2 className={'f30 headerColor boldText pb30'}>Add New Property</h2>
                     </div>
-                    <section className={'membersCard'}>
+                    <section className={'membersCard'} >
                         <p className={'f22 boldText headerColor pb30'}>Basic Information</p>
                         <div>
-                            <CustomInput label={'Property Title *'} value={state.propertyTitle} onChange={onChangePropertyTitle} name={'propertyTitle'} />
-                            <CustomInput label={'Type'} value={state.propertyType} onChange={onChangePropertyType} name={'propertyType'} />
-                            <CustomInput label={'Property Description *'} customStyle={{ height: '200px' }} value={state.propertyDescription} onChange={onChangePropertyDescription} name={'propertyDescription'} />
+                            <div className={'pb30'}>
+                                <CustomInput label={'Property Title *'} value={state.propertyTitle} onChange={onChangePropertyTitle} name={'propertyTitle'} />
+                            </div>
+                            <div className={'pb30'}>
+                                <CustomInput label={'Type'} value={state.propertyType} onChange={onChangePropertyType} name={'propertyType'} />
+                            </div>
+                            <CustomTextArea label={'Property Description *'} customStyle={{ height: '200px', textAlign: "start" }} value={state.propertyDescription} onChange={onChangePropertyDescription}
+                                name={'propertyDescription'} />
                         </div>
                     </section>
 
@@ -257,7 +283,7 @@ const AddProperty = (props) => {
 
                         <div className='packagesGrid'>
                             <CustomInput label={'Property ID'} value={state.propertyId} onChange={onChangePropertyId} name={'propertyId'} />
-                            
+
                             <Dropdown label={'Parent property'} curSelect={state.parentProperty} options={['Diamond Manor Apartment', 'Quality House For Sale']} setSelect={handleParentProperty} />
 
                             <Dropdown label={'Status'} curSelect={state.status} options={['For Rent', 'For Sale']} setSelect={handleStatus} />
@@ -278,8 +304,8 @@ const AddProperty = (props) => {
                         <p className={'f22 boldText headerColor pb30'}>Select Energy Class</p>
 
                         <div className='packagesGrid'>
-                        <Dropdown label={'Energy Class'} curSelect={state.energyClass} options={['A+', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']} setSelect={handleEnergyClass} />
-                        <CustomInput label={'Energy Index in kWh/m2a'} value={state.energyIndex} onChange={onChangeEnergyIndex} name={'energyIndex'} />
+                            <Dropdown label={'Energy Class'} curSelect={state.energyClass} options={['A+', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']} setSelect={handleEnergyClass} />
+                            <CustomInput label={'Energy Index in kWh/m2a'} value={state.energyIndex} onChange={onChangeEnergyIndex} name={'energyIndex'} />
                         </div>
                     </section>
 
@@ -299,10 +325,15 @@ const AddProperty = (props) => {
                         <p className={'f22 boldText headerColor pb30'}>Location</p>
 
                         <div>
-                        <Dropdown label={'Regions'} curSelect={state.region} options={['Atlanta', 'Florida', 'Los Angeles', 'Miami', 'New York', 'Orlando']} setSelect={handleRegion} />
-
-                        <CustomInput label={'Friendly Address'} value={state.friendlyAddress} onChange={onChangeAddress} name={'friendlyAddress'} />
-                            <CustomInput label={'Map Location'} value={state.mapLocation} onChange={onChangeLocation} name={'mapLocation'} />
+                            <div className={'pb30'}>
+                                <Dropdown label={'Regions'} curSelect={state.region} options={['North Cyprus', 'Kyrenia', 'Famagusta', 'Nicosia', 'Iskele', 'Lefke', 'Guzelyurt']} setSelect={handleRegion} />
+                            </div>
+                            <div className={'pb30'}>
+                                <CustomInput label={'Friendly Address'} value={state.friendlyAddress} onChange={onChangeAddress} name={'friendlyAddress'} />
+                            </div>
+                            <div className={'pb30'}>
+                                <CustomInput label={'Map Location'} value={state.mapLocation} onChange={onChangeLocation} name={'mapLocation'} />
+                            </div>
                         </div>
                         <div style={{ height: '400px' }}>
                             <SimpleMap />
@@ -317,43 +348,43 @@ const AddProperty = (props) => {
 
 
                         <div className={'pb30'}>
-                            <p className={'f18 boldText headerColor pb10'}>Featured Image</p>
-                            { state.featuredImage &&  state.featuredImage.map((val, index) => 
-                            <span key={index} className={'fileUploadContainer'}>
-                                <button className={'fileDelBtn'} onClick={() => delUpload(index, 'featuredImage')}>x</button>    
-                                <img id={index} src={val.url} alt={''} style={{ maxWidth: '100%', height: '100%' }} />
-                            </span> 
-                            ) }
+                            <p className={'f16 boldText black pb10'}>Featured Image</p>
+                            {state.featuredImage && state.featuredImage.map((val, index) =>
+                                <span key={index} className={'fileUploadContainer'}>
+                                    <button className={'fileDelBtn'} onClick={() => delUpload(index, 'featuredImage')}>x</button>
+                                    <img id={index} src={val.url} alt={''} style={{ maxWidth: '100%', height: '100%' }} />
+                                </span>
+                            )}
                             <CustomUploadInput fileState={state} handleState={setState} inputName={'featuredImage'} />
                         </div>
 
 
                         <div className={'pb30'}>
-                            <p className={'f18 boldText headerColor pb10'}>Gallery</p>
-                            { state.gallery &&  state.gallery.map((val, index) => 
-                            <span key={index} className={'fileUploadContainer'}>
-                                <button className={'fileDelBtn'} onClick={() => delUpload(index, 'gallery')}>x</button>    
-                                <img id={index} src={val.url} alt={''} style={{ maxWidth: '100%', height: '100%' }} />
-                            </span> 
-                            ) }
+                            <p className={'f16 boldText black pb10'}>Gallery</p>
+                            {state.gallery && state.gallery.map((val, index) =>
+                                <span key={index} className={'fileUploadContainer'}>
+                                    <button className={'fileDelBtn'} onClick={() => delUpload(index, 'gallery')}>x</button>
+                                    <img id={index} src={val.url} alt={''} style={{ maxWidth: '100%', height: '100%' }} />
+                                </span>
+                            )}
                             <CustomUploadInput fileState={state} handleState={setState} multi={true} inputName={'gallery'} />
                         </div>
 
 
                         <div className={'pb30'}>
-                            <p className={'f18 boldText headerColor pb10'}>Attachments</p>
-                            { state.attachment &&  state.attachment.map((val, index) => 
-                            <span key={index} className={'fileUploadContainer'}>
-                                <button className={'fileDelBtn'} onClick={() => delUpload(index, 'attachment')}>x</button>    
-                                <img id={index} src={val.url} alt={''} style={{ maxWidth: '100%', height: '100%' }} />
-                            </span> 
-                            ) }
+                            <p className={'f16 boldText black pb10'}>Attachments</p>
+                            {state.attachment && state.attachment.map((val, index) =>
+                                <span key={index} className={'fileUploadContainer'}>
+                                    <button className={'fileDelBtn'} onClick={() => delUpload(index, 'attachment')}>x</button>
+                                    <img id={index} src={val.url} alt={''} style={{ maxWidth: '100%', height: '100%' }} />
+                                </span>
+                            )}
                             <CustomUploadInput fileState={state} handleState={setState} multi={true} inputName={'attachment'} />
                         </div>
 
                         <div>
-                            <CustomInput label={'Video Link'} value={state.videoLink} onChange={onChangeVideoLink} name={'bed'} />
-                            <CustomInput label={'Virtual Tour'} customStyle={{ height: '200px' }} value={state.bed} onChange={onChangeBed} name={'bed'} />
+                            <CustomInput label={'Video Link'} value={state.videoLink} onChange={onChangeVideoLink} name={'videoLink'} />
+                            {/* <CustomTextArea label={'Virtual Tour'} customStyle={{ height: '200px' }} value={state.bed} onChange={onChangeBed} name={'bed'} /> */}
                         </div>
                     </section>
 
