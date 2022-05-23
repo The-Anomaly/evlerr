@@ -86,10 +86,13 @@ const Login = (props) => {
                             {/* <CloseOutlined sx={{ fontSize: '18px' }} className={'boldText'} /> */}
                         </div>
                         <form>
-                            <CustomInput placeholder={'Enter email'}
-                                icon={<AiOutlineMail className='authIcon' />}
-                                type={'email'} onChange={onChangeEmail} value={auth.email} name={'email'}
-                            />
+                            <div style={{ marginBottom: '16px' }}>
+                                <CustomInput placeholder={'Enter email'}
+                                    icon={<AiOutlineMail className='authIcon' />}
+                                    type={'email'} onChange={onChangeEmail} value={auth.email} name={'email'}
+                                />
+                            </div>
+
                             <CustomInput placeholder={'Password'} type={auth.showPassword ? 'password' : 'text'}
                                 icon={auth.showPassword ? <AiOutlineEyeInvisible className='authIcon' /> : <AiOutlineEye className='authIcon' />} onChange={onChangePassword} name={'password'}
                                 value={auth.password} onIconClick={togglePassword}
