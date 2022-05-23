@@ -12,7 +12,7 @@ const CustomInput = ({ type, disabled, name, value, onChange, subtitle, icon, cu
                     />
                     {icon && <span style={{ color: color }} onClick={onIconClick}>{icon}</span>}
                 </div>
-                {subtitle && <span style={{ color: 'grey',  }}><em>{subtitle}</em></span>}
+                {subtitle && <span className={'pt10 f12 regularText headerColor'}>{subtitle}</span>}
             </section>
 
         </>
