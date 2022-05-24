@@ -14,10 +14,10 @@ import { logout } from '../../redux/actions/AuthActions';
 import { toast } from 'react-toastify';
 import Loading from '../../utils/Loading';
 import ResponsiveSideNav from '../modals/ResponsiveSideNav';
-import { RiMenu4Line } from 'react-icons/ri';
+import { HiOutlineMenuAlt2 } from 'react-icons/hi';
 
 
-const NavBar = ({ boxShadow, logo }) => {
+const NavBar = ({ boxShadow, logo, sideBar }) => {
 
     const [state, setState] = useState({ showResponsiveNav: false })
     const [logoutLoading, setLogoutLoading] = useState(false)
@@ -55,7 +55,8 @@ const NavBar = ({ boxShadow, logo }) => {
     return (
         <>
             <nav className='navContainer' style={{ boxShadow: boxShadow }}>
-                <RiMenu4Line className='f50 pr10 navItemResponsive' onClick={toggleShowNav} />
+                {/* <RiMenu4Line className='f30 pr10 navItemResponsive' onClick={toggleShowNav} /> */}
+                <HiOutlineMenuAlt2 className='f30 pr10 navItemResponsive' onClick={toggleShowNav} />
                 {logo &&
                     <div className='logoContainer'>
                         <CustomLink to={'/'}>
@@ -233,9 +234,10 @@ const NavBar = ({ boxShadow, logo }) => {
                     <div>
                         <img src={agentiMG} alt={'agent avatar'} className={'agent-avatar'} />
                     </div>
-                    <p className={'flex alignCenter'} style={{ padding: '8px' }}>
-                        {user.username} <span style={{ marginTop: '5px' }}> <IoMdArrowDropdown size={16} /></span>
+                    <p className={'flex alignCenter navItems'} style={{ padding: '8px' }}>
+                        {user.username} 
                     </p>
+                    <span style={{ marginTop: '5px' }}> <IoMdArrowDropdown size={16} /></span>
                     <div className='agentDropDownContentContainer' >
                         <ul className={'flex justifyBetween alignCenter'} style={{ height: '100%' }}>
                             <li style={{ display: 'grid', gridTemplateColumns: '100%', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>

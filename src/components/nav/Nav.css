@@ -103,10 +103,11 @@ a:hover {
   width: 300px;
   position: fixed;
   top: 0;
-  z-index: 5;
+  z-index: 150;
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  animation: slideInLeft .5s;
   /* justify-content: center; */
 }
 .sideNavContainer::-webkit-scrollbar{
@@ -171,6 +172,17 @@ a:hover {
   display: block;
 }
 
+.menuBtn{
+  position: fixed;
+  top: 50%;
+  right: 0;
+  background-color: #FF5A5F;
+  color: #fff;
+  padding: 8px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
 
 
 @keyframes slideUpFade {
@@ -188,13 +200,20 @@ a:hover {
   display: none;
 }
 
+/* .mainContainer{
+  margin-left: 300px;
+} */
 
-@media screen and (max-width: 800px) {
-    .navItems{
-      display: none;
-    }
+@media screen and (max-width: 1023px) {
+  .navItems{
+    display: none !important;
+  }
+  
+  .navItemResponsive{
+    display: inline-block;
+  }
 
-    .navItemResponsive{
-      display: inline-block;
-    }
+  .agentDropDownContentContainer{
+    left: -120px;
+  }
 }

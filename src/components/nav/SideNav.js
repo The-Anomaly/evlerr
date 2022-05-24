@@ -11,10 +11,17 @@ import { FiSearch } from 'react-icons/fi';
 import { RiLockPasswordLine, RiHeart2Line } from 'react-icons/ri';
 import SideCustomLink from './SideNavCustomLink';
 
-const SideNav = () => {
+const SideNav = ({ removeSidebar, isMobile }) => {
+
+    const closeSideBar = () => {
+        if (isMobile) {
+            removeSidebar()
+        }
+    }
+
     return (
         <>
-            <nav className='sideNavContainer'>
+            <nav className='sideNavContainer' onClick={closeSideBar}>
                 <div className={'pt30 pl30'}>
                     <Link to={'/'}>
                         <img src={Logo} alt='logo' />

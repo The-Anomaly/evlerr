@@ -94,7 +94,7 @@ const MyPropertiesRows = () => {
         const { gallery, propertyTitle, friendlyAddress, createdAt, price, _id } = property
         const checkGallery = gallery[0] ? typeof gallery[0] : 'string'
         return (
-            <section key={index} className={'transactionRowContainer bgWhite'}>
+            <section key={index} className={'transactionRowContainer bgWhite'} style={{ overflow: 'auto' }}>
                 <ul className={'fav-container overviewGrid pb10'}>
                     <li className={'f14 headerColor'} >
                         <div onClick={() => selectResourceType(property)} className='cPointer image-wrapper'>
