@@ -55,9 +55,8 @@ export const logout = () => {
             try {
                 const res = await http.delete('auth/delete-session')
                 if (res.success) {
-                    localStorage.removeItem('userInfo')
-                    localStorage.removeItem('refreshToken')
-                    sessionStorage.removeItem('accessToken')
+                    localStorage.clear()
+                    sessionStorage.clear()
                     dispatch({ type: LOGOUT })
                     // console.log('logged out')
                 }

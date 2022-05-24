@@ -119,26 +119,36 @@ const Register = (props) => {
                         </div>
                         <form>
 
-                            <CustomInput placeholder={'User Name'}
-                                icon={<AiOutlineUser className='authIcon' />}
-                                type={'text'} onChange={onChangeUserName} value={auth.username} name={'username'}
+                            <div style={{ marginBottom: '16px' }}>
+                                <CustomInput placeholder={'User Name'}
+                                    icon={<AiOutlineUser className='authIcon' />}
+                                    type={'text'} onChange={onChangeUserName} value={auth.username} name={'username'}
 
-                            />
+                                />
 
-                            <CustomInput placeholder={'Email'}
-                                icon={<AiOutlineMail className='authIcon' />}
-                                type={'text'} onChange={onChangeEmail} value={auth.email} name={'email'}
-                            />
+                            </div>
 
-                            <CustomInput placeholder={'Password'} type={auth.showPassword ? 'password' : 'text'}
-                                icon={auth.showPassword ? <AiOutlineEyeInvisible className='authIcon' /> : <AiOutlineEye className='authIcon' />} onChange={onChangePassword} name={'password'}
-                                value={auth.password} onIconClick={togglePassword}
-                            />
+                            <div style={{ marginBottom: '16px' }}>
+                                <CustomInput placeholder={'Email'}
+                                    icon={<AiOutlineMail className='authIcon' />}
+                                    type={'text'} onChange={onChangeEmail} value={auth.email} name={'email'}
+                                />
+                            </div>
 
-                            <CustomInput placeholder={'Re-enter Password'} type={auth.showConfirmPassword ? 'password' : 'text'}
-                                icon={auth.showConfirmPassword ? <AiOutlineEyeInvisible className='authIcon' /> : <AiOutlineEye className='authIcon' />} onChange={onChangeConfirmPassword} name={'confirmPassword'}
-                                value={auth.confirmPassword} onIconClick={toggleConfirmPassword}
-                            />
+                            <div style={{ marginBottom: '16px' }}>
+                                <CustomInput placeholder={'Password'} type={auth.showPassword ? 'password' : 'text'}
+                                    icon={auth.showPassword ? <AiOutlineEyeInvisible className='authIcon' /> : <AiOutlineEye className='authIcon' />} onChange={onChangePassword} name={'password'}
+                                    value={auth.password} onIconClick={togglePassword}
+                                />
+                            </div>
+
+                            <div style={{ marginBottom: '16px' }}>
+                                <CustomInput placeholder={'Re-enter Password'} type={auth.showConfirmPassword ? 'password' : 'text'}
+                                    icon={auth.showConfirmPassword ? <AiOutlineEyeInvisible className='authIcon' /> : <AiOutlineEye className='authIcon' />} onChange={onChangeConfirmPassword} name={'confirmPassword'}
+                                    value={auth.confirmPassword} onIconClick={toggleConfirmPassword}
+                                />
+
+                            </div>
 
                             <Dropdown curSelect={auth.role} options={['agency', 'agent', 'user']} setSelect={handleRole} />
 

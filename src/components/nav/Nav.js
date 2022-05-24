@@ -56,7 +56,7 @@ const NavBar = ({ boxShadow, logo, sideBar }) => {
         <>
             <nav className='navContainer' style={{ boxShadow: boxShadow }}>
                 {/* <RiMenu4Line className='f30 pr10 navItemResponsive' onClick={toggleShowNav} /> */}
-                <HiOutlineMenuAlt2 className='f30 pr10 navItemResponsive' onClick={toggleShowNav} />
+                <HiOutlineMenuAlt2 className='f40 pr10 navItemResponsive' onClick={toggleShowNav} />
                 {logo &&
                     <div className='logoContainer'>
                         <CustomLink to={'/'}>
@@ -238,7 +238,7 @@ const NavBar = ({ boxShadow, logo, sideBar }) => {
                         {user.username} 
                     </p>
                     <span style={{ marginTop: '5px' }}> <IoMdArrowDropdown size={16} /></span>
-                    <div className={user.role === 'user' ? 'agentDropDownContentContainer' : 'agentDropDownContentContainer userAgent'}>
+                    <div className={user.role === 'user' ? 'agentDropDownContentContainer userAgent' : 'agentDropDownContentContainer'}>
                         <ul className={'flex justifyBetween alignCenter'} style={{ height: '100%' }}>
                             <li style={{ display: 'grid', gridTemplateColumns: '100%', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
                                 { user.role !== 'user' ? 

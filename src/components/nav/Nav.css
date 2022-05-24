@@ -167,8 +167,10 @@ a:hover {
   vertical-align: middle;
 }
 
-.agentUser{
+.userAgent{
   height: 50px;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 
