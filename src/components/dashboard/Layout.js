@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import SideNav from '../nav/SideNav';
 import '../../assets/style/GeneralStyles.css';
 import { Outlet } from 'react-router-dom';
@@ -11,6 +11,12 @@ const Layout = ({ children }) => {
 
     const [state, setState] = useState({ sidebar: false, isMobile: false })
 
+    const updateDimensions = useCallback(() => {
+        const width = window.innerWidth
+        const isMobile = width < 1023
+        setState((prevState) => ({...prevState, sidebar: isMobile, isMobile: isMobile}))
+        // console.log(isMobile)
+    }, [])
     useEffect(() => {
       updateDimensions()
       window.addEventListener("resize", updateDimensions)
@@ -18,14 +24,8 @@ const Layout = ({ children }) => {
       return () => 
         window.addEventListener("resize", updateDimensions)
       
-    }, [])
+    }, [updateDimensions])
 
-    const updateDimensions = () => {
-        const width = window.innerWidth
-        const isMobile = width < 1023
-        setState({ ...state, sidebar: isMobile, isMobile: isMobile })
-        // console.log(isMobile)
-    }
 
     const toggleSideBar = () => {
         setState({ ...state, sidebar: !state.sidebar })

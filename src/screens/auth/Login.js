@@ -41,7 +41,7 @@ const Login = (props) => {
     }
 
     const location = useLocation()
-    const from = location.state?.from?.pathname || "/dashboard";
+    const from = location.state?.from?.pathname || "/";
 
     const submit = async (e) => {
 

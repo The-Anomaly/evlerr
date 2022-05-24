@@ -1,5 +1,8 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
+import { useEffect } from 'react'
+import { useDispatch } from "react-redux";
+import { LOGIN_SUCCESS, UPDATE_USER } from "../redux/Types";
 import Layout from '../components/dashboard/Layout'
 import ForgotPassword from '../screens/auth/ForgotPassword'
 import Login from '../screens/auth/Login'
@@ -27,6 +30,21 @@ import PropertyDetails from '../screens/properties/PropertyDetails'
 import RequireAuth from './RoutesAuth'
 
 const RoutesContainer = () => {
+
+    const dispatch = useDispatch();
+    const accessToken = sessionStorage.getItem('accessToken')
+    const refreshToken = localStorage.getItem('refreshToken')
+    const userInfo = JSON.parse(localStorage.getItem('userInfo'))
+    
+
+    useEffect(() => {
+        if (accessToken) {
+            const data = {'accessToken': accessToken, 'refreshToken': refreshToken}
+            dispatch({ type: LOGIN_SUCCESS, payload: data });
+            dispatch({ type: UPDATE_USER, payload: userInfo })
+        }
+
+    }, [dispatch, accessToken, refreshToken, userInfo])
 
 
     return (

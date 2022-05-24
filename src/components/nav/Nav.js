@@ -238,16 +238,20 @@ const NavBar = ({ boxShadow, logo, sideBar }) => {
                         {user.username} 
                     </p>
                     <span style={{ marginTop: '5px' }}> <IoMdArrowDropdown size={16} /></span>
-                    <div className='agentDropDownContentContainer' >
+                    <div className={user.role === 'user' ? 'agentDropDownContentContainer' : 'agentDropDownContentContainer userAgent'}>
                         <ul className={'flex justifyBetween alignCenter'} style={{ height: '100%' }}>
                             <li style={{ display: 'grid', gridTemplateColumns: '100%', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
-                                <CustomLink to={'/dashboard'}>Dashboard</CustomLink>
-                                <CustomLink to={'/profile'}>Profile</CustomLink>
-                                <CustomLink to={'/reviews'}>Reviews</CustomLink>
-                                <CustomLink to={'/message'}>Message</CustomLink>
-                                <CustomLink to={'/myProperties'}>My Properties</CustomLink>
-                                <CustomLink to={'/favorites'}>My Favorite</CustomLink>
-                                <CustomLink to={'/savedSearch'}>Saved Search</CustomLink>
+                                { user.role !== 'user' ? 
+                                    <>
+                                        <CustomLink to={'/dashboard'}>Dashboard</CustomLink>
+                                        <CustomLink to={'/profile'}>Profile</CustomLink>
+                                        <CustomLink to={'/reviews'}>Reviews</CustomLink>
+                                        <CustomLink to={'/message'}>Message</CustomLink>
+                                        <CustomLink to={'/myProperties'}>My Properties</CustomLink>
+                                        <CustomLink to={'/favorites'}>My Favorite</CustomLink>
+                                        <CustomLink to={'/savedSearch'}>Saved Search</CustomLink>
+                                    </> : ''
+                                }
                                 <CustomLink to={'#'} onClick={logoutUser}>Log out {logoutLoading && <Loading />} </CustomLink>
                             </li>
                         </ul>

@@ -167,6 +167,10 @@ a:hover {
   vertical-align: middle;
 }
 
+.agentUser{
+  height: 50px;
+}
+
 
 #agentdropdown:hover .agentDropDownContentContainer {
   display: block;
