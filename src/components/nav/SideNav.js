@@ -8,11 +8,15 @@ import { GoPackage, GoMail } from 'react-icons/go';
 import { BsHouseDoor, } from 'react-icons/bs';
 import { FaRegCommentDots, } from 'react-icons/fa';
 import { FiSearch } from 'react-icons/fi';
+import { FaUsers } from 'react-icons/fa';
 import { RiLockPasswordLine, RiHeart2Line } from 'react-icons/ri';
 import SideCustomLink from './SideNavCustomLink';
+import { useSelector } from 'react-redux';
 
 const SideNav = ({ removeSidebar, isMobile }) => {
 
+    const user = useSelector((state) => state.auth.userInfo)
+    // console.log(user)
     const closeSideBar = () => {
         if (isMobile) {
             removeSidebar()
@@ -79,6 +83,14 @@ const SideNav = ({ removeSidebar, isMobile }) => {
                             <span className={'f14 regularText '}>Saved Search</span>
                         </SideCustomLink>
                     </li>
+                    { user.role === 'agency' && 
+                        <li>
+                            <SideCustomLink to={'/members'} className={' sideNavInactive'}>
+                                <FaUsers />
+                                <span className={'f14 regularText '}>Members</span>
+                            </SideCustomLink>
+                        </li>
+                    }
                     
                     <li>
                         <SideCustomLink to={'/submission'} className={'  sideNavInactive'}>
