@@ -216,8 +216,7 @@ const AddProperty = (props) => {
         if (price === '' || propertyDescription === '' || priceCustom === '' ||
             rooms === '' || bed === '' || garage === '' || bath === '' || garage === '' || yearBuilt === '' ||
             homeArea === '' || latitude === '' || longtitude === ''
-            || floors === '' || pricePrefix === '' || priceSuffix === '' || region === '' || friendlyAddress === '' || valuation === '' ||
-            mapLocation === '' || propertyTitle === '' || propertyId === '' || propertyType === '' || videoLink === '') {
+            || floors === '' || pricePrefix === '' || priceSuffix === '' || region === '' || friendlyAddress === '' || mapLocation === '' || propertyTitle === '' || propertyId === '' || propertyType === '' || videoLink === '') {
             toast.error('All fields cannot be empty', {
                 position: toast.POSITION.TOP_RIGHT
             });
@@ -255,13 +254,13 @@ const AddProperty = (props) => {
                     <section className={'membersCard'} >
                         <p className={'f22 boldText headerColor pb30'}>Basic Information</p>
                         <div>
-                            <div className={'pb30'}>
-                                <CustomInput label={'Property Title *'} value={state.propertyTitle} onChange={onChangePropertyTitle} name={'propertyTitle'} />
+                            <div>
+                                <CustomInput label={'Property Title'} value={state.propertyTitle} onChange={onChangePropertyTitle} name={'propertyTitle'} />
                             </div>
                             <div className={'pb30'}>
                                 <Dropdown label={'Type'} curSelect={state.propertyType} options={['Residential', 'Commercial', 'Project']} setSelect={handlePropertyType} />
                             </div>
-                            <CustomTextArea label={'Property Description *'} customStyle={{ height: '200px', textAlign: "start" }} value={state.propertyDescription} onChange={onChangePropertyDescription}
+                            <CustomTextArea label={'Property Description'} customStyle={{ height: '200px', textAlign: "start" }} value={state.propertyDescription} onChange={onChangePropertyDescription}
                                 name={'propertyDescription'} />
                         </div>
                     </section>

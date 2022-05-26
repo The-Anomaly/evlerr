@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import ImagePicker from '../../components/dashboard/ImagePicker'
 import CustomButton from '../../utils/CustomButton'
 import CustomInput from '../../utils/CustomInput'
@@ -20,10 +20,14 @@ const Profile = () => {
     })
 
     const user = useSelector((state) => state.auth.userInfo)
-    const userSocials = user.socials ? user.socials : []
-
-    const [formData, setFormData] = useState({ location: 'Select Country', username: user.username, fullName: user.fullName, email: user.email, socials: [ ...userSocials, {name: 'Select Social', url: ''}] })
+    
+    const [formData, setFormData] = useState({})
     const dispatch = useDispatch()
+    
+    useEffect(() => {
+      const userSocials = user.socials ? user.socials : []
+      setFormData({ username: user.username, fullName: user.fullName, email: user.email, description: user.description, job: user.job, web: user.web, phone: user.phone, fax: user.fax, friendlyAddress: user.friendlyAddress, mapLocation: user.mapLocation, location: user.location, socials: [...userSocials, {name: 'Select social', url: ''}]})
+    }, [user])
     
     
 
@@ -135,14 +139,10 @@ const Profile = () => {
 
     const submit = async (e) => {
         e.preventDefault()
-
-        const { socials, fullName, location, username } = formData
-        // const socilasArray = []
-        // socials.map((val) => socilasArray.push(val.url))
-        // const fd = { socials: socials, fullName: fullName.trim(), mapLocation: location.trim(), username: username.trim() }
-        const fd = formData.filter((val) => val != '')
-        console.log(fd)
-        return
+        // exclude socials till endpointed is fixed to accept object
+        const fd = Object.fromEntries(Object.entries(formData).filter(([key, val]) => val != undefined && key !== 'socials'))
+        // console.log(fd)
+        // return
 
         setState({ ...state, loading: true })
         try {
@@ -151,7 +151,7 @@ const Profile = () => {
             localStorage.setItem('userInfo', JSON.stringify(res.data))
             dispatch({ type: UPDATE_USER, payload: res.data })
             setState({ ...state, loading: false })
-            toast.success('Saved', {
+            toast.success('Profile updated', {
                 position: toast.POSITION.TOP_RIGHT
             });
             console.log('profile update: ',res)
@@ -179,7 +179,7 @@ const Profile = () => {
                         <p className={'f14 regularText headerColor'}>{state.url} <span style={{ color: 'red' }} onClick={showEdit}>Edit</span></p>
                         {state.edit &&
                             <div className={'pt20'}>
-                                <CustomInput value={state.url} />
+                                <CustomInput value={state.url} disabled={true} />
                                 <CustomButton title={'Save'} customStyle={{ color: '#fff', backgroundColor: '#ff5a5f', borderColor: '#ff5a5f', width: '80px' }}
                                     onClick={closeEdit}
                                 />
@@ -234,9 +234,9 @@ const Profile = () => {
                             </div>
                             <div className={'flex pt20 pb20'}>
                                 <div style={{ marginRight: '10px' }}>
-                                    <CustomInput value={'40.723101'} />
+                                    <CustomInput value={'40.723101'} disabled={true} />
                                 </div>
-                                <CustomInput value={'-73.952876'} />
+                                <CustomInput value={'-73.952876'} disabled={true} />
                             </div>
                         </div>
 
@@ -245,7 +245,7 @@ const Profile = () => {
 
                     <div className={'pt30'}>
                         <p className={'f14 boldText headerColor pb20'}>Socials</p>
-                        {formData.socials.map((val, index) => 
+                        {formData.socials && formData.socials.map((val, index) => 
                             <CustomInputDrop key={index} placeholder={`Network ${index+1}`} inputValue={formData.socials[index]} changeUrl={handleSocialUrl} changeName={handleSocialName} index={index} delNetwork={deleteNetwork} icon={state.menuDrop ? <IoMdArrowDropup size={22} /> : <IoMdArrowDropdown size={22} />}
                                 color={'#484848'}></CustomInputDrop>
 
