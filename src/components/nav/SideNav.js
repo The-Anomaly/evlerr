@@ -4,12 +4,10 @@ import Logo from '../../assets/images/logo2.svg';
 import { Link } from "react-router-dom";
 import { IoLayersOutline } from 'react-icons/io5';
 import { AiOutlineLogout, AiOutlinePlus, AiOutlineUser } from 'react-icons/ai';
-import { GoPackage, GoMail } from 'react-icons/go';
+import { GoPackage } from 'react-icons/go';
 import { BsHouseDoor, } from 'react-icons/bs';
-import { FaRegCommentDots, } from 'react-icons/fa';
-import { FiSearch } from 'react-icons/fi';
 import { FaUsers } from 'react-icons/fa';
-import { RiLockPasswordLine, RiHeart2Line } from 'react-icons/ri';
+import { RiLockPasswordLine } from 'react-icons/ri';
 import SideCustomLink from './SideNavCustomLink';
 import { useSelector } from 'react-redux';
 
@@ -52,37 +50,12 @@ const SideNav = ({ removeSidebar, isMobile }) => {
                         </SideCustomLink>
                     </li>
                     <li>
-                        <SideCustomLink to={'/reviews'} className={' sideNavInactive'}>
-                            <GoMail />
-                            <span className={'f14 regularText '}>Reviews</span>
-                        </SideCustomLink>
-                    </li>
-                    <li>
-                        <SideCustomLink to={'/messages'} className={' sideNavInactive'}>
-                            <FaRegCommentDots />
-                            <span className={'f14 regularText '}>Message</span>
-                        </SideCustomLink>
-                    </li>
-
-                    <li>
                         <SideCustomLink to={'/package'} className={'  sideNavInactive'}>
                             <GoPackage />
                             <span className={'f14 regularText '}>My Package</span>
                         </SideCustomLink>
                     </li>
                     
-                    <li>
-                        <SideCustomLink to={'/favorites'} className={' sideNavInactive'}>
-                            <RiHeart2Line />
-                            <span className={'f14 regularText '}>My Favorite</span>
-                        </SideCustomLink>
-                    </li>
-                    <li>
-                        <SideCustomLink to={'/savedSearch'} className={' sideNavInactive'}>
-                            <FiSearch />
-                            <span className={'f14 regularText '}>Saved Search</span>
-                        </SideCustomLink>
-                    </li>
                     { user.role === 'agency' && 
                         <li>
                             <SideCustomLink to={'/members'} className={' sideNavInactive'}>

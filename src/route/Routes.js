@@ -13,13 +13,9 @@ import AddProperty from '../screens/dashboard/AddProperty'
 import ChangePassword from '../screens/dashboard/ChangePassword'
 import Dashboard from '../screens/dashboard/Dashboard'
 import Members from '../screens/dashboard/Members'
-import Messages from '../screens/dashboard/Messages'
 import MyPackage from '../screens/dashboard/MyPackage'
 import MyProperties from '../screens/dashboard/MyProperties'
 import Profile from '../screens/dashboard/Profile'
-import SavedSearch from '../screens/dashboard/SavedSearch'
-import MyFavorites from '../screens/dashboard/MyFavorites'
-import Reviews from '../screens/dashboard/Reviews'
 import Submission from '../screens/dashboard/Submission'
 import LandingPage from '../screens/landing/LandingPage'
 import AgencyDetails from '../screens/members/AgencyDetails'
@@ -71,10 +67,6 @@ const RoutesContainer = () => {
                 <Route element={<Layout />} >
                     <Route path='dashboard' element={<RequireAuth><Dashboard /></RequireAuth>} />
                     <Route path='profile' element={<RequireAuth><Profile /></RequireAuth>} />
-                    <Route path='reviews' element={<RequireAuth><Reviews /></RequireAuth>} />
-                    <Route path='messages' element={<RequireAuth><Messages /></RequireAuth>} />
-                    <Route path='favorites' element={<RequireAuth><MyFavorites /></RequireAuth>} />
-                    <Route path='savedSearch' element={<RequireAuth><SavedSearch /></RequireAuth>} />
                     <Route path='myProperties' element={<RequireAuth><MyProperties /></RequireAuth>} />
                     <Route path='package' element={<RequireAuth><MyPackage /></RequireAuth>} />
                     <Route path='members' element={<RequireAuth><Members /></RequireAuth>} />

@@ -226,7 +226,7 @@ const LandingPage = (props) => {
                         </section>
                     </section>
 
-                    <section className='featuredPropertiesContainer'>
+                    {/* <section className='featuredPropertiesContainer'>
                         <div className='featuredPropertiesHeader'>
                             <h2 className={'boldText f30 headerColor textCenter'} style={{ margin: '15px 0' }}>Articles & Tips</h2>
                             <p className={'regularText f16 headerColor textCenter'}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -243,7 +243,7 @@ const LandingPage = (props) => {
                             />
                         </section>
 
-                    </section>
+                    </section> */}
 
 
                     <section className='featuredPropertiesContainer'>
