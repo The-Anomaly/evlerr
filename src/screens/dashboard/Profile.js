@@ -10,16 +10,19 @@ import http from '../../Utils'
 import Dropdown from '../../utils/Dropdown'
 import { toast } from 'react-toastify';
 import { UPDATE_USER } from '../../redux/Types'
+import defaultAvatar from '../../assets/images/defAvatar.jpg'
+import CustomTextArea from '../../utils/CustomTextarea'
 
 const Profile = () => {
 
     const [state, setState] = useState({
-        url: 'https://www.demoapus-wp1.com/homeo/agent/agent-yassine/', edit: false, data: null, fullScreen: false, loading: false, menuDrop: false
+        url: 'https://www.demoapus-wp1.com/homeo/agent/agent-yassine/', edit: false, data: null, fullScreen: false, loading: false, menuDrop: false, uploadImageLoading: false
     })
 
     const user = useSelector((state) => state.auth.userInfo)
+    const userSocials = user.socials ? user.socials : []
 
-    const [formData, setFormData] = useState({ location: 'Select Country', username: user.username, fullName: user.fullName, socials: [{name: 'Select Social', url: ''}] })
+    const [formData, setFormData] = useState({ location: 'Select Country', username: user.username, fullName: user.fullName, email: user.email, socials: [ ...userSocials, {name: 'Select Social', url: ''}] })
     const dispatch = useDispatch()
     
     
@@ -58,9 +61,65 @@ const Profile = () => {
         setFormData({ ...formData, location: val })
     }
 
+    const handleInput = (e) => {
+        switch (e.target.name) {
+            case 'fullName':
+            setFormData({ ...formData, fullName: e.target.value});
+            break;
+            
+            case 'username':
+            setFormData({ ...formData, username: e.target.value});
+            break;
+            
+            case 'description':
+            setFormData({ ...formData, description: e.target.value});
+            break;
+            
+            case 'job':
+            setFormData({ ...formData, job: e.target.value});
+            break;
+            
+            case 'email':
+            setFormData({ ...formData, email: e.target.value});
+            break;
+            
+            case 'web':
+            setFormData({ ...formData, web: e.target.value});
+            break;
+            
+            case 'phone':
+            setFormData({ ...formData, phone: e.target.value});
+            break;
+            
+            case 'fax':
+            setFormData({ ...formData, fax: e.target.value});
+            break;
+            
+            case 'friendlyAddress':
+            setFormData({ ...formData, friendlyAddress: e.target.value});
+            break;
+            
+            case 'mapLocation':
+            setFormData({ ...formData, map: e.target.value});
+            break;
+            
+            
+            default:
+            alert('sorry, unknown field');
+            break;
+        }
+    }
+
+
     const uploadProfileImage = async (file) => {
+        const fData = {photo: file}
+        // console.log(fData)
+        // return
+        setState({...state, uploadImageLoading: true})
         try {
-            const res = await http.uploadFile('user/photo-uploader', file)
+            const res = await http.post('user/photo-uploader', fData, false)
+            dispatch({ type: UPDATE_USER, payload: res.data })
+            localStorage.setItem('userInfo', JSON.stringify(res.data))
             toast.success('Profile image uploaded', {
                 position: toast.POSITION.TOP_RIGHT
             });
@@ -71,24 +130,24 @@ const Profile = () => {
                 position: toast.POSITION.TOP_RIGHT
             });
         }
+        setState({...state, uploadImageLoading: false})
     }
 
     const submit = async (e) => {
         e.preventDefault()
 
         const { socials, fullName, location, username } = formData
-        const sArray = []
-        socials.map((val) => sArray.push(val.url))
-
-        const fd = { sArray, fullName: fullName.trim(), location: location.trim(), username: username.trim() }
-        // console.log(fd)
-        // return
+        // const socilasArray = []
+        // socials.map((val) => socilasArray.push(val.url))
+        // const fd = { socials: socials, fullName: fullName.trim(), mapLocation: location.trim(), username: username.trim() }
+        const fd = formData.filter((val) => val != '')
+        console.log(fd)
+        return
 
         setState({ ...state, loading: true })
         try {
 
             const res = await http.patch('user/update-profile', fd)
-            
             localStorage.setItem('userInfo', JSON.stringify(res.data))
             dispatch({ type: UPDATE_USER, payload: res.data })
             setState({ ...state, loading: false })
@@ -131,44 +190,45 @@ const Profile = () => {
                     <div className={'pt30'}>
                         <p className={'f14 boldText headerColor pb40'}>Featured Image</p>
                         <div>
-                            <ImagePicker uploader={uploadProfileImage} />
+                            <ImagePicker uploader={uploadProfileImage} uploadLoading={state.uploadImageLoading} defImage={user.profilePicture ? {data_url: user.profilePicture.url} : {data_url: defaultAvatar}} />
                         </div>
                     </div>
 
                     <div className={'pt30'}>
 
                         <div>
-                            <CustomInput label={'Full Name'} onChange={(e) => {setFormData({ ...formData, fullName: e.target.value })}} value={formData.fullName} />
+                            <CustomInput label={'Full Name'} name={'fullName'} onChange={handleInput} value={formData.fullName} />
                         </div>
 
                         <div>
-                            <CustomInput label={'Username'} onChange={(e) => {setFormData({ ...formData, username: e.target.value })}} value={formData.username} />
+                            <CustomInput label={'Username'} name={'username'} onChange={handleInput} value={formData.username} />
                         </div>
 
                         <div>
-                            <CustomInput label={'Description'} value={'Evans Tower very high demand corner junior one bedroom plus a large balcony boasting full open NYC views. You need to see the views to believe them. Mint condition with new hardwood floors. Lots of closets plus washer and dryer.'} />
+                            <CustomTextArea label={'Description'} customStyle={{ height: '200px', textAlign: "start" }} value={formData.description} onChange={handleInput}
+                                name={'description'} />
                         </div>
 
                         <div>
-                            <CustomInput label={'Job'} value={'Marketing'} />
+                            <CustomInput label={'Job'} name={'job'} onChange={handleInput} value={formData.job} />
                         </div>
                         <div>
-                            <CustomInput label={'E-mail'} value={user.email} />
+                            <CustomInput label={'E-mail'} type={'email'} name={'email'} onChange={handleInput} value={formData.email} />
                         </div>
                         <div>
-                            <CustomInput label={'Web'} value={'apusthemes.com'} />
+                            <CustomInput label={'Web'} name={'web'} onChange={handleInput} value={formData.web} />
                         </div>
                         <div>
-                            <CustomInput label={'Phone'} value={'081 123 456'} />
+                            <CustomInput label={'Phone'} name={'phone'} onChange={handleInput} value={formData.phone} />
                         </div>
                         <div>
-                            <CustomInput label={'Fax'} value={''} />
+                            <CustomInput label={'Fax'} name={'fax'} onChange={handleInput} value={formData.fax} />
                         </div>
                         <div>
-                            <CustomInput label={'Friendly Address'} value={'49 Nassau Ave Brooklyn, NY'} />
+                            <CustomInput label={'Friendly Address'} name={'friendlyAddress'} onChange={handleInput} value={formData.friendlyAddress} />
                         </div>
                         <div>
-                            <CustomInput label={'Map Location'} value={'49 Nassau Ave Brooklyn, NY'} />
+                            <CustomInput label={'Map Location'} name={'mapLocation'} onChange={handleInput} value={formData.mapLocation} />
                             <div style={{ height: '400px' }}>
                                 <SimpleMap />
                             </div>
@@ -185,8 +245,8 @@ const Profile = () => {
 
                     <div className={'pt30'}>
                         <p className={'f14 boldText headerColor pb20'}>Socials</p>
-                        { formData.socials.map((val, index) => 
-                            <CustomInputDrop placeholder={`Network ${index+1}`} inputValue={formData.socials[index]} changeUrl={handleSocialUrl} changeName={handleSocialName} index={index} delNetwork={deleteNetwork} icon={state.menuDrop ? <IoMdArrowDropup size={22} /> : <IoMdArrowDropdown size={22} />}
+                        {formData.socials.map((val, index) => 
+                            <CustomInputDrop key={index} placeholder={`Network ${index+1}`} inputValue={formData.socials[index]} changeUrl={handleSocialUrl} changeName={handleSocialName} index={index} delNetwork={deleteNetwork} icon={state.menuDrop ? <IoMdArrowDropup size={22} /> : <IoMdArrowDropdown size={22} />}
                                 color={'#484848'}></CustomInputDrop>
 
                         ) }
@@ -196,7 +256,7 @@ const Profile = () => {
                     </div>
 
                     <div>
-                        <CustomButton onClick={submit} title={'Save Profile'} loading={state.loading} customStyle={{ color: '#fff', backgroundColor: '#ff5a5f', borderColor: '#ff5a5f', width: '100px' }} />
+                        <CustomButton onClick={submit} color={'#fff'} title={'Save Profile'} loading={state.loading} customStyle={{ color: '#fff', backgroundColor: '#ff5a5f', borderColor: '#ff5a5f', width: '100px' }} />
                     </div>
                 </section>
             </main>

@@ -15,15 +15,18 @@ const Members = () => {
 
     const searchAgent = async() => {
         setState({...state, loading: true})
-        const param = state.query
+        const {query} = state
+        // const param = {name: state.query}
+        // console.log('form data', param)
+        const name = query.trim();
+        const obj = {name}
+        
         try {
-            console.log(param)
-            const res = await http.get(`agency/search-members?name=${param}`)
+            const res = await http.get(`agency/search-members`,obj)
             console.log(res)
             setState({...state, loading: false})
         } catch (error) {
             console.log(error)
-            console.log(param)
             alert('request failed')
             setState({...state, loading: false})
         }
@@ -59,7 +62,7 @@ const Members = () => {
                     <p className={'f20 boldText headerColor pb20'}>Add Member</p>
                 </div>
                 <div>
-                    <CustomInput placeholder={'Search...'} onChange={onChangeQuery} />
+                    <CustomInput placeholder={'Search...'} onChange={onChangeQuery} name={'name'}/>
                 </div>
                 <div>
                     <CustomButton loading={state.loading} title={'Add Agent'} onClick={searchAgent} customStyle={{ color: '#fff', backgroundColor: '#ff5a5f', borderColor: '#ff5a5f', width: '80px', marginTop: '10px' }} color={'#fff'} />

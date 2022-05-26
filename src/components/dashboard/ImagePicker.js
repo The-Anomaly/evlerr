@@ -2,13 +2,15 @@ import React from 'react';
 import ImageUploading from "react-images-uploading";
 import '../../assets/style/DashboardStyles.css';
 import { AiOutlineClose } from 'react-icons/ai';
+import { SpinnerDotted } from 'spinners-react';
 
-function ImagePicker({ uploader }) {
-    const [images, setImages] = React.useState([]);
+function ImagePicker({ uploader, uploadLoading, defImage }) {
+    const [images, setImages] = React.useState([defImage]);
+    // console.log(images)
     const maxNumber = 69;
     const onChange = (imageList, addUpdateIndex) => {
         // data for submit
-        console.log(imageList, addUpdateIndex);
+        // console.log(imageList, addUpdateIndex);
         setImages(imageList);
         uploader(imageList[0].file)
     };
@@ -48,7 +50,8 @@ function ImagePicker({ uploader }) {
                             {...dragProps}
                             className={'uploadBtn f14 boldText headerColor'}
                         >
-                            Upload File
+                            {uploadLoading && uploadLoading ? <SpinnerDotted size={'20px'} /> :
+                    'Upload File'}
                         </button>
                         {/* &nbsp;
                         <button onClick={onImageRemoveAll}>Remove all images</button> */}
