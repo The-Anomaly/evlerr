@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import CustomInput from '../../utils/CustomInput'
 import { BsSearch } from 'react-icons/bs';
 import '../../assets/style/DashboardStyles.css';
+import '../../assets/style/FavoriteStyles.css';
 import MyPropertiesRows from '../../components/dashboard/MyPropertiesRows';
 import Dropdown from '../../utils/Dropdown';
 
