@@ -21,7 +21,7 @@ const AddProperty = (props) => {
         loading: false, dryer: false, fridge: false, barbeque: false, air: false, tv: false, washer: false, sauna: false, wifi: false,
         propertyTitle: "", propertyType: "", propertyDescription: "", propertyId: "", parentProperty: "",
         status: "For Rent", label: "", material: "", rooms: "", bed: "", bath: "", garage: "", yearBuilt: "", homeArea: "", energyClass: "",
-        energyIndex: "", price: "", pricePrefix: "", priceSuffix: "", priceCustom: "", region: "", friendlyAddress: "", mapLocation: "", longtitude: "", latitude: "",
+        energyIndex: "", price: "", currency: "USD", pricePrefix: "", priceSuffix: "", priceCustom: "", region: "", friendlyAddress: "", mapLocation: "", longtitude: "", latitude: "",
         featuredImage: [], gallery: [], attachment: [], videoLink: "", amenities: [], facilities: [], valuation: [], floors: []
     })
 
@@ -30,8 +30,8 @@ const AddProperty = (props) => {
     const onChangePropertyTitle = (e) => {
         setState({ ...state, propertyTitle: e.target.value })
     }
-    const onChangePropertyType = (e) => {
-        setState({ ...state, propertyType: e.target.value })
+    const handlePropertyType = (val) => {
+        setState({ ...state, propertyType: val })
     }
     const onChangePropertyDescription = (e) => {
         setState({ ...state, propertyDescription: e.target.value })
@@ -39,17 +39,11 @@ const AddProperty = (props) => {
     const onChangePropertyId = (e) => {
         setState({ ...state, propertyId: e.target.value })
     }
-    const handleParentProperty = (val) => {
-        setState({ ...state, parentProperty: val })
+    const handleCurrency = (val) => {
+        setState({ ...state, currency: val })
     }
     const handleStatus = (val) => {
         setState({ ...state, status: val })
-    }
-    const onChangeLabel = (e) => {
-        setState({ ...state, label: e.target.value })
-    }
-    const onChangeMaterial = (e) => {
-        setState({ ...state, material: e.target.value })
     }
 
     const onChangeRooms = (e) => {
@@ -70,12 +64,6 @@ const AddProperty = (props) => {
     }
     const onChangeArea = (e) => {
         setState({ ...state, homeArea: e.target.value })
-    }
-    const handleEnergyClass = (val) => {
-        setState({ ...state, energyClass: val })
-    }
-    const onChangeEnergyIndex = (e) => {
-        setState({ ...state, energyIndex: e.target.value })
     }
     const onChangePrice = (e) => {
         setState({ ...state, price: e.target.value })
@@ -198,17 +186,17 @@ const AddProperty = (props) => {
 
     const submit = async (e) => {
         e.preventDefault()
-        const { propertyTitle, propertyType, propertyDescription, propertyId, parentProperty, status, label,
-            material, rooms, bed, bath, garage, yearBuilt, homeArea, energyClass, energyIndex, price, pricePrefix,
+        const { propertyTitle, propertyType, propertyDescription, propertyId, status, rooms, bed, bath, garage, yearBuilt, homeArea, price, currency, pricePrefix,
             priceSuffix, priceCustom, region, friendlyAddress, mapLocation, longtitude, latitude, featuredImage,
             gallery, attachment, videoLink, amenities, facilities, valuation, floors } = state
 
         let fImage = featuredImage[0]
+        let newPrice = price + currency
 
         const formData = {
             propertyTitle, propertyType, propertyDescription, propertyId,
-            parentProperty, status, label, material, rooms, bed, bath, garage, yearBuilt,
-            homeArea, energyClass, energyIndex, price, pricePrefix, priceSuffix, priceCustom, region, friendlyAddress,
+         status, rooms, bed, bath, garage, yearBuilt,
+            homeArea, newPrice, pricePrefix, priceSuffix, priceCustom, region, friendlyAddress,
             mapLocation, longtitude, latitude, fImage, gallery, attachment, videoLink, amenities, facilities, valuation, floors
         }
 
@@ -225,9 +213,9 @@ const AddProperty = (props) => {
         // }
         // console.log(formData)
 
-        if (price === '' || parentProperty === '' || propertyDescription === '' || priceCustom === '' ||
-            material === '' || rooms === '' || bed === '' || garage === '' || bath === '' || garage === '' || yearBuilt === '' ||
-            homeArea === '' || energyClass === '' || energyIndex === '' || label === '' || latitude === '' || longtitude === ''
+        if (price === '' || propertyDescription === '' || priceCustom === '' ||
+            rooms === '' || bed === '' || garage === '' || bath === '' || garage === '' || yearBuilt === '' ||
+            homeArea === '' || latitude === '' || longtitude === ''
             || floors === '' || pricePrefix === '' || priceSuffix === '' || region === '' || friendlyAddress === '' || valuation === '' ||
             mapLocation === '' || propertyTitle === '' || propertyId === '' || propertyType === '' || videoLink === '') {
             toast.error('All fields cannot be empty', {
@@ -271,7 +259,7 @@ const AddProperty = (props) => {
                                 <CustomInput label={'Property Title *'} value={state.propertyTitle} onChange={onChangePropertyTitle} name={'propertyTitle'} />
                             </div>
                             <div className={'pb30'}>
-                                <CustomInput label={'Type'} value={state.propertyType} onChange={onChangePropertyType} name={'propertyType'} />
+                                <Dropdown label={'Type'} curSelect={state.propertyType} options={['Residential', 'Commercial', 'Project']} setSelect={handlePropertyType} />
                             </div>
                             <CustomTextArea label={'Property Description *'} customStyle={{ height: '200px', textAlign: "start" }} value={state.propertyDescription} onChange={onChangePropertyDescription}
                                 name={'propertyDescription'} />
@@ -284,13 +272,8 @@ const AddProperty = (props) => {
                         <div className='packagesGrid'>
                             <CustomInput label={'Property ID'} value={state.propertyId} onChange={onChangePropertyId} name={'propertyId'} />
 
-                            <Dropdown label={'Parent property'} curSelect={state.parentProperty} options={['Diamond Manor Apartment', 'Quality House For Sale']} setSelect={handleParentProperty} />
+                            <Dropdown label={'Status'} curSelect={state.status} options={['For Rent', 'For Sale', 'Short Stay']} setSelect={handleStatus} />
 
-                            <Dropdown label={'Status'} curSelect={state.status} options={['For Rent', 'For Sale']} setSelect={handleStatus} />
-
-
-                            <CustomInput label={'Label'} value={state.value} onChange={onChangeLabel} name={'label'} />
-                            <CustomInput label={'Materials'} value={state.material} onChange={onChangeMaterial} name={'material'} />
                             <CustomInput label={'Rooms'} type={'number'} value={state.rooms} onChange={onChangeRooms} name={'rooms'} />
                             <CustomInput label={'Beds'} type={'number'} value={state.bed} onChange={onChangeBed} name={'bed'} />
                             <CustomInput label={'Baths'} type={'number'} value={state.bath} onChange={onChangeBath} name={'bath'} />
@@ -301,19 +284,11 @@ const AddProperty = (props) => {
                     </section>
 
                     <section className={'membersCard'} style={{ marginTop: '30px' }}>
-                        <p className={'f22 boldText headerColor pb30'}>Select Energy Class</p>
-
-                        <div className='packagesGrid'>
-                            <Dropdown label={'Energy Class'} curSelect={state.energyClass} options={['A+', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']} setSelect={handleEnergyClass} />
-                            <CustomInput label={'Energy Index in kWh/m2a'} value={state.energyIndex} onChange={onChangeEnergyIndex} name={'energyIndex'} />
-                        </div>
-                    </section>
-
-                    <section className={'membersCard'} style={{ marginTop: '30px' }}>
                         <p className={'f22 boldText headerColor pb30'}>Price</p>
 
                         <div className='packagesGrid'>
-                            <CustomInput label={'Price ($)'} value={state.price} onChange={onChangePrice} name={'price'} />
+                            <CustomInput label={'Price'} type={'number'} value={state.price} onChange={onChangePrice} name={'price'} />
+                            <Dropdown label={'Currency'} curSelect={state.currency} options={['USD', 'CAD', 'TRY']} setSelect={handleCurrency} />
                             <CustomInput label={'Price Prefix'} value={state.pricePrefix} onChange={onChangePricePrefix} name={'pricePrefix'} subtitle={'Any text shown before price (for example: from).'} />
                             <CustomInput label={'Price Suffix'} subtitle={'Any text shown after price (for example: per night).'} value={state.priceSuffix} onChange={onChangePriceSuffix} name={'priceSuffix'} />
                             <CustomInput label={'Price Custom'} subtitle={'Any text instead of price (for example: by agreement). Prefix and Suffix will be ignored.'} value={state.priceCustom} onChange={onChangePriceCustom} name={'priceCustom'} />
@@ -326,10 +301,10 @@ const AddProperty = (props) => {
 
                         <div>
                             <div className={'pb30'}>
-                                <Dropdown label={'Regions'} curSelect={state.region} options={['North Cyprus', 'Kyrenia', 'Famagusta', 'Nicosia', 'Iskele', 'Lefke', 'Guzelyurt']} setSelect={handleRegion} />
+                                <Dropdown label={'Regions'} curSelect={state.region} options={['Kyrenia', 'Famagusta', 'Nicosia', 'Iskele', 'Lefke', 'Guzelyurt']} setSelect={handleRegion} />
                             </div>
                             <div className={'pb30'}>
-                                <CustomInput label={'Friendly Address'} value={state.friendlyAddress} onChange={onChangeAddress} name={'friendlyAddress'} />
+                                <CustomInput label={'Property Address'} value={state.friendlyAddress} onChange={onChangeAddress} name={'friendlyAddress'} />
                             </div>
                             <div className={'pb30'}>
                                 <CustomInput label={'Map Location'} value={state.mapLocation} onChange={onChangeLocation} name={'mapLocation'} />

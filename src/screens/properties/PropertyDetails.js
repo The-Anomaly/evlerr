@@ -12,7 +12,6 @@ import Home from '../../assets/images/home.jpeg';
 import HomeTwo from '../../assets/images/slide2.jpeg';
 import HomeThree from '../../assets/images/slider3.jpeg';
 import Agent from '../../assets/images/agent.jpeg';
-import CustomInput from '../../utils/CustomInput';
 import CustomButton from '../../utils/CustomButton';
 import 'react-input-range/lib/css/index.css';
 import { useLocation } from 'react-router-dom';
@@ -26,8 +25,7 @@ import { ImageGroup, Image } from 'react-fullscreen-image';
 const PropertyDetails = () => {
 
     const [state, setState] = useState({
-        value: 10, menuDrop: false, priceValue: { min: 0, max: 8000 }, loading: false, title: '', price: '', description: '',
-        address: '', images: null, showImages: false,
+        value: 10, menuDrop: false, priceValue: { min: 0, max: 8000 }, loading: false, showImages: false, property: {}
     })
 
     const property = useLocation()
@@ -52,11 +50,6 @@ const PropertyDetails = () => {
 
     }
 
-
-
-
-    
-
     useEffect(() => {
         const getPropertyDetails = async () => {
             setState((prevState) => ({ ...prevState, loading: true }))
@@ -65,14 +58,12 @@ const PropertyDetails = () => {
                 const data = res.data
                 console.log('Wallet activities ', res)
                 setState((prevState) => ({
-                    ...prevState, loading: false, address: data.friendlyAddress, price: data.price,
-                    title: data.propertyTitle, description: data.propertyDescription, images: data.gallery
+                    ...prevState, loading: false, property: data
                 }))
             } catch (error) {
                 console.log('Error ', error)
                 setState((prevState) => ({ ...prevState, loading: false }))
             }
-            setState((prevState) => ({ ...prevState, loading: false }))
         }
         getPropertyDetails()
     }, [propertyId])
@@ -93,8 +84,8 @@ const PropertyDetails = () => {
                 <main>
                     <section className={'pt40 pb40 flex justifyBetween alignCenter pl70 pr70 flexResponsive paddingResponsive flexStart'}>
                         <div className={'pl50 paddingResponsive'}>
-                            <p className={'f32 headerColor boldText pb10'}>{state.title}</p>
-                            <p className={'f14 headerColor regularText'}>{state.address}</p>
+                            <p className={'f32 headerColor boldText pb10'}>{state.property.title}</p>
+                            <p className={'f14 headerColor regularText'}>{state.property.address}</p>
                         </div>
                         <div className={'pr50 flex alignCenter flexResponsive paddingResponsive flexStart'}>
                             <div>
@@ -108,16 +99,16 @@ const PropertyDetails = () => {
                                 </ul>
                             </div>
                             <div>
-                                <p className={'f32 headerColor boldText '}>{state.price}</p>
+                                <p className={'f32 headerColor boldText '}>{state.property.price}</p>
                             </div>
                         </div>
                     </section>
                     <section>
                         <section className='imagesContainerNew'>
                             <div className='imagesGrid'>
-                                <img src={state.images && state.images[0]} style={{ width: '100%', height: '100%' }} alt='poster' />
-                                <img src={state.images && state.images[1]} style={{ width: '100%', height: '100%' }} alt='poster' />
-                                <img src={state.images && state.images[2]} style={{ width: '100%', height: '100%' }} alt='poster' />
+                                <img src={state.property.gallery && state.property.gallery[0]} style={{ width: '100%', height: '100%' }} alt='poster' />
+                                <img src={state.property.gallery && state.property.gallery[1]} style={{ width: '100%', height: '100%' }} alt='poster' />
+                                <img src={state.property.gallery && state.property.gallery[2]} style={{ width: '100%', height: '100%' }} alt='poster' />
                             </div>
                             <div className='imagesOverlayNew'>
                                 <CustomButton title={'View Photos'} customStyle={{ backgroundColor: '#fff', cursor: 'pointer' }} color={'#ff5a5f'} onClick={showImageGrid} />
@@ -131,7 +122,7 @@ const PropertyDetails = () => {
                                 </div>
                                 <ImageGroup>
                                     <ul className="images">
-                                        {state.images && state.images.map(i => (
+                                        {state.property.gallery && state.property.gallery.map(i => (
                                             <li key={i}>
                                                 <Image
                                                     src={i}
@@ -153,15 +144,15 @@ const PropertyDetails = () => {
                         <section>
                             <div className={'membersCard'}>
                                 <div className={'flex alignCenter'}>
-                                    <Tabs title={'Apartment'} color={'#ff5a5f'} />
-                                    <Tabs title={'Beds: 3'} color={'#484848'} />
-                                    <Tabs title={'Baths: 2'} color={'#484848'} />
-                                    <Tabs title={'110 sqft'} color={'#484848'} />
+                                    <Tabs title={state.property.propertyType ? state.property.propertyType : 'Apartment'} color={'#ff5a5f'} />
+                                    <Tabs title={'Beds: '+(state.property.bed ? state.property.bed : null)} color={'#484848'} />
+                                    <Tabs title={'Baths: '+(state.property.bath ? state.property.bath : null)} color={'#484848'} />
+                                    <Tabs title={state.property.homeArea ? state.property.homeArea : 'null'} color={'#484848'} />
                                 </div>
                                 <article>
                                     <p className={'f20 headerColor boldText pl10 pt30 pb30'}>Overview</p>
                                     <p className={'f14 headerColor mediumText pb30 pl10'}>
-                                        {state.description}
+                                        {state.property.propertyDescription}
                                     </p>
 
                                 </article>
@@ -172,61 +163,61 @@ const PropertyDetails = () => {
                                         <li className={'flex justifyBetween alignCenter f14 headerColor regularText'}>
                                             Property ID:
                                             <span className={'boldText'}>
-                                                HZ89
-                                            </span>
-                                        </li>
-                                        <li className={'flex justifyBetween alignCenter f14 headerColor regularText'}>
-                                            Lot Area:
-                                            <span className={'boldText'}>
-                                                110 sqft
+                                                {state.property.propertyId}
                                             </span>
                                         </li>
                                         <li className={'flex justifyBetween alignCenter f14 headerColor regularText'}>
                                             Home Area:
                                             <span className={'boldText'}>
-                                                90 sqft
+                                            {state.property.homeArea}
                                             </span>
                                         </li>
-                                        <li className={'flex justifyBetween alignCenter f14 headerColor regularText'}>
+                                        {/* <li className={'flex justifyBetween alignCenter f14 headerColor regularText'}>
                                             Lot dimensions:
                                             <span className={'boldText'}>
-                                                5x25x15
+                                            5x25x15
+                                            </span>
+                                        </li> */}
+                                        <li className={'flex justifyBetween alignCenter f14 headerColor regularText'}>
+                                            Garages:
+                                            <span className={'boldText'}>
+                                            {state.property.garage}
                                             </span>
                                         </li>
                                         <li className={'flex justifyBetween alignCenter f14 headerColor regularText'}>
                                             Rooms:
                                             <span className={'boldText'}>
-                                                5
+                                            {state.property.rooms}
                                             </span>
                                         </li>
                                         <li className={'flex justifyBetween alignCenter f14 headerColor regularText'}>
                                             Beds:
                                             <span className={'boldText'}>
-                                                3
+                                            {state.property.bed}
                                             </span>
                                         </li>
                                         <li className={'flex justifyBetween alignCenter f14 headerColor regularText'}>
                                             Baths:
                                             <span className={'boldText'}>
-                                                2
+                                                {state.property.bath}
                                             </span>
                                         </li>
                                         <li className={'flex justifyBetween alignCenter f14 headerColor regularText'}>
                                             Price:
                                             <span className={'boldText'}>
-                                                $1200/mo
+                                                {state.property.price}
                                             </span>
                                         </li>
                                         <li className={'flex justifyBetween alignCenter f14 headerColor regularText'}>
                                             Year built:
                                             <span className={'boldText'}>
-                                                2018
+                                                {state.property.yearBuilt}
                                             </span>
                                         </li>
                                         <li className={'flex justifyBetween alignCenter f14 headerColor regularText'}>
                                             Property Status:
                                             <span className={'boldText'}>
-                                                For Rent
+                                                {state.property.status}
                                             </span>
                                         </li>
 
@@ -236,92 +227,45 @@ const PropertyDetails = () => {
                                 <div>
                                     <p className={'f20 headerColor boldText pl10 pt30 pb30'}>Attachments</p>
                                     <div className='doubleGridTemplate'>
-                                        <div className={'flex alignCenter'}>
-                                            <div className='attachmentIcon'>
-                                                <AiOutlineFilePdf />
+                                        {state.property.attachment && (state.property.attachment.length === 0 && 'No attachments')}
+                                        {state.property.attachment && state.property.attachment.map((val, index) => 
+                                            <div key={index} className={'flex alignCenter'}>
+                                                <div className='attachmentIcon'>
+                                                    <IoDocumentTextOutline />
+                                                </div>
+                                                <div className={'flex alignCenter'}>
+                                                    <AiOutlineDownload color='#ff5a5f' className={'pr10'} />
+                                                    <p className={'f14 regularText headerColor'}>test_property.pdf</p>
+                                                </div>
                                             </div>
-                                            <div className={'flex alignCenter'}>
-                                                <AiOutlineDownload color='#ff5a5f' className={'pr10'} />
-                                                <p className={'f14 regularText headerColor'}>test_property.pdf</p>
-                                            </div>
-                                        </div>
-                                        <div className={'flex alignCenter'}>
-                                            <div className='attachmentIcon'>
-                                                <IoDocumentTextOutline />
-                                            </div>
-                                            <div className={'flex alignCenter'}>
-                                                <AiOutlineDownload color='#ff5a5f' className={'pr10'} />
-                                                <p className={'f14 regularText headerColor'}>test_property.docx</p>
-                                            </div>
-                                        </div>
+                                        )}
                                     </div>
                                 </div>
                             </div>
                             <div className={'membersCard '} style={{ margin: '30px 0' }}>
                                 <p className={'f20 headerColor boldText pl10  pb30'}>Amenities</p>
                                 <ul className='tripleGridTemplate'>
-                                    <li className={'f14 regularText headerColor flex alignCenter'}>
-                                        <MdDone color='#ff5a5f' className={'pr10'} />
-                                        Air Conditioning
-                                    </li>
-                                    <li className={'f14 regularText headerColor flex alignCenter'}>
-                                        <MdDone color='#ff5a5f' className={'pr10'} />
-                                        Barbeque
-                                    </li>
-                                    <li className={'f14 regularText headerColor flex alignCenter'}>
-                                        <MdDone color='#ff5a5f' className={'pr10'} />
-                                        Dryer
-                                    </li>
-                                    <li className={'f14 regularText headerColor flex alignCenter'}>
-                                        <MdDone color='#ff5a5f' className={'pr10'} />
-                                        Refrigerator
-                                    </li>
-                                    <li className={'f14 regularText headerColor flex alignCenter'}>
-                                        <MdDone color='#ff5a5f' className={'pr10'} />
-                                        Sauna
-                                    </li>
-                                    <li className={'f14 regularText headerColor flex alignCenter'}>
-                                        <MdDone color='#ff5a5f' className={'pr10'} />
-                                        TV Cable
-                                    </li>
-                                    <li className={'f14 regularText headerColor flex alignCenter'}>
-                                        <MdDone color='#ff5a5f' className={'pr10'} />
-                                        Washer
-                                    </li>
-                                    <li className={'f14 regularText headerColor flex alignCenter'}>
-                                        <MdDone color='#ff5a5f' className={'pr10'} />
-                                        WiFi
-                                    </li>
+
+                                    {state.property.amenities && (state.property.amenities.length === 0 && 'No amenities')}
+                                    {state.property.amenities && state.property.amenities.map((val, index) => 
+                                        <li key={index} className={'f14 regularText headerColor flex alignCenter'}>
+                                            <MdDone color='#ff5a5f' className={'pr10'} />
+                                            {val}
+                                        </li>
+                                    )}
                                 </ul>
                             </div>
 
                             <div className={'membersCard '} style={{ margin: '30px 0' }}>
                                 <div className={'flex justifyBetween alignCenter pb30'}>
                                     <p className={'f20 headerColor boldText'}>Location</p>
-                                    <p className={'f16 headerColor regularText flex alignCenter'}><span><GrLocation /></span>  318 E 84th St, New York</p>
+                                    <p className={'f16 headerColor regularText flex alignCenter'}><span><GrLocation /></span>  {state.property.friendlyAddress}</p>
                                 </div>
                                 <div style={{ height: '400px' }}>
                                     <SimpleMap />
                                 </div>
                             </div>
 
-                            <div className={'membersCard '} style={{ margin: '30px 0' }}>
-                                <p className={'f20 headerColor boldText pl10  pb30'}>Facilities</p>
-                                <ul className='tripleGridTemplate'>
-                                    <li className={'f14 regularText headerColor flex alignCenter'}>
-                                        City center
-                                        <span className={'boldText pl10'}>4km</span>
-                                    </li>
-                                    <li className={'f14 regularText headerColor flex alignCenter'}>
-                                        Hospital
-                                        <span className={'boldText pl10'}>2km</span>
-                                    </li>
-                                    <li className={'f14 regularText headerColor flex alignCenter'}>
-                                        Shop
-                                        <span className={'boldText pl10'}>1.5km</span>
-                                    </li>
-                                </ul>
-                            </div>
                             <div style={{ margin: '30px 0' }}>
                                 <p className={'f20 headerColor boldText pl10  pb30'}>Related Properties</p>
                                 <div className='columnsGrid'>
@@ -351,95 +295,7 @@ const PropertyDetails = () => {
                                         <p className={'f14 regularText headerColor'}>tomwilson@apus.com</p>
                                     </div>
                                 </div>
-                                <div className={'pt30'}>
-                                    <CustomInput value={'Name'} />
-                                    <CustomInput value={'E-mail'} />
-                                    <CustomInput value={'Phone'} />
-                                    <CustomInput value={'Message'} />
-                                    <div>
-                                        <CustomButton title={'Send Message'} customStyle={{ color: '#fff', backgroundColor: '#ff5a5f', borderColor: '#ff5a5f', }} />
-                                    </div>
-                                </div>
                             </div>
-                            {/* abtToUncomment && TODO: change <CustomInputDrop /> to <Dropdown /> */}
-                            {/* <div className={'membersCard'} style={{ margin: '30px 0' }}>
-                                <p className={'f20 headerColor boldText  pb20'}>Advanced Search</p>
-                                <section>
-                                    <div>
-                                        <CustomInput placeholder={'Keyword'} icon={<AiOutlineSearch color={'#484848'} size={22} />} />
-                                    </div>
-                                    <div >
-                                        <CustomInput placeholder={'Location'} icon={<BiCurrentLocation color={'#484848'} size={22} />} />
-                                    </div>
-
-                                    <div className={'pt20'}>
-                                        <CustomInputDrop onClick={showDropMenu} menuDrop={state.menuDrop}
-                                            icon={state.menuDrop ? <IoMdArrowDropup size={22} /> : <IoMdArrowDropdown size={22} />}
-                                            color={'#484848'} placeholder={'Region'}
-                                        >
-
-                                        </CustomInputDrop>
-                                    </div>
-
-                                    <div>
-                                        <CustomInputDrop onClick={showDropMenu} menuDrop={state.menuDrop}
-                                            icon={state.menuDrop ? <IoMdArrowDropup size={22} /> : <IoMdArrowDropdown size={22} />}
-                                            color={'#484848'} placeholder={'Status'}
-                                        >
-
-                                        </CustomInputDrop>
-                                    </div>
-
-                                    <div>
-                                        <CustomInputDrop onClick={showDropMenu} menuDrop={state.menuDrop}
-                                            icon={state.menuDrop ? <IoMdArrowDropup size={22} /> : <IoMdArrowDropdown size={22} />}
-                                            color={'#484848'} placeholder={'Type'}
-                                        >
-
-                                        </CustomInputDrop>
-                                    </div>
-
-                                    <div>
-                                        <CustomInputDrop onClick={showDropMenu} menuDrop={state.menuDrop}
-                                            icon={state.menuDrop ? <IoMdArrowDropup size={22} /> : <IoMdArrowDropdown size={22} />}
-                                            color={'#484848'} placeholder={'Beds'}
-                                        >
-
-                                        </CustomInputDrop>
-                                    </div>
-
-                                    <div>
-                                        <CustomInputDrop onClick={showDropMenu} menuDrop={state.menuDrop}
-                                            icon={state.menuDrop ? <IoMdArrowDropup size={22} /> : <IoMdArrowDropdown size={22} />}
-                                            color={'#484848'} placeholder={'Baths'}
-                                        >
-
-                                        </CustomInputDrop>
-                                    </div>
-
-                                    <div>
-                                        <CustomInputDrop onClick={showDropMenu} menuDrop={state.menuDrop}
-                                            icon={state.menuDrop ? <IoMdArrowDropup size={22} /> : <IoMdArrowDropdown size={22} />}
-                                            color={'#484848'} placeholder={'Garages'}
-                                        >
-
-                                        </CustomInputDrop>
-                                    </div>
-                                    <div>
-                                        <p className={'f14 regularText headerColor pb10'} style={{ textAlign: 'center' }}>From $ {state.priceValue.min} to $ {state.priceValue.max}</p>
-
-                                        <InputRange
-                                            maxValue={8000}
-                                            minValue={0}
-                                            value={state.priceValue}
-                                            onChange={priceValue => setState({ priceValue })} />
-                                    </div>
-
-                                    <div className={'pt20'}>
-                                        <CustomButton title={'Find Property'} customStyle={{ backgroundColor: '#f53c41' }} color={'#fff'} />
-                                    </div>
-                                </section>
-                            </div> */}
                             <div className={'membersCard'} style={{ margin: '30px 0' }}>
                                 <p className={'f20 headerColor boldText  pb20'}>Latest Properties</p>
                                 <ul>

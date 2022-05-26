@@ -56,7 +56,7 @@ const NavBar = ({ boxShadow, logo, sideBar }) => {
         <>
             <nav className='navContainer' style={{ boxShadow: boxShadow }}>
                 {/* <RiMenu4Line className='f30 pr10 navItemResponsive' onClick={toggleShowNav} /> */}
-                <HiOutlineMenuAlt2 className='f40 pr10 navItemResponsive' onClick={toggleShowNav} />
+                <HiOutlineMenuAlt2 className='f38 pr10 navItemResponsive' onClick={toggleShowNav} />
                 {logo &&
                     <div className='logoContainer'>
                         <CustomLink to={'/'}>

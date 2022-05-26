@@ -172,8 +172,10 @@ const Profile = () => {
                             <div style={{ height: '400px' }}>
                                 <SimpleMap />
                             </div>
-                            <div className={'flex pt20 pb20 justifyBetween'} style={{ width: '450px' }}>
-                                <CustomInput value={'40.723101'} />
+                            <div className={'flex pt20 pb20'}>
+                                <div style={{ marginRight: '10px' }}>
+                                    <CustomInput value={'40.723101'} />
+                                </div>
                                 <CustomInput value={'-73.952876'} />
                             </div>
                         </div>

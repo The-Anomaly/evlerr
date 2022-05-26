@@ -189,6 +189,11 @@ ul.images > li img {
   padding-bottom: 30px;
 }
 
+@media screen and (max-width: 1023px) {
+  .propertyDetailsLayout{
+    padding: 50px 100px;
+  }
+}
 
 @media screen and (min-width: 280px) and (max-width: 786px) {
   .propertiesHomeContainer {
