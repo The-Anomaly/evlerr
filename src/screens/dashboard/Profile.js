@@ -140,7 +140,7 @@ const Profile = () => {
     const submit = async (e) => {
         e.preventDefault()
         // exclude socials till endpointed is fixed to accept object
-        const fd = Object.fromEntries(Object.entries(formData).filter(([key, val]) => val != undefined && key !== 'socials'))
+        const fd = Object.fromEntries(Object.entries(formData).filter(([key, val]) => val !== undefined && key !== 'socials'))
         // console.log(fd)
         // return
 

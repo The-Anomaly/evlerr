@@ -4,8 +4,8 @@ import Agent from '../../assets/images/agent.jpeg';
 import CustomInput from '../../utils/CustomInput';
 import CustomButton from '../../utils/CustomButton';
 import http from '../../Utils';
-import axios from 'axios';
-import qs from 'qs'
+// import axios from 'axios';
+// import qs from 'qs'
 
 const Members = () => {
 
