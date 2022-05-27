@@ -1,16 +1,7 @@
 /* eslint-disable linebreak-style */
-// import { AsyncStorage } from 'react-native';
 import qs from 'qs';
-
 import axios from "axios";
-
-
-// const apiRootUrl = isProduction ? "https://api.obiex.finance/v1" : "https://obiex-cex-api.herokuapp.com/v1/";
 const apiRootUrl = 'https://evlerr-api.herokuapp.com/api/v1/'
-
-// import store from './redux/Index';
-
-
 
 
 const getUserToken = async () => {
