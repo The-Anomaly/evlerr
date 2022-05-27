@@ -17,6 +17,9 @@
   transition: all 0.3s ease-in-out;
   background-color: #fff;
 }
+.inputSpacing{
+  margin-bottom: 20px;
+}
 .inputBox {
   border: none;
   height: 100%;

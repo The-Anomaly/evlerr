@@ -5,7 +5,7 @@ const CustomInput = ({ type, disabled, name, value, onChange, subtitle, icon, cu
         <>
             <section>
                 {label && <p className={'f16 boldText black pb10'}>{label}</p>}
-                <div className='inputContainer'>
+                <div className={ subtitle ? 'inputContainer' : 'inputContainer inputSpacing'}>
                     <input type={type} disabled={disabled} name={name} value={value}
                         onChange={onChange} className='inputBox' style={customStyle}
                         placeholder={placeholder}

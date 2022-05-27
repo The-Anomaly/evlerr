@@ -28,12 +28,6 @@ import BrandTwo from '../../assets/images/brand2.png';
 import BrandThree from '../../assets/images/brand3.png';
 import BrandFour from '../../assets/images/brand4.png';
 import BrandFive from '../../assets/images/brand5.png';
-import ArticlesCards from '../../components/cards/ArticlesCard';
-
-import HomeOne from '../../assets/images/home.jpeg';
-import HomeTwo from '../../assets/images/hometwo.jpeg';
-import HomeThree from '../../assets/images/homethree.jpeg';
-// import HomeOne from '../../assets/images/homefour.jpeg';
 
 
 
@@ -64,10 +58,10 @@ const LandingPage = (props) => {
     }
 
 
-    const navigate = useNavigate()
-    const goToAgentDetails = () => {
-        navigate('/agent-details')
-    }
+    // const navigate = useNavigate()
+    // const goToAgentDetails = () => {
+    //     navigate('/agent-details')
+    // }
     const showFilterModal = () => {
         setState((prevState) => ({ ...prevState, visible: true }))
     }

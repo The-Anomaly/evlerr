@@ -8,7 +8,7 @@ import CustomIconButton from '../../utils/CustomIconButton';
 import CustomLink from './CustomLink';
 import { IoMdArrowDropdown } from 'react-icons/io';
 import { AiOutlineUser } from 'react-icons/ai';
-import agentiMG from '../../assets/images/agent.jpeg'
+import defaultAvatar from '../../assets/images/defAvatar.jpg'
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../redux/actions/AuthActions';
 import { toast } from 'react-toastify';
@@ -232,7 +232,7 @@ const NavBar = ({ boxShadow, logo, sideBar }) => {
                 { user ? 
                 <div id='agentdropdown'>
                     <div>
-                        <img src={agentiMG} alt={'agent avatar'} className={'agent-avatar'} />
+                        <img src={user.profilePicture ? user.profilePicture.url : defaultAvatar} alt={'agent avatar'} className={'agent-avatar'} />
                     </div>
                     <p className={'flex alignCenter navItems'} style={{ padding: '8px' }}>
                         {user.username} 
@@ -247,6 +247,7 @@ const NavBar = ({ boxShadow, logo, sideBar }) => {
                                         <CustomLink to={'/profile'}>Profile</CustomLink>
                                         <CustomLink to={'/reviews'}>Reviews</CustomLink>
                                         <CustomLink to={'/message'}>Message</CustomLink>
+                                        {user.role === 'agency' ? <CustomLink to={'/members'}>Members</CustomLink>: ''}
                                         <CustomLink to={'/myProperties'}>My Properties</CustomLink>
                                         <CustomLink to={'/favorites'}>My Favorite</CustomLink>
                                         <CustomLink to={'/savedSearch'}>Saved Search</CustomLink>
