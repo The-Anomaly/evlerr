@@ -15,7 +15,7 @@ import ContactComponent from '../../components/contact/ContactComponent';
 import 'animate.css';
 import RenderNav from '../../components/nav/RenderNav';
 import BestPropertyCarousel from '../../components/landingPage/BestPropertySlider';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import FilterModal from '../../components/modals/FilterModal';
 import { getProperties } from '../../redux/actions/PropertiesAction';
 import { connect } from 'react-redux';
