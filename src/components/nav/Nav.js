@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import Logo from '../../assets/images/logo2.svg';
 import './Nav.css';
 import '../../assets/style/GeneralStyles.css';
@@ -17,13 +17,30 @@ import ResponsiveSideNav from '../modals/ResponsiveSideNav';
 import { HiOutlineMenuAlt2 } from 'react-icons/hi';
 
 
-const NavBar = ({ boxShadow, logo, sideBar }) => {
+const NavBar = ({ boxShadow, logo }) => {
 
-    const [state, setState] = useState({ showResponsiveNav: false })
+    const [state, setState] = useState({ showResponsiveNav: false, isMobile: false })
     const [logoutLoading, setLogoutLoading] = useState(false)
     const user = useSelector((state) => state.auth.userInfo)
     const navigate = useNavigate()
     const dispatch = useDispatch()
+
+    const updateDimensions = useCallback(() => {
+        const width = window.innerWidth
+        const isMobile = width < 1023
+        setState((prevState) => ({...prevState, isMobile: isMobile}))
+        // console.log(isMobile)
+    }, [])
+    useEffect(() => {
+      updateDimensions()
+      window.addEventListener("resize", updateDimensions)
+    
+      return () => 
+        window.addEventListener("resize", updateDimensions)
+      
+    }, [updateDimensions])
+
+
 
     const logoutUser = async () => {
         setLogoutLoading(true)
@@ -56,13 +73,15 @@ const NavBar = ({ boxShadow, logo, sideBar }) => {
         <>
             <nav className='navContainer' style={{ boxShadow: boxShadow }}>
                 {/* <RiMenu4Line className='f30 pr10 navItemResponsive' onClick={toggleShowNav} /> */}
-                <HiOutlineMenuAlt2 className='f38 pr10 navItemResponsive' onClick={toggleShowNav} />
+                <HiOutlineMenuAlt2 className='pr10 navItemResponsive' style={{ height: '20px', width: '20px' }} onClick={toggleShowNav} />
                 {logo &&
                     <div className='logoContainer'>
                         <CustomLink to={'/'}>
                             <img src={Logo} alt='logo' style={{ width: '100px', height: '50px' }} />
                         </CustomLink>
                     </div>}
+                    
+                {!state.isMobile && <div id="google_translate_element"></div>}
                 <div className='navItems'>
                     <ul>
                         <li className={'regularText f16'} id='forSale'>
@@ -231,7 +250,7 @@ const NavBar = ({ boxShadow, logo, sideBar }) => {
                 <div className='divider' />
                 { user ? 
                 <div id='agentdropdown'>
-                    <div>
+                    <div className='pl10'>
                         <img src={user.profilePicture ? user.profilePicture.url : defaultAvatar} alt={'agent avatar'} className={'agent-avatar'} />
                     </div>
                     <p className={'flex alignCenter navItems'} style={{ padding: '8px' }}>
@@ -290,6 +309,7 @@ const NavBar = ({ boxShadow, logo, sideBar }) => {
                 </div>
 
             </nav >
+            {state.isMobile && <div className='pl20' id="google_translate_element"></div>}
             <ResponsiveSideNav closeModal={toggleShowNav} visible={state.showResponsiveNav} />
 
         </>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { IoMdArrowDropdown, IoMdArrowDropup } from 'react-icons/io'
 import RenderNav from '../../components/nav/RenderNav'
 import CustomButton from '../../utils/CustomButton'
@@ -40,23 +40,23 @@ const PropertiesMap = (props) => {
         }
     }
 
-    const submit = async () => {
-        setState({ ...state, loading: true, })
+    const submit = useCallback(async () => {
+        setState((state) => ({ ...state, loading: true, }))
         try {
             const res = await props.getProperties()
             console.log('hey', res[0].gallery)
             localStorage.setItem('properties', JSON.stringify(res))
-            setState({ ...state, loading: false, })
+            setState((state) => ({ ...state, loading: false, }))
         } catch (error) {
             // returnError(error)
             console.log('catched error ', error)
         }
-
-    }
-
+        
+    }, [props])
+    
     useEffect(() => {
         submit()
-    }, [getProperties])
+    }, [submit])
 
     const showGrid = () => {
         setState((prevState) => ({ ...prevState, grid: true, list: false }))
