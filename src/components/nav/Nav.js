@@ -19,7 +19,7 @@ import { HiOutlineMenuAlt2 } from 'react-icons/hi';
 
 const NavBar = ({ boxShadow, logo }) => {
 
-    const [state, setState] = useState({ showResponsiveNav: false, isMobile: false })
+    const [state, setState] = useState({ showResponsiveNav: false, isMobile: false, showAgentDropdwn: false })
     const [logoutLoading, setLogoutLoading] = useState(false)
     const user = useSelector((state) => state.auth.userInfo)
     const navigate = useNavigate()
@@ -39,6 +39,10 @@ const NavBar = ({ boxShadow, logo }) => {
         window.addEventListener("resize", updateDimensions)
       
     }, [updateDimensions])
+
+    const toggleAvatarModal = () => {
+        setState({...state, showAgentDropdwn: !state.showAgentDropdwn})
+    }
 
 
 
@@ -249,7 +253,7 @@ const NavBar = ({ boxShadow, logo }) => {
                 </div >
                 <div className='divider' />
                 { user ? 
-                <div id='agentdropdown'>
+                <div id='agentdropdown' onClick={toggleAvatarModal}>
                     <div className='pl10'>
                         <img src={user.profilePicture ? user.profilePicture.url : defaultAvatar} alt={'agent avatar'} className={'agent-avatar'} />
                     </div>
@@ -257,7 +261,7 @@ const NavBar = ({ boxShadow, logo }) => {
                         {user.username} 
                     </p>
                     <span style={{ marginTop: '5px' }}> <IoMdArrowDropdown size={16} /></span>
-                    <div className={user.role === 'user' ? 'agentDropDownContentContainer userAgent' : 'agentDropDownContentContainer'}>
+                    <div style={state.isMobile ? !state.showAgentDropdwn ? { display: 'none' } : {} : {}} className={user.role === 'user' ? 'agentDropDownContentContainer userAgent' : 'agentDropDownContentContainer'}>
                         <ul className={'flex justifyBetween alignCenter'} style={{ height: '100%' }}>
                             <li style={{ display: 'grid', gridTemplateColumns: '100%', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
                                 { user.role !== 'user' ? 

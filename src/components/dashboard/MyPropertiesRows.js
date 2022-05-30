@@ -3,38 +3,49 @@ import { useNavigate } from 'react-router-dom'
 import { IoLocationOutline } from 'react-icons/io5'
 import { VscTrash } from 'react-icons/vsc'
 import { FaDollarSign } from 'react-icons/fa'
+import { BsArrowLeft, BsArrowRight } from 'react-icons/bs'
 import Loading from '../../utils/Loading';
 import { useDispatch, useSelector } from 'react-redux'
 import { getProperties, deleteProperty } from "../../redux/actions/PropertiesAction";
 import { toast } from 'react-toastify';
 import CustomButton from '../../utils/CustomButton'
+import { PROPERTIES_SUCCESS } from '../../redux/Types'
 
 const MyPropertiesRows = () => {
 
     const [state, setState] = useState({ loading: false, delLoading: false, resourceId: '', selectedProperty: '', delModal: false, msg: "Loading..." })
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    const properties = useSelector((state) => state.properties.properties)
+    // console.log('first', properties)
 
     useEffect(() => {
         (async () => {
-            setState((state) => ({ ...state, loading: true, }))
-            try {
-                
-                const res = await dispatch(getProperties())
-                console.log('hey', res)
-                // localStorage.setItem('properties', JSON.stringify(res))
-                setState((state) => ({ ...state, loading: false, msg: "You don't have any properties yet. Start by creating new one." }))
-            } catch (error) {
-                // returnError(error)
-                setState((state) => ({ ...state, msg: error[0] }))
-                console.log('fetch property error ', error)
-                setState((state) => ({ ...state, loading: false, }))
-            }
+            if (!Object.keys(properties).length) {
+                const data = localStorage.getItem('properties')
+                const localProps = JSON.parse(data)
+                if (localProps) {
+                    dispatch({ type: PROPERTIES_SUCCESS, payload: localProps })
+                    setState((prevState) => ({...prevState,  msg: "You don't have any properties yet. Start by creating new one."}))
+                    console.log('from local', localProps)
+                } else {
+                    setState((state) => ({ ...state, loading: true, }))
+                    try {
+                        const res = await dispatch(getProperties())
+                        console.log('from dispatch', res)
+                        localStorage.setItem('properties', JSON.stringify(res))
+                        setState((state) => ({ ...state, loading: false, msg: "You don't have any properties yet. Start by creating new one." }))
+                    } catch (error) {
+                        // returnError(error)
+                        setState((state) => ({ ...state, msg: error[0] }))
+                        console.log('fetch property error ', error)
+                        setState((state) => ({ ...state, loading: false, msg: "You don't have any properties yet. Start by creating new one." }))
+                    }
+                }
+            } else { console.log('from redux store', properties) }
         })()
-    }, [dispatch])
+    }, [dispatch, properties])
     
-    const properties = useSelector((state) => state.properties.properties)
-    // console.log('first', properties)
 
     const renderLoading = () => {
         if (state.loading) {
@@ -89,8 +100,31 @@ const MyPropertiesRows = () => {
         }
     }
 
+    
+    const pagesNumbering = [...Array(properties.totalPages)].map((val, index) =>  {
+        if (index+1 > properties.page+2 || index+1 < properties.page-2) {
+            return false
+        }
+        return <div onClick={() => {paginate(index+1)}} className={properties.page === index+1 ? "paginateBtn active" : "paginateBtn"} style={{ marginBottom: '10px' }} key={index+1}>{index+1}</div>
+    })
 
-    const propertiesList = properties.map((property, index) => {
+    const paginate = async (page) => {
+        setState((state) => ({ ...state, loading: true, }))
+        try {
+            const res = await dispatch(getProperties(page))
+            console.log('from dispatch', res)
+            // localStorage.setItem('properties', JSON.stringify(res))
+            setState((state) => ({ ...state, loading: false }))
+        } catch (error) {
+            // returnError(error)
+            setState((state) => ({ ...state, msg: error[0] }))
+            console.log('fetch property error ', error)
+            setState((state) => ({ ...state, loading: false }))
+        }
+    }
+
+
+    const propertiesList = Object.keys(properties).length !== 0 ? properties.docs.map((property, index) => {
         const { gallery, propertyTitle, friendlyAddress, createdAt, price, _id } = property
         const checkGallery = gallery[0] ? typeof gallery[0] : 'string'
         return (
@@ -120,7 +154,7 @@ const MyPropertiesRows = () => {
                 </ul>
             </section>
         )
-    })
+    }) : ''
 
 
 
@@ -148,10 +182,28 @@ const MyPropertiesRows = () => {
                 </div>
             </section>}
 
-        { !properties.length ? 
-            <div className={'infoHeader pt20 pr20 pb20 pl20'}>
+        { !Object.keys(properties).length ? 
+            <section className={'infoHeader pt20 pr20 pb20 pl20'}>
                 <p className={'f14 regularText'}>{state.msg}</p>
-            </div> : propertiesList }
+            </section> : propertiesList }
+
+            <section className='pagination flex justifyCenter' style={{ flexWrap: 'wrap' }}>
+                {properties.hasPrevPage && <div onClick={() => {paginate(properties.prevPage)}} className="paginateBtn"><BsArrowLeft /></div>}
+                {properties.page > 3 ? 
+                <>
+                    <div onClick={() => {paginate(1)}} className='paginateBtn' style={{ marginBottom: '10px' }}>1</div> 
+                    <span style={{ display: 'flex', alignItems: 'center' }}>...</span>
+                </> :
+                ''}
+                {pagesNumbering}
+                {properties.page < properties.totalPages-2 ? 
+                <>
+                    <span style={{ display: 'flex', alignItems: 'center', marginLeft: '20px' }}>...</span>
+                    <div onClick={() => {paginate(properties.totalPages)}} className='paginateBtn' style={{ marginBottom: '10px', marginLeft: 0 }}>{properties.totalPages}</div>
+                </> :
+                ''}
+                {properties.hasNextPage && <div onClick={() => {paginate(properties.nextPage)}} className="paginateBtn"><BsArrowRight /></div>}
+            </section>
       </>
   )
 }

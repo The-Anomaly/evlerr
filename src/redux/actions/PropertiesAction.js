@@ -4,12 +4,12 @@ import { DELETE_PROPERTY, GETTING_PROPERTIES, PROPERTIES_FAIL, PROPERTIES_SUCCES
 
 
 
-export const getProperties = () => {
+export const getProperties = (page = 1) => {
     return dispatch => {
         dispatch({ type: GETTING_PROPERTIES })
         return new Promise(async (resolve, reject) => {
             try {
-                const res = await http.get("user/properties")
+                const res = await http.get(`user/properties?page=${page}`)
                 const data = res.data
                 console.log('currencies ', data)
                 dispatch({ type: PROPERTIES_SUCCESS, payload: data });

@@ -4,7 +4,7 @@ import '../../assets/style/GeneralStyles.css';
 import SearchComponent from '../../components/landingPage/SearchComponent';
 import SearchSelector from '../../components/landingPage/SearchSelector';
 import FeaturedCarousel from '../../components/landingPage/FeaturePropertiesSlider';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 // import Florida from '../../assets/images/new.jpeg';
 import Miami from '../../assets/images/new2.jpeg';
 import NewYork from '../../assets/images/new3.jpeg';
@@ -28,6 +28,7 @@ import BrandTwo from '../../assets/images/brand2.png';
 import BrandThree from '../../assets/images/brand3.png';
 import BrandFour from '../../assets/images/brand4.png';
 import BrandFive from '../../assets/images/brand5.png';
+import { PROPERTIES_SUCCESS } from '../../redux/Types';
 
 
 
@@ -44,6 +45,7 @@ const LandingPage = (props) => {
     console.log('auth ',auth)
 
     const { properties } = props
+    const dispatch = useDispatch()
     // console.log('hello', properties)
 
     const showRentSearchBox = () => {
@@ -86,7 +88,7 @@ const LandingPage = (props) => {
             setState((state) => ({ ...state, loading: true, }))
             try {
                 const res = await getProperties()
-                console.log('hey', res[0].gallery)
+                // console.log('hey', res[0].gallery)
                 localStorage.setItem('properties', JSON.stringify(res))
                 setState((state) => ({ ...state, loading: false, }))
             } catch (error) {
@@ -95,8 +97,17 @@ const LandingPage = (props) => {
                 setState((state) => ({ ...state, loading: false, }))
             }
         }    
-        submit()
-    }, [getProperties])
+
+        //check if properties in localstorage else fetch
+        const data = localStorage.getItem('properties')
+        const localProps = JSON.parse(data)
+        if (localProps) {
+            dispatch({ type: PROPERTIES_SUCCESS, payload: localProps })
+            console.log('from local', localProps)
+        } else {
+            submit()
+        }
+    }, [getProperties, dispatch])
 
 
 
@@ -157,18 +168,18 @@ const LandingPage = (props) => {
                             <p className={'regularText f16 headerColor'}>Handpicked properties by our team</p>
                         </div>
                         <section>
-                            <FeaturedCarousel properties={properties} />
+                            {Object.keys(properties).length ? <FeaturedCarousel properties={properties.docs} /> : ''}
                         </section>
                     </section>
 
                     <section className='featuredPropertiesContainer'>
                         <div className='featuredPropertiesHeader'>
-                            <h2 className={'boldText f30 headerColor textCenter'} style={{ margin: '15px 0' }}>Most Viewed Properties</h2>
-                            <p className={'regularText f16 headerColor textCenter'}>Properties with the highest views</p>
+                            <h2 className={'boldText f30 headerColor textCenter'} style={{ margin: '15px 0' }}>Latest Properties</h2>
+                            <p className={'regularText f16 headerColor textCenter'}>Most recent properties</p>
                         </div>
                         <section>
                             {/* <FeaturedCarousel */}
-                            <MostViewedPropertyCarousel properties={properties} />
+                            {Object.keys(properties).length ? <MostViewedPropertyCarousel properties={properties.docs} /> : ''}
                         </section>
                     </section>
 
@@ -215,7 +226,7 @@ const LandingPage = (props) => {
                         </div>
                         <section >
                             <Suspense fallback={<Loading />}>
-                                <BestPropertyCarousel properties={properties} />
+                                {Object.keys(properties).length ? <BestPropertyCarousel properties={properties.docs} /> : ''}
                             </Suspense>
                         </section>
                     </section>
