@@ -10,6 +10,11 @@
     height: 138px;
 }
 
+.fav-container .search-img{
+    width: 120px;
+    height: 90px;
+}
+
 .fav-container .image-wrapper img{
     border-radius: 5px;
     width: 100%;

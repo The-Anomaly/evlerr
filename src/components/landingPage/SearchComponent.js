@@ -5,20 +5,22 @@ import CustomButton from '../../utils/CustomButton';
 import CustomInput from '../../utils/CustomInput';
 import http from '../../Utils';
 import { toast } from 'react-toastify';
+import { IoLocationOutline } from 'react-icons/io5'
+import { useNavigate } from 'react-router-dom';
 
 const SearchComponent = () => {
 
-    const [state, setState] = useState({ query: '', fetchedItems: [], loading: false, showDropdown: false })
+    const [state, setState] = useState({ query: '', fetchedItems: {}, loading: true, showDropdown: false })
 
     const onChangeQuery = (e) => {
         setState({ ...state, query: e.target.value })
     }
 
 
-    const search = async (e) => {
-        e.preventDefault()
+    const search = async () => {
 
         setState({ ...state, loading: true })
+        console.log(state.query)
         try {
             const res = await http.get('search-property', { search: state.query })
             setState({ ...state, fetchedItems: res.data, showDropdown: true, loading: false })
@@ -33,9 +35,47 @@ const SearchComponent = () => {
 
     }
 
-    let searchResult = state.fetchedItems.length === 0 ? (<p>No property found</p>) : state.fetchedItems.map((val, index)   => 
-        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Debitis magnam, amet vel soluta, cupiditate eum dignissimos sapiente ad, qui odio dolorum odit sunt. Aut, at vero adipisci rerum eveniet quasi!</p>
+    const navigate = useNavigate()
+    function selectResourceType(val) {
+        // console.log(val._id)
+        if (val) {
+            navigate('/properties-details', { state: { propertyId: val._id } })
+        }
 
+    }
+
+
+
+    const searchResult = !Object.keys(state.fetchedItems).length ? (<p>No property found</p>) : state.fetchedItems.docs.map((property, index)   => {
+        const { gallery, propertyTitle, friendlyAddress, status, price } = property
+        const checkGallery = gallery[0] ? typeof gallery[0] : 'string'
+        return (
+            <section key={index} className={'transactionRowContainer'} style={{ overflow: 'auto' }}>
+                <ul className={'fav-container overviewGrid pb10'}>
+                    <li className={'f14 headerColor'} >
+                        <div onClick={() => selectResourceType(property)} className='cPointer image-wrapper search-img'>
+                            <div className="overlay"></div>
+                            <span className="property-status">{status}</span>
+                            <img src={ checkGallery === 'string' ? gallery[0] : gallery[0].url } alt={''}  />
+                        </div>
+                    </li>
+                    <li className={'f14 headerColor'}>
+                        <div className='flex alignCenter justifyBetween'>
+                            <div>
+                                <h3 onClick={() => selectResourceType(property)} className='headerColor cPointer'>{propertyTitle}</h3>
+                                <div className='my20'>
+                                    <IoLocationOutline />
+                                    <span className='pl10'>{friendlyAddress}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    <li className="property-price redText">{price}</li>
+                    {/* <li className={'f14 redText'}>{property.createdAt}</li> */}
+                </ul>
+            </section>
+        )
+        }
     )
 
     window.onclick = (e) => {

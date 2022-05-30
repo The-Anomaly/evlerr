@@ -125,7 +125,7 @@ const MyPropertiesRows = () => {
 
 
     const propertiesList = Object.keys(properties).length !== 0 ? properties.docs.map((property, index) => {
-        const { gallery, propertyTitle, friendlyAddress, createdAt, price, _id } = property
+        const { gallery, propertyTitle, friendlyAddress, createdAt, status, price, _id } = property
         const checkGallery = gallery[0] ? typeof gallery[0] : 'string'
         return (
             <section key={index} className={'transactionRowContainer bgWhite'} style={{ overflow: 'auto' }}>
@@ -133,7 +133,7 @@ const MyPropertiesRows = () => {
                     <li className={'f14 headerColor'} >
                         <div onClick={() => selectResourceType(property)} className='cPointer image-wrapper'>
                             <div className="overlay"></div>
-                            <span className="property-status">For sale</span>
+                            <span className="property-status">{status}</span>
                             <img src={ checkGallery === 'string' ? gallery[0] : gallery[0].url } alt={''}  />
                         </div>
                     </li>
