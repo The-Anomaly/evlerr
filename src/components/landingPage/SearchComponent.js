@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 
 const SearchComponent = () => {
 
-    const [state, setState] = useState({ query: '', fetchedItems: {}, loading: true, showDropdown: false })
+    const [state, setState] = useState({ query: '', fetchedItems: {}, loading: false, showDropdown: false })
 
     const onChangeQuery = (e) => {
         setState({ ...state, query: e.target.value })
