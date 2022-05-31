@@ -17,8 +17,8 @@ const SearchComponent = () => {
     }
 
 
-    const search = async () => {
-
+    const search = async (e) => {
+        e.preventDefault()
         setState({ ...state, loading: true })
         console.log(state.query)
         try {
@@ -51,7 +51,7 @@ const SearchComponent = () => {
         const checkGallery = gallery[0] ? typeof gallery[0] : 'string'
         return (
             <section key={index} className={'transactionRowContainer'} style={{ overflow: 'auto' }}>
-                <ul className={'fav-container overviewGrid pb10'}>
+                <ul className={'fav-container overviewGrid pb10'} style={{ gridTemplateColumns: "130px 1fr" }}>
                     <li className={'f14 headerColor'} >
                         <div onClick={() => selectResourceType(property)} className='cPointer image-wrapper search-img'>
                             <div className="overlay"></div>
@@ -66,12 +66,11 @@ const SearchComponent = () => {
                                 <div className='my20'>
                                     <IoLocationOutline />
                                     <span className='pl10'>{friendlyAddress}</span>
+                                    <p className="property-price redText" style={{ marginTop: '4px' }}>{price}</p>
                                 </div>
                             </div>
                         </div>
                     </li>
-                    <li className="property-price redText">{price}</li>
-                    {/* <li className={'f14 redText'}>{property.createdAt}</li> */}
                 </ul>
             </section>
         )
@@ -89,21 +88,23 @@ const SearchComponent = () => {
     return (
         <>
             <section className='transparentContainer'>
-                <div className='searchBox'>
-                    <CustomInput value={state.query} placeholder={'Please enter text'} onChange={onChangeQuery} name={'query'} />
-                    <CustomButton onClick={search} title={'Search'} customStyle={{
-                        backgroundColor: '#3E4C66', color: '#fff', padding: '10px 30px',
-                        borderRadius: '6px', display: 'flex', justifyContent: 'center'
-                    }} />
+                <form onSubmit={search}>
+                    <div className='searchBox'>
+                        <CustomInput noMarginBt={true} value={state.query} placeholder={'Please enter text'} onChange={onChangeQuery} name={'query'} />
+                        <CustomButton onClick={search} title={'Search'} customStyle={{
+                            backgroundColor: '#3E4C66', color: '#fff', padding: '10px 30px',
+                            borderRadius: '6px', display: 'flex', justifyContent: 'center'
+                        }} />
 
-                    {state.showDropdown || state.loading ? 
-                    <div className="searchDropdown" id='searchModal'>
-                        <div>
-                            {state.loading && <p>Loading...</p>}
-                            {state.loading ? '' : searchResult}
-                        </div>
-                    </div> : ''}
-                </div>
+                        {state.showDropdown || state.loading ? 
+                        <div className="searchDropdown" id='searchModal'>
+                            <div>
+                                {state.loading && <p>Loading...</p>}
+                                {state.loading ? '' : searchResult}
+                            </div>
+                        </div> : ''}
+                    </div>
+                </form>
             </section>
         </>
     )

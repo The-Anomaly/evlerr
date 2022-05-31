@@ -1,11 +1,11 @@
 import React from 'react'
 
-const CustomInput = ({ type, disabled, name, value, onChange, subtitle, icon, customStyle, color, placeholder, label, onIconClick }) => {
+const CustomInput = ({ type, noMarginBt, disabled, name, value, onChange, subtitle, icon, customStyle, color, placeholder, label, onIconClick }) => {
     return (
         <>
             <section>
                 {label && <p className={'f16 boldText black pb10'}>{label}</p>}
-                <div className={ subtitle ? 'inputContainer' : 'inputContainer inputSpacing'}>
+                <div className={ subtitle || noMarginBt ? 'inputContainer' : 'inputContainer inputSpacing'}>
                     <input type={type} disabled={disabled} name={name} value={value}
                         onChange={onChange} className='inputBox' style={customStyle}
                         placeholder={placeholder}

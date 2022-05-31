@@ -28,7 +28,7 @@ import BrandTwo from '../../assets/images/brand2.png';
 import BrandThree from '../../assets/images/brand3.png';
 import BrandFour from '../../assets/images/brand4.png';
 import BrandFive from '../../assets/images/brand5.png';
-import { PROPERTIES_SUCCESS } from '../../redux/Types';
+// import { PROPERTIES_SUCCESS } from '../../redux/Types';
 
 
 
@@ -38,15 +38,15 @@ const LandingPage = (props) => {
 
 
     const [state, setState] = useState({
-        rentSearch: true, saleSearch: false, shortLease: false, activeBg: '#ff5a5f', inactiveBg: '#fff', visible: false, loading: false
+        rentSearch: true, saleSearch: false, shortLease: false, activeBg: '#ff5a5f', inactiveBg: '#fff', visible: false, loading: true
     })
 
     const auth = useSelector((state) => state.auth)
     console.log('auth ',auth)
 
-    const { properties } = props
+    const properties = useSelector((state) => state.properties.properties)
     const dispatch = useDispatch()
-    // console.log('hello', properties)
+    console.log('hello', properties)
 
     const showRentSearchBox = () => {
         setState((prevState) => ({ ...prevState, rentSearch: true, saleSearch: false, shortLease: false }))
@@ -87,9 +87,9 @@ const LandingPage = (props) => {
         const submit = async () => {
             setState((state) => ({ ...state, loading: true, }))
             try {
-                const res = await getProperties()
+                await getProperties()
                 // console.log('hey', res[0].gallery)
-                localStorage.setItem('properties', JSON.stringify(res))
+                // localStorage.setItem('properties', JSON.stringify(res))
                 setState((state) => ({ ...state, loading: false, }))
             } catch (error) {
                 // returnError(error)
@@ -98,16 +98,12 @@ const LandingPage = (props) => {
             }
         }    
 
-        //check if properties in localstorage else fetch
-        const data = localStorage.getItem('properties')
-        const localProps = JSON.parse(data)
-        if (localProps) {
-            dispatch({ type: PROPERTIES_SUCCESS, payload: localProps })
-            console.log('from local', localProps)
-        } else {
+        if (!Object.keys(properties).length) {
             submit()
+        } else {
+            setState((state) => ({...state, loading: false}))
         }
-    }, [getProperties, dispatch])
+    }, [getProperties, dispatch, properties])
 
 
 
@@ -137,7 +133,7 @@ const LandingPage = (props) => {
                                             color={state.saleSearch ? state.activeBg : state.inactiveBg}
                                             size={'40px'} onClick={showSaleSearchBox} textColor={state.saleSearch ? '#fff' : '#000'} />
 
-                                        <SearchSelector title={'Short lease'} backgroundColor={state.shortLease ? state.activeBg : state.inactiveBg}
+                                        <SearchSelector title={'Short stay'} backgroundColor={state.shortLease ? state.activeBg : state.inactiveBg}
                                             arrowDown={state.shortLease ? true : false}
                                             color={state.shortLease ? state.activeBg : state.inactiveBg}
                                             size={'40px'} onClick={showShortLeaseSearchBox} textColor={state.shortLease ? '#fff' : '#000'} />

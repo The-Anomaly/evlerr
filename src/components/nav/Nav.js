@@ -77,15 +77,13 @@ const NavBar = ({ boxShadow, logo }) => {
         <>
             <nav className='navContainer' style={{ boxShadow: boxShadow }}>
                 {/* <RiMenu4Line className='f30 pr10 navItemResponsive' onClick={toggleShowNav} /> */}
-                <HiOutlineMenuAlt2 className='pr10 navItemResponsive' style={{ height: '20px', width: '20px' }} onClick={toggleShowNav} />
-                {logo &&
-                    <div className='logoContainer'>
+                <div className='logoContainer' style={{ display: 'flex', alignItems: 'center' }}>
+                    <HiOutlineMenuAlt2 className='pr10 navItemResponsive' style={{ height: '20px', width: '20px' }} onClick={toggleShowNav} />
+                    {logo &&
                         <CustomLink to={'/'}>
                             <img src={Logo} alt='logo' style={{ width: '100px', height: '50px' }} />
-                        </CustomLink>
-                    </div>}
-                    
-                {!state.isMobile && <div id="google_translate_element"></div>}
+                        </CustomLink>}
+                </div>
                 <div className='navItems'>
                     <ul>
                         <li className={'regularText f16'} id='forSale'>
@@ -251,6 +249,7 @@ const NavBar = ({ boxShadow, logo }) => {
                         </li>
                     </ul>
                 </div >
+                {!state.isMobile && <div id="google_translate_element" className='pr10'></div>}
                 <div className='divider' />
                 { user ? 
                 <div id='agentdropdown' onClick={toggleAvatarModal}>
@@ -268,12 +267,8 @@ const NavBar = ({ boxShadow, logo }) => {
                                     <>
                                         <CustomLink to={'/dashboard'}>Dashboard</CustomLink>
                                         <CustomLink to={'/profile'}>Profile</CustomLink>
-                                        <CustomLink to={'/reviews'}>Reviews</CustomLink>
-                                        <CustomLink to={'/message'}>Message</CustomLink>
                                         {user.role === 'agency' ? <CustomLink to={'/members'}>Members</CustomLink>: ''}
                                         <CustomLink to={'/myProperties'}>My Properties</CustomLink>
-                                        <CustomLink to={'/favorites'}>My Favorite</CustomLink>
-                                        <CustomLink to={'/savedSearch'}>Saved Search</CustomLink>
                                     </> : ''
                                 }
                                 <CustomLink to={'#'} onClick={logoutUser}>Log out {logoutLoading && <Loading />} </CustomLink>

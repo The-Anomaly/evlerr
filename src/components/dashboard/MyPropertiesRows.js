@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { IoLocationOutline } from 'react-icons/io5'
 import { VscTrash } from 'react-icons/vsc'
-import { FaDollarSign } from 'react-icons/fa'
 import { BsArrowLeft, BsArrowRight } from 'react-icons/bs'
 import Loading from '../../utils/Loading';
 import { useDispatch, useSelector } from 'react-redux'
@@ -145,7 +144,7 @@ const MyPropertiesRows = () => {
                                     <IoLocationOutline />
                                     <span className='pl10'>{friendlyAddress}</span>
                                 </div>
-                                <div className="property-price redText"><FaDollarSign style={{ width: '0.5em' }} />{price}</div>
+                                <div className="property-price redText">{price}</div>
                             </div>
                         </div>        
                     </li>
