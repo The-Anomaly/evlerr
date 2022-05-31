@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import RenderNav from '../../components/nav/RenderNav'
 import CustomInput from '../../utils/CustomInput'
-import Loading from '../../utils/Loading'
+// import Loading from '../../utils/Loading'
 import '../../assets/style/SubmissionStyles.css';
 import SimpleMap from '../../utils/Map';
 import CustomButton from '../../utils/CustomButton';
@@ -97,13 +97,13 @@ const AddProperty = (props) => {
     }
 
 
-    const renderLoading = () => {
-        if (state.loading) {
-            return (
-                <Loading />
-            )
-        }
-    }
+    // const renderLoading = () => {
+    //     if (state.loading) {
+    //         return (
+    //             <Loading />
+    //         )
+    //     }
+    // }
 
     const delUpload = (index, where) => {
         setState((prevState) => ({ ...prevState, [where]: prevState[where].filter((val, id) => id !== index) }))
@@ -213,14 +213,20 @@ const AddProperty = (props) => {
         // }
         // console.log(formData)
 
-        if (price === '' || propertyDescription === '' || priceCustom === '' ||
-            rooms === '' || bed === '' || garage === '' || bath === '' || garage === '' || yearBuilt === '' ||
-            homeArea === '' || latitude === '' || longtitude === ''
-            || floors === '' || pricePrefix === '' || priceSuffix === '' || region === '' || friendlyAddress === '' || mapLocation === '' || propertyTitle === '' || propertyId === '' || propertyType === '' || videoLink === '') {
-            toast.error('All fields cannot be empty', {
+        if (price === '' || propertyDescription === '' || rooms === '' 
+            || bed === '' || garage === '' || bath === '' || garage === '' || yearBuilt === '' ||
+            homeArea === '' || floors === '' || region === '' || friendlyAddress === '' || mapLocation === '' || propertyTitle === '' || propertyId === '' || propertyType === '') {
+            toast.error('All required fields cannot be empty', {
+                position: toast.POSITION.TOP_RIGHT
+            });
+        } else if(gallery.length === 0) {
+            toast.error('Gallery should have at least one image', {
                 position: toast.POSITION.TOP_RIGHT
             });
         } else {
+            // console.log('submitting')
+            // return
+            setState({...state, loading: true})
             try {
                 const res = await props.uploadProperties(formData)
                 if (res) {
@@ -231,11 +237,12 @@ const AddProperty = (props) => {
                 }
                 console.log(res.message);
             } catch (error) {
-                toast.error(error[1].data.message, {
-                    position: toast.POSITION.TOP_RIGHT
-                });
+                // toast.error(error[1].data.message, {
+                //     position: toast.POSITION.TOP_RIGHT
+                // });
                 console.log('Upload failed: ', error)
             }
+            setState({...state, loading: false})
         }
 
 
@@ -244,7 +251,7 @@ const AddProperty = (props) => {
 
     return (
         <RenderNav boxShadow={'0px 1px 4px 0px rgb(0 0 0 / 9%)'}>
-            {renderLoading()}
+            {/* {renderLoading()} */}
             <main className='submissionContainer'>
 
                 <section>
@@ -255,12 +262,12 @@ const AddProperty = (props) => {
                         <p className={'f22 boldText headerColor pb30'}>Basic Information</p>
                         <div>
                             <div>
-                                <CustomInput label={'Property Title'} value={state.propertyTitle} onChange={onChangePropertyTitle} name={'propertyTitle'} />
+                                <CustomInput label={'Property Title *'} value={state.propertyTitle} onChange={onChangePropertyTitle} name={'propertyTitle'} />
                             </div>
                             <div className={'pb30'}>
-                                <Dropdown label={'Type'} curSelect={state.propertyType} options={['Residential', 'Commercial', 'Project']} setSelect={handlePropertyType} />
+                                <Dropdown label={'Type *'} curSelect={state.propertyType} options={['Residential', 'Commercial', 'Project']} setSelect={handlePropertyType} />
                             </div>
-                            <CustomTextArea label={'Property Description'} customStyle={{ height: '200px', textAlign: "start" }} value={state.propertyDescription} onChange={onChangePropertyDescription}
+                            <CustomTextArea label={'Property Description *'} customStyle={{ height: '200px', textAlign: "start" }} value={state.propertyDescription} onChange={onChangePropertyDescription}
                                 name={'propertyDescription'} />
                         </div>
                     </section>
@@ -269,16 +276,16 @@ const AddProperty = (props) => {
                         <p className={'f22 boldText headerColor pb30'}>Additional</p>
 
                         <div className='packagesGrid'>
-                            <CustomInput label={'Property ID'} value={state.propertyId} onChange={onChangePropertyId} name={'propertyId'} />
+                            <CustomInput label={'Property ID *'} value={state.propertyId} onChange={onChangePropertyId} name={'propertyId'} />
 
-                            <Dropdown label={'Status'} curSelect={state.status} options={['For Rent', 'For Sale', 'Short Stay']} setSelect={handleStatus} />
+                            <Dropdown label={'Status *'} curSelect={state.status} options={['For Rent', 'For Sale', 'Short Stay']} setSelect={handleStatus} />
 
-                            <CustomInput label={'Rooms'} type={'number'} value={state.rooms} onChange={onChangeRooms} name={'rooms'} />
-                            <CustomInput label={'Beds'} type={'number'} value={state.bed} onChange={onChangeBed} name={'bed'} />
-                            <CustomInput label={'Baths'} type={'number'} value={state.bath} onChange={onChangeBath} name={'bath'} />
-                            <CustomInput label={'Garages'} type={'number'} value={state.garage} onChange={onChangeGarage} name={'garage'} />
-                            <CustomInput label={'Year built'} type={'number'} value={state.yearBuilt} onChange={onChangeYear} name={'yearBuilt'} />
-                            <CustomInput label={'Home area (sqft)'} value={state.homeArea} onChange={onChangeArea} name={'homeArea'} />
+                            <CustomInput label={'Rooms *'} type={'number'} value={state.rooms} onChange={onChangeRooms} name={'rooms'} />
+                            <CustomInput label={'Beds *'} type={'number'} value={state.bed} onChange={onChangeBed} name={'bed'} />
+                            <CustomInput label={'Baths *'} type={'number'} value={state.bath} onChange={onChangeBath} name={'bath'} />
+                            <CustomInput label={'Garages *'} type={'number'} value={state.garage} onChange={onChangeGarage} name={'garage'} />
+                            <CustomInput label={'Year built *'} type={'number'} value={state.yearBuilt} onChange={onChangeYear} name={'yearBuilt'} />
+                            <CustomInput label={'Home area (sqft) *'} value={state.homeArea} onChange={onChangeArea} name={'homeArea'} />
                         </div>
                     </section>
 
@@ -286,8 +293,8 @@ const AddProperty = (props) => {
                         <p className={'f22 boldText headerColor pb30'}>Price</p>
 
                         <div className='packagesGrid'>
-                            <CustomInput label={'Price'} type={'number'} value={state.price} onChange={onChangePrice} name={'price'} />
-                            <Dropdown label={'Currency'} curSelect={state.currency} options={['USD', 'CAD', 'TRY']} setSelect={handleCurrency} />
+                            <CustomInput label={'Price *'} type={'number'} value={state.price} onChange={onChangePrice} name={'price'} />
+                            <Dropdown label={'Currency'} curSelect={state.currency} options={['USD', 'EUR', 'CAD', 'TRY']} setSelect={handleCurrency} />
                             <CustomInput label={'Price Prefix'} value={state.pricePrefix} onChange={onChangePricePrefix} name={'pricePrefix'} subtitle={'Any text shown before price (for example: from).'} />
                             <CustomInput label={'Price Suffix'} subtitle={'Any text shown after price (for example: per night).'} value={state.priceSuffix} onChange={onChangePriceSuffix} name={'priceSuffix'} />
                             <CustomInput label={'Price Custom'} subtitle={'Any text instead of price (for example: by agreement). Prefix and Suffix will be ignored.'} value={state.priceCustom} onChange={onChangePriceCustom} name={'priceCustom'} />
@@ -300,13 +307,13 @@ const AddProperty = (props) => {
 
                         <div>
                             <div className={'pb30'}>
-                                <Dropdown label={'Regions'} curSelect={state.region} options={['Kyrenia', 'Famagusta', 'Nicosia', 'Iskele', 'Lefke', 'Guzelyurt']} setSelect={handleRegion} />
+                                <Dropdown label={'Regions *'} curSelect={state.region} options={['Kyrenia', 'Famagusta', 'Nicosia', 'Iskele', 'Lefke', 'Guzelyurt']} setSelect={handleRegion} />
                             </div>
                             <div className={'pb30'}>
-                                <CustomInput label={'Property Address'} value={state.friendlyAddress} onChange={onChangeAddress} name={'friendlyAddress'} />
+                                <CustomInput label={'Property Address *'} value={state.friendlyAddress} onChange={onChangeAddress} name={'friendlyAddress'} />
                             </div>
                             <div className={'pb30'}>
-                                <CustomInput label={'Map Location'} value={state.mapLocation} onChange={onChangeLocation} name={'mapLocation'} />
+                                <CustomInput label={'Map Location *'} value={state.mapLocation} onChange={onChangeLocation} name={'mapLocation'} />
                             </div>
                         </div>
                         <div style={{ height: '400px' }}>
@@ -426,7 +433,7 @@ const AddProperty = (props) => {
 
                 </section>
                 <div className={'pt40'}>
-                    <CustomButton title={'Save & Preview'} onClick={submit} color={'#fff'} customStyle={{ backgroundColor: '#ff5a5f', width: '120px', }} />
+                    <CustomButton title={'Save & Preview'} loading={state.loading} onClick={submit} color={'#fff'} customStyle={{ backgroundColor: '#ff5a5f', width: '120px', }} />
                 </div>
             </main>
         </RenderNav>

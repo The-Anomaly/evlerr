@@ -21,25 +21,26 @@ const MyPropertiesRows = () => {
     useEffect(() => {
         (async () => {
             if (!Object.keys(properties).length) {
-                const data = localStorage.getItem('properties')
-                const localProps = JSON.parse(data)
-                if (localProps) {
-                    dispatch({ type: PROPERTIES_SUCCESS, payload: localProps })
-                    setState((prevState) => ({...prevState,  msg: "You don't have any properties yet. Start by creating new one."}))
-                    console.log('from local', localProps)
-                } else {
-                    setState((state) => ({ ...state, loading: true, }))
-                    try {
-                        const res = await dispatch(getProperties())
-                        console.log('from dispatch', res)
-                        localStorage.setItem('properties', JSON.stringify(res))
-                        setState((state) => ({ ...state, loading: false, msg: "You don't have any properties yet. Start by creating new one." }))
-                    } catch (error) {
-                        // returnError(error)
-                        setState((state) => ({ ...state, msg: error[0] }))
-                        console.log('fetch property error ', error)
-                        setState((state) => ({ ...state, loading: false, msg: "You don't have any properties yet. Start by creating new one." }))
-                    }
+                // const data = localStorage.getItem('properties')
+                // const localProps = JSON.parse(data)
+                // if (localProps) {
+                //     dispatch({ type: PROPERTIES_SUCCESS, payload: localProps })
+                //     setState((prevState) => ({...prevState,  msg: "You don't have any properties yet. Start by creating new one."}))
+                //     console.log('from local', localProps)
+                // } else {
+                // }
+                console.log('we sha reach here')
+                // setState((state) => ({ ...state, loading: true, }))
+                try {
+                    const res = await dispatch(getProperties())
+                    console.log('from dispatch', res)
+                    // localStorage.setItem('properties', JSON.stringify(res))
+                    setState((state) => ({ ...state, loading: false, msg: "You don't have any properties yet. Start by creating new one." }))
+                } catch (error) {
+                    // returnError(error)
+                    setState((state) => ({ ...state, msg: error[0] }))
+                    console.log('fetch property error ', error)
+                    setState((state) => ({ ...state, loading: false, msg: "You don't have any properties yet. Start by creating new one." }))
                 }
             } else { console.log('from redux store', properties) }
         })()
