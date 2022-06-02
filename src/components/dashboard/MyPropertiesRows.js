@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { IoLocationOutline } from 'react-icons/io5'
 import { VscTrash } from 'react-icons/vsc'
 import { BsArrowLeft, BsArrowRight } from 'react-icons/bs'
+import { FiEdit2 } from 'react-icons/fi'
 import Loading from '../../utils/Loading';
 import { useDispatch, useSelector } from 'react-redux'
 import { getProperties, deleteProperty } from "../../redux/actions/PropertiesAction";
@@ -29,7 +30,6 @@ const MyPropertiesRows = () => {
                 //     console.log('from local', localProps)
                 // } else {
                 // }
-                console.log('we sha reach here')
                 // setState((state) => ({ ...state, loading: true, }))
                 try {
                     const res = await dispatch(getProperties())
@@ -150,7 +150,12 @@ const MyPropertiesRows = () => {
                         </div>        
                     </li>
                     <li className={'f14 redText'}>{createdAt}</li>
-                    <li className={'f14 headerColor'} ><VscTrash onClick={() => handleDelmodal(_id)} className='del-btn' /></li>
+                    <li className={'f14 headerColor'} >
+                        <VscTrash onClick={() => handleDelmodal(_id)} className='del-btn mr10' />
+                        <Link to={'/edit-property'}>
+                            <FiEdit2 onClick={() => handleDelmodal(_id)} className='del-btn' />
+                        </Link>
+                    </li>
                 </ul>
             </section>
         )
