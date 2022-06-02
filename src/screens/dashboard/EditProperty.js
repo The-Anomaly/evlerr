@@ -172,7 +172,7 @@ const EditProperty = (props) => {
 
     const submit = async (e) => {
         e.preventDefault()
-        return
+        // return
         const { propertyTitle, propertyType, propertyDescription, status, rooms, bed, bath, garage, yearBuilt, homeArea, price, currency, pricePrefix,
             priceSuffix, priceCustom, friendlyAddress, featuredImage,
             gallery, attachment, videoLink, amenities, facilities, valuation, floors } = state

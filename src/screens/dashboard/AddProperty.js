@@ -237,9 +237,9 @@ const AddProperty = (props) => {
                 }
                 console.log(res.message);
             } catch (error) {
-                // toast.error(error[1].data.message, {
-                //     position: toast.POSITION.TOP_RIGHT
-                // });
+                toast.error(error[1].data.message, {
+                    position: toast.POSITION.TOP_RIGHT
+                });
                 console.log('Upload failed: ', error)
             }
             setState({...state, loading: false})
