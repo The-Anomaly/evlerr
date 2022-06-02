@@ -1,4 +1,4 @@
-import React, { Suspense, useState } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 import RenderNav from '../../components/nav/RenderNav'
 // import Breadcrumbs from '../../utils/Breadcrumb'
 import '../../assets/style/PropertyStyles.css';
@@ -50,6 +50,7 @@ const AgencyDetails = () => {
         { id: 4, name: 'Lowest Price' }, { id: 5, name: 'Highest Price' }, { id: 6, name: 'Random' }], filter: 'All', filterDrop: false,
         selected: 'Default', visible: false, filterItem: [{ id: 1, name: 'All' }, { id: 2, name: 'Rent' }, { id: 2, name: 'Sale' },],
     })
+    const member = useSelector((state) => state.auth.selectedUser)
     const [active, setActive] = useState(types[0]);
     const [data, setData] = useState({
         _id: ''
@@ -111,12 +112,12 @@ const AgencyDetails = () => {
                     <section className='flex agentNlatest'>
                         <section className='agent pr20'>
                             <section >
-                                <h1 className='f30 headerColor boldText' style={{ marginBottom: '30px' }}>Member name</h1>
+                                <h1 className='f30 headerColor boldText' style={{ marginBottom: '30px' }}>{member.fullName??member.username}</h1>
                                 <div>
                                     <div className={'flex justifyBetween alignCenter pb40'}>
                                         {/* <AgencyDetailsCard agentImage={Agency} agentName={'James Fallen'} department={'Sales'} phoneNumber={'932323432'}
                                             email={'jamesfallen@mail.com'} agencyAddress={'333 NW 26th St, Miami'} /> */}
-                                        <AgentDisplayCard customStyle={{ width: '100%' }} name='some name' phone='90094' fax='877123' email='sm@gmail.com' />
+                                        <AgentDisplayCard customStyle={{ width: '100%' }} name={member.username} phone={member.phone} fax={member.fax} email={member.email} photo={member.profilePicture} />
                                     </div>
                                     {active === 'Properties' &&
                                         <div className={'pt20 animate__animated animate__fadeIn'}>
@@ -141,7 +142,11 @@ const AgencyDetails = () => {
                             </section>
                             <section className={'membersCard'}>
                                 <ButtonGroup>
-                                    {types.map(type => (
+                                {types.map(type => {
+                                    if (type === 'Agents' && member.role !== 'agency') {
+                                        return false
+                                    }
+                                    return (
                                         <Tab
                                             key={type}
                                             active={active === type}
@@ -150,17 +155,15 @@ const AgencyDetails = () => {
                                         >
                                             {type}
                                         </Tab>
-                                    ))}
+                                    )})}
                                 </ButtonGroup>
                                 {active === 'Overview' && <section className={'pt40'}>
                                     <article>
 
                                         <p className={'f14 headerColor mediumText pb30 pl10'}>
-                                            Evans Tower very high demand corner junior one bedroom plus a large balcony boasting full open NYC views.
-                                            You need to see the views to believe them. Mint condition with new hardwood floors.
-                                            Lots of closets plus washer and dryer.
+                                            {member.description ? member.description : 'No description'}
                                         </p>
-                                        <p className={'f14 headerColor mediumText pb30 pl10'}>
+                                        {/* <p className={'f14 headerColor mediumText pb30 pl10'}>
                                             Fully furnished. Elegantly appointed condominium unit situated on premier location. PS6.
                                             The wide entry hall leads to a large living room with dining area. This expansive 2 bedroom and 2 renovated marble bathroom apartment has great windows.
                                             Despite the interior views, the apartments Southern and Eastern exposures allow for lovely natural light to fill every room.
@@ -171,7 +174,7 @@ const AgencyDetails = () => {
                                             Other features include rich herringbone floors, crown moldings and coffered ceilings throughout the apartment.
                                             1049 5th Avenue is a classic pre-war building located across from Central Park, the reservoir and The Metropolitan Museum.
                                             Elegant lobby and 24 hours doorman. This is a pet-friendly building.
-                                        </p>
+                                        </p> */}
                                     </article>
                                 </section>}
                                 {active === 'Properties' && <section className={'pt40'}>

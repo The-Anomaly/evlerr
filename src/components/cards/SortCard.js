@@ -3,7 +3,7 @@ import './Cards.css';
 import { IoMdArrowDropup, IoMdArrowDropdown } from 'react-icons/io'
 
 
-const SortCard = ({ remFilterBy, listCount, result, dropDown, value, children, onClick, filterDropDown, filterValue, onClickFilter, filterList, sortList,
+const SortCard = ({ remFilterBy, listCount, result, dropDown, value, listCountOffset, children, onClick, filterDropDown, filterValue, onClickFilter, filterList, sortList,
     selectFilterType, selectSortType
 }) => {
 
@@ -13,7 +13,7 @@ const SortCard = ({ remFilterBy, listCount, result, dropDown, value, children, o
             <section className={'pt10 pr20 pb10 pl20 bgWhite sortCardContainer flex justifyBetween alignCenter flexResponsive'}>
                 <div>
                     <p className={'flex alignCenter regularText f14 headerColor'}>
-                        Showing 1-{listCount}
+                        Showing {listCountOffset}-{listCountOffset + (listCount-1)}
                         <span className={'pl10'}>of</span>
                         <span className={'pl10'}>{result} results</span>
                     </p>

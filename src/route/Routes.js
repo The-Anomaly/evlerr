@@ -57,7 +57,7 @@ const RoutesContainer = () => {
                 <Route path='properties' element={<PropertiesDisplay />} />
                 <Route path='properties-map' element={<PropertiesMap />} />
                 <Route path='properties-details' element={<PropertyDetails />} />
-                <Route path='member-details/:uid' element={<AgencyDetails />} />
+                <Route path='member-details' element={<AgencyDetails />} />
                 {/* <Route path='agency-details' element={<AgencyDetails />} /> */}
                 <Route path='agents-display' element={<AgentsDisplay />} />
                 <Route path='agencies-display' element={<AgenciesDisplay />} />

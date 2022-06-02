@@ -102,6 +102,14 @@ const ResponsiveSideNav = ({ visible, closeModal }) => {
                                 
                                 </li>
                                 <hr />
+                                <li  className={"pt10 pl10 pb10 pr10 boldText headerColor"}>
+                                    <Link to={'/agencies-display'}>Agencies</Link>
+                                </li>
+                                <hr />
+                                <li  className={"pt10 pl10 pb10 pr10 boldText headerColor"}>
+                                    <Link to={'/agents-display'}>Agents</Link>
+                                </li>
+                                <hr />
 
                                 <li style={{ display: 'grid', gridTemplateColumns: '100%', justifyContent: 'center', alignItems: 'center', gap: '10px', position: 'fixed', bottom: '10px', right: '25%' }}>
                                     <Link to={'submission'}>

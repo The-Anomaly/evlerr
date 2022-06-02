@@ -11,6 +11,7 @@ import { getProperties } from '../../redux/actions/PropertiesAction';
 import Loading from '../../utils/Loading';
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
+import Pagination from '../../utils/Pagination';
 
 
 
@@ -19,9 +20,9 @@ const AgentsDisplay = () => {
 
     const [state, setState] = useState({
         sortDrop: false,
-        agents: [], loading: false,
-        sortItem: [{ id: 1, name: 'Default' }, { id: 2, name: 'Newest' }, { id: 3, name: 'Oldest' },
-        { id: 4, name: 'Lowest Price' }, { id: 5, name: 'Highest Price' }, { id: 6, name: 'Random' }], filter: 'All', filterDrop: false,
+        agents: [], loading: false, agentsXtra: {},
+        sortItem: [{ id: 1, name: 'Default' }, { id: 2, name: 'Newest' }, { id: 3, name: 'Oldest' }, { id: 6, name: 'Random' }], 
+        filter: 'All', filterDrop: false,
         selected: 'Default', visible: false, filterItem: [{ id: 1, name: 'All' }, { id: 2, name: 'Rent' }, { id: 2, name: 'Sale' },],
     })
 
@@ -34,10 +35,11 @@ const AgentsDisplay = () => {
     useEffect(() => {
       
         (async () => {
+            const order = state.selected === 'Default' ? 'newest' : state.selected
             setState((prevState) => ({...prevState, loading: true}))
             try {
-                const res = await http.get('/user/get-users?orderBy=newest', {role: 'agent'})
-                setState((prevState) => ({...prevState, agents: res.data}))
+                const res = await http.get('/user/get-users', {role: 'agent', orderBy: order})
+                setState((prevState) => ({...prevState, agents: res.data.docs, agentsXtra: res.data}))
                 console.log(res)
             } catch (error) {
                 toast.error('Sorry, could not gets agents', {
@@ -63,7 +65,7 @@ const AgentsDisplay = () => {
             setState((prevState) => ({...prevState, loading: false}))
         })()
 
-    }, [dispatch, properties])
+    }, [dispatch, properties, state.selected])
     
     const renderLoading = () => {
         if (state.loading) {
@@ -115,6 +117,22 @@ const AgentsDisplay = () => {
             navigate('/properties-details', { state: { propertyId: propId } })
         }
 
+    }
+
+    const paginate = async (page) => {
+        const order = state.selected === 'Default' ? 'newest' : state.selected
+        setState((prevState) => ({...prevState, loading: true}))
+        try {
+            const res = await http.get('/user/get-users', {role: 'agency', orderBy: order, page: page})
+            setState((prevState) => ({...prevState, agents: res.data.docs, agentsXtra: res.data}))
+            console.log(res)
+        } catch (error) {
+            toast.error('Sorry, could not gets agents', {
+                position: toast.POSITION.TOP_RIGHT
+            })
+            console.log(error)
+        }
+        setState((prevState) => ({...prevState, loading: false}))
     }
 
 
@@ -170,16 +188,16 @@ const AgentsDisplay = () => {
                             </section>
                             <section className='pl20 agent'>
                                 <div>
-                                    <SortCard remFilterBy={true} listCount={state.agents.length} result={state.agents.length} onClick={showSortDropDown} dropDown={state.sortDrop} value={state.selected} onClickFilter={showFilterDropDown}
+                                    <SortCard remFilterBy={true} listCountOffset={(state.agentsXtra.page*state.agentsXtra.limit)-(state.agentsXtra.limit-1)} listCount={state.agents.length} result={state.agentsXtra.totalDocs} onClick={showSortDropDown} dropDown={state.sortDrop} value={state.selected} onClickFilter={showFilterDropDown}
                                         filterValue={state.filter} filterDropDown={state.filterDrop} filterList={state.filterItem}
                                         selectFilterType={selectFilterType} sortList={state.sortItem} selectSortType={selectSortType}
                                     ></SortCard>
                                 </div>
                                 <Suspense fallback={'Loading...'}>
                                     {state.agents.map((agent, index) => 
-                                        <AgentDisplayCard key={index} agentId={agent._id} photo={agent.profilePicture} name={agent.username} phone={agent.phone} email={agent.email} fax={agent.fax} web={agent.web} job={agent.job} />
+                                        <AgentDisplayCard key={index} agentId={agent._id} photo={agent.profilePicture} name={agent.username} phone={agent.phone} email={agent.email} fax={agent.fax} web={agent.web} job={agent.job} agent={agent} />
                                     )}
-                                    
+                                    <Pagination paginationObj={state.agentsXtra} paginator={paginate} />
                                 </Suspense>
                             </section>
                         </section>

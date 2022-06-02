@@ -1,5 +1,5 @@
 import {
-    LOGIN_SUCCESS, LOGIN_FAIL, LOADING_USER, LOGOUT, UPDATE_USER
+    LOGIN_SUCCESS, LOGIN_FAIL, LOADING_USER, LOGOUT, UPDATE_USER, SELECT_USER
 } from '../Types';
 
 const INITIAL_STATE = {
@@ -7,6 +7,7 @@ const INITIAL_STATE = {
     error: [],
     userData: '',
     userInfo: '',
+    selectedUser: {},
     isLogged: false
 };
 
@@ -20,6 +21,8 @@ const AuthReducer = (state = INITIAL_STATE, { type, payload }) => {
             return { ...state, error: payload, userData: '' };
         case UPDATE_USER:
             return { ...state, userInfo: payload };
+        case SELECT_USER:
+            return { ...state, selectedUser: payload };
         case LOGOUT:
             return { ...state, userData: '', userInfo: '', isLogged: false }
         default:

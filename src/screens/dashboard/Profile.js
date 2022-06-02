@@ -26,7 +26,7 @@ const Profile = () => {
     
     useEffect(() => {
       const userSocials = user.socials ? user.socials : []
-      setFormData({ username: user.username, fullName: user.fullName, email: user.email, description: user.description, job: user.job, web: user.web, phone: user.phone, fax: user.fax, friendlyAddress: user.friendlyAddress, mapLocation: user.mapLocation, location: user.location, socials: [...userSocials, {name: 'Select social', url: ''}]})
+      setFormData({ username: user.username, fullName: user.fullName, email: user.email, description: user.description, job: user.job, web: user.web, phone: user.phone, fax: user.fax, friendlyAddress: user.friendlyAddress, mapLocation: user.mapLocation, location: user.location, socials: [ {name: 'Select social', url: ''}]})
     }, [user])
     
     
@@ -140,14 +140,15 @@ const Profile = () => {
     const submit = async (e) => {
         e.preventDefault()
         // exclude socials till endpointed is fixed to accept object
-        const fd = Object.fromEntries(Object.entries(formData).filter(([key, val]) => val !== undefined && key !== 'socials'))
+        const obj = Object.fromEntries(Object.entries(formData).filter(([key, val]) => val !== undefined))
         // console.log(fd)
         // return
 
         setState({ ...state, loading: true })
         try {
 
-            const res = await http.patch('user/update-profile', fd)
+            console.log(obj)
+            const res = await http.patch('user/update-profile', obj)
             localStorage.setItem('userInfo', JSON.stringify(res.data))
             dispatch({ type: UPDATE_USER, payload: res.data })
             setState({ ...state, loading: false })
