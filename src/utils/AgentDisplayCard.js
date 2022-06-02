@@ -5,21 +5,21 @@ import { TiSocialFacebook } from 'react-icons/ti'
 import { FaLinkedinIn } from 'react-icons/fa'
 import { Link } from 'react-router-dom';
 
-const AgentDisplayCard = ({ name, phone, email, fax, web, photo, job, agentId }) => {
+const AgentDisplayCard = ({ name, phone, email, fax, web, photo, job, agentId, customStyle }) => {
   return (
       <>
-        <section className='agentFlexCard'>
+        <section className='agentFlexCard' style={customStyle}>
             <section className='agentImg'>
-                <Link to={`/agent-details/${agentId}`}>
-                    <img src={photo ? photo : avatar} style={{ width: '100%', height: '100%', borderRadius: '6px' }} alt='' />
+                <Link to={`/member-details/${agentId}`}>
+                    <img src={photo ? photo.url : avatar} style={{ width: '100%', height: '100%', borderRadius: '6px' }} alt='' />
                 </Link>
             </section>
             <section className='agentDetails'>
                 <div style={{ marginBottom: '10px' }}>
-                    <Link to={`/agent-details/${agentId}`}>
+                    <Link to={`/member-details/${agentId}`}>
                         <h2 className='f20 boldText'>{name}</h2>
                     </Link>
-                    <small className='redText'>{job ? job : 'Agent'}</small>
+                    <small className='redText'>{job ? job : 'Member'}</small>
                 </div>
                 <div className='deets'>
                     <p>Phone: {phone}</p>
@@ -39,7 +39,7 @@ const AgentDisplayCard = ({ name, phone, email, fax, web, photo, job, agentId })
                             <FaLinkedinIn className='f18' />
                         </Link>
                     </div>
-                    <Link to={`/agent-details/${agentId}`} className='redText'>View My Listing</Link>
+                    <Link to={`/member-details/${agentId}`} className='redText'>View My Listing</Link>
                 </div>
             </section>
         </section>

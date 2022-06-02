@@ -250,6 +250,9 @@ const NavBar = ({ boxShadow, logo }) => {
                         <li>
                             <Link to={'/agents-display'}>Agents</Link>
                         </li>
+                        <li>
+                            <Link to={'/agencies-display'}>Agencies</Link>
+                        </li>
                     </ul>
                 </div >
                 {!state.isMobile && <div id="google_translate_element" className='pr10'></div>}
