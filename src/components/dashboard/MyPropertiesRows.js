@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getProperties, deleteProperty } from "../../redux/actions/PropertiesAction";
 import { toast } from 'react-toastify';
 import CustomButton from '../../utils/CustomButton'
-import { PROPERTIES_SUCCESS } from '../../redux/Types'
+// import { PROPERTIES_SUCCESS } from '../../redux/Types'
 
 const MyPropertiesRows = () => {
 

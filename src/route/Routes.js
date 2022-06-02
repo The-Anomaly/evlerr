@@ -19,6 +19,7 @@ import Profile from '../screens/dashboard/Profile'
 import Submission from '../screens/dashboard/Submission'
 import LandingPage from '../screens/landing/LandingPage'
 import AgencyDetails from '../screens/members/AgencyDetails'
+import AgentsDisplay from '../screens/members/AgentsDisplay'
 import AgentDetails from '../screens/members/AgentDetails'
 import PropertiesDisplay from '../screens/properties/PropertiesDisplay'
 import PropertiesMap from '../screens/properties/PropertiesMap'
@@ -54,8 +55,9 @@ const RoutesContainer = () => {
                 <Route path='properties' element={<PropertiesDisplay />} />
                 <Route path='properties-map' element={<PropertiesMap />} />
                 <Route path='properties-details' element={<PropertyDetails />} />
-                <Route path='agent-details' element={<AgentDetails />} />
+                <Route path='agent-details/:uid' element={<AgentDetails />} />
                 <Route path='agency-details' element={<AgencyDetails />} />
+                <Route path='agents-display' element={<AgentsDisplay />} />
                 <Route path='submission' element={<RequireAuth><Submission /></RequireAuth>} />
                 <Route path='add-property' element={<RequireAuth><AddProperty /></RequireAuth>} />
                 <Route path='verified' element={<VerifiedPage />} />

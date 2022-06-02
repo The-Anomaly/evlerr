@@ -3,7 +3,7 @@ import './Cards.css';
 import { IoMdArrowDropup, IoMdArrowDropdown } from 'react-icons/io'
 
 
-const SortCard = ({ result, dropDown, value, children, onClick, filterDropDown, filterValue, onClickFilter, filterList, sortList,
+const SortCard = ({ remFilterBy, listCount, result, dropDown, value, children, onClick, filterDropDown, filterValue, onClickFilter, filterList, sortList,
     selectFilterType, selectSortType
 }) => {
 
@@ -13,13 +13,13 @@ const SortCard = ({ result, dropDown, value, children, onClick, filterDropDown, 
             <section className={'pt10 pr20 pb10 pl20 bgWhite sortCardContainer flex justifyBetween alignCenter flexResponsive'}>
                 <div>
                     <p className={'flex alignCenter regularText f14 headerColor'}>
-                        Showing 1-9
+                        Showing 1-{listCount}
                         <span className={'pl10'}>of</span>
                         <span className={'pl10'}>{result} results</span>
                     </p>
                 </div>
                 <div className={'flex alignCenter'}>
-                    <div style={{ marginRight: '20px' }} className={'flex alignCenter pr10'}>
+                    {!remFilterBy && <div style={{ marginRight: '20px' }} className={'flex alignCenter pr10'}>
                         <p className={'f14 boldText pr10'}>Filter by:</p>
                         <div className='sortDropContainer'>
                             <p className={'headerColor f14 regularText flex alignCenter'} onClick={onClickFilter}>{filterValue}  <span style={{ marginTop: '5px' }}>{filterDropDown ? <IoMdArrowDropup size={22} />
@@ -31,7 +31,7 @@ const SortCard = ({ result, dropDown, value, children, onClick, filterDropDown, 
                                 )}
                             </div>}
                         </div>
-                    </div>
+                    </div>}
                     <div className={'flex alignCenter'}>
                         <p className={'f14 boldText pr10'}>Sort by:</p>
                         <div className='sortDropContainer'>

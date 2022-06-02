@@ -214,7 +214,7 @@ ul.images > li img {
   cursor: pointer;
 }
 
-@media screen and (max-width: 1023px) {
+@media screen and (max-width: 1300px) {
   .propertyDetailsLayout{
     padding: 50px 100px;
   }

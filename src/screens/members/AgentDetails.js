@@ -23,7 +23,8 @@ const AgentDetails = () => {
         { id: 4, name: 'Lowest Price' }, { id: 5, name: 'Highest Price' }, { id: 6, name: 'Random' }], filter: 'All', filterDrop: false,
         selected: 'Default', visible: false, filterItem: [{ id: 1, name: 'All' }, { id: 2, name: 'Rent' }, { id: 2, name: 'Sale' },],
     })
-    const { properties } = useSelector(state => state.properties)
+    const { properties } = useSelector((state) => state.properties)
+    console.log('my clg',properties)
 
     const showSortDropDown = () => {
         if (state.sortDrop) {
@@ -51,10 +52,10 @@ const AgentDetails = () => {
         // console.log(val)
     }
 
-    const [data, setData] = useState({
-        _id: ''
-    })
-    console.log(data)
+    // const [data, setData] = useState({
+    //     _id: ''
+    // })
+    // console.log(data)
 
     // const showFilterModal = () => {
     //     setState((prevState) => ({ ...prevState, visible: true }))
@@ -73,7 +74,7 @@ const AgentDetails = () => {
 
 
     function selectResourceType(val) {
-        setData((prevState) => ({ ...prevState, _id: val._id }))
+        // setData((prevState) => ({ ...prevState, _id: val._id }))
         // console.log(state.value)÷
         console.log(val._id)
         if (val) {
@@ -117,7 +118,7 @@ const AgentDetails = () => {
 
                             <section className='propertiesGridFull'>
 
-                                {properties.map((item) => (
+                                {properties.length !== 0 ? properties.docs.map((item) => (
                                     <div key={item._id}>
                                         <PropertyGridCards
                                             type={'Featured'} leaseType={'For Rent'} price={item.price} background={item.gallery[2]}
@@ -126,13 +127,13 @@ const AgentDetails = () => {
                                             onAgentClick={goToAgentDetails}
                                         />
                                     </div>
-                                ))}
+                                )) : ''}
 
                             </section>}
                         {state.filter === 'Rent' &&
 
                             <section className='propertiesGridFull'>
-                                {properties.map((item) => (
+                                {/* {properties.docs.map((item) => (
                                     <div key={item._id}>
                                         <PropertyGridCards
                                             type={'Featured'} leaseType={'For Rent'} price={item.price} background={item.gallery[1]}
@@ -141,13 +142,13 @@ const AgentDetails = () => {
                                             onAgentClick={goToAgentDetails}
                                         />
                                     </div>
-                                ))}
+                                ))} */}
                             </section>}
                         {state.filter === 'Sale' &&
 
                             <section className='propertiesGridFull'>
 
-                                {properties.map((item) => (
+                                {/* {properties.docs.map((item) => (
                                     <div key={item._id}>
                                         <PropertyGridCards
                                             type={'Featured'} leaseType={'For Rent'} price={item.price} background={item.gallery[0]}
@@ -157,7 +158,7 @@ const AgentDetails = () => {
                                         />
                                     </div>
 
-                                ))}
+                                ))} */}
                             </section>}
 
 

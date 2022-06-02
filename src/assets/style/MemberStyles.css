@@ -16,3 +16,113 @@
   grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
   gap: 50px;
 }
+
+.agentFlexCard{
+  display: flex;
+  padding: 10px;
+  background: #fff;
+  border: 1px solid #eee;
+  box-shadow: 0 0 5px #f7f7f7;
+  transition: .5s ease;
+  margin-bottom: 30px;
+}
+
+.agentFlexCard:hover{
+  box-shadow: 0 0 15px 15px #f7f7f7;
+}
+
+.agentFlexCard .agentDetails{
+  width: calc(100% - 260px);
+  font-family: "Nunito", sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 10px;
+}
+
+.agentFlexCard .agentDetails p{
+  margin-bottom: 5px;
+}
+
+.agentFlexCard .agentImg{
+  height: 260px;
+  width: 260px;
+  margin: 10px;
+  margin-right: 15px;
+}
+
+.agentFlexCard .deets{
+  margin: 7px 0;
+}
+
+.socialIcons{
+  color: #7A7876;
+}
+
+.agentNlatest .agent{
+  width: 66%;
+}
+
+.agentNlatest .latest{
+  width: 33%;
+}
+
+@media screen and (max-width: 1115px) {
+  .agentFlexCard .agentDetails{
+    width: calc(100% - 175px);
+  }
+
+  .agentFlexCard .agentImg{
+    height: 175px;
+    width: 175px;
+  }
+
+  .agentFlexCard .deets {
+    margin: 0;
+  }
+
+}
+
+@media screen and (max-width: 1300px) {
+  .agentSection{
+    padding: 50px 50px;
+  }
+}
+
+@media screen and (max-width: 1023px) {
+  .agentNlatest{
+    flex-direction: column;
+  }
+
+  .agentNlatest .agent, .agentNlatest .latest{
+    width: 100%;
+    padding: 0;
+  }
+
+  .agentNlatest .agent{
+    order: 1;
+  }
+
+  .agentNlatest .latest{
+    order: 2;
+    margin-top: 30px;
+  }
+
+  
+}
+
+@media screen and (max-width: 763px) {
+
+  .agentFlexCard .agentDetails{
+    width: calc(100% - 125px);
+  }
+
+  .agentFlexCard .agentImg{
+    height: 125px;
+    width: 125px;
+  }
+
+  .agentFlexCard .agentCardFooter{
+    display: none;
+  }
+}

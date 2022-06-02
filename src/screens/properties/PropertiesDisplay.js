@@ -127,7 +127,7 @@ const PropertiesDisplay = () => {
 
                             <section className='propertiesGridFull'>
 
-                                {properties.map((item) => (
+                                {properties.docs.map((item) => (
                                     <div key={item._id}>
                                         <PropertyGridCards
                                             type={'Featured'} leaseType={'For Rent'} price={item.price} background={item.gallery[2]}
