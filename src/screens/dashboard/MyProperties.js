@@ -40,7 +40,7 @@ const MyProperties = () => {
                             <li className={'f14 semiBoldText white'}>Action</li>
                         </ul>
                     </div>
-                    <MyPropertiesRows />
+                    <MyPropertiesRows sortBy={state.sortBy} />
                 </section>
             </main>
         </>

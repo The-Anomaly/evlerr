@@ -10,6 +10,7 @@ export const SELECT_USER = "select_user";
 
 
 export const GETTING_PROPERTIES = "getting_properties";
+export const SELECT_PROPERTY = "select_property";
 export const DELETE_PROPERTY = "delete_properties";
 export const PROPERTIES_SUCCESS = "properties_success";
 export const PROPERTIES_FAIL = "properties_fail";

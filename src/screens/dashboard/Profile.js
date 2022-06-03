@@ -25,7 +25,7 @@ const Profile = () => {
     const dispatch = useDispatch()
     
     useEffect(() => {
-      const userSocials = user.socials ? user.socials : []
+    //   const userSocials = user.socials ? user.socials : []
       setFormData({ username: user.username, fullName: user.fullName, email: user.email, description: user.description, job: user.job, web: user.web, phone: user.phone, fax: user.fax, friendlyAddress: user.friendlyAddress, mapLocation: user.mapLocation, location: user.location, socials: [ {name: 'Select social', url: ''}]})
     }, [user])
     

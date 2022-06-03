@@ -1,10 +1,11 @@
-import { GETTING_PROPERTIES, PROPERTIES_FAIL, PROPERTIES_SUCCESS, UPLOADING_PROPERTY, UPLOADING_PROPERTY_FAIL, UPLOADING_PROPERTY_SUCCESSFUL, DELETE_PROPERTY } from "../Types"
+import { GETTING_PROPERTIES, PROPERTIES_FAIL, PROPERTIES_SUCCESS, UPLOADING_PROPERTY, UPLOADING_PROPERTY_FAIL, UPLOADING_PROPERTY_SUCCESSFUL, DELETE_PROPERTY, SELECT_PROPERTY } from "../Types"
 
 const initialState = {
     properties: [],
     loadingProperties: false,
     propertiesError: '',
     uploadingProperty: false,
+    selectedProperty: {},
     uploadedProperty: [],
 }
 
@@ -13,6 +14,8 @@ const PropertiesReducer = (state = initialState, { type, payload }) => {
 
         case GETTING_PROPERTIES:
             return { ...state, loadingProperties: true }
+        case SELECT_PROPERTY:
+            return { ...state, selectedProperty: payload }
         case PROPERTIES_SUCCESS:
             return { ...state, loadingProperties: false, properties: payload }
         case PROPERTIES_FAIL:

@@ -1,29 +1,47 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import RenderNav from '../../components/nav/RenderNav'
 import CustomInput from '../../utils/CustomInput'
 // import Loading from '../../utils/Loading'
 import '../../assets/style/SubmissionStyles.css';
-import SimpleMap from '../../utils/Map';
 import CustomButton from '../../utils/CustomButton';
 import Dropdown from '../../utils/Dropdown';
 import CustomUploadInput from '../../utils/CustomUploadInput';
 import { MdDone } from 'react-icons/md';
-import { connect } from 'react-redux';
-import { uploadProperties } from '../../redux/actions/PropertiesAction';
+import { useDispatch, useSelector } from 'react-redux';
+import { editProperties } from '../../redux/actions/PropertiesAction';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import CustomTextArea from '../../utils/CustomTextarea';
+import { SELECT_PROPERTY } from '../../redux/Types';
+import http from '../../Utils';
+import ImagePicker from '../../components/dashboard/ImagePicker';
 
 
-const EditProperty = (props) => {
+const EditProperty = () => {
 
+    const property = useSelector((state) => state.properties.selectedProperty)
+    const dispatch = useDispatch()
+    const price = property.price.match(/\d+/)[0]
+    const cur = property.price.match(/\D+/)[0]
     const [state, setState] = useState({
-        loading: false, dryer: false, fridge: false, barbeque: false, air: false, tv: false, washer: false, sauna: false, wifi: false,
-        propertyTitle: "", propertyType: "", propertyDescription: "", propertyId: "", parentProperty: "",
-        status: "For Rent", label: "", material: "", rooms: "", bed: "", bath: "", garage: "", yearBuilt: "", homeArea: "", energyClass: "",
-        energyIndex: "", price: "", currency: "USD", pricePrefix: "", priceSuffix: "", priceCustom: "", region: "", friendlyAddress: "", mapLocation: "", longtitude: "", latitude: "",
-        featuredImage: [], gallery: [], attachment: [], videoLink: "", amenities: [], facilities: [], valuation: [], floors: []
+        loading: false, uploadImageLoading: false,
+        dryer: property.amenities.some(val => val === 'dryer'), 
+        fridge: property.amenities.some(val => val === 'fridge'), 
+        barbeque: property.amenities.some(val => val === 'barbeque'), 
+        air: property.amenities.some(val => val === 'air conditioning'), 
+        tv: property.amenities.some(val => val === 'tv'), 
+        washer: property.amenities.some(val => val === 'washer'), 
+        sauna: property.amenities.some(val => val === 'sauna'), 
+        wifi: property.amenities.some(val => val === 'wifi'),
+        propertyTitle: property.propertyTitle, propertyType: property.propertyType, propertyDescription: property.propertyDescription, status: property.status, rooms: property.rooms, bed: property.bed, bath: property.bath, garage: property.garage, yearBuilt: property.yearBuilt, homeArea: property.homeArea, price: price, currency: cur, pricePrefix: property.pricePrefix, priceSuffix: property.priceSuffix, priceCustom: property.pricecustom, featuredImage: [], gallery: [...property.gallery], attachment: [...property.attachment], videoLink: "", amenities: [...property.amenities]
     })
+
+    useEffect(() => {
+        return () => {
+            dispatch({type: SELECT_PROPERTY, payload: {}})
+        }
+    }, [dispatch])
+    
 
     const navigate = useNavigate()
 
@@ -73,18 +91,6 @@ const EditProperty = (props) => {
     }
     const onChangePriceCustom = (e) => {
         setState({ ...state, priceCustom: e.target.value })
-    }
-    const onChangeAddress = (e) => {
-        setState({ ...state, friendlyAddress: e.target.value })
-    }
-    const onChangeLocation = (e) => {
-        setState({ ...state, mapLocation: e.target.value })
-    }
-    const onChangeLongitude = (e) => {
-        setState({ ...state, longtitude: e.target.value })
-    }
-    const onChangeLatitude = (e) => {
-        setState({ ...state, latitude: e.target.value })
     }
     const onChangeVideoLink = (e) => {
         setState({ ...state, videoLink: e.target.value })
@@ -170,31 +176,48 @@ const EditProperty = (props) => {
         }
     }
 
+    const uploadProfileImage = async (file) => {
+        const fData = {photo: file, propertyField: 'featuredImage', id: property._id}
+        // console.log(fData)
+        // return
+        setState({...state, uploadImageLoading: true})
+        try {
+            const res = await http.post('user/media-upload', fData, false)
+            // dispatch({ type: UPDATE_USER, payload: res.data })
+            // localStorage.setItem('userInfo', JSON.stringify(res.data))
+            toast.success('Profile image uploaded', {
+                position: toast.POSITION.TOP_RIGHT
+            });
+            console.log('profile image update: ', res.data)
+        } catch (error) {
+            console.log(error)
+            toast.error('Unable to upload image', {
+                position: toast.POSITION.TOP_RIGHT
+            });
+        }
+        setState({...state, uploadImageLoading: false})
+    }
+
     const submit = async (e) => {
         e.preventDefault()
         // return
         const { propertyTitle, propertyType, propertyDescription, status, rooms, bed, bath, garage, yearBuilt, homeArea, price, currency, pricePrefix,
-            priceSuffix, priceCustom, friendlyAddress, featuredImage,
-            gallery, attachment, videoLink, amenities, facilities, valuation, floors } = state
+            priceSuffix, priceCustom, videoLink, amenities } = state
 
-        let fImage = featuredImage[0]
-        let newPrice = price + currency
+        // let fImage = featuredImage[0]
+        let newPrice = `${price} ${currency}`
 
         const formData = {
             propertyTitle, propertyType, propertyDescription,
          status, rooms, bed, bath, garage, yearBuilt,
-            homeArea, newPrice, pricePrefix, priceSuffix, priceCustom, friendlyAddress,
-            fImage, gallery, attachment, videoLink, amenities, facilities, valuation, floors
+            homeArea, price: newPrice, pricePrefix, priceSuffix, priceCustom,
+            videoLink, amenities,
         }
 
         if (price === '' || propertyDescription === '' || rooms === '' 
             || bed === '' || garage === '' || bath === '' || garage === '' || yearBuilt === '' ||
-            homeArea === '' || floors === '' || friendlyAddress === '' || propertyTitle === '' || propertyType === '') {
+            homeArea === '' || propertyTitle === '' || propertyType === '') {
             toast.error('All required fields cannot be empty', {
-                position: toast.POSITION.TOP_RIGHT
-            });
-        } else if(gallery.length === 0) {
-            toast.error('Gallery should have at least one image', {
                 position: toast.POSITION.TOP_RIGHT
             });
         } else {
@@ -202,18 +225,18 @@ const EditProperty = (props) => {
             // return
             setState({...state, loading: true})
             try {
-                const res = await props.uploadProperties(formData)
+                const res = await dispatch(editProperties(property._id, formData))
                 if (res) {
-                    toast.success('SuccessFul', {
+                    toast.success('Property updated succesfully', {
                         position: toast.POSITION.TOP_RIGHT
                     })
-                    navigate('/submission');
+                    navigate(-1);
                 }
                 console.log(res.message);
             } catch (error) {
-                // toast.error(error[1].data.message, {
-                //     position: toast.POSITION.TOP_RIGHT
-                // });
+                toast.error('Something went wrong, could not update property', {
+                    position: toast.POSITION.TOP_RIGHT
+                });
                 console.log('Upload failed: ', error)
             }
             setState({...state, loading: false})
@@ -277,28 +300,6 @@ const EditProperty = (props) => {
                     </section>
 
                     <section className={'membersCard'} style={{ marginTop: '30px' }}>
-                        <p className={'f22 boldText headerColor pb30'}>Location</p>
-
-                        <div>
-                            {/* <div className={'pb30'}>
-                                <Dropdown label={'Regions'} curSelect={state.region} options={['Kyrenia', 'Famagusta', 'Nicosia', 'Iskele', 'Lefke', 'Guzelyurt']} setSelect={handleRegion} />
-                            </div> */}
-                            <div className={'pb30'}>
-                                <CustomInput label={'Property Address'} disabled value={state.friendlyAddress} onChange={onChangeAddress} name={'friendlyAddress'} />
-                            </div>
-                            <div className={'pb30'}>
-                                <CustomInput label={'Map Location'} disabled value={state.mapLocation} onChange={onChangeLocation} name={'mapLocation'} />
-                            </div>
-                        </div>
-                        <div style={{ height: '400px' }}>
-                            <SimpleMap />
-                        </div>
-                        <div style={{ width: '70%', marginTop: '20px' }} className={'packagesGrid'}>
-                            <CustomInput placeholder={'Latitude'} value={state.latitude} onChange={onChangeLatitude} name={'latitude'} />
-                            <CustomInput placeholder={'Longitude'} value={state.longtitude} onChange={onChangeLongitude} name={'longitude'} />
-                        </div>
-                    </section>
-                    <section className={'membersCard'} style={{ marginTop: '30px' }}>
                         <p className={'f22 boldText headerColor pb30'}>Media</p>
 
 
@@ -310,7 +311,7 @@ const EditProperty = (props) => {
                                     <img id={index} src={val.url} alt={''} style={{ maxWidth: '100%', height: '100%' }} />
                                 </span>
                             )}
-                            <CustomUploadInput fileState={state} handleState={setState} inputName={'featuredImage'} />
+                            <ImagePicker uploader={uploadProfileImage} uploadLoading={state.uploadImageLoading} defImage={property.featuredImage ? {data_url: property.featuredImage.url} : ''} />
                         </div>
 
 
@@ -415,4 +416,4 @@ const EditProperty = (props) => {
 }
 
 // export default EditProperty
-export default connect(null, { uploadProperties })(EditProperty)
+export default EditProperty

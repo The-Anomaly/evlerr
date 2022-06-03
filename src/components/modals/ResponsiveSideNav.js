@@ -112,7 +112,7 @@ const ResponsiveSideNav = ({ visible, closeModal }) => {
                                 <hr />
 
                                 <li style={{ display: 'grid', gridTemplateColumns: '100%', justifyContent: 'center', alignItems: 'center', gap: '10px', position: 'fixed', bottom: '10px', right: '25%' }}>
-                                    <Link to={'submission'}>
+                                    <Link to={'/submission'}>
                                         <CustomIconButton title={'Submit Property'}
                                             customStyle={{ backgroundColor: '#0c304a', borderRadius: '50px', color: '#fff', padding: '10px 16px', }}
                                             icon={<BsPlusLg size={16} />}

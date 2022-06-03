@@ -12,9 +12,10 @@ import '../../assets/style/MemberStyles.css';
 // import AgencyDetailsCard from '../../components/cards/AgencyDetailsCard';
 import styled from 'styled-components';
 import AgencyAgentCard from '../../components/cards/AgencyAgentsCard';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import AgentDisplayCard from '../../utils/AgentDisplayCard';
+import { SELECT_USER } from '../../redux/Types';
 
 
 const Tab = styled.button`
@@ -57,6 +58,15 @@ const AgencyDetails = () => {
     })
     console.log(data)
     const { properties } = useSelector(state => state.properties)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+    
+      return () => {
+        dispatch({type: SELECT_USER, payload: {}})
+      }
+    }, [dispatch])
+    
 
     const showSortDropDown = () => {
         if (state.sortDrop) {

@@ -237,7 +237,7 @@ const AddProperty = (props) => {
                 }
                 console.log(res.message);
             } catch (error) {
-                toast.error(error[1].data.message, {
+                toast.error('Could not upload property', {
                     position: toast.POSITION.TOP_RIGHT
                 });
                 console.log('Upload failed: ', error)

@@ -24,6 +24,26 @@ export const getProperties = (page = 1) => {
     };
 }
 
+export const getMembersProperties = (obj) => {
+    return dispatch => {
+        dispatch({ type: GETTING_PROPERTIES })
+        return new Promise(async (resolve, reject) => {
+            try {
+                const res = await http.get('user/get-agent-properties', obj)
+                const data = res.data
+                console.log('properties ', data)
+                // dispatch({ type: PROPERTIES_SUCCESS, payload: data });
+                // storeCurrencies(data)
+                resolve(data);
+            } catch (error) {
+                console.log('properties err ', error)
+                // dispatch({ type: PROPERTIES_FAIL, payload: error });
+                reject(error);
+            }
+        });
+    };
+}
+
 
 export const uploadProperties = (obj) => {
     return dispatch => {
@@ -39,6 +59,26 @@ export const uploadProperties = (obj) => {
             } catch (error) {
                 // console.log('Upload failed ', error)
                 dispatch({ type: UPLOADING_PROPERTY_FAIL, payload: error });
+                reject(error);
+            }
+        });
+    };
+}
+
+export const editProperties = (propId, obj) => {
+    return () => {
+        // dispatch({ type: UPLOADING_PROPERTY })
+        return new Promise(async (resolve, reject) => {
+            try {
+                const res = await http.patch(`/user/update-property/${propId}`, obj)
+                const data = res.data
+                console.log('Upload response: ', data)
+                // dispatch({ type: UPLOADING_PROPERTY_SUCCESSFUL, payload: data });
+                // storeCurrencies(data)
+                resolve(data);
+            } catch (error) {
+                // console.log('Upload failed ', error)
+                // dispatch({ type: UPLOADING_PROPERTY_FAIL, payload: error });
                 reject(error);
             }
         });
