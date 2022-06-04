@@ -20,7 +20,7 @@ const MyProperties = () => {
             <main className={'dashBg pl15 pr15 pt40 h100'}>
                 <div className={'pb40 flex justifyBetween alignCenter'} style={{ flexWrap: 'wrap' }}>
                     <h2 className={'f34 boldText headerColor'}>My Properties</h2>
-                    <div className={'flex'}>
+                    <div style={{flexWrap: 'wrap'}} className={'flex'}>
                         <div className={'pr10 pt10'}>
                             <CustomInput placeholder={'Search ...'} icon={<BsSearch />} />
                         </div>

@@ -25,18 +25,18 @@ const Profile = () => {
     const dispatch = useDispatch()
     
     useEffect(() => {
-    //   const userSocials = user.socials ? user.socials : []
-      setFormData({ username: user.username, fullName: user.fullName, email: user.email, description: user.description, job: user.job, web: user.web, phone: user.phone, fax: user.fax, friendlyAddress: user.friendlyAddress, mapLocation: user.mapLocation, location: user.location, socials: [ {name: 'Select social', url: ''}]})
+      const userSocials = user.socials ? user.socials : []
+      setFormData({ username: user.username, fullName: user.fullName, email: user.email, description: user.description, job: user.job, web: user.web, phone: user.phone, fax: user.fax, friendlyAddress: user.friendlyAddress, mapLocation: user.mapLocation, location: user.location, socials: [...userSocials]})
     }, [user])
     
     
 
-    const showEdit = () => {
-        setState((prevState) => ({ ...prevState, edit: true }))
-    }
-    const closeEdit = () => {
-        setState((prevState) => ({ ...prevState, edit: false }))
-    }
+    // const showEdit = () => {
+    //     setState((prevState) => ({ ...prevState, edit: true }))
+    // }
+    // const closeEdit = () => {
+    //     setState((prevState) => ({ ...prevState, edit: false }))
+    // }
 
     const newNetwork = () => {
         setFormData({ ...formData, socials: [ ...formData.socials, { name: 'Select Social', url: '' } ] })
@@ -175,7 +175,7 @@ const Profile = () => {
                 </div>
 
                 <section className={'membersCard'}>
-                    <div>
+                    {/* <div>
                         <p className={'f14 boldText headerColor pb20'}>Profile Url</p>
                         <p className={'f14 regularText headerColor'}>{state.url} <span style={{ color: 'red' }} onClick={showEdit}>Edit</span></p>
                         {state.edit &&
@@ -186,10 +186,10 @@ const Profile = () => {
                                 />
                             </div>
                         }
-                    </div>
+                    </div> */}
 
                     <div className={'pt30'}>
-                        <p className={'f14 boldText headerColor pb40'}>Featured Image</p>
+                        <p className={'f16 boldText headerColor pb40'}>Featured Image</p>
                         <div>
                             <ImagePicker uploader={uploadProfileImage} uploadLoading={state.uploadImageLoading} defImage={user.profilePicture ? {data_url: user.profilePicture.url} : {data_url: defaultAvatar}} />
                         </div>
@@ -210,7 +210,7 @@ const Profile = () => {
                                 name={'description'} />
                         </div>
 
-                        <div>
+                        <div style={{ marginTop: '20px' }}>
                             <CustomInput label={'Job'} name={'job'} onChange={handleInput} value={formData.job} />
                         </div>
                         <div>
@@ -245,13 +245,13 @@ const Profile = () => {
                     </div>
 
                     <div className={'pt30'}>
-                        <p className={'f14 boldText headerColor pb20'}>Socials</p>
+                        <p className={'f16 boldText headerColor pb20'}>Socials</p>
                         {formData.socials && formData.socials.map((val, index) => 
                             <CustomInputDrop key={index} placeholder={`Network ${index+1}`} inputValue={formData.socials[index]} changeUrl={handleSocialUrl} changeName={handleSocialName} index={index} delNetwork={deleteNetwork} icon={state.menuDrop ? <IoMdArrowDropup size={22} /> : <IoMdArrowDropdown size={22} />}
                                 color={'#484848'}></CustomInputDrop>
 
                         ) }
-                        <div className='addNetwork' style={{ marginBottom: '20px' }}>
+                        <div className='addNetwork cPointer' style={{ marginBottom: '20px' }}>
                             <p onClick={newNetwork} className={'f14 regularText white'}>Add Another Network</p>
                         </div>
                     </div>

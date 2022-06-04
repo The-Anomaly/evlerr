@@ -83,7 +83,9 @@
   border-radius: 2px;
   width: 150px;
 }
-
+.respWidth{
+  width: 50%;
+}
 
 /******************************
 * INPUT SEARCH & SORT BY
@@ -186,5 +188,8 @@
 @media screen and (min-width: 280px) and (max-width: 786px) {
   .membersCard {
     padding: 10px;
+  }
+  .respWidth{
+    width: 80%;
   }
 }

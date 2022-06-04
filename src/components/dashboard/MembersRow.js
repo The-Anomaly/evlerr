@@ -4,7 +4,7 @@ import '../../assets/style/DashboardStyles.css';
 
 const MembersRow = ({ agentImage, agentAddress, agentMail, agentName, agentNumber, id, toggleDelete }) => {
     return (
-        <section className={'flex justifyBetween alignCenter whiteBg pt20 pb20 borderBt'}>
+        <section style={{ flexWrap: 'wrap' }} className={'flex justifyBetween alignCenter whiteBg pt20 pb20 borderBt'}>
             <div className={'flex alignCenter'}>
                 <div className='memberImage'>
                     <img src={agentImage} alt='agent' style={{ width: '100%', height: '100%' }} />

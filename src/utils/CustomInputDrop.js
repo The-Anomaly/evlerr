@@ -28,10 +28,10 @@ const CustomInputDrop = ({ type, disabled, name, value, onChange, icon, customSt
                 </div>
                 {state.showDropdown &&
                     <div className='dropDownContentContainer'>
-                        <div style={{ width: '50%', padding: '10px' }}>
+                        <div className='socialInputs'>
                             <Dropdown label={'Network'} curSelect={inputValue.name} options={['Reddit', 'Facebook', 'LinkedIn', 'Twitter', 'Instagram', 'Google+', 'Youtube']} setSelect={handleName} />
                         </div>
-                        <div style={{ width: '50%', padding: '10px' }}>
+                        <div className='socialInputs'>
                             <section>
                                 <p className={'f16 boldText black pb10'}>Url</p>
                                 <div className='inputContainer'>

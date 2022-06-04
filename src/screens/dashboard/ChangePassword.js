@@ -48,7 +48,7 @@ const ChangePassword = () => {
             <div className={'pb30'}>
                 <h2 className={'f34 boldText headerColor'}>Change Password</h2>
             </div>
-            <section className='membersCard' style={{ width: '50%' }}>
+            <section className='membersCard respWidth'>
                 <CustomInput label={'Old password'} value={state.oldPass} onChange={onChangeOldPass} /> <br />
 
                 <CustomInput label={'New password'} value={state.newPass} onChange={onChangeNewPass} /> <br />

@@ -25,7 +25,10 @@ const Members = () => {
                 setState((state) => ({ ...state, loading: false, agents: res.data.docs, agentsXtra: res.data}))
             } catch (error) {
                 // returnError(error)
-                setState((state) => ({ ...state, msg: error[0] }))
+                toast.error('Could not fetch members', {
+                    position: toast.POSITION.TOP_RIGHT
+                })
+                // setState((state) => ({ ...state, msg: error[0] }))
                 console.log('fetch property error ', error)
                 setState((state) => ({ ...state, loading: false}))
             }
@@ -203,7 +206,7 @@ const Members = () => {
                         }
                     )}
 
-                    <div className="mb10">
+                    <div className="mt10">
                         <Pagination paginationObj={state.agentsXtra} paginator={paginate} />
                     </div>
                 </section>
