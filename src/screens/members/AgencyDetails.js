@@ -4,7 +4,7 @@ import RenderNav from '../../components/nav/RenderNav'
 import '../../assets/style/PropertyStyles.css';
 import FilterModal from '../../components/modals/FilterModal';
 import Agent from '../../assets/images/agent.jpeg';
-// import Agency from '../../assets/images/agencyImage.jpeg';
+import Agency from '../../assets/images/agencyImage.jpeg';
 import '../../assets/style/MemberStyles.css';
 // import AgencyDetailsCard from '../../components/cards/AgencyDetailsCard';
 import styled from 'styled-components';
@@ -39,6 +39,7 @@ const Tab = styled.button`
 const ButtonGroup = styled.div`
   display: flex;
   border-bottom:1px solid #ebebeb;
+  overflow-x: auto;
 `;
 const types = ['Overview', 'Properties', 'Agents'];
 
@@ -181,21 +182,21 @@ const AgencyDetails = () => {
                                             {state.propertiesLoading ? <p style={{background: '#FFE089', opacity: '0.7', padding: '15px', borderRadius: '7px'}} className={'f14 regularText'}>Loading...</p> : 
                                             state.properties.docs.length === 0 ? <p style={{background: '#FFE089', opacity: '0.7', padding: '15px', borderRadius: '7px'}} className={'f14 regularText'}>User has not uploaded any properties yet</p> : 
                                             state.properties.docs.map((item, index) => (
-                                                <section key={index} style={{ maxHeight: '237' }} className='listCardContainer flex animate__animated animate__fadeIn'>
+                                                <section key={index} style={{ transition: 'all 0.3s ease-in-out 0s', borderRadius: '6px', border: '1px solid #ebebeb', backgroundColor: '#fff' }} className='flex animate__animated animate__fadeIn'>
                                                 <section className={'whiteBg pt10 pl10 pr10'} style={{ width: '250px' }}>
                                                     <div className={'cardImage'}>
-                                                        <img alt='property' src={item.gallery[0].url} loading={'eager'} />
+                                                        <img alt='property' src={item.featuredImage ? item.featuredImage.url : Agency} loading={'eager'} />
                                                         <div className='cardImageOverlay'>
-                                                            <div className='cardTagContainer'>
-                                                                {/* {leaseType &&
+                                                            {/* <div className='cardTagContainer'>
+                                                                {leaseType &&
                                                                     <div className='cardLeaseTag'>
                                                                         <p className={'semiBoldText white f14'}>{leaseType}</p>
                                                                     </div>}
                                                                 {type &&
                                                                     <div className='cardTypeTag'>
                                                                         <p className={'semiBoldText white f14'}>{type}</p>
-                                                                    </div>} */}
-                                                            </div>
+                                                                    </div>}
+                                                            </div> */}
                                                         </div>
                                                     </div>
                                                 </section>
@@ -251,7 +252,7 @@ const AgencyDetails = () => {
 
                                 </section>}
                                 {active === 'Agents' && 
-                                <section className={'pt40 agentsGridTemplate'}>
+                                <section className={'pt40'}>
                                     {state.propertiesLoading ? <p style={{background: '#FFE089', opacity: '0.7', padding: '15px', borderRadius: '7px'}} className={'f14 regularText'}>Loading...</p> : 
                                             state.agents.docs.length === 0 ? <p style={{background: '#FFE089', opacity: '0.7', padding: '15px', borderRadius: '7px'}} className={'f14 regularText'}>Agency has no members yet</p> : 
                                             state.agents.docs.map((item, index) => (
@@ -266,13 +267,13 @@ const AgencyDetails = () => {
                                 <p className={'f20 headerColor boldText  pb20'}>Latest Properties</p>
                                 <ul>
                                     {Object.keys(properties).length !== 0 && properties.docs.map((property, index) => {
-                                        const { propertyTitle, price, bed, bath, homeArea, gallery, _id } = property
+                                        const { propertyTitle, price, bed, bath, homeArea, featuredImage, _id } = property
 
                                         if (index < 4) {
                                             return (
                                                 <li key={index} onClick={() => {selectResourceType(_id)}} className={'flex alignCenter pb20'}>
                                                     <div className='latestPropertiesImage cPointer'>
-                                                        <img src={gallery[0]} alt='home' style={{ width: '100%', height: '100%', borderRadius: '6px' }} />
+                                                        <img src={featuredImage ? featuredImage.url : Agency} alt='home' style={{ width: '100%', height: '100%', borderRadius: '6px' }} />
                                                     </div>
                                                     <div>
                                                         <p className={'f16 headerColor boldText cPointer pb10'} onClick={() => {selectResourceType(_id)}}>{propertyTitle}</p>

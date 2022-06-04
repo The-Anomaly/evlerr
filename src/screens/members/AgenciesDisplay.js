@@ -20,7 +20,7 @@ const AgenciesDisplay = () => {
 
     const [state, setState] = useState({
         sortDrop: false,
-        agents: [], loading: false, agentsXtra: {},
+        agents: [], loading: true, agentsXtra: {},
         sortItem: [{ id: 1, name: 'Default' }, { id: 2, name: 'Newest' }, { id: 3, name: 'Oldest' }, { id: 6, name: 'Random' }], 
         filter: 'All', filterDrop: false,
         selected: 'Default', visible: false, filterItem: [{ id: 1, name: 'All' }, { id: 2, name: 'Rent' }, { id: 2, name: 'Sale' },],

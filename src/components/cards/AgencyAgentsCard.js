@@ -7,7 +7,7 @@ import { MdEmail } from 'react-icons/md';
 const AgencyAgentCard = ({ agentImage, agentName, department, phoneNumber, email, agencyAddress }) => {
     return (
         <>
-            <section className={'agentTitleCard flex alignCenter pb10 pr10 pl10 pt10'}>
+            <section style={{wordBreak: 'break-word'}} className={'agentTitleCard flex alignCenter mb10 pb10 pr10 pl10 pt10'}>
                 <div >
                     <div style={{ width: '120px', height: '120px' }}>
                         <img src={agentImage} alt='agent' style={{ width: '100%', height: '100%', borderRadius: '6px' }} loading={'eager'} />

@@ -147,7 +147,7 @@ const PropertyDetails = () => {
                                     <Tabs title={state.property.propertyType ? state.property.propertyType : 'Apartment'} color={'#ff5a5f'} />
                                     <Tabs title={'Beds: '+(state.property.bed ? state.property.bed : null)} color={'#484848'} />
                                     <Tabs title={'Baths: '+(state.property.bath ? state.property.bath : null)} color={'#484848'} />
-                                    <Tabs title={state.property.homeArea ? state.property.homeArea : 'null'} color={'#484848'} />
+                                    <Tabs title={state.property.homeArea ? state.property.homeArea+' sqft' : 'null'} color={'#484848'} />
                                 </div>
                                 <article>
                                     <p className={'f20 headerColor boldText pl10 pt30 pb30'}>Overview</p>

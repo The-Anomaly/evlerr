@@ -22,7 +22,7 @@ const SearchComponent = () => {
         setState({ ...state, loading: true })
         console.log(state.query)
         try {
-            const res = await http.get('search-property', { search: state.query, status: 'rent' })
+            const res = await http.get('search-property', { search: state.query })
             setState({ ...state, fetchedItems: res.data, showDropdown: true, loading: false })
             console.log(res)
         } catch (error) {
