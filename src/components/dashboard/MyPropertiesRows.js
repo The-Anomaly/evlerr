@@ -113,8 +113,8 @@ const MyPropertiesRows = ({sortBy}) => {
 
 
     const propertiesList = Object.keys(state.properties).length !== 0 ? state.properties.docs.map((property, index) => {
-        const { gallery, propertyTitle, friendlyAddress, createdAt, status, pricePrefix, priceSuffix, price, _id } = property
-        const checkGallery = gallery[0] ? typeof gallery[0] : 'string'
+        const { gallery, propertyTitle, friendlyAddress, createdAt, status, featuredImage, pricePrefix, priceSuffix, price, _id } = property
+        // const checkGallery = gallery[0] ? typeof gallery[0] : 'string'
         return (
             <section key={index} className={'transactionRowContainer bgWhite'} style={{ overflow: 'auto' }}>
                 <ul className={'fav-container overviewGrid pb10'}>
@@ -122,7 +122,7 @@ const MyPropertiesRows = ({sortBy}) => {
                         <div onClick={() => selectResourceType(property)} className='cPointer image-wrapper'>
                             <div className="overlay"></div>
                             <span className="property-status">{status}</span>
-                            <img src={ checkGallery === 'string' ? gallery[0] : gallery[0].url } alt={''}  />
+                            <img src={featuredImage.url} alt={''}  />
                         </div>
                     </li>
                     <li className={'f14 headerColor'}>

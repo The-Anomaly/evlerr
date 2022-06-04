@@ -2,10 +2,7 @@ import React, { Suspense, useEffect, useState } from 'react'
 import RenderNav from '../../components/nav/RenderNav'
 // import Breadcrumbs from '../../utils/Breadcrumb'
 import '../../assets/style/PropertyStyles.css';
-import Home from '../../assets/images/home.jpeg';
-import SortCard from '../../components/cards/SortCard';
 import FilterModal from '../../components/modals/FilterModal';
-import PropertyGridCards from '../../components/cards/PropertyGridCards';
 import Agent from '../../assets/images/agent.jpeg';
 // import Agency from '../../assets/images/agencyImage.jpeg';
 import '../../assets/style/MemberStyles.css';
@@ -16,6 +13,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import AgentDisplayCard from '../../utils/AgentDisplayCard';
 import { SELECT_USER } from '../../redux/Types';
+import { getMembersProperties } from '../../redux/actions/PropertiesAction';
+import { IoLocationOutline } from "react-icons/io5";
+import http from '../../Utils';
+import { GrLocation } from 'react-icons/gr'
+import PropertyGridCards from '../../components/cards/PropertyGridCards';
 
 
 const Tab = styled.button`
@@ -47,52 +49,57 @@ const AgencyDetails = () => {
 
     const [state, setState] = useState({
         sortDrop: false,
+        properties: [], agents: [], propertiesLoading: false,
         sortItem: [{ id: 1, name: 'Default' }, { id: 2, name: 'Newest' }, { id: 3, name: 'Oldest' },
         { id: 4, name: 'Lowest Price' }, { id: 5, name: 'Highest Price' }, { id: 6, name: 'Random' }], filter: 'All', filterDrop: false,
         selected: 'Default', visible: false, filterItem: [{ id: 1, name: 'All' }, { id: 2, name: 'Rent' }, { id: 2, name: 'Sale' },],
     })
     const member = useSelector((state) => state.auth.selectedUser)
     const [active, setActive] = useState(types[0]);
-    const [data, setData] = useState({
+    const [setData] = useState({
         _id: ''
     })
-    console.log(data)
+    // console.log(data)
     const { properties } = useSelector(state => state.properties)
     const dispatch = useDispatch()
 
-    useEffect(() => {
+    // useEffect(() => {
     
-      return () => {
-        dispatch({type: SELECT_USER, payload: {}})
-      }
-    }, [dispatch])
+    //   return () => {
+    //     dispatch({type: SELECT_USER, payload: {}})
+    //   }
+    // }, [dispatch])
     
-
-    const showSortDropDown = () => {
-        if (state.sortDrop) {
-            setState((prevState) => ({ ...prevState, sortDrop: false }))
-        } else {
-            setState((prevState) => ({ ...prevState, sortDrop: true }))
+    const fetchProperties = async (type) => {
+        setState((state) => ({ ...state, propertiesLoading: true}))
+        setActive(type)
+        try {
+            const res = await dispatch(getMembersProperties({agentId: member._id, orderBy: 'newest', page: 1}))
+            console.log('properties ', res)
+            setState((state) => ({ ...state, propertiesLoading: false, properties: res}))
+        } catch (error) {
+            // returnError(error)
+            setState((state) => ({ ...state, msg: error[0] }))
+            console.log('fetch property error ', error)
+            setState((state) => ({ ...state, propertiesLoading: false}))
+        }
+    }
+    
+    const fetchAgents = async (type) => {
+        setState((state) => ({ ...state, propertiesLoading: true}))
+        setActive(type)
+        try {
+            const res = await http.get('agency/get-members?agencyId='+member._id)
+            console.log('properties ', res)
+            setState((state) => ({ ...state, propertiesLoading: false, agents: res.data}))
+        } catch (error) {
+            // returnError(error)
+            setState((state) => ({ ...state, msg: error[0] }))
+            console.log('fetch property error ', error)
+            setState((state) => ({ ...state, propertiesLoading: false}))
         }
     }
 
-    const showFilterDropDown = () => {
-        if (state.filterDrop) {
-            setState((prevState) => ({ ...prevState, filterDrop: false }))
-        } else {
-            setState((prevState) => ({ ...prevState, filterDrop: true }))
-        }
-    }
-
-
-    function selectSortType(val) {
-        setState((prevState) => ({ ...prevState, selected: val.name, sortDrop: false }))
-        // console.log(val)
-    }
-    function selectFilterType(val) {
-        setState((prevState) => ({ ...prevState, filter: val.name, filterDrop: false }))
-        // console.log(val)
-    }
     const navigate = useNavigate()
     // const showFilterModal = () => {
     //     setState((prevState) => ({ ...prevState, visible: true }))
@@ -110,9 +117,9 @@ const AgencyDetails = () => {
         }
 
     }
-    const goToAgentDetails = () => {
-        navigate('/agent-details')
-    }
+    // const goToAgentDetails = () => {
+    //     navigate('/agent-details')
+    // }
 
     return (
         // <Breadcrumbs />
@@ -129,43 +136,33 @@ const AgencyDetails = () => {
                                             email={'jamesfallen@mail.com'} agencyAddress={'333 NW 26th St, Miami'} /> */}
                                         <AgentDisplayCard customStyle={{ width: '100%' }} name={member.username} phone={member.phone} fax={member.fax} email={member.email} photo={member.profilePicture} />
                                     </div>
-                                    {active === 'Properties' &&
-                                        <div className={'pt20 animate__animated animate__fadeIn'}>
-                                            <SortCard result={'14'} onClick={showSortDropDown} dropDown={state.sortDrop} value={state.selected} onClickFilter={showFilterDropDown}
-                                                filterValue={state.filter} filterDropDown={state.filterDrop} filterList={state.filterItem}
-                                                selectFilterType={selectFilterType} sortList={state.sortItem} selectSortType={selectSortType}
-                                            >
-                                                {/* <div className={'pt10 pb10 pl10 pr10 bgWhite dropContent animate__animated animate__fadeIn'}>
-                                                {state.filterItem.map((item) =>
-                                                    <p key={item.id} className={'f14 regularText headerColor pb10'} onClick={() => selectFilterType(item)}>{item.name}</p>
-                                                )}
-                                            </div>
-                                            <div>
-                                                {state.sortItem.map((item) =>
-                                                    <p key={item.id} className={'f14 regularText headerColor pb10'} onClick={() => selectSortType(item)}>{item.name}</p>
-                                                )}
-                                            </div> */}
-
-                                            </SortCard>
-                                        </div>}
                                 </div>
                             </section>
                             <section className={'membersCard'}>
                                 <ButtonGroup>
-                                {types.map(type => {
-                                    if (type === 'Agents' && member.role !== 'agency') {
-                                        return false
-                                    }
-                                    return (
-                                        <Tab
-                                            key={type}
-                                            active={active === type}
-                                            onClick={() => setActive(type)}
-                                            className={' headerColor semiBoldText'}
-                                        >
-                                            {type}
-                                        </Tab>
-                                    )})}
+                                <Tab
+                                    active={active === types[0]}
+                                    onClick={() => setActive(types[0])}
+                                    className={' headerColor semiBoldText'}
+                                >
+                                    {types[0]}
+                                </Tab>
+                                <Tab
+                                    active={active === types[1]}
+                                    onClick={() => fetchProperties(types[1])}
+                                    className={' headerColor semiBoldText'}
+                                >
+                                    {types[1]}
+                                </Tab>
+                                {member.role === 'agency' && 
+                                    <Tab
+                                        active={active === types[2]}
+                                        onClick={() => fetchAgents(types[2])}
+                                        className={' headerColor semiBoldText'}
+                                    >
+                                        {types[2]}
+                                    </Tab>
+                                }
                                 </ButtonGroup>
                                 {active === 'Overview' && <section className={'pt40'}>
                                     <article>
@@ -173,84 +170,93 @@ const AgencyDetails = () => {
                                         <p className={'f14 headerColor mediumText pb30 pl10'}>
                                             {member.description ? member.description : 'No description'}
                                         </p>
-                                        {/* <p className={'f14 headerColor mediumText pb30 pl10'}>
-                                            Fully furnished. Elegantly appointed condominium unit situated on premier location. PS6.
-                                            The wide entry hall leads to a large living room with dining area. This expansive 2 bedroom and 2 renovated marble bathroom apartment has great windows.
-                                            Despite the interior views, the apartments Southern and Eastern exposures allow for lovely natural light to fill every room.
-                                            The master suite is surrounded by handcrafted milkwork and features incredible walk-in closet and storage space.
-                                        </p>
-                                        <p className={'f14 headerColor mediumText pb30 pl10'}>
-                                            The second bedroom is a corner room with double windows. The kitchen has fabulous space, new appliances, and a laundry area.
-                                            Other features include rich herringbone floors, crown moldings and coffered ceilings throughout the apartment.
-                                            1049 5th Avenue is a classic pre-war building located across from Central Park, the reservoir and The Metropolitan Museum.
-                                            Elegant lobby and 24 hours doorman. This is a pet-friendly building.
-                                        </p> */}
                                     </article>
                                 </section>}
                                 {active === 'Properties' && <section className={'pt40'}>
 
                                     <Suspense fallback={'Loading...'}>
 
-                                        {state.filter === 'All' &&
+                                        <section>
 
-                                            <section className='propertiesGridFull'>
-
-                                                {properties.map((item) => (
-                                                    <div key={item._id}>
-                                                        <PropertyGridCards
-                                                            type={'Featured'} leaseType={'For Rent'} price={item.price} background={item.gallery[2]}
-                                                            sqft={'480'} baths={'4'} beds={'4'} location={item.friendlyAddress} detailsSubTitle={item.propertyTitle}
-                                                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onClick={() => selectResourceType(item)}
-                                                            onAgentClick={goToAgentDetails}
-                                                        />
+                                            {state.propertiesLoading ? <p style={{background: '#FFE089', opacity: '0.7', padding: '15px', borderRadius: '7px'}} className={'f14 regularText'}>Loading...</p> : 
+                                            state.properties.docs.length === 0 ? <p style={{background: '#FFE089', opacity: '0.7', padding: '15px', borderRadius: '7px'}} className={'f14 regularText'}>User has not uploaded any properties yet</p> : 
+                                            state.properties.docs.map((item, index) => (
+                                                <section key={index} style={{ maxHeight: '237' }} className='listCardContainer flex animate__animated animate__fadeIn'>
+                                                <section className={'whiteBg pt10 pl10 pr10'} style={{ width: '250px' }}>
+                                                    <div className={'cardImage'}>
+                                                        <img alt='property' src={item.gallery[0].url} loading={'eager'} />
+                                                        <div className='cardImageOverlay'>
+                                                            <div className='cardTagContainer'>
+                                                                {/* {leaseType &&
+                                                                    <div className='cardLeaseTag'>
+                                                                        <p className={'semiBoldText white f14'}>{leaseType}</p>
+                                                                    </div>}
+                                                                {type &&
+                                                                    <div className='cardTypeTag'>
+                                                                        <p className={'semiBoldText white f14'}>{type}</p>
+                                                                    </div>} */}
+                                                            </div>
+                                                        </div>
                                                     </div>
-                                                ))}
-
-                                            </section>}
-                                        {state.filter === 'Rent' &&
-
-                                            <section className='propertiesGridFull'>
-                                                {properties.map((item) => (
-                                                    <div key={item._id}>
-                                                        <PropertyGridCards
-                                                            type={'Featured'} leaseType={'For Rent'} price={item.price} background={item.gallery[1]}
-                                                            sqft={'480'} baths={'4'} beds={'4'} location={item.friendlyAddress} detailsSubTitle={item.propertyTitle}
-                                                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onClick={() => selectResourceType(item)}
-                                                            onAgentClick={goToAgentDetails}
-                                                        />
+                                                </section>
+                                                <section style={{ width: 'calc(100% - 250px)' }} className={'pl20 pr20'}>
+                                                    <div className={'cardDetails'}>
+                                                        <div className='cardDetailsHeader'>
+                                                            <div className="flex justifyBetween">
+                                                                <span style={{ background: '#3E4C66', fontSize: '16px', padding: '1px 8px', color: 'white', borderRadius: '3px' }}>{item.status}</span>
+                                                                <div className="property-price">{item.price}</div>
+                                                                
+                                                            </div>
+                                                            <p className={'regularText mt10 f14'}>{item.propertyType}</p>
+                                                            <h2 className={'boldText f18 propertyDetailsLink'} >{item.propertyTitle}</h2>
+                                                        </div>
+                                                        <div className='cardDetailsLocation'>
+                                                            <p className={'regularText f14'}>
+                                                                <span style={{ marginRight: '10px' }}>
+                                                                    <GrLocation />
+                                                                </span>
+                                                                {item.friendlyAddress}
+                                                            </p>
+                                                        </div>
+                                                        <div className='cardPropertyDetails'>
+                                                                <ul>
+                                                                <li className={'regularText f14'}>Beds: {item.bed}</li>
+                                                                <li className={'regularText f14'}>Baths: {item.bath}</li>
+                                                                <li className={'regularText f14'}>Sqft: {item.homeArea}</li>
+                                                            </ul>
+                                                        </div>
                                                     </div>
-                                                ))}
-                                            </section>}
-                                        {state.filter === 'Sale' &&
+                                                    {/* <section className={'cardFooter pl20 pr20 pt10 pb10 flex justifyBetween alignCenter'}>
+                                                        <div className={'flex alignCenter'}>
+                                                            <div className='cardFooterImage'>
+                                                                <img src={Agent} alt='poster' style={{ width: '100%', height: '100%' }} />
+                                                            </div>
+                                                            <div>
+                                                                <p className={'f14 regularText headerColor propertyDetailsLink'}>dsfkdfs</p>
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <p className={'f14 regularText headerColor'}>32 years ago</p>
+                                                        </div>
+                                                    </section> */}
+                                                </section>
+                                            </section>
 
-                                            <section className='propertiesGridFull'>
-
-                                                {properties.map((item) => (
-                                                    <div key={item._id}>
-                                                        <PropertyGridCards
-                                                            type={'Featured'} leaseType={'For Rent'} price={item.price} background={item.gallery[0]}
-                                                            sqft={'480'} baths={'4'} beds={'4'} location={item.friendlyAddress} detailsSubTitle={item.propertyTitle}
-                                                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onClick={() => selectResourceType(item)}
-                                                            onAgentClick={goToAgentDetails}
-                                                        />
-                                                    </div>
-
-                                                ))}
-                                            </section>}
+                                            ))}
+                                            
+                                        </section>
 
 
                                     </Suspense>
 
                                 </section>}
-                                {active === 'Agents' && <section className={'pt40 agentsGridTemplate'}>
-                                    <AgencyAgentCard agentImage={Agent} agentName={'James Miller'} department={'Marketing'} phoneNumber={'938392911'} email={'jamesmiller@mail.com'} />
-                                    <AgencyAgentCard agentImage={Agent} agentName={'James Miller'} department={'Marketing'} phoneNumber={'938392911'} email={'jamesmiller@mail.com'} />
-                                    <AgencyAgentCard agentImage={Agent} agentName={'James Miller'} department={'Marketing'} phoneNumber={'938392911'} email={'jamesmiller@mail.com'} />
-                                    <AgencyAgentCard agentImage={Agent} agentName={'James Miller'} department={'Marketing'} phoneNumber={'938392911'} email={'jamesmiller@mail.com'} />
-                                    <AgencyAgentCard agentImage={Agent} agentName={'James Miller'} department={'Marketing'} phoneNumber={'938392911'} email={'jamesmiller@mail.com'} />
-                                    <AgencyAgentCard agentImage={Agent} agentName={'James Miller'} department={'Marketing'} phoneNumber={'938392911'} email={'jamesmiller@mail.com'} />
-                                    <AgencyAgentCard agentImage={Agent} agentName={'James Miller'} department={'Marketing'} phoneNumber={'938392911'} email={'jamesmiller@mail.com'} />
-
+                                {active === 'Agents' && 
+                                <section className={'pt40 agentsGridTemplate'}>
+                                    {state.propertiesLoading ? <p style={{background: '#FFE089', opacity: '0.7', padding: '15px', borderRadius: '7px'}} className={'f14 regularText'}>Loading...</p> : 
+                                            state.agents.docs.length === 0 ? <p style={{background: '#FFE089', opacity: '0.7', padding: '15px', borderRadius: '7px'}} className={'f14 regularText'}>Agency has no members yet</p> : 
+                                            state.agents.docs.map((item, index) => (
+                                                <AgencyAgentCard key={index} agentImage={Agent} agentName={item.memberId.username} department={item.memberId.job} phoneNumber={item.memberId.phone} email={item.memberId.email} />
+                                            ))}
                                 </section>}
                             </section>
                         </section>

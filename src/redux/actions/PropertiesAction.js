@@ -9,7 +9,7 @@ export const getProperties = (page = 1) => {
         dispatch({ type: GETTING_PROPERTIES })
         return new Promise(async (resolve, reject) => {
             try {
-                const res = await http.get(`user/properties?page=${page}`)
+                const res = await http.get(`user/properties?page=${page}&orderBy=newest`)
                 const data = res.data
                 console.log('currencies ', data)
                 dispatch({ type: PROPERTIES_SUCCESS, payload: data });
@@ -92,7 +92,7 @@ export const deleteProperty = (p_id) => {
             try {
                 const res = await http.delete(`user/delete-property/${p_id}`)
                 const data = res.data
-                dispatch({type: DELETE_PROPERTY, payload: p_id})
+                // dispatch({type: DELETE_PROPERTY, payload: p_id})
                 // console.log('deleteAction: ', data)
                 resolve(data)
             } catch (error) {

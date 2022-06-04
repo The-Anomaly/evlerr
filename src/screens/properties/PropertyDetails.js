@@ -11,7 +11,7 @@ import PropertyGridCards from '../../components/cards/PropertyGridCards';
 import Home from '../../assets/images/home.jpeg';
 import HomeTwo from '../../assets/images/slide2.jpeg';
 import HomeThree from '../../assets/images/slider3.jpeg';
-import Agent from '../../assets/images/agent.jpeg';
+import Agent from '../../assets/images/defAvatar.jpg';
 import CustomButton from '../../utils/CustomButton';
 import 'react-input-range/lib/css/index.css';
 import { useLocation } from 'react-router-dom';
@@ -25,7 +25,7 @@ import { ImageGroup, Image } from 'react-fullscreen-image';
 const PropertyDetails = () => {
 
     const [state, setState] = useState({
-        value: 10, menuDrop: false, priceValue: { min: 0, max: 8000 }, loading: false, showImages: false, property: {}
+        value: 10, menuDrop: false, priceValue: { min: 0, max: 8000 }, loading: false, showImages: false, property: {}, agent: {}
     })
 
     const property = useLocation()
@@ -58,7 +58,7 @@ const PropertyDetails = () => {
                 const data = res.data
                 console.log('Wallet activities ', res)
                 setState((prevState) => ({
-                    ...prevState, loading: false, property: data
+                    ...prevState, loading: false, property: data, agent: data.agentId
                 }))
             } catch (error) {
                 console.log('Error ', error)
@@ -284,15 +284,15 @@ const PropertyDetails = () => {
                         </section>
                         <section>
                             <div className={'membersCard'}>
-                                <p className={'f20 headerColor boldText  pb20'}>Contact Tom Wilson</p>
+                                <p className={'f20 headerColor boldText  pb20'}>Contact {state.agent.username}</p>
                                 <div className={'flex alignCenter'}>
                                     <div className='agentImageContainer'>
-                                        <img src={Agent} alt='agent' style={{ width: '100%', height: '100%', borderRadius: '50%' }} />
+                                        <img src={state.agent.profilePicture ? state.agent.profilePicture.url : Agent} alt='agent' style={{ width: '100%', height: '100%', borderRadius: '50%' }} />
                                     </div>
                                     <div className={'pl10'}>
-                                        <p className={'f14 boldText headerColor'}>Tom Wilson</p>
-                                        <p className={'f14 regularText headerColor'}>91 456 9874</p>
-                                        <p className={'f14 regularText headerColor'}>tomwilson@apus.com</p>
+                                        <p className={'f14 boldText headerColor'}>{state.agent.username}</p>
+                                        {state.agent.phone && <p className={'f14 regularText headerColor'}>{state.agent.phone}</p>}
+                                        <p className={'f14 regularText headerColor'}>{state.agent.email}</p>
                                     </div>
                                 </div>
                             </div>

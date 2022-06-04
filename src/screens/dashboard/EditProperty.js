@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import CustomTextArea from '../../utils/CustomTextarea';
 import { SELECT_PROPERTY } from '../../redux/Types';
 import http from '../../Utils';
+import { IoIosDocument } from "react-icons/io";
 import ImagePicker from '../../components/dashboard/ImagePicker';
 
 
@@ -24,7 +25,7 @@ const EditProperty = () => {
     const price = property.price.match(/\d+/)[0]
     const cur = property.price.match(/\D+/)[0]
     const [state, setState] = useState({
-        loading: false, uploadImageLoading: false,
+        loading: false, uploadImageLoading: false, delLoading: false,
         dryer: property.amenities.some(val => val === 'dryer'), 
         fridge: property.amenities.some(val => val === 'fridge'), 
         barbeque: property.amenities.some(val => val === 'barbeque'), 
@@ -33,14 +34,15 @@ const EditProperty = () => {
         washer: property.amenities.some(val => val === 'washer'), 
         sauna: property.amenities.some(val => val === 'sauna'), 
         wifi: property.amenities.some(val => val === 'wifi'),
-        propertyTitle: property.propertyTitle, propertyType: property.propertyType, propertyDescription: property.propertyDescription, status: property.status, rooms: property.rooms, bed: property.bed, bath: property.bath, garage: property.garage, yearBuilt: property.yearBuilt, homeArea: property.homeArea, price: price, currency: cur, pricePrefix: property.pricePrefix, priceSuffix: property.priceSuffix, priceCustom: property.pricecustom, featuredImage: [], gallery: [...property.gallery], attachment: [...property.attachment], videoLink: "", amenities: [...property.amenities]
+        propertyTitle: property.propertyTitle, propertyType: property.propertyType, propertyDescription: property.propertyDescription, status: property.status, rooms: property.rooms, bed: property.bed, bath: property.bath, garage: property.garage, yearBuilt: property.yearBuilt, homeArea: property.homeArea, price: price, currency: cur, pricePrefix: property.pricePrefix, priceSuffix: property.priceSuffix, priceCustom: property.pricecustom, featuredImage: property.featuredImage, gallery: [...property.gallery], attachment: [...property.attachment], videoLink: "", amenities: [...property.amenities], 
+        delModal: false, selectedPublicId: '', delWhere: '', delIndex: ''
     })
 
-    useEffect(() => {
-        return () => {
-            dispatch({type: SELECT_PROPERTY, payload: {}})
-        }
-    }, [dispatch])
+    // useEffect(() => {
+    //     return () => {
+    //         dispatch({type: SELECT_PROPERTY, payload: {}})
+    //     }
+    // }, [dispatch])
     
 
     const navigate = useNavigate()
@@ -176,19 +178,72 @@ const EditProperty = () => {
         }
     }
 
-    const uploadProfileImage = async (file) => {
-        const fData = {photo: file, propertyField: 'featuredImage', id: property._id}
-        // console.log(fData)
+
+    const handleDelmodal = (p_id = '', where = '', index = '') => {
+        setState({ ...state, selectedPublicId: p_id, delModal: !state.delModal, delWhere: where, delIndex: index })
+    }
+
+    
+    const handleDel = async (p_id, where, index) => {
+        setState({ ...state, delLoading: true })
+        try {
+            const res = await http.delete(`user/delete-profile?publicId=${p_id}`)
+            console.log('delete resp:', res)
+            if (!res.data.deleted) {
+                console.log(state[where])
+                setState((prevState) => ({ ...prevState, [where]: prevState[where].filter((val, id) => id !== index) }))
+                toast.success('File deleted', {
+                    position: toast.POSITION.TOP_RIGHT
+                })
+                handleDelmodal('')
+            } else {
+                toast.error('Sorry, could not delete file', {
+                    position: toast.POSITION.TOP_RIGHT
+                })
+                setState({...state, delLoading: false})
+                handleDelmodal('')
+            }
+        } catch (error) {
+            console.log('delete catch:', error)
+            toast.error(error[0], {
+                position: toast.POSITION.TOP_RIGHT
+            });
+            setState({ ...state, delLoading: false })
+            handleDelmodal('')
+        }
+    }
+
+
+    const handleMultiImagePreview = (e, fieldName) => {
+        let images = [...e.target.files]
+
+        // console.log(fieldName)
+        uploadProfileImage(images, fieldName)
+        // images.map((val, index) => {
+
+        //     let image_as_base64 = URL.createObjectURL(e.target.files[index])
+        //     let image_as_files = e.target.files[index];
+        //     let name = e.target.id
+
+        //     setState((state) => ({ ...state, [name]: [ ...state[name], { image_preview: image_as_base64, url: image_as_files }] }))
+
+        // })
+
+    }
+
+    const uploadProfileImage = async (file, field) => {
+        const fData = {photo: file[0]}
+        console.log(fData)
         // return
         setState({...state, uploadImageLoading: true})
         try {
-            const res = await http.post('user/media-upload', fData, false)
+            const res = await http.post(`user/media-upload?propertyId=${property._id}&propertyField=${field}`, fData, false)
             // dispatch({ type: UPDATE_USER, payload: res.data })
             // localStorage.setItem('userInfo', JSON.stringify(res.data))
-            toast.success('Profile image uploaded', {
+            toast.success('Image uploaded successfully', {
                 position: toast.POSITION.TOP_RIGHT
             });
-            console.log('profile image update: ', res.data)
+            console.log('Image uploaded successfully: ', res)
         } catch (error) {
             console.log(error)
             toast.error('Unable to upload image', {
@@ -305,37 +360,39 @@ const EditProperty = () => {
 
                         <div className={'pb30'}>
                             <p className={'f16 boldText black pb10'}>Featured Image</p>
-                            {state.featuredImage && state.featuredImage.map((val, index) =>
-                                <span key={index} className={'fileUploadContainer'}>
-                                    <button className={'fileDelBtn'} onClick={() => delUpload(index, 'featuredImage')}>x</button>
-                                    <img id={index} src={val.url} alt={''} style={{ maxWidth: '100%', height: '100%' }} />
+                            { state.featuredImage && (
+                                <span className={'fileUploadContainer mb10'}>
+                                    {/* <button className={'fileDelBtn'}>x</button> */}
+                                    <img src={state.featuredImage.url} style={{ maxWidth: '100%', height: '100%' }} />
                                 </span>
-                            )}
-                            <ImagePicker uploader={uploadProfileImage} uploadLoading={state.uploadImageLoading} defImage={property.featuredImage ? {data_url: property.featuredImage.url} : ''} />
+                                    ) }
+                            <CustomUploadInput title={'Upload file'} restrict='image/*' id={'featuredImage'} onChange={handleMultiImagePreview} customStyle={{ backgroundColor: '#f7f7f7', border: '1px solid #ebebeb', width: '150px' }} />
                         </div>
 
 
                         <div className={'pb30'}>
                             <p className={'f16 boldText black pb10'}>Gallery</p>
-                            {state.gallery && state.gallery.map((val, index) =>
-                                <span key={index} className={'fileUploadContainer'}>
-                                    <button className={'fileDelBtn'} onClick={() => delUpload(index, 'gallery')}>x</button>
-                                    <img id={index} src={val.url} alt={''} style={{ maxWidth: '100%', height: '100%' }} />
-                                </span>
-                            )}
-                            <CustomUploadInput fileState={state} handleState={setState} multi={true} inputName={'gallery'} />
+                            { state.gallery &&  state.gallery.map((val, index) =>
+                            <span key={index} className={'fileUploadContainer mb10'}>
+                                <button className={'fileDelBtn'} onClick={() => handleDelmodal(val.publicId, 'gallery', index)}>x</button>
+                                <img id={index} src={val.url} style={{ maxWidth: '100%', height: '100%' }} />
+                            </span> 
+                            ) }
+                            <CustomUploadInput title={'Upload files'} restrict="image/*" id={'gallery'} onChange={handleMultiImagePreview} multi={true} uploadLoading={state.uploadImageLoading} customStyle={{ backgroundColor: '#f7f7f7', border: '1px solid #ebebeb', width: '150px' }} />
+                            {/* <CustomUploadInput fileState={state} handleState={setState} multi={true} inputName={'gallery'} /> */}
                         </div>
 
 
                         <div className={'pb30'}>
                             <p className={'f16 boldText black pb10'}>Attachments</p>
-                            {state.attachment && state.attachment.map((val, index) =>
-                                <span key={index} className={'fileUploadContainer'}>
-                                    <button className={'fileDelBtn'} onClick={() => delUpload(index, 'attachment')}>x</button>
-                                    <img id={index} src={val.url} alt={''} style={{ maxWidth: '100%', height: '100%' }} />
-                                </span>
-                            )}
-                            <CustomUploadInput fileState={state} handleState={setState} multi={true} inputName={'attachment'} />
+                            { state.attachment &&  state.attachment.map((val, index) => 
+                            <span key={index} className={'fileUploadContainer mb10'}>
+                                <button className={'fileDelBtn'} onClick={() => handleDelmodal(val.publicId, 'attachment', index)}>x</button>
+                                <IoIosDocument style={{ width: '50%', height: '100%' }} />
+                                <p>{val.publicId}</p>
+                            </span> 
+                            ) }
+                            <CustomUploadInput title={'Upload files'} restrict="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf" onChange={handleMultiImagePreview} id={'attachment'} multi={true} customStyle={{ backgroundColor: '#f7f7f7', border: '1px solid #ebebeb', width: '150px' }} />
                         </div>
 
                         <div>
@@ -410,6 +467,27 @@ const EditProperty = () => {
                 <div className={'pt40'}>
                     <CustomButton title={'Save & Preview'} loading={state.loading} onClick={submit} color={'#fff'} customStyle={{ backgroundColor: '#ff5a5f', width: '120px', }} />
                 </div>
+
+
+                {/* delete modal */}
+                { state.delModal && 
+                <section className='modal' id='modal'>
+                    <div className='animate__animated  animate__slideInDown animate__faster' style={{ background: 'white', width: 'clamp(170px, 400px, 50%)', margin: 'auto', padding: '15px', borderRadius: '5px' }} >
+
+                        <h5>DELETE</h5>
+                        <hr style={{ marginTop: '10px', marginBottom: '20px' }} />
+                        <div className="pb-3 px-5">
+                            <h5 className='f18' style={{ marginTop: '10px' }}>Are you sure?</h5>
+                            <p className='f20' style={{ marginTop: '10px' }}>You can't undo this action</p>
+                        </div>
+                        <hr  style={{ marginTop: '20px', marginBottom: '10px' }} />
+                        <div className="p10 flex">
+                            <CustomButton title={'CANCEL'} customStyle={{ border: 'none', cursor: 'pointer', padding: '8px', borderRadius: '3px', marginRight: '10px', background: '#EAEAEA' }} color={'#000'} onClick={() => handleDelmodal('')}  />
+                            <CustomButton title={'DELETE'} customStyle={{ border: 'none', cursor: 'pointer', padding: '8px', borderRadius: '3px', background: '#E12D2D', color: 'white' }} color={'#fff'} onClick={() => handleDel(state.selectedPublicId, state.delWhere, state.delIndex)} loading={state.delLoading}  />
+                        </div>
+                    </div>
+                </section>}
+
             </main>
         </RenderNav>
     )

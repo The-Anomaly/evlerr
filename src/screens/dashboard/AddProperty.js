@@ -191,12 +191,12 @@ const AddProperty = (props) => {
             gallery, attachment, videoLink, amenities, facilities, valuation, floors } = state
 
         let fImage = featuredImage[0]
-        let newPrice = price + currency
+        let newPrice = `${price} ${currency}`
 
         const formData = {
             propertyTitle, propertyType, propertyDescription, propertyId,
          status, rooms, bed, bath, garage, yearBuilt,
-            homeArea, newPrice, pricePrefix, priceSuffix, priceCustom, region, friendlyAddress,
+            homeArea, price: newPrice, pricePrefix, priceSuffix, priceCustom, region, friendlyAddress,
             mapLocation, longtitude, latitude, fImage, gallery, attachment, videoLink, amenities, facilities, valuation, floors
         }
 
@@ -219,10 +219,6 @@ const AddProperty = (props) => {
             toast.error('All required fields cannot be empty', {
                 position: toast.POSITION.TOP_RIGHT
             });
-        } else if(gallery.length === 0) {
-            toast.error('Gallery should have at least one image', {
-                position: toast.POSITION.TOP_RIGHT
-            });
         } else {
             // console.log('submitting')
             // return
@@ -233,7 +229,7 @@ const AddProperty = (props) => {
                     toast.success('SuccessFul', {
                         position: toast.POSITION.TOP_RIGHT
                     })
-                    navigate('/submission');
+                    navigate(-1);
                 }
                 console.log(res.message);
             } catch (error) {
