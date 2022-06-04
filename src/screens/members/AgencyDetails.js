@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect, useState } from 'react'
+import React, { Suspense, useState } from 'react'
 import RenderNav from '../../components/nav/RenderNav'
 // import Breadcrumbs from '../../utils/Breadcrumb'
 import '../../assets/style/PropertyStyles.css';
@@ -12,12 +12,12 @@ import AgencyAgentCard from '../../components/cards/AgencyAgentsCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import AgentDisplayCard from '../../utils/AgentDisplayCard';
-import { SELECT_USER } from '../../redux/Types';
+// import { SELECT_USER } from '../../redux/Types';
 import { getMembersProperties } from '../../redux/actions/PropertiesAction';
-import { IoLocationOutline } from "react-icons/io5";
+// import { IoLocationOutline } from "react-icons/io5";
 import http from '../../Utils';
 import { GrLocation } from 'react-icons/gr'
-import PropertyGridCards from '../../components/cards/PropertyGridCards';
+// import PropertyGridCards from '../../components/cards/PropertyGridCards';
 
 
 const Tab = styled.button`

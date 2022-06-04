@@ -1,16 +1,52 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import MembersRow from '../../components/dashboard/MembersRow';
-import Agent from '../../assets/images/agent.jpeg';
 import CustomInput from '../../utils/CustomInput';
 import CustomButton from '../../utils/CustomButton';
 import http from '../../Utils';
 import { HiOutlineUserAdd } from 'react-icons/hi'
 import defaultAvatar from '../../assets/images/defAvatar.jpg'
 import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
+import Pagination from '../../utils/Pagination';
+import Loading from '../../utils/Loading';
 
 const Members = () => {
 
-    const [state, setState] = useState({ query: '', loading: false, addAgentLoading: false, fetchedMembers: {}, showSearchModal: false })
+    const [state, setState] = useState({ query: '', loading: false, addAgentLoading: false, fetchedMembers: {}, showSearchModal: false, agents: [], delLoading: false, delModal: false, selectedAgent: '', agentsXtra: {} })
+    const user = useSelector((state) => state.auth.userInfo)
+    // console.log(user._id)
+
+    useEffect(() => {
+        (async () => {
+            setState((state) => ({...state, loading: true}))
+            try {
+                const res = await http.get('agency/get-members?agencyId='+user._id)
+                console.log('properties ', res)
+                setState((state) => ({ ...state, loading: false, agents: res.data.docs, agentsXtra: res.data}))
+            } catch (error) {
+                // returnError(error)
+                setState((state) => ({ ...state, msg: error[0] }))
+                console.log('fetch property error ', error)
+                setState((state) => ({ ...state, loading: false}))
+            }
+        })()
+    }, [user])
+    
+
+    const paginate = async (page) => {
+        setState((state) => ({...state, loading: true}))
+        try {
+            const res = await http.get(`agency/get-members?agencyId=${user._id}&page=${page}`)
+            // console.log('properties ', res)
+            setState((state) => ({ ...state, loading: false, agents: res.data.docs, agentsXtra: res.data}))
+        } catch (error) {
+            // returnError(error)
+            setState((state) => ({ ...state, msg: error[0] }))
+            console.log('fetch property error ', error)
+            setState((state) => ({ ...state, loading: false}))
+        }
+        
+    }
 
     const onChangeQuery = (e) => {
         setState({...state, query: e.target.value})
@@ -54,6 +90,52 @@ const Members = () => {
         }
     }
 
+    const handleDelmodal = (p_id = '') => {
+        setState({ ...state, selectedAgent: p_id, delModal: !state.delModal })
+    }
+
+    const handleDel = async (p_id) => {
+        setState({ ...state, delLoading: true })
+        try {
+            const res = await http.delete(`agency/delete-member?memberId=${p_id}`)
+            toast.success('Agent deleted', {
+                position: toast.POSITION.TOP_RIGHT
+            });
+            console.log(res)
+            handleDelmodal('')
+
+            // setState((state) => ({...state, loading: true}))
+            try {
+                const res = await http.get('agency/get-members?agencyId='+user._id)
+                console.log('properties ', res)
+                setState((state) => ({ ...state, loading: false, agents: res.data.docs, agentsXtra: res.data}))
+            } catch (error) {
+                // returnError(error)
+                setState((state) => ({ ...state, msg: error[0] }))
+                console.log('fetch property error ', error)
+                setState((state) => ({ ...state, loading: false}))
+            }
+        } catch (error) {
+            console.log('delete catch:', error)
+            toast.error(error[0], {
+                position: toast.POSITION.TOP_RIGHT
+            });
+            setState({ ...state, delLoading: false })
+            handleDelmodal('')
+            
+        }
+    }
+
+
+    const renderLoading = () => {
+        if (state.loading) {
+            return (
+                <Loading />
+            )
+        }
+    }
+
+
     const searchResult = !Object.keys(state.fetchedMembers).length ? (<p>No member found</p>) : state.fetchedMembers.map((member, index)   => {
         const {profilePicture, fullName, email, friendlyAddress, username, _id} = member
         return (
@@ -83,6 +165,27 @@ const Members = () => {
     
     return (
         <main className={'dashBg pl15 pr15 pt40 h100'}>
+            {renderLoading()}
+
+            {/* delete modal */}
+            { state.delModal && 
+            <section className='modal' id='modal'>
+                <div className='animate__animated  animate__slideInDown animate__faster' style={{ background: 'white', width: 'clamp(170px, 400px, 50%)', margin: 'auto', padding: '15px', borderRadius: '5px' }} >
+
+                    <h5>DELETE</h5>
+                    <hr style={{ marginTop: '10px', marginBottom: '20px' }} />
+                    <div className="pb-3 px-5">
+                        <h5 className='f18' style={{ marginTop: '10px' }}>Are you sure?</h5>
+                        <p className='f20' style={{ marginTop: '10px' }}>You can't undo this action</p>
+                    </div>
+                    <hr  style={{ marginTop: '20px', marginBottom: '10px' }} />
+                    <div className="p10 flex">
+                        <CustomButton title={'CANCEL'} customStyle={{ border: 'none', cursor: 'pointer', padding: '8px', borderRadius: '3px', marginRight: '10px', background: '#EAEAEA' }} color={'#000'} onClick={() => handleDelmodal('')}  />
+                        <CustomButton title={'DELETE'} customStyle={{ border: 'none', cursor: 'pointer', padding: '8px', borderRadius: '3px', background: '#E12D2D', color: 'white' }} color={'#fff'} onClick={() => handleDel(state.selectedAgent)} loading={state.delLoading}  />
+                    </div>
+                </div>
+            </section>}
+
             <div className={'pb30'}>
                 <h2 className={'f34 boldText headerColor'}>Team Members</h2>
             </div>
@@ -91,18 +194,18 @@ const Members = () => {
                     <p className={'f20 boldText headerColor pb20'}>All Members</p>
                 </div>
                 <section>
-                    <MembersRow agentImage={Agent} agentAddress={'49th Ave, Long Island City, NY'} agentName={'Tom Wilson'}
-                        agentNumber={'91 456 9874'} agentMail={'tomwilson@apus.com'}
-                    />
-                    <MembersRow agentImage={Agent} agentAddress={'49th Ave, Long Island City, NY'} agentName={'Tom Wilson'}
-                        agentNumber={'91 456 9874'} agentMail={'tomwilson@apus.com'}
-                    />
-                    <MembersRow agentImage={Agent} agentAddress={'49th Ave, Long Island City, NY'} agentName={'Tom Wilson'}
-                        agentNumber={'91 456 9874'} agentMail={'tomwilson@apus.com'}
-                    />
-                    <MembersRow agentImage={Agent} agentAddress={'49th Ave, Long Island City, NY'} agentName={'Tom Wilson'}
-                        agentNumber={'91 456 9874'} agentMail={'tomwilson@apus.com'}
-                    />
+                    {state.agents.map((agent, index) => {
+                            const {profilePicture, friendlyAddress, username, phone, email, _id} = agent.memberId
+                            return (
+                            <MembersRow key={index} agentImage={profilePicture ? profilePicture : defaultAvatar} agentAddress={friendlyAddress} agentName={username} id={_id} toggleDelete={handleDelmodal}
+                                agentNumber={phone} agentMail={email}
+                            />)
+                        }
+                    )}
+
+                    <div className="mb10">
+                        <Pagination paginationObj={state.agentsXtra} paginator={paginate} />
+                    </div>
                 </section>
             </section>
             <section className='membersCard' style={{ marginTop: '20px', position: 'relative' }}>

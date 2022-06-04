@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { IoLocationOutline } from 'react-icons/io5'
 import { VscTrash } from 'react-icons/vsc'
 import { FiEdit2 } from 'react-icons/fi'
-import Loading from '../../utils/Loading';
+// import Loading from '../../utils/Loading';
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteProperty, getMembersProperties } from "../../redux/actions/PropertiesAction";
 import { toast } from 'react-toastify';
@@ -14,7 +14,7 @@ import Pagination from '../../utils/Pagination'
 
 const MyPropertiesRows = ({sortBy}) => {
 
-    const [state, setState] = useState({ loading: false, properties: [], delLoading: false, resourceId: '', selectedProperty: '', delModal: false, msg: "Loading..." })
+    const [state, setState] = useState({ loading: false, properties: [], propXtra: {}, delLoading: false, resourceId: '', selectedProperty: '', delModal: false, msg: "Loading..." })
     const dispatch = useDispatch()
     const navigate = useNavigate()
     // const properties = useSelector((state) => state.properties.properties)
@@ -22,11 +22,13 @@ const MyPropertiesRows = ({sortBy}) => {
 
     useEffect(() => {
         (async () => {
+            setState((prevState) => ({...prevState, loading: true}))
             const order = sortBy === 'Sort By...' || sortBy === 'Default' ? 'newest' : sortBy
             try {
                 const res = await dispatch(getMembersProperties({agentId: user._id, orderBy: order, page: 1}))
                 console.log('from dispatch', res)
-                setState((state) => ({ ...state, loading: false, properties: res, msg: "You don't have any properties yet. Start by creating new one." }))
+                setState((state) => ({ ...state, loading: false, properties: res.docs, propXtra: res}))
+                setState((state) => ({...state, msg: 'you no get prop'}))
             } catch (error) {
                 // returnError(error)
                 setState((state) => ({ ...state, msg: error[0] }))
@@ -37,13 +39,13 @@ const MyPropertiesRows = ({sortBy}) => {
     }, [dispatch, user, sortBy])
     
 
-    const renderLoading = () => {
-        if (state.loading) {
-            return (
-                <Loading />
-            )
-        }
-    }
+    // const renderLoading = () => {
+    //     if (state.loading) {
+    //         return (
+    //             <Loading />
+    //         )
+    //     }
+    // }
 
     const handleDelmodal = (p_id = '') => {
         setState({ ...state, selectedProperty: p_id, delModal: !state.delModal })
@@ -57,8 +59,21 @@ const MyPropertiesRows = ({sortBy}) => {
             toast.success('SuccessFul', {
                 position: toast.POSITION.TOP_RIGHT
             })
-            setState({ ...state, delLoading: false })
             handleDelmodal('')
+
+            //refetch properties and update state
+            setState((prevState) => ({...prevState, loading: true}))
+            const order = sortBy === 'Sort By...' || sortBy === 'Default' ? 'newest' : sortBy
+            try {
+                const res = await dispatch(getMembersProperties({agentId: user._id, orderBy: order, page: 1}))
+                console.log('from dispatch', res)
+                setState((state) => ({ ...state, loading: false, properties: res.docs, propXtra: res}))
+            } catch (error) {
+                // returnError(error)
+                setState((state) => ({ ...state, msg: error[0] }))
+                console.log('fetch property error ', error)
+                setState((state) => ({ ...state, loading: false, msg: "Something went wrong, could not fetch properties" }))
+            }
         } catch (error) {
             console.log('delete catch:', error)
             toast.error(error[0], {
@@ -112,8 +127,8 @@ const MyPropertiesRows = ({sortBy}) => {
     }
 
 
-    const propertiesList = Object.keys(state.properties).length !== 0 ? state.properties.docs.map((property, index) => {
-        const { gallery, propertyTitle, friendlyAddress, createdAt, status, featuredImage, pricePrefix, priceSuffix, price, _id } = property
+    const propertiesList = state.properties.map((property, index) => {
+        const { propertyTitle, friendlyAddress, createdAt, status, featuredImage, pricePrefix, priceSuffix, price, _id } = property
         // const checkGallery = gallery[0] ? typeof gallery[0] : 'string'
         return (
             <section key={index} className={'transactionRowContainer bgWhite'} style={{ overflow: 'auto' }}>
@@ -122,7 +137,7 @@ const MyPropertiesRows = ({sortBy}) => {
                         <div onClick={() => selectResourceType(property)} className='cPointer image-wrapper'>
                             <div className="overlay"></div>
                             <span className="property-status">{status}</span>
-                            <img src={featuredImage.url} alt={''}  />
+                            <img src={featuredImage ? featuredImage.url : ''} alt={''}  />
                         </div>
                     </li>
                     <li className={'f14 headerColor'}>
@@ -145,14 +160,14 @@ const MyPropertiesRows = ({sortBy}) => {
                 </ul>
             </section>
         )
-    }) : ''
+    })
 
 
 
 
     return (
       <>
-        {renderLoading()}
+        {/* {renderLoading()} */}
 
         {/* delete modal */}
         { state.delModal && 
@@ -173,12 +188,17 @@ const MyPropertiesRows = ({sortBy}) => {
                 </div>
             </section>}
 
-        { !Object.keys(state.properties).length ? 
+        { state.loading ? 
             <section className={'infoHeader pt20 pr20 pb20 pl20'}>
-                <p className={'f14 regularText'}>{state.msg}</p>
-            </section> : propertiesList }
+                <p className={'f14 regularText'}>Loading...</p>
+            </section> : 
+            state.properties.length === 0 ?
+            <section className={'infoHeader pt20 pr20 pb20 pl20'}>
+                <p className={'f14 regularText'}>You don't have any properties yet. Start by creating new one.</p>
+            </section> :
+            propertiesList }
 
-            <Pagination paginationObj={state.properties} paginator={paginate} />
+            <Pagination paginationObj={state.propXtra} paginator={paginate} />
       </>
   )
 }

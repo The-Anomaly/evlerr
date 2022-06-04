@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import RenderNav from '../../components/nav/RenderNav'
 import CustomInput from '../../utils/CustomInput'
 // import Loading from '../../utils/Loading'
@@ -12,10 +12,10 @@ import { editProperties } from '../../redux/actions/PropertiesAction';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import CustomTextArea from '../../utils/CustomTextarea';
-import { SELECT_PROPERTY } from '../../redux/Types';
+// import { SELECT_PROPERTY } from '../../redux/Types';
 import http from '../../Utils';
 import { IoIosDocument } from "react-icons/io";
-import ImagePicker from '../../components/dashboard/ImagePicker';
+// import ImagePicker from '../../components/dashboard/ImagePicker';
 
 
 const EditProperty = () => {
@@ -96,11 +96,6 @@ const EditProperty = () => {
     }
     const onChangeVideoLink = (e) => {
         setState({ ...state, videoLink: e.target.value })
-    }
-
-
-    const delUpload = (index, where) => {
-        setState((prevState) => ({ ...prevState, [where]: prevState[where].filter((val, id) => id !== index) }))
     }
 
 
@@ -363,7 +358,7 @@ const EditProperty = () => {
                             { state.featuredImage && (
                                 <span className={'fileUploadContainer mb10'}>
                                     {/* <button className={'fileDelBtn'}>x</button> */}
-                                    <img src={state.featuredImage.url} style={{ maxWidth: '100%', height: '100%' }} />
+                                    <img src={state.featuredImage.url} alt='' style={{ maxWidth: '100%', height: '100%' }} />
                                 </span>
                                     ) }
                             <CustomUploadInput title={'Upload file'} restrict='image/*' id={'featuredImage'} onChange={handleMultiImagePreview} customStyle={{ backgroundColor: '#f7f7f7', border: '1px solid #ebebeb', width: '150px' }} />
@@ -375,7 +370,7 @@ const EditProperty = () => {
                             { state.gallery &&  state.gallery.map((val, index) =>
                             <span key={index} className={'fileUploadContainer mb10'}>
                                 <button className={'fileDelBtn'} onClick={() => handleDelmodal(val.publicId, 'gallery', index)}>x</button>
-                                <img id={index} src={val.url} style={{ maxWidth: '100%', height: '100%' }} />
+                                <img id={index} src={val.url} alt='' style={{ maxWidth: '100%', height: '100%' }} />
                             </span> 
                             ) }
                             <CustomUploadInput title={'Upload files'} restrict="image/*" id={'gallery'} onChange={handleMultiImagePreview} multi={true} uploadLoading={state.uploadImageLoading} customStyle={{ backgroundColor: '#f7f7f7', border: '1px solid #ebebeb', width: '150px' }} />

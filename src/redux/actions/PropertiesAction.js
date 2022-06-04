@@ -1,6 +1,6 @@
 
 import http from "../../Utils";
-import { DELETE_PROPERTY, GETTING_PROPERTIES, PROPERTIES_FAIL, PROPERTIES_SUCCESS, UPLOADING_PROPERTY, UPLOADING_PROPERTY_FAIL, UPLOADING_PROPERTY_SUCCESSFUL } from "../Types";
+import { GETTING_PROPERTIES, PROPERTIES_FAIL, PROPERTIES_SUCCESS, UPLOADING_PROPERTY, UPLOADING_PROPERTY_FAIL, UPLOADING_PROPERTY_SUCCESSFUL } from "../Types";
 
 
 
@@ -25,8 +25,8 @@ export const getProperties = (page = 1) => {
 }
 
 export const getMembersProperties = (obj) => {
-    return dispatch => {
-        dispatch({ type: GETTING_PROPERTIES })
+    return () => {
+        // dispatch({ type: GETTING_PROPERTIES })
         return new Promise(async (resolve, reject) => {
             try {
                 const res = await http.get('user/get-agent-properties', obj)

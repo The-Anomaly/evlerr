@@ -2,7 +2,7 @@ import React from 'react';
 import { RiDeleteBin6Line } from 'react-icons/ri';
 import '../../assets/style/DashboardStyles.css';
 
-const MembersRow = ({ agentImage, agentAddress, agentMail, agentName, agentNumber }) => {
+const MembersRow = ({ agentImage, agentAddress, agentMail, agentName, agentNumber, id, toggleDelete }) => {
     return (
         <section className={'flex justifyBetween alignCenter whiteBg pt20 pb20 borderBt'}>
             <div className={'flex alignCenter'}>
@@ -17,14 +17,13 @@ const MembersRow = ({ agentImage, agentAddress, agentMail, agentName, agentNumbe
             <div>
                 <div className={'flex'}>
                     <p className={'f14 regularText headerColor pb10'}>{agentNumber}</p>
-                    <span>Show</span>
                 </div>
                 <div>
                     <p className={'f14 regularText headerColor'}>{agentMail}</p>
                 </div>
             </div>
             <div className='deleteContainer'>
-                <RiDeleteBin6Line size={22} />
+                <RiDeleteBin6Line onClick={() => {toggleDelete(id)}} size={22} />
             </div>
         </section>
     )
