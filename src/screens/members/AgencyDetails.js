@@ -17,6 +17,7 @@ import { getMembersProperties } from '../../redux/actions/PropertiesAction';
 // import { IoLocationOutline } from "react-icons/io5";
 import http from '../../Utils';
 import { GrLocation } from 'react-icons/gr'
+import { toast } from 'react-toastify';
 // import PropertyGridCards from '../../components/cards/PropertyGridCards';
 
 
@@ -50,7 +51,7 @@ const AgencyDetails = () => {
 
     const [state, setState] = useState({
         sortDrop: false,
-        properties: [], agents: [], propertiesLoading: false,
+        properties: {docs: []}, agents: {docs: []}, propertiesLoading: false,
         sortItem: [{ id: 1, name: 'Default' }, { id: 2, name: 'Newest' }, { id: 3, name: 'Oldest' },
         { id: 4, name: 'Lowest Price' }, { id: 5, name: 'Highest Price' }, { id: 6, name: 'Random' }], filter: 'All', filterDrop: false,
         selected: 'Default', visible: false, filterItem: [{ id: 1, name: 'All' }, { id: 2, name: 'Rent' }, { id: 2, name: 'Sale' },],
@@ -79,8 +80,9 @@ const AgencyDetails = () => {
             console.log('properties ', res)
             setState((state) => ({ ...state, propertiesLoading: false, properties: res}))
         } catch (error) {
-            // returnError(error)
-            setState((state) => ({ ...state, msg: error[0] }))
+            toast.error(error[0], {
+                position: toast.POSITION.TOP_RIGHT
+            });
             console.log('fetch property error ', error)
             setState((state) => ({ ...state, propertiesLoading: false}))
         }
@@ -94,9 +96,10 @@ const AgencyDetails = () => {
             console.log('properties ', res)
             setState((state) => ({ ...state, propertiesLoading: false, agents: res.data}))
         } catch (error) {
-            // returnError(error)
-            setState((state) => ({ ...state, msg: error[0] }))
-            console.log('fetch property error ', error)
+            toast.error(error[0], {
+                position: toast.POSITION.TOP_RIGHT
+            });
+            console.log('fetch agent error ', error)
             setState((state) => ({ ...state, propertiesLoading: false}))
         }
     }
