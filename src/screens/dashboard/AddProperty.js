@@ -13,17 +13,20 @@ import { uploadProperties } from '../../redux/actions/PropertiesAction';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import CustomTextArea from '../../utils/CustomTextarea';
+import http from '../../Utils';
 
 
 const AddProperty = (props) => {
 
     const [state, setState] = useState({
-        loading: false, dryer: false, fridge: false, barbeque: false, air: false, tv: false, washer: false, sauna: false, wifi: false,
+        loading: false, dryer: false, fridge: false, barbeque: false, air: false, tv: false, washer: false, sauna: false, wifi: false, featuredUploadLoading: false,
         propertyTitle: "", propertyType: "", propertyDescription: "", propertyId: "", parentProperty: "",
         status: "For Rent", label: "", material: "", rooms: "", bed: "", bath: "", garage: "", yearBuilt: "", homeArea: "", energyClass: "",
         energyIndex: "", price: "", currency: "USD", pricePrefix: "", priceSuffix: "", priceCustom: "", region: "", friendlyAddress: "", mapLocation: "", longtitude: "", latitude: "",
-        featuredImage: [], gallery: [], attachment: [], videoLink: "", amenities: [], facilities: [], valuation: [], floors: []
+        featuredImage: {}, gallery: [], attachment: [], videoLink: "", amenities: [], facilities: [], valuation: [], floors: []
     })
+
+    const [featured, setFeatured] = useState({})
 
     const navigate = useNavigate()
 
@@ -184,6 +187,58 @@ const AddProperty = (props) => {
         }
     }
 
+
+    const uploadFeatured = async (e) => {
+        let images = [...e.target.files]
+
+        // console.log('files', e.target.files)
+        // uploadProfileImage(images, fieldName)
+        const fData = {photo: images[0]}
+        // console.log(fData)
+        // return
+        setState({...state, featuredUploadLoading: true})
+        try {
+            const res = await http.post(`media-uploader`, fData, false)
+            const data = res.data
+            toast.success('Image uploaded successfully', {
+                position: toast.POSITION.TOP_RIGHT
+            });
+            console.log('Image uploaded resp: ', res)
+            setFeatured({url: data.secure_url, publcId: data.public_id})
+        } catch (error) {
+            console.log(error)
+            toast.error('Unable to upload image', {
+                position: toast.POSITION.TOP_RIGHT
+            });
+        }
+        setState({...state, featuredUploadLoading: false})
+        
+
+    }
+
+    // const uploadProfileImage = async (file, field) => {
+    //     const fData = {photo: file[0]}
+    //     console.log(fData)
+    //     // return
+    //     setState({...state, featuredUploadLoading: true})
+    //     try {
+    //         const res = await http.post(`media-uploader`, fData, false)
+    //         const data = res.data
+    //         toast.success('Image uploaded successfully', {
+    //             position: toast.POSITION.TOP_RIGHT
+    //         });
+    //         console.log('Image uploaded resp: ', res)
+    //         setFeatured({url: data.secure_url, publcId: data.public_id})
+    //     } catch (error) {
+    //         console.log(error)
+    //         toast.error('Unable to upload image', {
+    //             position: toast.POSITION.TOP_RIGHT
+    //         });
+    //     }
+    //     setState({...state, featuredUploadLoading: false})
+    // }
+
+
     const submit = async (e) => {
         e.preventDefault()
         const { propertyTitle, propertyType, propertyDescription, propertyId, status, rooms, bed, bath, garage, yearBuilt, homeArea, price, currency, pricePrefix,
@@ -197,7 +252,7 @@ const AddProperty = (props) => {
             propertyTitle, propertyType, propertyDescription, propertyId,
          status, rooms, bed, bath, garage, yearBuilt,
             homeArea, price: newPrice, pricePrefix, priceSuffix, priceCustom, region, friendlyAddress,
-            mapLocation, longtitude, latitude, fImage, gallery, attachment, videoLink, amenities, facilities, valuation, floors
+            mapLocation, longtitude, latitude, fImage, gallery, attachment, videoLink, amenities, featured
         }
 
         // if (!propertyTitle) {
@@ -217,6 +272,10 @@ const AddProperty = (props) => {
             || bed === '' || garage === '' || bath === '' || garage === '' || yearBuilt === '' ||
             homeArea === '' || floors === '' || region === '' || friendlyAddress === '' || mapLocation === '' || propertyTitle === '' || propertyId === '' || propertyType === '') {
             toast.error('All required fields cannot be empty', {
+                position: toast.POSITION.TOP_RIGHT
+            });
+        } else if (Object.keys(featured).length === 0) {
+            toast.error('Featured image is required', {
                 position: toast.POSITION.TOP_RIGHT
             });
         } else {
@@ -326,13 +385,13 @@ const AddProperty = (props) => {
 
                         <div className={'pb30'}>
                             <p className={'f16 boldText black pb10'}>Featured Image</p>
-                            {state.featuredImage && state.featuredImage.map((val, index) =>
-                                <span key={index} className={'fileUploadContainer'}>
-                                    <button className={'fileDelBtn'} onClick={() => delUpload(index, 'featuredImage')}>x</button>
-                                    <img id={index} src={val.url} alt={''} style={{ maxWidth: '100%', height: '100%' }} />
+                            { Object.keys(featured).length ? (
+                                <span className={'fileUploadContainer mb10'}>
+                                    <button className={'fileDelBtn'} onClick={() => {setFeatured({})}}>x</button>
+                                    <img src={featured.url} alt='' style={{ maxWidth: '100%', height: '100%' }} />
                                 </span>
-                            )}
-                            <CustomUploadInput fileState={state} handleState={setState} inputName={'featuredImage'} />
+                            ) : ''}
+                            <CustomUploadInput title={'Upload file'} restrict='image/*' id={'featuredImage'} onChange={uploadFeatured} customStyle={{ backgroundColor: '#f7f7f7', border: '1px solid #ebebeb', width: '150px' }} uploadLoading={state.featuredUploadLoading} />
                         </div>
 
 
