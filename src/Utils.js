@@ -173,6 +173,20 @@ const http = {
     uploadFile(url, file, options = {}) {
         return this.post(url, { file, ...options }, false);
     },
+    submissionFileUpload(url, data, isJson = true, options = {}) {
+        // const options = {};
+        if (!isJson) {
+            options.headers = { "Content-Type": "multipart/form-data" };
+            const formData = new FormData();
+            data.forEach((value) =>
+                formData.append('photo', value)
+            );
+            data = formData;
+        }
+        // console.log('Got here ', data, isJson, options)
+
+        return this.request(url, "POST", data, options);
+    },
     delete(url) {
         return this.request(url, "DELETE");
     }

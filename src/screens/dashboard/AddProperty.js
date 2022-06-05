@@ -14,19 +14,22 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import CustomTextArea from '../../utils/CustomTextarea';
 import http from '../../Utils';
+import { GrDocumentText } from "react-icons/gr";
 
 
 const AddProperty = (props) => {
 
     const [state, setState] = useState({
-        loading: false, dryer: false, fridge: false, barbeque: false, air: false, tv: false, washer: false, sauna: false, wifi: false, featuredUploadLoading: false,
+        loading: false, dryer: false, fridge: false, barbeque: false, air: false, tv: false, washer: false, sauna: false, wifi: false, featuredUploadLoading: false, galleryUploadLoading: false, attachUploadLoading: false,
         propertyTitle: "", propertyType: "", propertyDescription: "", propertyId: "", parentProperty: "",
         status: "For Rent", label: "", material: "", rooms: "", bed: "", bath: "", garage: "", yearBuilt: "", homeArea: "", energyClass: "",
         energyIndex: "", price: "", currency: "USD", pricePrefix: "", priceSuffix: "", priceCustom: "", region: "", friendlyAddress: "", mapLocation: "", longtitude: "", latitude: "",
-        featuredImage: {}, gallery: [], attachment: [], videoLink: "", amenities: [], facilities: [], valuation: [], floors: []
+        videoLink: "", amenities: [], facilities: [], valuation: [], floors: []
     })
 
     const [featured, setFeatured] = useState({})
+    const [gallery, setGallery] = useState([])
+    const [attachment, setAttachment] = useState([])
 
     const navigate = useNavigate()
 
@@ -109,7 +112,12 @@ const AddProperty = (props) => {
     // }
 
     const delUpload = (index, where) => {
-        setState((prevState) => ({ ...prevState, [where]: prevState[where].filter((val, id) => id !== index) }))
+        // setState((prevState) => ({ ...prevState, [where]: prevState[where].filter((val, id) => id !== index) }))
+        if (where === 'gallery') {
+            setGallery((prevState) => gallery.filter((val, id) => id !== index))
+        } else {
+            setAttachment((prevState) => attachment.filter((val, id) => id !== index))
+        }
     }
 
 
@@ -216,6 +224,43 @@ const AddProperty = (props) => {
 
     }
 
+
+    const uploadGallery = async (e, inputName) => {
+        let images = [...e.target.files]
+
+        // console.log(images)
+        // return
+        if (inputName === 'gallery') {
+            setState({...state, galleryUploadLoading: true})
+        } else {
+            setState({...state, attachUploadLoading: true})
+        }
+        try {
+            const res = await http.submissionFileUpload(`media-uploader`, images, false)
+            const data = res.data
+            toast.success('File uploaded successfully', {
+                position: toast.POSITION.TOP_RIGHT
+            });
+            console.log('File uploaded resp: ', res)
+            if (inputName === 'gallery') {
+                setGallery([...gallery, {url: data.secure_url, publcId: data.public_id}])
+            } else {
+                setAttachment([...attachment, {url: data.secure_url, publcId: data.public_id}])
+            }
+        } catch (error) {
+            console.log(error)
+            toast.error('Unable to upload files', {
+                position: toast.POSITION.TOP_RIGHT
+            });
+        }
+        if (inputName === 'gallery') {
+            setState({...state, galleryUploadLoading: false})
+        } else {
+            setState({...state, attachUploadLoading: false})
+        }
+
+    }
+
     // const uploadProfileImage = async (file, field) => {
     //     const fData = {photo: file[0]}
     //     console.log(fData)
@@ -242,17 +287,15 @@ const AddProperty = (props) => {
     const submit = async (e) => {
         e.preventDefault()
         const { propertyTitle, propertyType, propertyDescription, propertyId, status, rooms, bed, bath, garage, yearBuilt, homeArea, price, currency, pricePrefix,
-            priceSuffix, priceCustom, region, friendlyAddress, mapLocation, longtitude, latitude, featuredImage,
-            gallery, attachment, videoLink, amenities, facilities, valuation, floors } = state
+            priceSuffix, priceCustom, region, friendlyAddress, mapLocation, longtitude, latitude, videoLink, amenities } = state
 
-        let fImage = featuredImage[0]
         let newPrice = `${price} ${currency}`
 
         const formData = {
             propertyTitle, propertyType, propertyDescription, propertyId,
          status, rooms, bed, bath, garage, yearBuilt,
             homeArea, price: newPrice, pricePrefix, priceSuffix, priceCustom, region, friendlyAddress,
-            mapLocation, longtitude, latitude, fImage, gallery, attachment, videoLink, amenities, featured
+            mapLocation, longtitude, latitude, videoLink, amenities, featured, gallery, attachment
         }
 
         // if (!propertyTitle) {
@@ -266,11 +309,11 @@ const AddProperty = (props) => {
         //     });
         //     return;
         // }
-        // console.log(formData)
+        console.log(formData)
 
         if (price === '' || propertyDescription === '' || rooms === '' 
             || bed === '' || garage === '' || bath === '' || garage === '' || yearBuilt === '' ||
-            homeArea === '' || floors === '' || region === '' || friendlyAddress === '' || mapLocation === '' || propertyTitle === '' || propertyId === '' || propertyType === '') {
+            homeArea === '' || region === '' || friendlyAddress === '' || mapLocation === '' || propertyTitle === '' || propertyId === '' || propertyType === '') {
             toast.error('All required fields cannot be empty', {
                 position: toast.POSITION.TOP_RIGHT
             });
@@ -397,25 +440,25 @@ const AddProperty = (props) => {
 
                         <div className={'pb30'}>
                             <p className={'f16 boldText black pb10'}>Gallery</p>
-                            {state.gallery && state.gallery.map((val, index) =>
-                                <span key={index} className={'fileUploadContainer'}>
-                                    <button className={'fileDelBtn'} onClick={() => delUpload(index, 'gallery')}>x</button>
-                                    <img id={index} src={val.url} alt={''} style={{ maxWidth: '100%', height: '100%' }} />
-                                </span>
-                            )}
-                            <CustomUploadInput fileState={state} handleState={setState} multi={true} inputName={'gallery'} />
+                            { gallery &&  gallery.map((val, index) =>
+                            <span key={index} className={'fileUploadContainer mb10'}>
+                                <button className={'fileDelBtn'} onClick={() => {delUpload(index, 'gallery')}}>x</button>
+                                <img id={index} src={val.url} alt='' style={{ maxWidth: '100%', height: '100%' }} />
+                            </span> 
+                            ) }
+                            <CustomUploadInput title={'Upload files'} restrict="image/*" id={'gallery'} onChange={uploadGallery} multi={true} uploadLoading={state.galleryUploadLoading} customStyle={{ backgroundColor: '#f7f7f7', border: '1px solid #ebebeb', width: '150px' }} />
                         </div>
-
 
                         <div className={'pb30'}>
                             <p className={'f16 boldText black pb10'}>Attachments</p>
-                            {state.attachment && state.attachment.map((val, index) =>
-                                <span key={index} className={'fileUploadContainer'}>
-                                    <button className={'fileDelBtn'} onClick={() => delUpload(index, 'attachment')}>x</button>
-                                    <img id={index} src={val.url} alt={''} style={{ maxWidth: '100%', height: '100%' }} />
-                                </span>
-                            )}
-                            <CustomUploadInput fileState={state} handleState={setState} multi={true} inputName={'attachment'} />
+                            { attachment &&  attachment.map((val, index) => 
+                            <span key={index} className={'fileUploadContainer mb10'}>
+                                <button className={'fileDelBtn'} onClick={() => {delUpload(index, 'attachment')}}>x</button>
+                                <GrDocumentText style={{ width: '50%', height: '100%' }} />
+                                {/* <p>{val.publicId}</p> */}
+                            </span> 
+                            ) }
+                            <CustomUploadInput title={'Upload files'} restrict="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf" onChange={uploadGallery} id={'attachment'} multi={true} uploadLoading={state.attachUploadLoading} customStyle={{ backgroundColor: '#f7f7f7', border: '1px solid #ebebeb', width: '150px' }} />
                         </div>
 
                         <div>
