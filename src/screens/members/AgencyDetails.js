@@ -3,7 +3,7 @@ import RenderNav from '../../components/nav/RenderNav'
 // import Breadcrumbs from '../../utils/Breadcrumb'
 import '../../assets/style/PropertyStyles.css';
 import FilterModal from '../../components/modals/FilterModal';
-import Agent from '../../assets/images/agent.jpeg';
+import Agent from '../../assets/images/defAvatar.jpg';
 import Agency from '../../assets/images/agencyImage.jpeg';
 import '../../assets/style/MemberStyles.css';
 // import AgencyDetailsCard from '../../components/cards/AgencyDetailsCard';
@@ -16,8 +16,9 @@ import AgentDisplayCard from '../../utils/AgentDisplayCard';
 import { getMembersProperties } from '../../redux/actions/PropertiesAction';
 // import { IoLocationOutline } from "react-icons/io5";
 import http from '../../Utils';
-import { GrLocation } from 'react-icons/gr'
+import { IoLocationOutline } from 'react-icons/io5'
 import { toast } from 'react-toastify';
+import { SELECT_USER } from '../../redux/Types';
 // import PropertyGridCards from '../../components/cards/PropertyGridCards';
 
 
@@ -121,6 +122,12 @@ const AgencyDetails = () => {
         }
 
     }
+
+    const redirectAgent = (member) => {
+        setActive(types[0])
+        dispatch({type: SELECT_USER, payload: member})
+        navigate('/member-details')
+    }
     // const goToAgentDetails = () => {
     //     navigate('/agent-details')
     // }
@@ -185,68 +192,37 @@ const AgencyDetails = () => {
                                             {state.propertiesLoading ? <p style={{background: '#FFE089', opacity: '0.7', padding: '15px', borderRadius: '7px'}} className={'f14 regularText'}>Loading...</p> : 
                                             state.properties.docs.length === 0 ? <p style={{background: '#FFE089', opacity: '0.7', padding: '15px', borderRadius: '7px'}} className={'f14 regularText'}>User has not uploaded any properties yet</p> : 
                                             state.properties.docs.map((item, index) => (
-                                                <section key={index} style={{ transition: 'all 0.3s ease-in-out 0s', borderRadius: '6px', border: '1px solid #ebebeb', backgroundColor: '#fff' }} className='flex animate__animated animate__fadeIn'>
-                                                <section className={'whiteBg pt10 pl10 pr10'} style={{ width: '250px' }}>
-                                                    <div className={'cardImage'}>
-                                                        <img alt='property' src={item.featuredImage ? item.featuredImage.url : Agency} loading={'eager'} />
-                                                        <div className='cardImageOverlay'>
-                                                            {/* <div className='cardTagContainer'>
-                                                                {leaseType &&
-                                                                    <div className='cardLeaseTag'>
-                                                                        <p className={'semiBoldText white f14'}>{leaseType}</p>
-                                                                    </div>}
-                                                                {type &&
-                                                                    <div className='cardTypeTag'>
-                                                                        <p className={'semiBoldText white f14'}>{type}</p>
-                                                                    </div>}
-                                                            </div> */}
-                                                        </div>
-                                                    </div>
-                                                </section>
-                                                <section style={{ width: 'calc(100% - 250px)' }} className={'pl20 pr20'}>
-                                                    <div className={'cardDetails'}>
-                                                        <div className='cardDetailsHeader'>
-                                                            <div className="flex justifyBetween">
-                                                                <span style={{ background: '#3E4C66', fontSize: '16px', padding: '1px 8px', color: 'white', borderRadius: '3px' }}>{item.status}</span>
+                                                <section className='agentFlexCard'>
+                                                    <section className='agentImg cPointer'>
+                                                        <img src={item.featuredImage ? item.featuredImage.url : Agency} style={{ width: '100%', height: '100%', borderRadius: '6px' }} alt='' />
+                                                    </section>
+                                                    <section className='agentDetails'>
+                                                        <div style={{ marginBottom: '10px' }}>
+                                                            <div style={{flexWrap: 'wrap-reverse'}} className="flex justifyBetween">
+                                                                <div>
+                                                                    <span style={{ background: '#3E4C66', fontSize: '16px', padding: '1px 8px', color: 'white', borderRadius: '3px' }}>{item.status}</span>
+                                                                </div>
                                                                 <div className="property-price">{item.price}</div>
                                                                 
                                                             </div>
-                                                            <p className={'regularText mt10 f14'}>{item.propertyType}</p>
-                                                            <h2 className={'boldText f18 propertyDetailsLink'} >{item.propertyTitle}</h2>
+                                                            <small className='redText mt10'>{item.propertyType}</small>
                                                         </div>
-                                                        <div className='cardDetailsLocation'>
-                                                            <p className={'regularText f14'}>
-                                                                <span style={{ marginRight: '10px' }}>
-                                                                    <GrLocation />
-                                                                </span>
-                                                                {item.friendlyAddress}
-                                                            </p>
+                                                        <div className="property-price mb10">{item.propertyTitle}</div>
+                                                        <p style={{color: '#484848'}}>
+                                                            <span className='mr10'>
+                                                                <IoLocationOutline style={{color: '#484848'}} />
+                                                            </span>
+                                                            {item.friendlyAddress}
+                                                        </p>
+                                                        <div className='deets flex'>
+                                                            <p className='mr10'>Bed: {item.bed}</p>
+                                                            <p className='mr10'>Bath: {item.bath}</p>
+                                                            <p>Sqft: {item.homeArea}</p>
                                                         </div>
-                                                        <div className='cardPropertyDetails'>
-                                                                <ul>
-                                                                <li className={'regularText f14'}>Beds: {item.bed}</li>
-                                                                <li className={'regularText f14'}>Baths: {item.bath}</li>
-                                                                <li className={'regularText f14'}>Sqft: {item.homeArea}</li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                    {/* <section className={'cardFooter pl20 pr20 pt10 pb10 flex justifyBetween alignCenter'}>
-                                                        <div className={'flex alignCenter'}>
-                                                            <div className='cardFooterImage'>
-                                                                <img src={Agent} alt='poster' style={{ width: '100%', height: '100%' }} />
-                                                            </div>
-                                                            <div>
-                                                                <p className={'f14 regularText headerColor propertyDetailsLink'}>dsfkdfs</p>
-                                                            </div>
-                                                        </div>
-                                                        <div>
-                                                            <p className={'f14 regularText headerColor'}>32 years ago</p>
-                                                        </div>
-                                                    </section> */}
+                                                    </section>
                                                 </section>
-                                            </section>
-
                                             ))}
+
                                             
                                         </section>
 
@@ -259,7 +235,7 @@ const AgencyDetails = () => {
                                     {state.propertiesLoading ? <p style={{background: '#FFE089', opacity: '0.7', padding: '15px', borderRadius: '7px'}} className={'f14 regularText'}>Loading...</p> : 
                                             state.agents.docs.length === 0 ? <p style={{background: '#FFE089', opacity: '0.7', padding: '15px', borderRadius: '7px'}} className={'f14 regularText'}>Agency has no members yet</p> : 
                                             state.agents.docs.map((item, index) => (
-                                                <AgencyAgentCard key={index} agentImage={Agent} agentName={item.memberId.username} department={item.memberId.job} phoneNumber={item.memberId.phone} email={item.memberId.email} />
+                                                <AgencyAgentCard key={index} agentImage={item.memberId.profilePicture ? item.memberId.profilePicture.url : Agent} agentName={item.memberId.username} department={item.memberId.job} phoneNumber={item.memberId.phone} email={item.memberId.email} redirect={() => {redirectAgent(item.memberId)}} />
                                             ))}
                                 </section>}
                             </section>

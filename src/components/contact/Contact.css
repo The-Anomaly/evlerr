@@ -44,3 +44,10 @@
   height: 30px;
   margin-right: 10px;
 }
+
+
+@media screen and (max-width: 1124px) and (min-width: 1000px) {
+  .searchInputContainer input{
+    width: 100px;
+  }
+}

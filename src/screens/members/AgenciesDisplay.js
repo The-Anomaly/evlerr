@@ -8,10 +8,10 @@ import AgentDisplayCard from '../../utils/AgentDisplayCard';
 import http from '../../Utils';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProperties } from '../../redux/actions/PropertiesAction';
-import Loading from '../../utils/Loading';
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import Pagination from '../../utils/Pagination';
+import { SpinnerCircularFixed } from 'spinners-react';
 
 
 
@@ -69,7 +69,9 @@ const AgenciesDisplay = () => {
     const renderLoading = () => {
         if (state.loading) {
             return (
-                <Loading />
+                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                    <SpinnerCircularFixed size={'40px'} />
+                </div>
             )
         }
     }
@@ -139,7 +141,6 @@ const AgenciesDisplay = () => {
     return (
         // <Breadcrumbs />
         <>
-            {renderLoading()}
             <RenderNav boxShadow={'0px 1px 4px 0px rgb(0 0 0 / 9%)'}>
                 <section className='propertiesHomeContainer agentSection'>
                     <section>
@@ -159,13 +160,13 @@ const AgenciesDisplay = () => {
                                     <p className={'f20 headerColor boldText  pb20'}>Latest Properties</p>
                                     <ul>
                                         {Object.keys(properties).length !== 0 && properties.docs.map((property, index) => {
-                                            const { propertyTitle, price, bed, bath, homeArea, gallery, _id } = property
+                                            const { propertyTitle, price, bed, bath, homeArea, featuredImage, _id } = property
 
                                             if (index < 4) {
                                                 return (
                                                     <li key={index} onClick={() => {selectResourceType(_id)}} className={'flex alignCenter pb20'}>
                                                         <div className='latestPropertiesImage cPointer'>
-                                                            <img src={gallery[0]} alt='home' style={{ width: '100%', height: '100%', borderRadius: '6px' }} />
+                                                            <img src={featuredImage && featuredImage.url} alt='home' style={{ width: '100%', height: '100%', borderRadius: '6px' }} />
                                                         </div>
                                                         <div>
                                                             <p className={'f16 headerColor boldText cPointer pb10'} onClick={() => {selectResourceType(_id)}}>{propertyTitle}</p>
@@ -194,7 +195,7 @@ const AgenciesDisplay = () => {
                                     ></SortCard>
                                 </div>
                                 <Suspense fallback={'Loading...'}>
-                                    {state.agents.map((agent, index) => 
+                                    {state.loading ? renderLoading() : state.agents.map((agent, index) => 
                                         <AgentDisplayCard key={index} agentId={agent._id} photo={agent.profilePicture} name={agent.username} phone={agent.phone} email={agent.email} fax={agent.fax} web={agent.web} job={agent.job} agent={agent} />
                                     )}
                                     <Pagination paginationObj={state.agentsXtra} paginator={paginate} />

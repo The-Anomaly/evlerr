@@ -32,7 +32,7 @@ const MyProperties = () => {
                     </div>
                 </div>
                 <section className={'membersCard'}>
-                    <div className='tableHeader'>
+                    <div className='tableHeader thResponsive'>
                         <ul className='tableCells repeat-4'>
                             <li className={'f14 semiBoldText white'}>Image</li>
                             <li className={'f14 semiBoldText white'}>Information</li>

@@ -189,7 +189,7 @@
   }
   .heroContainer {
     height: 400px;
-    margin-bottom: 400px;
+    margin-bottom: 200px;
   }
   .heroContainer h2 {
     font-size: 2.25rem;
@@ -216,4 +216,15 @@
     top: 150px;
   }
 
+}
+
+
+@media screen and (max-width: 763px) {
+  .citiesGrid{
+    display: block;
+  }
+
+  .citiesGrid .citiesCardContainer{
+    margin-bottom: 20px;
+  }
 }

@@ -102,9 +102,9 @@ const FeaturedCarousel = (props) => {
                 {properties.map((item) => (
                     <div key={item._id}>
                         <PropertyCards
-                            type={'Featured'} leaseType={'For Rent'} price={item.price} background={item.gallery[0]}
+                            type={'Featured'} leaseType={'For Rent'} price={item.price} background={item.featuredImage && item.featuredImage.url}
                             sqft={'480'} baths={'4'} beds={'4'} location={item.friendlyAddress} detailsSubTitle={item.propertyTitle}
-                            detailsTitle={'Apartment'} onClick={() => selectResourceType(item)} agentImage={item.gallery[1]} agentName={'Malen'} years={'2'}
+                            detailsTitle={'Apartment'} onClick={() => selectResourceType(item)} agentImage={item.agentId.profilePicture.url} agentName={item.agentId.username} years={'2'}
                             onAgentClick={goToAgentDetails}
                         />
                     </div>

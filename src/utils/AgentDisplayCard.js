@@ -28,7 +28,7 @@ const AgentDisplayCard = ({ name, phone, email, fax, web, photo, job, agent, cus
                     <div className='cPointer' onClick={() => {redirect(agent)}}>
                         <h2 className='f20 boldText'>{name}</h2>
                     </div>
-                    <small className='redText'>{job ? job : 'Member'}</small>
+                    {job && <small className='redText'>{job}</small>}
                 </div>
                 <div className='deets'>
                     {phone ? <p>Phone: {phone}</p> : ''}
@@ -36,7 +36,7 @@ const AgentDisplayCard = ({ name, phone, email, fax, web, photo, job, agent, cus
                     <p>Email: {email}</p>
                     {web ? <p>Website: {web}</p> : ''}
                 </div>
-                <div className='flex agentCardFooter' style={{ justifyContent: 'space-between', padding: '15px 15px 0 0' }}>
+                <div className='agentCardFooter' style={{ justifyContent: 'space-between', padding: '15px 15px 0 0' }}>
                     <div className="socialIcons">
                         <Link to={'/'}>
                             <TiSocialFacebook className='f18 mr10' />

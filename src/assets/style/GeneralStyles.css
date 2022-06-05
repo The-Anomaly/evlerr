@@ -409,3 +409,9 @@ hr {
     align-items: flex-start;
   }
 }
+
+@media screen and (max-width: 763px) {
+  .thResponsive{
+    display: none;
+  }
+}

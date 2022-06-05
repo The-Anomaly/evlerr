@@ -189,7 +189,7 @@ const Profile = () => {
                     </div> */}
 
                     <div className={'pt30'}>
-                        <p className={'f16 boldText headerColor pb40'}>Featured Image</p>
+                    <p className={'f16 boldText black pb10 mb10'}>Featured Image</p>
                         <div>
                             <ImagePicker uploader={uploadProfileImage} uploadLoading={state.uploadImageLoading} defImage={user.profilePicture ? {data_url: user.profilePicture.url} : {data_url: defaultAvatar}} />
                         </div>
@@ -245,7 +245,7 @@ const Profile = () => {
                     </div>
 
                     <div className={'pt30'}>
-                        <p className={'f16 boldText headerColor pb20'}>Socials</p>
+                        <p className={'f16 boldText black pb10'}>Socials</p>
                         {formData.socials && formData.socials.map((val, index) => 
                             <CustomInputDrop key={index} placeholder={`Network ${index+1}`} inputValue={formData.socials[index]} changeUrl={handleSocialUrl} changeName={handleSocialName} index={index} delNetwork={deleteNetwork} icon={state.menuDrop ? <IoMdArrowDropup size={22} /> : <IoMdArrowDropdown size={22} />}
                                 color={'#484848'}></CustomInputDrop>
