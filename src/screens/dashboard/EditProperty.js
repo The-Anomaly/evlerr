@@ -14,7 +14,7 @@ import { useNavigate } from 'react-router-dom';
 import CustomTextArea from '../../utils/CustomTextarea';
 // import { SELECT_PROPERTY } from '../../redux/Types';
 import http from '../../Utils';
-import { IoIosDocument } from "react-icons/io";
+import { GrDocumentText } from "react-icons/gr";
 // import ImagePicker from '../../components/dashboard/ImagePicker';
 
 
@@ -25,7 +25,7 @@ const EditProperty = () => {
     const price = property.price.match(/\d+/)[0]
     const cur = property.price.match(/\D+/)[0]
     const [state, setState] = useState({
-        loading: false, uploadImageLoading: false, delLoading: false,
+        loading: false,  featuredUploadLoading: false, galleryUploadLoading: false, attachUploadLoading: false, delLoading: false,
         dryer: property.amenities.some(val => val === 'dryer'), 
         fridge: property.amenities.some(val => val === 'fridge'), 
         barbeque: property.amenities.some(val => val === 'barbeque'), 
@@ -34,15 +34,14 @@ const EditProperty = () => {
         washer: property.amenities.some(val => val === 'washer'), 
         sauna: property.amenities.some(val => val === 'sauna'), 
         wifi: property.amenities.some(val => val === 'wifi'),
-        propertyTitle: property.propertyTitle, propertyType: property.propertyType, propertyDescription: property.propertyDescription, status: property.status, rooms: property.rooms, bed: property.bed, bath: property.bath, garage: property.garage, yearBuilt: property.yearBuilt, homeArea: property.homeArea, price: price, currency: cur, pricePrefix: property.pricePrefix, priceSuffix: property.priceSuffix, priceCustom: property.pricecustom, featuredImage: property.featuredImage, gallery: [...property.gallery], attachment: [...property.attachment], videoLink: "", amenities: [...property.amenities], 
+        propertyTitle: property.propertyTitle, propertyType: property.propertyType, propertyDescription: property.propertyDescription, status: property.status, rooms: property.rooms, bed: property.bed, bath: property.bath, garage: property.garage, yearBuilt: property.yearBuilt, homeArea: property.homeArea, price: price, currency: cur, pricePrefix: property.pricePrefix, priceSuffix: property.priceSuffix, priceCustom: property.pricecustom, videoLink: "", amenities: [...property.amenities], 
         delModal: false, selectedPublicId: '', delWhere: '', delIndex: ''
     })
 
-    // useEffect(() => {
-    //     return () => {
-    //         dispatch({type: SELECT_PROPERTY, payload: {}})
-    //     }
-    // }, [dispatch])
+
+    const [featured, setFeatured] = useState(property.featuredImage)
+    const [gallery, setGallery] = useState([...property.gallery])
+    const [attachment, setAttachment] = useState([...property.attachment])
     
 
     const navigate = useNavigate()
@@ -209,44 +208,72 @@ const EditProperty = () => {
     }
 
 
-    const handleMultiImagePreview = (e, fieldName) => {
+    
+    const uploadFeatured = async (e) => {
         let images = [...e.target.files]
 
-        // console.log(fieldName)
-        uploadProfileImage(images, fieldName)
-        // images.map((val, index) => {
-
-        //     let image_as_base64 = URL.createObjectURL(e.target.files[index])
-        //     let image_as_files = e.target.files[index];
-        //     let name = e.target.id
-
-        //     setState((state) => ({ ...state, [name]: [ ...state[name], { image_preview: image_as_base64, url: image_as_files }] }))
-
-        // })
-
-    }
-
-    const uploadProfileImage = async (file, field) => {
-        const fData = {photo: file[0]}
-        console.log(fData)
+        // console.log('files', e.target.files)
+        // uploadProfileImage(images, fieldName)
+        const fData = {photo: images[0]}
+        // console.log(fData)
         // return
-        setState({...state, uploadImageLoading: true})
+        setState({...state, featuredUploadLoading: true})
         try {
-            const res = await http.post(`user/media-upload?propertyId=${property._id}&propertyField=${field}`, fData, false)
-            // dispatch({ type: UPDATE_USER, payload: res.data })
-            // localStorage.setItem('userInfo', JSON.stringify(res.data))
+            const res = await http.post(`media-uploader`, fData, false)
+            const data = res.data
             toast.success('Image uploaded successfully', {
                 position: toast.POSITION.TOP_RIGHT
             });
-            console.log('Image uploaded successfully: ', res)
+            console.log('Image uploaded resp: ', res)
+            setFeatured({url: data.secure_url, publcId: data.public_id})
         } catch (error) {
             console.log(error)
             toast.error('Unable to upload image', {
                 position: toast.POSITION.TOP_RIGHT
             });
         }
-        setState({...state, uploadImageLoading: false})
+        setState({...state, featuredUploadLoading: false})
+        
+
     }
+
+
+    const uploadGallery = async (e, inputName) => {
+        let images = [...e.target.files]
+
+        // console.log(images)
+        // return
+        if (inputName === 'gallery') {
+            setState({...state, galleryUploadLoading: true})
+        } else {
+            setState({...state, attachUploadLoading: true})
+        }
+        try {
+            const res = await http.submissionFileUpload(`media-uploader`, images, false)
+            const data = res.data
+            toast.success('File uploaded successfully', {
+                position: toast.POSITION.TOP_RIGHT
+            });
+            console.log('File uploaded resp: ', res)
+            if (inputName === 'gallery') {
+                setGallery([...gallery, {url: data.secure_url, publcId: data.public_id}])
+            } else {
+                setAttachment([...attachment, {url: data.secure_url, publcId: data.public_id}])
+            }
+        } catch (error) {
+            console.log(error)
+            toast.error('Unable to upload files', {
+                position: toast.POSITION.TOP_RIGHT
+            });
+        }
+        if (inputName === 'gallery') {
+            setState({...state, galleryUploadLoading: false})
+        } else {
+            setState({...state, attachUploadLoading: false})
+        }
+
+    }
+
 
     const submit = async (e) => {
         e.preventDefault()
@@ -261,7 +288,7 @@ const EditProperty = () => {
             propertyTitle, propertyType, propertyDescription,
          status, rooms, bed, bath, garage, yearBuilt,
             homeArea, price: newPrice, pricePrefix, priceSuffix, priceCustom,
-            videoLink, amenities,
+            videoLink, amenities, featured, gallery, attachment
         }
 
         if (price === '' || propertyDescription === '' || rooms === '' 
@@ -355,39 +382,38 @@ const EditProperty = () => {
 
                         <div className={'pb30'}>
                             <p className={'f16 boldText black pb10'}>Featured Image</p>
-                            { state.featuredImage && (
+                            { featured && (
                                 <span className={'fileUploadContainer mb10'}>
                                     {/* <button className={'fileDelBtn'}>x</button> */}
-                                    <img src={state.featuredImage.url} alt='' style={{ maxWidth: '100%', height: '100%' }} />
+                                    <img src={featured.url} alt='' style={{ maxWidth: '100%', height: '100%' }} />
                                 </span>
                                     ) }
-                            <CustomUploadInput title={'Upload file'} restrict='image/*' id={'featuredImage'} onChange={handleMultiImagePreview} customStyle={{ backgroundColor: '#f7f7f7', border: '1px solid #ebebeb', width: '150px' }} />
+                            <CustomUploadInput title={'Upload file'} restrict='image/*'uploadLoading={state.featuredUploadLoading}  id={'featuredImage'} onChange={uploadFeatured} customStyle={{ backgroundColor: '#f7f7f7', border: '1px solid #ebebeb', width: '150px' }} />
                         </div>
 
 
                         <div className={'pb30'}>
                             <p className={'f16 boldText black pb10'}>Gallery</p>
-                            { state.gallery &&  state.gallery.map((val, index) =>
+                            { gallery &&  gallery.map((val, index) =>
                             <span key={index} className={'fileUploadContainer mb10'}>
                                 <button className={'fileDelBtn'} onClick={() => handleDelmodal(val.publicId, 'gallery', index)}>x</button>
                                 <img id={index} src={val.url} alt='' style={{ maxWidth: '100%', height: '100%' }} />
                             </span> 
                             ) }
-                            <CustomUploadInput title={'Upload files'} restrict="image/*" id={'gallery'} onChange={handleMultiImagePreview} multi={true} uploadLoading={state.uploadImageLoading} customStyle={{ backgroundColor: '#f7f7f7', border: '1px solid #ebebeb', width: '150px' }} />
+                            <CustomUploadInput title={'Upload files'} restrict="image/*" id={'gallery'} onChange={uploadGallery} multi={true} uploadLoading={state.galleryUploadLoading} customStyle={{ backgroundColor: '#f7f7f7', border: '1px solid #ebebeb', width: '150px' }} />
                             {/* <CustomUploadInput fileState={state} handleState={setState} multi={true} inputName={'gallery'} /> */}
                         </div>
 
 
                         <div className={'pb30'}>
                             <p className={'f16 boldText black pb10'}>Attachments</p>
-                            { state.attachment &&  state.attachment.map((val, index) => 
+                            { attachment &&  attachment.map((val, index) => 
                             <span key={index} className={'fileUploadContainer mb10'}>
                                 <button className={'fileDelBtn'} onClick={() => handleDelmodal(val.publicId, 'attachment', index)}>x</button>
-                                <IoIosDocument style={{ width: '50%', height: '100%' }} />
-                                <p>{val.publicId}</p>
+                                <GrDocumentText style={{ width: '50%', height: '100%' }} />
                             </span> 
                             ) }
-                            <CustomUploadInput title={'Upload files'} restrict="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf" onChange={handleMultiImagePreview} id={'attachment'} multi={true} customStyle={{ backgroundColor: '#f7f7f7', border: '1px solid #ebebeb', width: '150px' }} />
+                            <CustomUploadInput title={'Upload files'} restrict="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf"uploadLoading={state.attachUploadLoading}  onChange={uploadGallery} id={'attachment'} multi={true} customStyle={{ backgroundColor: '#f7f7f7', border: '1px solid #ebebeb', width: '150px' }} />
                         </div>
 
                         <div>

@@ -25,7 +25,7 @@ import { ImageGroup, Image } from 'react-fullscreen-image';
 const PropertyDetails = () => {
 
     const [state, setState] = useState({
-        value: 10, menuDrop: false, priceValue: { min: 0, max: 8000 }, loading: false, showImages: false, property: {}, agent: {}
+        value: 10, menuDrop: false, priceValue: { min: 0, max: 8000 }, loading: true, showImages: false, property: {}, agent: {}
     })
 
     const property = useLocation()
@@ -230,12 +230,14 @@ const PropertyDetails = () => {
                                         {state.property.attachment && (state.property.attachment.length === 0 && 'No attachments')}
                                         {state.property.attachment && state.property.attachment.map((val, index) => 
                                             <div key={index} className={'flex alignCenter'}>
-                                                <div className='attachmentIcon'>
+                                                <div className='attachmentIcon' title={val.url}>
                                                     <IoDocumentTextOutline />
                                                 </div>
                                                 <div className={'flex alignCenter'}>
-                                                    <AiOutlineDownload color='#ff5a5f' className={'pr10'} />
-                                                    <p className={'f14 regularText headerColor'}>test_property.pdf</p>
+                                                    <a href={val.url}>
+                                                        <AiOutlineDownload color='#ff5a5f' className={'pr10'} />
+                                                        <span className={'f14 regularText headerColor'}>Download file</span>
+                                                    </a>
                                                 </div>
                                             </div>
                                         )}

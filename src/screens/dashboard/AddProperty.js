@@ -261,28 +261,6 @@ const AddProperty = (props) => {
 
     }
 
-    // const uploadProfileImage = async (file, field) => {
-    //     const fData = {photo: file[0]}
-    //     console.log(fData)
-    //     // return
-    //     setState({...state, featuredUploadLoading: true})
-    //     try {
-    //         const res = await http.post(`media-uploader`, fData, false)
-    //         const data = res.data
-    //         toast.success('Image uploaded successfully', {
-    //             position: toast.POSITION.TOP_RIGHT
-    //         });
-    //         console.log('Image uploaded resp: ', res)
-    //         setFeatured({url: data.secure_url, publcId: data.public_id})
-    //     } catch (error) {
-    //         console.log(error)
-    //         toast.error('Unable to upload image', {
-    //             position: toast.POSITION.TOP_RIGHT
-    //         });
-    //     }
-    //     setState({...state, featuredUploadLoading: false})
-    // }
-
 
     const submit = async (e) => {
         e.preventDefault()
@@ -295,7 +273,7 @@ const AddProperty = (props) => {
             propertyTitle, propertyType, propertyDescription, propertyId,
          status, rooms, bed, bath, garage, yearBuilt,
             homeArea, price: newPrice, pricePrefix, priceSuffix, priceCustom, region, friendlyAddress,
-            mapLocation, longtitude, latitude, videoLink, amenities, featured, gallery, attachment
+            mapLocation, longtitude, latitude, videoLink, amenities, featuredImage: featured, gallery, attachment
         }
 
         // if (!propertyTitle) {
