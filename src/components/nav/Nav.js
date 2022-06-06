@@ -20,7 +20,7 @@ import { FlareSharp } from '@mui/icons-material';
 
 const NavBar = ({ boxShadow, logo }) => {
 
-    const [state, setState] = useState({ showResponsiveNav: false, saleHover: false, rentHover: false, projectHover: FlareSharp, isMobile: false, showAgentDropdwn: false })
+    const [state, setState] = useState({ showResponsiveNav: false, saleHover: false, rentHover: false, projectHover: false, isMobile: false, showAgentDropdwn: false })
     const [logoutLoading, setLogoutLoading] = useState(false)
     const user = useSelector((state) => state.auth.userInfo)
     const navigate = useNavigate()
