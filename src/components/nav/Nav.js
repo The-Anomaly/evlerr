@@ -15,11 +15,12 @@ import { toast } from 'react-toastify';
 import Loading from '../../utils/Loading';
 import ResponsiveSideNav from '../modals/ResponsiveSideNav';
 import { HiOutlineMenuAlt2 } from 'react-icons/hi';
+import { FlareSharp } from '@mui/icons-material';
 
 
 const NavBar = ({ boxShadow, logo }) => {
 
-    const [state, setState] = useState({ showResponsiveNav: false, isMobile: false, showAgentDropdwn: false })
+    const [state, setState] = useState({ showResponsiveNav: false, saleHover: false, rentHover: false, projectHover: FlareSharp, isMobile: false, showAgentDropdwn: false })
     const [logoutLoading, setLogoutLoading] = useState(false)
     const user = useSelector((state) => state.auth.userInfo)
     const navigate = useNavigate()
@@ -39,6 +40,22 @@ const NavBar = ({ boxShadow, logo }) => {
         window.addEventListener("resize", updateDimensions)
       
     }, [updateDimensions])
+
+    const handleSaleHover = (value) => {
+        setState({...state, rentHover: false, projectHover: false, saleHover: value})
+    }
+
+    const handleRentHover = (value) => {
+        setState({...state, rentHover: value, projectHover: false, saleHover: false})
+    }
+
+    const handleProjectHover = (value) => {
+        setState({...state, rentHover: false, projectHover: value, saleHover: false})
+    }
+
+    const closeSubMenus = () => {
+        setState({...state, saleHover:false, rentHover: false, projectHover: false})
+    }
 
     const toggleAvatarModal = () => {
         setState({...state, showAgentDropdwn: !state.showAgentDropdwn})
@@ -86,12 +103,41 @@ const NavBar = ({ boxShadow, logo }) => {
                 </div>
                 <div className='navItems'>
                     <ul>
-                        <li className={'regularText f16'} id='forSale'>
-                            <p className={'flex alignCenter'}>
-                                For Sale  <span style={{ marginTop: '5px' }}> <IoMdArrowDropdown size={16} /></span>
+                        <li className={'regularText f16'} id='allProperties' onMouseLeave={closeSubMenus}>
+                            <p className={'flex alignCenter cPointer'}>
+                                Properties  <span style={{ marginTop: '5px' }}> <IoMdArrowDropdown size={16} /></span>
                             </p>
-                            <div className='navDropDownContentContainer' >
+                            <div className={'agentDropDownContentContainer pl10 pr10 pb10 pt10'}>
 
+                                <ul style={{ height: '100%', flexDirection: 'column' }}>
+                                    
+                                    <li className={'regularText f16'} onMouseEnter={() => {handleSaleHover(true)}} style={{ justifyContent: 'flex-start', padding: '10px' }}>
+                                        <p className='flex alignCenter'>
+                                            For sale <span style={{ marginTop: '5px' }}> <IoMdArrowDropdown size={16} /></span>
+                                        </p>
+                                    </li>
+
+                                    <li className={'regularText f16'} onMouseEnter={() => {handleRentHover(true)}} style={{ justifyContent: 'flex-start', padding: '10px' }}>
+                                        <p className='flex alignCenter'>
+                                            For Rent <span style={{ marginTop: '5px' }}> <IoMdArrowDropdown size={16} /></span>
+                                        </p>
+                                    </li>
+
+                                    <li className={'regularText f16'} onMouseEnter={() => {handleProjectHover(true)}} style={{ justifyContent: 'flex-start', padding: '10px' }}>
+                                        <p className='flex alignCenter'>
+                                            Projects <span style={{ marginTop: '5px' }}> <IoMdArrowDropdown size={16} /></span>
+                                        </p>
+                                    </li>
+                                    
+                                    <li className={'regularText f16'} onMouseEnter={closeSubMenus} style={{ justifyContent: 'flex-start', padding: '10px' }}>
+                                        <Link to={'/properties'} className='flex alignCenter'>
+                                            All Projects
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </div>
+                            {state.saleHover &&
+                            <div className='subDropdown' id='saleSubDropDown'>
                                 <ul className={'flex justifyBetween alignCenter'} style={{ width: '100%', height: '100%' }}>
                                     <li style={{ display: 'grid', gridTemplateColumns: '100%', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
                                         <p className={'pb10 semiBoldText headerColor'} style={{ textAlign: 'left' }}>Property</p>
@@ -137,15 +183,9 @@ const NavBar = ({ boxShadow, logo }) => {
                                     </li>
 
                                 </ul>
-                            </div>
-
-                        </li>
-                        <li className={'regularText f16'} id='properties'>
-                            <p className={'flex alignCenter'}>
-                                To Rent <span style={{ marginTop: '5px' }}> <IoMdArrowDropdown size={16} /></span>
-                            </p>
-                            <div className='navDropDownContentContainer' >
-
+                            </div>}
+                            {state.rentHover &&
+                            <div className='subDropdown' style={{ top: '150px' }} id='rentSubDropDown'>
                                 <ul className={'flex justifyBetween alignCenter'} style={{ width: '100%', height: '100%' }}>
                                     <li style={{ display: 'grid', gridTemplateColumns: '100%', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
                                         <p className={'pb10 semiBoldText headerColor'} style={{ textAlign: 'left' }}>Property</p>
@@ -191,14 +231,9 @@ const NavBar = ({ boxShadow, logo }) => {
                                     </li>
 
                                 </ul>
-                            </div>
-                        </li>
-                        <li className={'regularText f16'} style={{ position: 'relative' }} id='forProjects'>
-                            <p className={'flex alignCenter'}>
-                                Projects <span style={{ marginTop: '5px' }}> <IoMdArrowDropdown size={16} /></span>
-                            </p>
-                            <div className='navDropDownContentContainer' >
-
+                            </div>}
+                            {state.projectHover &&
+                            <div className='subDropdown' style={{ top: '190px' }} id='projectSubDropDown'>
                                 <ul className={'flex justifyBetween alignCenter'} style={{ width: '100%', height: '100%' }}>
                                     <li style={{ display: 'grid', gridTemplateColumns: '100%', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
                                         <p className={'pb10 semiBoldText headerColor'} style={{ textAlign: 'left' }}>Property</p>
@@ -244,8 +279,7 @@ const NavBar = ({ boxShadow, logo }) => {
                                     </li>
 
                                 </ul>
-                            </div>
-
+                            </div>}
                         </li>
                         <li>
                             <Link to={'/agents-display'}>Agents</Link>

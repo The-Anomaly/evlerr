@@ -67,7 +67,7 @@ a:hover {
   transition: all 0.2s ease-in-out 0s;
 }
 
-.agentDropDownContentContainer {
+.agentDropDownContentContainer, .subDropdown {
   background-color: #fff;
   position: absolute;
   top: 80px;
@@ -196,6 +196,31 @@ a:hover {
   display: block;
 }
 
+#allProperties:hover .agentDropDownContentContainer{
+  display: block;
+}
+
+.subDropdown{
+  position: absolute;
+  top: 100px;
+  background: #fff;
+  left: 80px;
+  z-index: 20;
+  display: block;
+}
+
+#saleSubDropDown{
+  animation: slideUpFade100 .5s;
+}
+
+#rentSubDropDown{
+  animation: slideUpFade150 .5s;
+}
+
+#projectSubDropDown{
+  animation: slideUpFade190 .5s;
+}
+
 .menuBtn{
   position: fixed;
   top: 50%;
@@ -216,6 +241,39 @@ a:hover {
   }
   to{
     top: 80px;
+    opacity: 1;
+  }
+}
+
+@keyframes slideUpFade100 {
+  from{
+    top: 110px;
+    opacity: 0;
+  }
+  to{
+    top: 100px;
+    opacity: 1;
+  }
+}
+
+@keyframes slideUpFade150 {
+  from{
+    top: 160px;
+    opacity: 0;
+  }
+  to{
+    top: 150px;
+    opacity: 1;
+  }
+}
+
+@keyframes slideUpFade190 {
+  from{
+    top: 200px;
+    opacity: 0;
+  }
+  to{
+    top: 190px;
     opacity: 1;
   }
 }
