@@ -1,4 +1,4 @@
-import React, { Suspense, useState } from 'react'
+import React, { Suspense, useState, useEffect } from 'react'
 import RenderNav from '../../components/nav/RenderNav'
 // import Breadcrumbs from '../../utils/Breadcrumb'
 import '../../assets/style/PropertyStyles.css';
@@ -9,23 +9,24 @@ import PropertyGridCards from '../../components/cards/PropertyGridCards';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import Pagination from '../../utils/Pagination';
-import { getProperties } from '../../redux/actions/PropertiesAction';
+import { SpinnerCircularFixed } from 'spinners-react';
+import http from '../../Utils';
 
 
 const PropertiesDisplay = () => {
 
 
     const [state, setState] = useState({
-        sortDrop: false, property: [], propertiesXtra: {}, 
+        sortDrop: false, propertyList: [], propertiesXtra: {}, loading: false,
         sortItem: [{ id: 1, name: 'Default' }, { id: 2, name: 'Newest' }, { id: 3, name: 'Oldest' },
         { id: 4, name: 'Lowest Price' }, { id: 5, name: 'Highest Price' }, { id: 6, name: 'Random' }], filter: 'All', filterDrop: false,
         selected: 'Default', visible: false, filterItem: [{ id: 1, name: 'All' }, { id: 2, name: 'Rent' }, { id: 2, name: 'Sale' },],
     })
     const { properties } = useSelector(state => state.properties)
 
-    // useEffect(() => {
-    //   setState((prevState) => ({...prevState, property: properties.docs, propertiesXtra: properties}))
-    // }, [properties])
+    useEffect(() => {
+        setState((prevState) => ({...prevState, propertyList: properties.docs, propertiesXtra: properties}))
+    }, [properties])
     
     // console.log(properties);
     const [data, setData] = useState({
@@ -85,18 +86,28 @@ const PropertiesDisplay = () => {
         navigate('/agent-details')
     }
 
-    const paginate = async (page) => {
-        // setState((state) => ({ ...state, loading: true, }))
-        try {
-            await getProperties(page)
-            // console.log('hey', res[0].gallery)
-            // localStorage.setItem('properties', JSON.stringify(res))
-            // setState((state) => ({ ...state, loading: false, }))
-        } catch (error) {
-            // returnError(error)
-            console.log('catched error ', error)
-            // setState((state) => ({ ...state, loading: false, }))
+    const renderLoading = () => {
+        if (state.loading) {
+            return (
+                <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+                    <SpinnerCircularFixed size={'40px'} color="rgba(255, 90, 95, 1)" secondaryColor="rgba(172, 57, 57, 0.58)" speed={150} />
+                </div>
+            )
         }
+    }
+
+
+    const paginate = async (page) => {
+        setState((state) => ({ ...state, loading: true }))
+        try {
+            const res = await http.get(`user/properties?page=${page}&orderBy=newest`)
+            const data = res.data
+            setState({...state, propertyList: data.docs, propertiesXtra: data})
+            console.log('resp: ', data)
+        } catch (error) {
+            console.log('catched error ', error)
+        }
+        setState((state) => ({ ...state, loading: false }))
     }
 
 
@@ -124,7 +135,7 @@ const PropertiesDisplay = () => {
                                 </div> */}
                             </div>
                             <div className={'pt20'}>
-                                <SortCard listCountOffset={(properties.page*properties.limit)-(properties.limit-1)} listCount={properties.docs.length} result={properties.totalDocs} onClick={showSortDropDown} dropDown={state.sortDrop} value={state.selected} onClickFilter={showFilterDropDown}
+                                <SortCard listCountOffset={(state.propertiesXtra.page*state.propertiesXtra.limit)-(state.propertiesXtra.limit-1)} listCount={state.propertyList.length} result={state.propertiesXtra.totalDocs} onClick={showSortDropDown} dropDown={state.sortDrop} value={state.selected} onClickFilter={showFilterDropDown}
                                     filterValue={state.filter} filterDropDown={state.filterDrop} filterList={state.filterItem}
                                     selectFilterType={selectFilterType} sortList={state.sortItem} selectSortType={selectSortType}
                                 >
@@ -149,10 +160,10 @@ const PropertiesDisplay = () => {
 
                             <section className='propertiesGridFull'>
 
-                                {properties.docs && properties.docs.map((item) => (
+                                {!state.loading && state.propertyList.map((item) => (
                                     <div key={item._id}>
                                         <PropertyGridCards
-                                            type={'Featured'} leaseType={'For Rent'} price={item.price} background={item.gallery[2]}
+                                            type={'Featured'} leaseType={'For Rent'} price={item.price} background={item.featuredImage && item.featuredImage.url}
                                             sqft={'480'} baths={'4'} beds={'4'} location={item.friendlyAddress} detailsSubTitle={item.propertyTitle}
                                             detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onClick={() => selectResourceType(item)}
                                             onAgentClick={goToAgentDetails}
@@ -161,10 +172,10 @@ const PropertiesDisplay = () => {
                                 ))}
 
                             </section>}
-                        {state.filter === 'Rent' &&
+                        {!state.loading && state.filter === 'Rent' &&
 
                             <section className='propertiesGridFull'>
-                                {properties.map((item) => (
+                                {state.propertyList.map((item) => (
                                     <div key={item._id}>
                                         <PropertyGridCards
                                             type={'Featured'} leaseType={'For Rent'} price={item.price} background={item.gallery[1]}
@@ -179,7 +190,7 @@ const PropertiesDisplay = () => {
 
                             <section className='propertiesGridFull'>
 
-                                {properties.docs && properties.map((item) => (
+                                {!state.loading && state.propertyList.map((item) => (
                                     <div key={item._id}>
                                         <PropertyGridCards
                                             type={'Featured'} leaseType={'For Rent'} price={item.price} background={item.gallery[0]}
@@ -195,8 +206,9 @@ const PropertiesDisplay = () => {
 
                     </Suspense>
 
+                    {renderLoading()}
                     <div className="mt10">
-                        <Pagination paginationObj={properties} paginator={paginate} />
+                        <Pagination paginationObj={state.propertiesXtra} paginator={paginate} />
                     </div>
 
                 </section>

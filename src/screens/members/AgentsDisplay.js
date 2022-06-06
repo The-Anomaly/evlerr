@@ -126,7 +126,7 @@ const AgentsDisplay = () => {
         const order = state.selected === 'Default' ? 'newest' : state.selected
         setState((prevState) => ({...prevState, loading: true}))
         try {
-            const res = await http.get('/user/get-users', {role: 'agency', orderBy: order, page: page})
+            const res = await http.get('/user/get-users', {role: 'agent', orderBy: order, page: page})
             setState((prevState) => ({...prevState, agents: res.data.docs, agentsXtra: res.data}))
             console.log(res)
         } catch (error) {

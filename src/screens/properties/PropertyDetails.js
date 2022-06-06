@@ -17,9 +17,11 @@ import 'react-input-range/lib/css/index.css';
 import { useLocation } from 'react-router-dom';
 import Loading from '../../utils/Loading';
 import http from '../../Utils';
-// import { getProperties } from '../../redux/actions/PropertiesAction';
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom';
 // import { getProperties } from '../../redux/actions/PropertiesAction';
 import { ImageGroup, Image } from 'react-fullscreen-image';
+import { SELECT_USER } from '../../redux/Types';
 
 
 const PropertyDetails = () => {
@@ -31,6 +33,8 @@ const PropertyDetails = () => {
     const property = useLocation()
     // console.log(property?.state.propertyId);
     const propertyId = property?.state.propertyId
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
 
     // const showDropMenu = () => {
     //     if (state.menuDrop) {
@@ -47,8 +51,13 @@ const PropertyDetails = () => {
                 <Loading />
             )
         }
-
     }
+
+    const toMemberDetail = (member) => {
+        dispatch({type: SELECT_USER, payload: member})
+        navigate('/member-details')
+    }
+
 
     useEffect(() => {
         const getPropertyDetails = async () => {
@@ -286,13 +295,13 @@ const PropertyDetails = () => {
                         </section>
                         <section>
                             <div className={'membersCard'}>
-                                <p className={'f20 headerColor boldText  pb20'}>Contact {state.agent.username}</p>
+                                <p className={'f20 headerColor boldText  pb20'}>{state.agent.role === 'agent' ? 'Agent' : 'Agency'}</p>
                                 <div className={'flex alignCenter'}>
                                     <div className='agentImageContainer'>
                                         <img src={state.agent.profilePicture ? state.agent.profilePicture.url : Agent} alt='agent' style={{ width: '100%', height: '100%', borderRadius: '50%' }} />
                                     </div>
                                     <div className={'pl10'}>
-                                        <p className={'f14 boldText headerColor'}>{state.agent.username}</p>
+                                        <p className={'f14 boldText headerColor cPointer'} onClick={() => {toMemberDetail(state.agent)}}>{state.agent.username}</p>
                                         {state.agent.phone && <p className={'f14 regularText headerColor'}>{state.agent.phone}</p>}
                                         <p className={'f14 regularText headerColor'}>{state.agent.email}</p>
                                     </div>
