@@ -15,7 +15,6 @@ import { toast } from 'react-toastify';
 import Loading from '../../utils/Loading';
 import ResponsiveSideNav from '../modals/ResponsiveSideNav';
 import { HiOutlineMenuAlt2 } from 'react-icons/hi';
-import { FlareSharp } from '@mui/icons-material';
 
 
 const NavBar = ({ boxShadow, logo }) => {

@@ -8,18 +8,25 @@ import FilterModal from '../../components/modals/FilterModal';
 import PropertyGridCards from '../../components/cards/PropertyGridCards';
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import Pagination from '../../utils/Pagination';
+import { getProperties } from '../../redux/actions/PropertiesAction';
 
 
 const PropertiesDisplay = () => {
 
 
     const [state, setState] = useState({
-        sortDrop: false,
+        sortDrop: false, property: [], propertiesXtra: {}, 
         sortItem: [{ id: 1, name: 'Default' }, { id: 2, name: 'Newest' }, { id: 3, name: 'Oldest' },
         { id: 4, name: 'Lowest Price' }, { id: 5, name: 'Highest Price' }, { id: 6, name: 'Random' }], filter: 'All', filterDrop: false,
         selected: 'Default', visible: false, filterItem: [{ id: 1, name: 'All' }, { id: 2, name: 'Rent' }, { id: 2, name: 'Sale' },],
     })
     const { properties } = useSelector(state => state.properties)
+
+    // useEffect(() => {
+    //   setState((prevState) => ({...prevState, property: properties.docs, propertiesXtra: properties}))
+    // }, [properties])
+    
     // console.log(properties);
     const [data, setData] = useState({
         _id: ''
@@ -78,6 +85,21 @@ const PropertiesDisplay = () => {
         navigate('/agent-details')
     }
 
+    const paginate = async (page) => {
+        // setState((state) => ({ ...state, loading: true, }))
+        try {
+            await getProperties(page)
+            // console.log('hey', res[0].gallery)
+            // localStorage.setItem('properties', JSON.stringify(res))
+            // setState((state) => ({ ...state, loading: false, }))
+        } catch (error) {
+            // returnError(error)
+            console.log('catched error ', error)
+            // setState((state) => ({ ...state, loading: false, }))
+        }
+    }
+
+
     return (
         // <Breadcrumbs />
         <>
@@ -102,7 +124,7 @@ const PropertiesDisplay = () => {
                                 </div> */}
                             </div>
                             <div className={'pt20'}>
-                                <SortCard result={'14'} onClick={showSortDropDown} dropDown={state.sortDrop} value={state.selected} onClickFilter={showFilterDropDown}
+                                <SortCard listCountOffset={(properties.page*properties.limit)-(properties.limit-1)} listCount={properties.docs.length} result={properties.totalDocs} onClick={showSortDropDown} dropDown={state.sortDrop} value={state.selected} onClickFilter={showFilterDropDown}
                                     filterValue={state.filter} filterDropDown={state.filterDrop} filterList={state.filterItem}
                                     selectFilterType={selectFilterType} sortList={state.sortItem} selectSortType={selectSortType}
                                 >
@@ -127,7 +149,7 @@ const PropertiesDisplay = () => {
 
                             <section className='propertiesGridFull'>
 
-                                {properties.docs.map((item) => (
+                                {properties.docs && properties.docs.map((item) => (
                                     <div key={item._id}>
                                         <PropertyGridCards
                                             type={'Featured'} leaseType={'For Rent'} price={item.price} background={item.gallery[2]}
@@ -157,7 +179,7 @@ const PropertiesDisplay = () => {
 
                             <section className='propertiesGridFull'>
 
-                                {properties.map((item) => (
+                                {properties.docs && properties.map((item) => (
                                     <div key={item._id}>
                                         <PropertyGridCards
                                             type={'Featured'} leaseType={'For Rent'} price={item.price} background={item.gallery[0]}
@@ -172,6 +194,10 @@ const PropertiesDisplay = () => {
 
 
                     </Suspense>
+
+                    <div className="mt10">
+                        <Pagination paginationObj={properties} paginator={paginate} />
+                    </div>
 
                 </section>
 

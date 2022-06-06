@@ -100,7 +100,7 @@ const MostViewedPropertyCarousel = (props) => {
                         <PropertyCards
                             type={'Most Viewed'} leaseType={'For Rent'} price={item.price} background={item.featuredImage && item.featuredImage.url}
                             sqft={'480'} baths={'4'} beds={'4'} location={item.friendlyAddress} detailsSubTitle={item.propertyTitle}
-                            detailsTitle={'Apartment'} onClick={() => selectResourceType(item)} agentImage={item.agentId.profilePicture.url} agentName={item.agentId.username} years={'2'} onAgentClick={goToAgentDetails}
+                            detailsTitle={'Apartment'} onClick={() => selectResourceType(item)} agentImage={item.agentId.profilePicture && item.agentId.profilePicture.url} agentName={item.agentId.username} years={'2'} onAgentClick={goToAgentDetails}
                         />
                     </div>
                 ))}
