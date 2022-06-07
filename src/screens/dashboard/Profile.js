@@ -205,13 +205,13 @@ const Profile = () => {
                             <CustomInput label={'Username'} name={'username'} onChange={handleInput} value={formData.username} />
                         </div>
 
-                        <div>
+                        <div style={{ marginBottom: '20px' }}>
                             <CustomTextArea label={'Description'} customStyle={{ height: '200px', textAlign: "start" }} value={formData.description} onChange={handleInput}
                                 name={'description'} />
                         </div>
 
                         {user.role === 'agent' &&
-                        <div style={{ marginTop: '20px' }}>
+                        <div>
                             <CustomInput label={'Job'} name={'job'} onChange={handleInput} value={formData.job} />
                         </div>
                         }

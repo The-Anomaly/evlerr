@@ -5,7 +5,7 @@ const Dropdown = ({ curSelect, options, setSelect, label, textColor }) => {
 
     // const [curSort, setCurSort] = useState('Newest')
     const [dropdown, setDropdown] = useState(false)
-    const [color, setColor] = useState(textColor ? textColor : '#000')
+    const [color, setColor] = useState(textColor ? textColor : '#7F7F7F')
 
     const showDropMenu = () => {
         if (dropdown) {
@@ -28,7 +28,7 @@ const Dropdown = ({ curSelect, options, setSelect, label, textColor }) => {
                     {dropdown && 
                     <ul className={"submissionDropdowncontainer"}>
                         { options.map((val, index) => 
-                            <li key={index} className={curSelect === val ? 'active' : ''} onClick={() => { setSelect(val); showDropMenu(); setColor('#000') }}>{val}</li>) 
+                            <li key={index} className={curSelect === val ? 'active' : ''} onClick={() => { setSelect(val); showDropMenu(); setColor('#7F7F7F') }}>{val}</li>) 
                         }
                     </ul>}
                 </div>

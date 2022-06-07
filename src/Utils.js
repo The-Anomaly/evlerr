@@ -19,22 +19,28 @@ const setTokenIfExists = async options => {
     const token = await getUserToken();
 
     if (token.access === null) {
+        console.log('token not exist')
         return;
     }
 
+    console.log('token exists')
     if (!options.headers) {
-        options.headers = {};
+        options.headers = {
+            'x-access-token': token.access,
+            'x-refresh-token': token.refresh
+        };
     }
 
-    axios.interceptors.request.use((config) => {
-        if (token.access) {
-            config.headers['x-access-token'] = token.access
-            config.headers['x-refresh-token'] = token.refresh
-        }
-        return config
-    }, (error) => {
-        Promise.reject(error)
-    })
+    // axios.interceptors.request.use((config) => {
+    //     if (token.access) {
+    //         console.log('appended tokens')
+    //         config.headers['x-access-token'] = token.access
+    //         config.headers['x-refresh-token'] = token.refresh
+    //     }
+    //     return config
+    // }, (error) => {
+    //     Promise.reject(error)
+    // })
     // options.headers.Authorization = `Bearer ${token}`;
     // console.log('bearer token: ',token)
     // options.headers.Authorization = `Bearer ${tokenOne}`;

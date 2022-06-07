@@ -10,6 +10,8 @@ export const login = ({ email, password }) => {
         dispatch({ type: LOADING_USER })
         return new Promise(async (resolve, reject) => {
             try {
+                localStorage.clear()
+                sessionStorage.clear()
                 const res = await http.post("auth/createSession", obj)
                 const data = res.data
                 let { accessToken, refreshToken } = data;
@@ -58,7 +60,7 @@ export const logout = () => {
                     localStorage.clear()
                     sessionStorage.clear()
                     dispatch({ type: LOGOUT })
-                    // console.log('logged out')
+                    console.log('logged out', res)
                 }
 
                 resolve(res)

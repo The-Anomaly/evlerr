@@ -92,7 +92,7 @@ const NavBar = ({ boxShadow, logo }) => {
 
     return (
         <>
-            <nav style={{ boxShadow: boxShadow, marginLeft: !logo ? '-300px' : 0 }} className='navContainer'>
+            <nav style={{ boxShadow: boxShadow, marginLeft: !logo ? !state.isMobile ? '-300px' : 0 : 0 }} className='navContainer'>
                 {/* <RiMenu4Line className='f30 pr10 navItemResponsive' onClick={toggleShowNav} /> */}
                 <div className='logoContainer' style={{ display: 'flex', alignItems: 'center' }}>
                     <HiOutlineMenuAlt2 className='pr10 navItemResponsive' style={{ height: '20px', width: '20px' }} onClick={toggleShowNav} />
