@@ -210,9 +210,11 @@ const Profile = () => {
                                 name={'description'} />
                         </div>
 
+                        {user.role === 'agent' &&
                         <div style={{ marginTop: '20px' }}>
                             <CustomInput label={'Job'} name={'job'} onChange={handleInput} value={formData.job} />
                         </div>
+                        }
                         <div>
                             <CustomInput label={'E-mail'} type={'email'} name={'email'} onChange={handleInput} value={formData.email} />
                         </div>

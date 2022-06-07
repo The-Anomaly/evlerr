@@ -69,8 +69,8 @@ const AgenciesDisplay = () => {
     const renderLoading = () => {
         if (state.loading) {
             return (
-                <div style={{ display: 'flex', justifyContent: 'center' }}>
-                    <SpinnerCircularFixed size={'40px'} />
+                <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+                    <SpinnerCircularFixed size={'40px'} color="rgba(255, 90, 95, 1)" secondaryColor="rgba(172, 57, 57, 0.58)" speed={150} />
                 </div>
             )
         }
