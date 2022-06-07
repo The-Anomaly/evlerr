@@ -2,7 +2,6 @@ import { ArrowBackIos } from '@mui/icons-material';
 import React, { useState } from 'react';
 import CustomInput from '../../utils/CustomInput';
 import '../../assets/style/AuthStyles.css';
-import AuthHero from '../../assets/images/bg-login.jpeg';
 import { AiOutlineEye, AiOutlineEyeInvisible, AiOutlineMail } from 'react-icons/ai';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import CustomButton from '../../utils/CustomButton';

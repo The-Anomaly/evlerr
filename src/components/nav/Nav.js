@@ -16,7 +16,6 @@ import Loading from '../../utils/Loading';
 import ResponsiveSideNav from '../modals/ResponsiveSideNav';
 import { HiOutlineMenuAlt2 } from 'react-icons/hi';
 import { SiGoogletranslate } from 'react-icons/si';
-import { Visibility } from '@mui/icons-material';
 
 
 const NavBar = ({ boxShadow, logo }) => {
@@ -146,7 +145,6 @@ const NavBar = ({ boxShadow, logo }) => {
                                         <ul className={'flex justifyBetween alignCenter'} style={{ width: '100%', height: '100%' }}>
                                             <li style={{ display: 'grid', gridTemplateColumns: '100%', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
                                                 <p className={'pb10 semiBoldText headerColor'} style={{ textAlign: 'left' }}>Property</p>
-                                                <CustomLink to={'/properties'}>North Cyprus</CustomLink>
                                                 <CustomLink to={'/properties'}>Kyrenia</CustomLink>
                                                 <CustomLink to={'/properties'}>Famagusta</CustomLink>
                                                 <CustomLink to={'/properties'}>Nicosia</CustomLink>
@@ -158,7 +156,6 @@ const NavBar = ({ boxShadow, logo }) => {
 
                                             <li style={{ display: 'grid', gridTemplateColumns: '100%', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
                                                 <p className={'pb10 semiBoldText headerColor'} style={{ textAlign: 'left' }}>Land</p>
-                                                <CustomLink to={'/properties'}>North Cyprus</CustomLink>
                                                 <CustomLink to={'/properties'}>Kyrenia</CustomLink>
                                                 <CustomLink to={'/properties'}>Famagusta</CustomLink>
                                                 <CustomLink to={'/properties'}>Nicosia</CustomLink>
@@ -168,7 +165,6 @@ const NavBar = ({ boxShadow, logo }) => {
                                             </li>
                                             <li style={{ display: 'grid', gridTemplateColumns: '100%', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
                                                 <p className={'pb10 semiBoldText headerColor'} style={{ textAlign: 'left' }}>Commercial</p>
-                                                <CustomLink to={'/properties'}>North Cyprus</CustomLink>
                                                 <CustomLink to={'/properties'}>Kyrenia</CustomLink>
                                                 <CustomLink to={'/properties'}>Famagusta</CustomLink>
                                                 <CustomLink to={'/properties'}>Nicosia</CustomLink>
@@ -178,7 +174,6 @@ const NavBar = ({ boxShadow, logo }) => {
                                             </li>
                                             <li style={{ display: 'grid', gridTemplateColumns: '100%', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
                                                 <p className={'pb10 semiBoldText headerColor'} style={{ textAlign: 'left' }}>Projects</p>
-                                                <CustomLink to={'/properties'}>North Cyprus</CustomLink>
                                                 <CustomLink to={'/properties'}>Kyrenia</CustomLink>
                                                 <CustomLink to={'/properties'}>Famagusta</CustomLink>
                                                 <CustomLink to={'/properties'}>Nicosia</CustomLink>
@@ -194,7 +189,6 @@ const NavBar = ({ boxShadow, logo }) => {
                                         <ul className={'flex justifyBetween alignCenter'} style={{ width: '100%', height: '100%' }}>
                                             <li style={{ display: 'grid', gridTemplateColumns: '100%', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
                                                 <p className={'pb10 semiBoldText headerColor'} style={{ textAlign: 'left' }}>Property</p>
-                                                <CustomLink to={'/properties'}>North Cyprus</CustomLink>
                                                 <CustomLink to={'/properties'}>Kyrenia</CustomLink>
                                                 <CustomLink to={'/properties'}>Famagusta</CustomLink>
                                                 <CustomLink to={'/properties'}>Nicosia</CustomLink>
@@ -206,7 +200,6 @@ const NavBar = ({ boxShadow, logo }) => {
 
                                             <li style={{ display: 'grid', gridTemplateColumns: '100%', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
                                                 <p className={'pb10 semiBoldText headerColor'} style={{ textAlign: 'left' }}>Land</p>
-                                                <CustomLink to={'/properties'}>North Cyprus</CustomLink>
                                                 <CustomLink to={'/properties'}>Kyrenia</CustomLink>
                                                 <CustomLink to={'/properties'}>Famagusta</CustomLink>
                                                 <CustomLink to={'/properties'}>Nicosia</CustomLink>
@@ -216,7 +209,6 @@ const NavBar = ({ boxShadow, logo }) => {
                                             </li>
                                             <li style={{ display: 'grid', gridTemplateColumns: '100%', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
                                                 <p className={'pb10 semiBoldText headerColor'} style={{ textAlign: 'left' }}>Commercial</p>
-                                                <CustomLink to={'/properties'}>North Cyprus</CustomLink>
                                                 <CustomLink to={'/properties'}>Kyrenia</CustomLink>
                                                 <CustomLink to={'/properties'}>Famagusta</CustomLink>
                                                 <CustomLink to={'/properties'}>Nicosia</CustomLink>
@@ -226,7 +218,6 @@ const NavBar = ({ boxShadow, logo }) => {
                                             </li>
                                             <li style={{ display: 'grid', gridTemplateColumns: '100%', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
                                                 <p className={'pb10 semiBoldText headerColor'} style={{ textAlign: 'left' }}>Projects</p>
-                                                <CustomLink to={'/properties'}>North Cyprus</CustomLink>
                                                 <CustomLink to={'/properties'}>Kyrenia</CustomLink>
                                                 <CustomLink to={'/properties'}>Famagusta</CustomLink>
                                                 <CustomLink to={'/properties'}>Nicosia</CustomLink>
@@ -242,7 +233,6 @@ const NavBar = ({ boxShadow, logo }) => {
                                         <ul className={'flex justifyBetween alignCenter'} style={{ width: '100%', height: '100%' }}>
                                             <li style={{ display: 'grid', gridTemplateColumns: '100%', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
                                                 <p className={'pb10 semiBoldText headerColor'} style={{ textAlign: 'left' }}>Property</p>
-                                                <CustomLink to={'/properties'}>North Cyprus</CustomLink>
                                                 <CustomLink to={'/properties'}>Kyrenia</CustomLink>
                                                 <CustomLink to={'/properties'}>Famagusta</CustomLink>
                                                 <CustomLink to={'/properties'}>Nicosia</CustomLink>
@@ -254,7 +244,6 @@ const NavBar = ({ boxShadow, logo }) => {
 
                                             <li style={{ display: 'grid', gridTemplateColumns: '100%', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
                                                 <p className={'pb10 semiBoldText headerColor'} style={{ textAlign: 'left' }}>Land</p>
-                                                <CustomLink to={'/properties'}>North Cyprus</CustomLink>
                                                 <CustomLink to={'/properties'}>Kyrenia</CustomLink>
                                                 <CustomLink to={'/properties'}>Famagusta</CustomLink>
                                                 <CustomLink to={'/properties'}>Nicosia</CustomLink>
@@ -264,7 +253,6 @@ const NavBar = ({ boxShadow, logo }) => {
                                             </li>
                                             <li style={{ display: 'grid', gridTemplateColumns: '100%', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
                                                 <p className={'pb10 semiBoldText headerColor'} style={{ textAlign: 'left' }}>Commercial</p>
-                                                <CustomLink to={'/properties'}>North Cyprus</CustomLink>
                                                 <CustomLink to={'/properties'}>Kyrenia</CustomLink>
                                                 <CustomLink to={'/properties'}>Famagusta</CustomLink>
                                                 <CustomLink to={'/properties'}>Nicosia</CustomLink>
@@ -274,7 +262,6 @@ const NavBar = ({ boxShadow, logo }) => {
                                             </li>
                                             <li style={{ display: 'grid', gridTemplateColumns: '100%', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
                                                 <p className={'pb10 semiBoldText headerColor'} style={{ textAlign: 'left' }}>Projects</p>
-                                                <CustomLink to={'/properties'}>North Cyprus</CustomLink>
                                                 <CustomLink to={'/properties'}>Kyrenia</CustomLink>
                                                 <CustomLink to={'/properties'}>Famagusta</CustomLink>
                                                 <CustomLink to={'/properties'}>Nicosia</CustomLink>
