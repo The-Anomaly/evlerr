@@ -315,7 +315,7 @@ const NavBar = ({ boxShadow, logo }) => {
                                                 <CustomLink to={'/myProperties'}>My Properties</CustomLink>
                                             </> : ''
                                         }
-                                        <CustomLink to={'#'} onClick={logoutUser}>Log out {logoutLoading && <Loading />} </CustomLink>
+                                        <CustomLink to={'#'} style={{color: '#484848'}} onClick={logoutUser}>Log out {logoutLoading && <Loading />} </CustomLink>
                                     </li>
                                 </ul>
                             </div>
@@ -340,6 +340,7 @@ const NavBar = ({ boxShadow, logo }) => {
                                 </li>
                             </ul>
                         </div>}
+                    
 
                     <div className='navItems'>
                         <Link to={'/submission'}>
