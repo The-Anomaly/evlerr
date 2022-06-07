@@ -1,6 +1,7 @@
 .navContainer {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  /* justify-content: space-between; */
   align-items: center;
   padding: 0 20px;
   height: 80px;

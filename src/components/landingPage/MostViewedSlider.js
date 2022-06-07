@@ -7,6 +7,7 @@ import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import EastIcon from '@mui/icons-material/East';
 import { useNavigate } from "react-router-dom";
 import avatar from "../../assets/images/defAvatar.jpg";
+import defaultPropImage from '../../assets/images/home.jpeg'
 
 function NextArrow(props) {
     const { onClick } = props;
@@ -99,7 +100,7 @@ const MostViewedPropertyCarousel = (props) => {
                 {properties.map((item) => (
                     <div key={item._id}>
                         <PropertyCards
-                            type={'Most Viewed'} leaseType={item.status} price={item.price} background={item.featuredImage && item.featuredImage.url}
+                            type={'Most Viewed'} leaseType={item.status} price={item.price} background={item.featuredImage ? item.featuredImage.url !== 'string' ? item.featuredImage.url : defaultPropImage : defaultPropImage}
                             sqft={'480'} baths={'4'} beds={'4'} location={item.friendlyAddress} detailsSubTitle={item.propertyTitle}
                             detailsTitle={'Apartment'} onClick={() => selectResourceType(item)} agentImage={item.agentId.profilePicture ? item.agentId.profilePicture.url : avatar} agentName={item.agentId.username} years={'2'} onAgentClick={goToAgentDetails}
                         />
