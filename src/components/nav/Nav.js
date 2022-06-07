@@ -15,12 +15,13 @@ import { toast } from 'react-toastify';
 import Loading from '../../utils/Loading';
 import ResponsiveSideNav from '../modals/ResponsiveSideNav';
 import { HiOutlineMenuAlt2 } from 'react-icons/hi';
-// import { SiGoogletranslate } from 'react-icons/si';
+import { SiGoogletranslate } from 'react-icons/si';
+import { Visibility } from '@mui/icons-material';
 
 
 const NavBar = ({ boxShadow, logo }) => {
 
-    const [state, setState] = useState({ showResponsiveNav: false, saleHover: false, rentHover: false, projectHover: false, isMobile: false, showAgentDropdwn: false })
+    const [state, setState] = useState({ showResponsiveNav: false, showGT: true, saleHover: false, rentHover: false, projectHover: false, isMobile: false, showAgentDropdwn: false })
     const [logoutLoading, setLogoutLoading] = useState(false)
     const user = useSelector((state) => state.auth.userInfo)
     const navigate = useNavigate()
@@ -61,6 +62,9 @@ const NavBar = ({ boxShadow, logo }) => {
         setState({ ...state, showAgentDropdwn: !state.showAgentDropdwn })
     }
 
+    const handleGT = () => {
+        setState({...state, showGT: !state.showGT})
+    }
 
 
     const logoutUser = async () => {
@@ -300,7 +304,7 @@ const NavBar = ({ boxShadow, logo }) => {
                                 {user.username}
                             </p>
                             <span style={{ marginTop: '5px' }}> <IoMdArrowDropdown size={16} /></span>
-                            <div style={state.isMobile ? !state.showAgentDropdwn ? { display: 'none' } : {} : {}} className={user.role === 'user' ? 'agentDropDownContentContainer userAgent' : 'agentDropDownContentContainer'}>
+                            <div style={state.isMobile ? !state.showAgentDropdwn ? { display: 'none' } : {} : {}} className={user.role === 'user' ? 'agentDropDownContentContainer userAgent top80' : 'agentDropDownContentContainer top80'}>
                                 <ul className={'flex justifyBetween alignCenter'} style={{ height: '100%' }}>
                                     <li style={{ display: 'grid', gridTemplateColumns: '100%', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
                                         {user.role !== 'user' ?
@@ -350,10 +354,11 @@ const NavBar = ({ boxShadow, logo }) => {
                 </section>
 
             </nav >
-            {state.isMobile && <div className='pl20' id="google_translate_element"></div>}
-            {/* <div className='translateContainer'>
-               <SiGoogletranslate className='f30' />
-            </div> */}
+            {/* {state.isMobile && <div className='pl20' id="google_translate_element"></div>} */}
+            <div className='translateContainer' onClick={handleGT}>
+                {<div id="google_translate_element" style={state.showGT ? { visibility: 'visible' } : { visibility: 'hidden' }}></div>}
+                <SiGoogletranslate className='f30' />
+            </div>
             <ResponsiveSideNav closeModal={toggleShowNav} visible={state.showResponsiveNav} />
 
         </>

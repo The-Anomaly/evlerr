@@ -5,7 +5,7 @@ const Dropdown = ({ curSelect, options, setSelect, label, textColor }) => {
 
     // const [curSort, setCurSort] = useState('Newest')
     const [dropdown, setDropdown] = useState(false)
-    const [color, setColor] = useState(textColor ? textColor : '#7F7F7F')
+    const [color, setColor] = useState(textColor ? textColor : '#484848')
 
     const showDropMenu = () => {
         if (dropdown) {
@@ -23,7 +23,7 @@ const Dropdown = ({ curSelect, options, setSelect, label, textColor }) => {
             <div className='inputContainer'>
                 {dropdown && <div className="modal" onClick={showDropMenu} style={{ background: 'transparent' }}></div>}
                 <div style={{ position: 'relative', display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-                    <span className={"sort"} style={{ width: '100%', display: 'inline-block', color: color }} onClick={showDropMenu}>{ curSelect }</span>
+                    <span className={"sort f14"} style={{ width: '100%', display: 'inline-block', color: color }} onClick={showDropMenu}>{ curSelect }</span>
                     {!dropdown ? <IoMdArrowDropdown style={{ width: '40px' }} size={16} /> : <IoMdArrowDropdown style={{ width: '40px', transform: 'rotate(180deg)' }} size={16} /> }
                     {dropdown && 
                     <ul className={"submissionDropdowncontainer"}>

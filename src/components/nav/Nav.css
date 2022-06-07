@@ -84,10 +84,34 @@ a:hover {
   transition: all 0.2s ease-in-out 0s;
 }
 
+.translateContainer{
+  position: fixed;
+  right: 0;
+  background: #e8e8e8;
+  z-index: 200;
+  width: 50px;
+  display: flex;
+  height: 50px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+
+#google_translate_element{
+  margin-right: 280px;
+  background: #e8e8e8;
+  padding: 3px;
+  border-radius: 10px;
+}
+
+.top80{
+  top: 40px !important;
+}
+
 
 .agentDropDownContentContainer {
   /* left: -70px; */
-  top: 40px;
+  /* top: 40px; */
   width: 150px;
   overflow-x: hidden;
   animation: slideUpFade .2s;

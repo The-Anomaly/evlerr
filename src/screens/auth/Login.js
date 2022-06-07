@@ -77,9 +77,6 @@ const Login = (props) => {
                     <ArrowBackIos />
                 </div>
                 <section className='authContainer'>
-                    <div className='authImg'>
-                        <img src={AuthHero} alt='hero' loading='eager' />
-                    </div>
                     <div className='authFormContainer'>
                         <div className='authHeader'>
                             <h3 className={'f18, boldText'}>Login</h3>

@@ -109,9 +109,6 @@ const Register = (props) => {
                     <ArrowBackIos />
                 </div>
                 <section className='authContainer'>
-                    <div className='authImg'>
-                        <img src={AuthHero} alt='hero' loading='eager' />
-                    </div>
                     <div className='authFormContainer'>
                         <div className='authHeader'>
                             <h3 className={'f18, boldText'}>Register</h3>
@@ -150,7 +147,7 @@ const Register = (props) => {
 
                             </div>
 
-                            <Dropdown curSelect={auth.role} textColor={'#aaa'} options={['agency', 'agent']} setSelect={handleRole} />
+                            <Dropdown curSelect={auth.role} textColor={'#555'} options={['agency', 'agent']} setSelect={handleRole} />
 
 
                             <div>
