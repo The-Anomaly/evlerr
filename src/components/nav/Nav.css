@@ -1,6 +1,9 @@
 .navContainer {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  display: grid; 
+  grid-template-columns: 50% 50%;
+
+  /* display: grid;
+  grid-template-columns: repeat(auto-fit, 1fr); */
   /* justify-content: space-between; */
   align-items: center;
   padding: 0 20px;
@@ -8,15 +11,15 @@
   position: relative;
   background-color: #fff;
 }
-.logoContainer {
+/* .logoContainer {
   width: 450px;
-}
+} */
 .navContainer ul {
   display: flex;
   align-items: center;
   list-style: none;
   justify-content: space-evenly;
-  width: 500px;
+  /* width: 500px; */
   height: 80px;
 }
 .navContainer ul li {
@@ -34,10 +37,6 @@
   height: 25px;
 }
 
-#authLinks {
-  width: 130px;
-  justify-content: center;
-}
 a {
   text-decoration: none;
   color: #484848;
@@ -88,7 +87,7 @@ a:hover {
 
 .agentDropDownContentContainer {
   /* left: -70px; */
-  top: 80px;
+  top: 40px;
   width: 150px;
   overflow-x: hidden;
   animation: slideUpFade .2s;
@@ -179,6 +178,15 @@ a:hover {
   height: 100%;
 }
 
+#agentdropdown, #authLinks {
+  padding-left: 30px;
+  margin-left: 10px;
+  height: 25px;
+  border-left: 1px solid #484848;
+  width: 130px;
+  /* justify-content: center; */
+}
+
 .agent-avatar{
   width: 35px;
   height: 35px;
@@ -233,7 +241,22 @@ a:hover {
   border-bottom-left-radius: 5px;
 }
 
+.pale {
+  grid-template-columns: repeat(3,1fr);
+  display: grid; 
+  align-items: center;
+}
 
+.navStyle{
+  width: 100%; 
+  display: flex; 
+  justify-content: space-between; 
+  align-items: center;
+}
+
+.propNavWidth{
+  width: 270px;
+}
 
 @keyframes slideUpFade {
   from{
@@ -287,6 +310,16 @@ a:hover {
   margin-left: 300px;
 } */
 
+@media screen and (max-width: 1265px) {
+  .navContainer{
+    grid-template-columns: 30% 70%;
+  }
+
+  .propNavWidth{
+    width: 250px;
+  }
+}
+
 @media screen and (max-width: 1023px) {
   .navItems{
     display: none !important;
@@ -298,5 +331,25 @@ a:hover {
 
   .agentDropDownContentContainer{
     left: -120px;
+  }
+
+  .navContainer{
+    grid-template-columns: 70% 30%;
+  }
+
+  .pale{
+    grid-template-columns: 150px;
+    justify-content: center;
+  }
+
+  #agentdropdown, #authLinks {
+    border: none;
+    /* text-align: right; */
+  }
+}
+
+@media screen and (max-width: 763px) {
+  .navContainer{
+    grid-template-columns: 50% 50%;
   }
 }

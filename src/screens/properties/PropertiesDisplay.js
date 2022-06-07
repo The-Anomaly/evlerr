@@ -12,6 +12,7 @@ import { SpinnerCircularFixed } from 'spinners-react';
 import http from '../../Utils';
 import avatar from "../../assets/images/defAvatar.jpg";
 import { toast } from 'react-toastify';
+import defaultPropImage from '../../assets/images/home.jpeg';
 
 
 const PropertiesDisplay = () => {
@@ -183,7 +184,7 @@ const PropertiesDisplay = () => {
                             {!state.loading && state.propertyList.map((item) => (
                                 <div key={item._id}>
                                     <PropertyGridCards
-                                        type={'Featured'} leaseType={item.status} price={item.price} background={item.featuredImage && item.featuredImage.url}
+                                        type={'Featured'} leaseType={item.status} price={item.price} background={item.featuredImage ? item.featuredImage.url !== 'string' ? item.featuredImage.url : defaultPropImage : defaultPropImage}
                                         sqft={item.homeArea} baths={item.bath} beds={item.bed} location={item.friendlyAddress} detailsSubTitle={item.propertyTitle}
                                         detailsTitle={item.propertyType} years={'2'} agentImage={item.agentId.profilePicture ? item.agentId.profilePicture.url : avatar} agentName={item.agentId.username} onClick={() => selectResourceType(item)}
                                         onAgentClick={goToAgentDetails}
