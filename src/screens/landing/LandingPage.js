@@ -140,16 +140,16 @@ const LandingPage = (props) => {
                                     </div>
                                     {state.rentSearch &&
                                         <div className="animate__animated animate__fadeIn">
-                                            <SearchComponent advancedClick={showFilterModal} />
+                                            <SearchComponent status={'Rent'} advancedClick={showFilterModal} />
                                         </div>
 
                                     }
                                     {state.saleSearch && <div className="animate__animated animate__fadeIn">
-                                        <SearchComponent advancedClick={showFilterModal} />
+                                        <SearchComponent status={'Sale'} advancedClick={showFilterModal} />
                                     </div>}
 
                                     {state.shortLease && <div className="animate__animated animate__fadeIn">
-                                        <SearchComponent advancedClick={showFilterModal} />
+                                        <SearchComponent status={'Short stay'} advancedClick={showFilterModal} />
                                     </div>}
 
 

@@ -6,6 +6,7 @@ import PropertyCards from "../cards/PropertyCards";
 import KeyboardBackspaceIcon from '@mui/icons-material/KeyboardBackspace';
 import EastIcon from '@mui/icons-material/East';
 import { useNavigate } from "react-router-dom";
+import avatar from "../../assets/images/defAvatar.jpg";
 
 function NextArrow(props) {
     const { onClick } = props;
@@ -97,10 +98,9 @@ const BestPropertyCarousel = (props) => {
                 {properties.map((item) => (
                     <div key={item._id}>
                         <PropertyCards
-                            type={'Featured'} leaseType={'For Rent'} price={item.price} background={item.gallery[0]}
+                            type={'Most Viewed'} leaseType={item.status} price={item.price} background={item.featuredImage && item.featuredImage.url}
                             sqft={'480'} baths={'4'} beds={'4'} location={item.friendlyAddress} detailsSubTitle={item.propertyTitle}
-                            detailsTitle={'Apartment'} onClick={() => selectResourceType(item)} agentImage={item.gallery[0]} agentName={'Malen'} years={'2'}
-                            onAgentClick={goToAgentDetails}
+                            detailsTitle={'Apartment'} onClick={() => selectResourceType(item)} agentImage={item.agentId.profilePicture ? item.agentId.profilePicture.url : avatar} agentName={item.agentId.username} years={'2'} onAgentClick={goToAgentDetails}
                         />
                     </div>
                 ))}

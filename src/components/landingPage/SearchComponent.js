@@ -8,9 +8,9 @@ import { toast } from 'react-toastify';
 import { IoLocationOutline } from 'react-icons/io5'
 import { useNavigate } from 'react-router-dom';
 
-const SearchComponent = () => {
+const SearchComponent = ({status}) => {
 
-    const [state, setState] = useState({ query: '', fetchedItems: {}, loading: false, showDropdown: false })
+    const [state, setState] = useState({ query: '', fetchedItems: [], pageInfo: {}, loading: false, showDropdown: false })
 
     const onChangeQuery = (e) => {
         setState({ ...state, query: e.target.value })
@@ -20,10 +20,9 @@ const SearchComponent = () => {
     const search = async (e) => {
         e.preventDefault()
         setState({ ...state, loading: true })
-        console.log(state.query)
         try {
-            const res = await http.get('search-property', { search: state.query })
-            setState({ ...state, fetchedItems: res.data, showDropdown: true, loading: false })
+            const res = await http.get('search-property', { search: state.query, status: status })
+            setState({ ...state, fetchedItems: res.data.docs, showDropdown: true, loading: false })
             console.log(res)
         } catch (error) {
             setState({ ...state, loading: false })
@@ -46,9 +45,9 @@ const SearchComponent = () => {
 
 
 
-    const searchResult = !Object.keys(state.fetchedItems).length ? (<p>No property found</p>) : state.fetchedItems.docs.map((property, index)   => {
-        const { gallery, propertyTitle, friendlyAddress, status, price } = property
-        const checkGallery = gallery[0] ? typeof gallery[0] : 'string'
+    const searchResult = !state.fetchedItems.length ? (<p>No property found</p>) : state.fetchedItems.map((property, index)   => {
+        const { featuredImage, propertyTitle, friendlyAddress, status, price } = property
+        // const checkGallery = gallery[0] ? typeof gallery[0] : 'string'
         return (
             <section key={index} className={'transactionRowContainer'} style={{ overflow: 'auto' }}>
                 <ul className={'fav-container overviewGrid pb10'} style={{ gridTemplateColumns: "130px 1fr" }}>
@@ -56,7 +55,7 @@ const SearchComponent = () => {
                         <div onClick={() => selectResourceType(property)} className='cPointer image-wrapper search-img'>
                             <div className="overlay"></div>
                             <span className="property-status">{status}</span>
-                            <img src={ checkGallery === 'string' ? gallery[0] : gallery[0].url } alt={''}  />
+                            <img src={featuredImage && featuredImage.url} alt={''}  />
                         </div>
                     </li>
                     <li className={'f14 headerColor'}>

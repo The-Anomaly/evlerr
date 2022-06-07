@@ -2,15 +2,16 @@ import React, { Suspense, useState, useEffect } from 'react'
 import RenderNav from '../../components/nav/RenderNav'
 // import Breadcrumbs from '../../utils/Breadcrumb'
 import '../../assets/style/PropertyStyles.css';
-import Home from '../../assets/images/home.jpeg';
 import SortCard from '../../components/cards/SortCard';
 import FilterModal from '../../components/modals/FilterModal';
 import PropertyGridCards from '../../components/cards/PropertyGridCards';
 import { useNavigate } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import Pagination from '../../utils/Pagination';
 import { SpinnerCircularFixed } from 'spinners-react';
 import http from '../../Utils';
+import avatar from "../../assets/images/defAvatar.jpg";
+import { toast } from 'react-toastify';
 
 
 const PropertiesDisplay = () => {
@@ -22,11 +23,47 @@ const PropertiesDisplay = () => {
         { id: 4, name: 'Lowest Price' }, { id: 5, name: 'Highest Price' }, { id: 6, name: 'Random' }], filter: 'All', filterDrop: false,
         selected: 'Default', visible: false, filterItem: [{ id: 1, name: 'All' }, { id: 2, name: 'Rent' }, { id: 2, name: 'Sale' },],
     })
-    const { properties } = useSelector(state => state.properties)
+    // const { properties } = useSelector(state => state.properties)
+
+    
+    const paginate = async (page) => {
+        setState((state) => ({ ...state, loading: true }))
+        const order = state.selected === 'Default' ? 'newest' : state.selected
+        const obj = { page: page, orderBy: order, status: state.filter }
+        try {
+            const res = await http.get(`user/properties`, obj)
+            const data = res.data
+            setState({...state, propertyList: data.docs, propertiesXtra: data})
+            console.log('resp: ', data)
+        } catch (error) {
+            toast.error('Sorry, could not gets properties', {
+                position: toast.POSITION.TOP_RIGHT
+            })
+            console.log('catched error ', error)
+        }
+        setState((state) => ({ ...state, loading: false }))
+    }
+
 
     useEffect(() => {
-        setState((prevState) => ({...prevState, propertyList: properties.docs, propertiesXtra: properties}))
-    }, [properties])
+        (async () => {
+            setState((state) => ({ ...state, loading: true }))
+            const order = state.selected === 'Default' ? 'newest' : state.selected
+            const obj = { page: 1, orderBy: order, status: state.filter }
+            try {
+                const res = await http.get(`user/properties`, obj)
+                const data = res.data
+                setState((state) => ({...state, propertyList: data.docs, propertiesXtra: data}))
+                console.log('resp: ', data)
+            } catch (error) {
+                toast.error('Sorry, could not gets properties', {
+                    position: toast.POSITION.TOP_RIGHT
+                })
+                console.log('catched error ', error)
+            }
+            setState((state) => ({ ...state, loading: false }))
+        })()
+    }, [state.selected, state.filter])
     
     // console.log(properties);
     const [data, setData] = useState({
@@ -97,19 +134,6 @@ const PropertiesDisplay = () => {
     }
 
 
-    const paginate = async (page) => {
-        setState((state) => ({ ...state, loading: true }))
-        try {
-            const res = await http.get(`user/properties?page=${page}&orderBy=newest`)
-            const data = res.data
-            setState({...state, propertyList: data.docs, propertiesXtra: data})
-            console.log('resp: ', data)
-        } catch (error) {
-            console.log('catched error ', error)
-        }
-        setState((state) => ({ ...state, loading: false }))
-    }
-
 
     return (
         // <Breadcrumbs />
@@ -155,55 +179,19 @@ const PropertiesDisplay = () => {
                         </div>
                     </section>
                     <Suspense fallback={'Loading...'}>
-
-                        {state.filter === 'All' &&
-
-                            <section className='propertiesGridFull'>
-
-                                {!state.loading && state.propertyList.map((item) => (
-                                    <div key={item._id}>
-                                        <PropertyGridCards
-                                            type={'Featured'} leaseType={'For Rent'} price={item.price} background={item.featuredImage && item.featuredImage.url}
-                                            sqft={'480'} baths={'4'} beds={'4'} location={item.friendlyAddress} detailsSubTitle={item.propertyTitle}
-                                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onClick={() => selectResourceType(item)}
-                                            onAgentClick={goToAgentDetails}
-                                        />
-                                    </div>
-                                ))}
-
-                            </section>}
-                        {!state.loading && state.filter === 'Rent' &&
-
-                            <section className='propertiesGridFull'>
-                                {state.propertyList.map((item) => (
-                                    <div key={item._id}>
-                                        <PropertyGridCards
-                                            type={'Featured'} leaseType={'For Rent'} price={item.price} background={item.gallery[1]}
-                                            sqft={'480'} baths={'4'} beds={'4'} location={item.friendlyAddress} detailsSubTitle={item.propertyTitle}
-                                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onClick={() => selectResourceType(item)}
-                                            onAgentClick={goToAgentDetails}
-                                        />
-                                    </div>
-                                ))}
-                            </section>}
-                        {state.filter === 'Sale' &&
-
-                            <section className='propertiesGridFull'>
-
-                                {!state.loading && state.propertyList.map((item) => (
-                                    <div key={item._id}>
-                                        <PropertyGridCards
-                                            type={'Featured'} leaseType={'For Rent'} price={item.price} background={item.gallery[0]}
-                                            sqft={'480'} baths={'4'} beds={'4'} location={item.friendlyAddress} detailsSubTitle={item.propertyTitle}
-                                            detailsTitle={'Apartment'} years={'2'} agentImage={Home} agentName={'BlackGik'} onClick={() => selectResourceType(item)}
-                                            onAgentClick={goToAgentDetails}
-                                        />
-                                    </div>
-
-                                ))}
-                            </section>}
-
-
+                        <section className='propertiesGridFull'>
+                            {!state.loading && state.propertyList.map((item) => (
+                                <div key={item._id}>
+                                    <PropertyGridCards
+                                        type={'Featured'} leaseType={item.status} price={item.price} background={item.featuredImage && item.featuredImage.url}
+                                        sqft={item.homeArea} baths={item.bath} beds={item.bed} location={item.friendlyAddress} detailsSubTitle={item.propertyTitle}
+                                        detailsTitle={item.propertyType} years={'2'} agentImage={item.agentId.profilePicture ? item.agentId.profilePicture.url : avatar} agentName={item.agentId.username} onClick={() => selectResourceType(item)}
+                                        onAgentClick={goToAgentDetails}
+                                    />
+                                </div>
+                            ))}
+                        </section>
+                        
                     </Suspense>
 
                     {renderLoading()}
