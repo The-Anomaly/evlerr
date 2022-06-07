@@ -9,8 +9,6 @@ import { GrLocation } from 'react-icons/gr'
 import SimpleMap from '../../utils/Map';
 import PropertyGridCards from '../../components/cards/PropertyGridCards';
 import Home from '../../assets/images/home.jpeg';
-import HomeTwo from '../../assets/images/slide2.jpeg';
-import HomeThree from '../../assets/images/slider3.jpeg';
 import Agent from '../../assets/images/defAvatar.jpg';
 import CustomButton from '../../utils/CustomButton';
 import 'react-input-range/lib/css/index.css';
@@ -22,6 +20,7 @@ import { useNavigate } from 'react-router-dom';
 // import { getProperties } from '../../redux/actions/PropertiesAction';
 import { ImageGroup, Image } from 'react-fullscreen-image';
 import { SELECT_USER } from '../../redux/Types';
+import LatestPropertyList from '../../components/properties/LatestPropertyList';
 
 
 const PropertyDetails = () => {
@@ -35,6 +34,7 @@ const PropertyDetails = () => {
     const propertyId = property?.state.propertyId
     const dispatch = useDispatch()
     const navigate = useNavigate()
+    
 
     // const showDropMenu = () => {
     //     if (state.menuDrop) {
@@ -307,55 +307,7 @@ const PropertyDetails = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className={'membersCard'} style={{ margin: '30px 0' }}>
-                                <p className={'f20 headerColor boldText  pb20'}>Latest Properties</p>
-                                <ul>
-                                    <li className={'flex alignCenter pb20'}>
-                                        <div className='latestPropertiesImage'>
-                                            <img src={Home} alt='home' style={{ width: '100%', height: '100%', borderRadius: '6px' }} />
-                                        </div>
-                                        <div>
-                                            <p className={'f16 headerColor boldText  pb10'}>Diamond Manor...</p>
-                                            <p className={'f16 boldText  pb10 redText'}>$6500</p>
-                                            <ul className={'flex alignCenter'}>
-                                                <li className={'f14 headerColor boldText  pr10'}>Beds: 4</li>
-                                                <li className={'f14 headerColor boldText  pr10'}>Baths: 2</li>
-                                                <li className={'f14 headerColor boldText'}>sqft: 150</li>
-                                            </ul>
-                                        </div>
-                                    </li>
-
-                                    <li className={'flex alignCenter pb20'}>
-                                        <div className='latestPropertiesImage'>
-                                            <img src={HomeTwo} alt='home' style={{ width: '100%', height: '100%', borderRadius: '6px' }} />
-                                        </div>
-                                        <div>
-                                            <p className={'f16 headerColor boldText  pb10'}>Eaton Garth Penthouse</p>
-                                            <p className={'f16  boldText  pb10 redText'}>$7500</p>
-                                            <ul className={'flex alignCenter'}>
-                                                <li className={'f14 headerColor boldText  pr10'}>Beds: 4</li>
-                                                <li className={'f14 headerColor boldText  pr10'}>Baths: 1</li>
-                                                <li className={'f14 headerColor boldText'}>sqft: 220</li>
-                                            </ul>
-                                        </div>
-                                    </li>
-
-                                    <li className={'flex alignCenter pb20'}>
-                                        <div className='latestPropertiesImage'>
-                                            <img src={HomeThree} alt='home' style={{ width: '100%', height: '100%', borderRadius: '6px' }} />
-                                        </div>
-                                        <div>
-                                            <p className={'f16 headerColor boldText  pb10'}>Skyper Pool Apartment</p>
-                                            <p className={'f16  boldText  pb10 redText'}>$1200<span className={'regularText'}>/mo</span></p>
-                                            <ul className={'flex alignCenter'}>
-                                                <li className={'f14 headerColor boldText  pr10'}>Beds: 3</li>
-                                                <li className={'f14 headerColor boldText  pr10'}>Baths: 2</li>
-                                                <li className={'f14 headerColor boldText'}>sqft: 110</li>
-                                            </ul>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
+                            <LatestPropertyList customStyle={{margin: '30px 0'}} />
                         </section>
 
                     </section>

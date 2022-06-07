@@ -106,7 +106,7 @@ a:hover {
 }
 
 .top80{
-  top: 40px !important;
+  top: 45px !important;
 }
 
 
@@ -206,7 +206,7 @@ a:hover {
 #agentdropdown, #authLinks {
   padding-left: 30px;
   margin-left: 10px;
-  height: 25px;
+  height: 45px;
   border-left: 1px solid #484848;
   width: 130px;
 }

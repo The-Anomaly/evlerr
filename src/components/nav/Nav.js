@@ -302,7 +302,7 @@ const NavBar = ({ boxShadow, logo }) => {
                                                 <CustomLink to={'/myProperties'}>My Properties</CustomLink>
                                             </> : ''
                                         }
-                                        <CustomLink to={'#'} style={{color: '#484848'}} onClick={logoutUser}>Log out {logoutLoading && <Loading />} </CustomLink>
+                                        <CustomLink to={'#'} onClick={logoutUser}>Log out {logoutLoading && <Loading />} </CustomLink>
                                     </li>
                                 </ul>
                             </div>
