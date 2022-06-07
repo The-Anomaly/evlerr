@@ -1,15 +1,24 @@
 import React from 'react'
 import DashboardCards from '../../components/cards/DashboardCards';
 import '../../assets/style/DashboardStyles.css';
-import { AiOutlineEye, } from 'react-icons/ai';
+import { useEffect } from "react";
 import { BsHouseDoor } from 'react-icons/bs';
+import { useSelector } from 'react-redux';
 
 
 const AgentDashboard = () => {
+
+    const user = useSelector((state) => state.auth.userInfo)
+
+    useEffect(() => {
+      
+    }, [])
+    
+
     return (
         <main className={'dashBg pl15 pr15 pt40 h100'}>
             <div className={'pb30'}>
-                <h2 className={'f34 boldText headerColor'}>Hello Agent Pakulla</h2>
+                <h2 className={'f34 boldText headerColor'}>Hello {user.role === 'agent' && 'Agent'} {user.username}</h2>
             </div>
             <section className='overviewGrid'>
                 <DashboardCards>
@@ -28,24 +37,6 @@ const AgentDashboard = () => {
                     </div>
                     <div className='FavIconContainer'>
                         <BsHouseDoor />
-                    </div>
-                </DashboardCards>
-                <DashboardCards>
-                    <div>
-                        <h2 className={'f34 boldText headerColor'}>0</h2>
-                        <p className={'f18 regularText headerColor'}>Favorites</p>
-                    </div>
-                    <div className='FavIconContainer'>
-                        <BsHouseDoor />
-                    </div>
-                </DashboardCards>
-                <DashboardCards>
-                    <div>
-                        <h2 className={'f34 boldText headerColor'}>0</h2>
-                        <p className={'f18 regularText headerColor'}>Review</p>
-                    </div>
-                    <div className='FavIconContainer'>
-                        <AiOutlineEye />
                     </div>
                 </DashboardCards>
             </section>
