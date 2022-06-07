@@ -21,7 +21,7 @@ import { Visibility } from '@mui/icons-material';
 
 const NavBar = ({ boxShadow, logo }) => {
 
-    const [state, setState] = useState({ showResponsiveNav: false, showGT: true, saleHover: false, rentHover: false, projectHover: false, isMobile: false, showAgentDropdwn: false })
+    const [state, setState] = useState({ showResponsiveNav: false, showGT: false, saleHover: false, rentHover: false, projectHover: false, isMobile: false, showAgentDropdwn: false })
     const [logoutLoading, setLogoutLoading] = useState(false)
     const user = useSelector((state) => state.auth.userInfo)
     const navigate = useNavigate()
@@ -355,8 +355,8 @@ const NavBar = ({ boxShadow, logo }) => {
 
             </nav >
             {/* {state.isMobile && <div className='pl20' id="google_translate_element"></div>} */}
+            {<div id="google_translate_element" style={state.showGT ? { visibility: 'visible' } : { visibility: 'hidden' }}></div>}
             <div className='translateContainer' onClick={handleGT}>
-                {<div id="google_translate_element" style={state.showGT ? { visibility: 'visible' } : { visibility: 'hidden' }}></div>}
                 <SiGoogletranslate className='f30' />
             </div>
             <ResponsiveSideNav closeModal={toggleShowNav} visible={state.showResponsiveNav} />

@@ -103,6 +103,10 @@ const ResponsiveSideNav = ({ visible, closeModal }) => {
                                 </li>
                                 <hr />
                                 <li  className={"pt10 pl10 pb10 pr10 boldText headerColor"}>
+                                    <Link to={'/properties'}>All properties</Link>
+                                </li>
+                                <hr />
+                                <li  className={"pt10 pl10 pb10 pr10 boldText headerColor"}>
                                     <Link to={'/agencies-display'}>Agencies</Link>
                                 </li>
                                 <hr />

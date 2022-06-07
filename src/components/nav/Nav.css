@@ -84,7 +84,7 @@ a:hover {
   transition: all 0.2s ease-in-out 0s;
 }
 
-.translateContainer{
+.translateContainer, #google_translate_element{
   position: fixed;
   right: 0;
   background: #e8e8e8;
@@ -98,7 +98,8 @@ a:hover {
 }
 
 #google_translate_element{
-  margin-right: 280px;
+  /* margin-right: 280px; */
+  width: 220px;
   background: #e8e8e8;
   padding: 3px;
   border-radius: 10px;
