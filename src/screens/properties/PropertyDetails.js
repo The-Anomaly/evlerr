@@ -144,6 +144,10 @@ const PropertyDetails = () => {
         setState((prevState) => ({ ...prevState, showImages: false }))
     }
 
+    const slide = Object.keys(state.property).length ? state.property.gallery.map((val, index) => 
+        index < 3 ? <img key={index} src={val.url} style={{ width: '100%', height: '100%' }} alt='poster' /> : ''
+    ) : ''
+
     return (
         <>
             <RenderNav boxShadow={'0px 1px 4px 0px rgb(0 0 0 / 9%)'}>
@@ -172,13 +176,12 @@ const PropertyDetails = () => {
                     </section>
                     <section>
                         <section className='imagesContainerNew'>
+                            {Object.keys(state.property).length ? state.property.gallery.length ?
                             <div className='imagesGrid'>
-                                <img src={state.property.gallery && state.property.gallery[0]} style={{ width: '100%', height: '100%' }} alt='poster' />
-                                <img src={state.property.gallery && state.property.gallery[1]} style={{ width: '100%', height: '100%' }} alt='poster' />
-                                <img src={state.property.gallery && state.property.gallery[2]} style={{ width: '100%', height: '100%' }} alt='poster' />
-                            </div>
+                                {slide}
+                            </div> : '' : ''}
                             <div className='imagesOverlayNew'>
-                                <CustomButton title={'View Photos'} customStyle={{ backgroundColor: '#fff', cursor: 'pointer' }} color={'#ff5a5f'} onClick={showImageGrid} />
+                                <CustomButton title={Object.keys(state.property).length ? state.property.gallery.length ?'View Photos' : 'No photos in gallery' : ''} customStyle={{ backgroundColor: '#fff', cursor: 'pointer' }} color={'#ff5a5f'} onClick={showImageGrid} />
                             </div>
                         </section>
 
@@ -192,9 +195,9 @@ const PropertyDetails = () => {
                                         {state.property.gallery && state.property.gallery.map(i => (
                                             <li key={i}>
                                                 <Image
-                                                    src={i}
+                                                    src={i.url}
                                                     alt="nature"
-                                                    style={{ width: '100%', height: '100%' }}
+                                                    style={{ width: '100%', height: '80%', position: 'absolute', top: '50%', transform: 'translateY(-50%)' }}
                                                 />
                                             </li>
                                         ))}

@@ -296,11 +296,11 @@ const NavBar = ({ boxShadow, logo }) => {
                                 <li style={{ display: 'grid', gridTemplateColumns: '100%', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
                                     {user.role !== 'user' ?
                                         <>
-                                            <CustomLink to={'/dashboard'}>Dashboard</CustomLink>
-                                            <CustomLink to={'/profile'}>Profile</CustomLink>
-                                            {user.role === 'agency' ? <CustomLink to={'/members'}>Members</CustomLink> : ''}
-                                            <CustomLink to={'/myProperties'}>My Properties</CustomLink>
-                                            <CustomLink to={'/submission'}>Submit Property</CustomLink>
+                                            <CustomLink className='pt10' to={'/dashboard'}>Dashboard</CustomLink>
+                                            <CustomLink className='pt10' to={'/profile'}>Profile</CustomLink>
+                                            {user.role === 'agency' ? <CustomLink className='pt10' to={'/members'}>Members</CustomLink> : ''}
+                                            <CustomLink className='pt10' to={'/myProperties'}>My Properties</CustomLink>
+                                            <CustomLink className='pt10 pb10' to={'/submission'}>Submit Property</CustomLink>
                                         </> : ''
                                     }
                                     <CustomLink to={'#'} onClick={logoutUser}>Log out {logoutLoading && <Loading />} </CustomLink>

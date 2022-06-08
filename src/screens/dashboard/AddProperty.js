@@ -299,6 +299,10 @@ const AddProperty = (props) => {
             toast.error('Featured image is required', {
                 position: toast.POSITION.TOP_RIGHT
             });
+        } else if (Object.keys(gallery).length < 3) {
+            toast.error('At least 3 images are required for gallery', {
+                position: toast.POSITION.TOP_RIGHT
+            });
         } else {
             // console.log('submitting')
             // return
