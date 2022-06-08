@@ -19,11 +19,11 @@ const setTokenIfExists = async options => {
     const token = await getUserToken();
 
     if (token.access === null) {
-        console.log('token not exist')
+        // console.log('token not exist')
         return;
     }
 
-    console.log('token exists')
+    // console.log('token exists')
     if (!options.headers) {
         options.headers = {
             'x-access-token': token.access,

@@ -21,13 +21,18 @@ import { useNavigate } from 'react-router-dom';
 import { ImageGroup, Image } from 'react-fullscreen-image';
 import { SELECT_USER } from '../../redux/Types';
 import LatestPropertyList from '../../components/properties/LatestPropertyList';
+import CustomInput from '../../utils/CustomInput'
+import CustomTextArea from '../../utils/CustomTextarea'
+import { toast } from 'react-toastify';
 
 
 const PropertyDetails = () => {
 
     const [state, setState] = useState({
-        value: 10, menuDrop: false, priceValue: { min: 0, max: 8000 }, loading: true, showImages: false, property: {}, agent: {}
+        value: 10, menuDrop: false, priceValue: { min: 0, max: 8000 }, contactFormLoading: false, loading: true, showImages: false, property: {}, agent: {}
     })
+
+    const [contactForm, setContactForm] = useState({ subject: '', phone: '', message: '', name: '', emailFrom: '', emailtTo: 'bradleycogen@gmail.com' })
 
     const property = useLocation()
     // console.log(property?.state.propertyId);
@@ -56,6 +61,59 @@ const PropertyDetails = () => {
     const toMemberDetail = (member) => {
         dispatch({type: SELECT_USER, payload: member})
         navigate('/member-details')
+    }
+
+    const handleInput = (e) => {
+        switch (e.target.name) {
+            case 'name':
+            setContactForm({ ...contactForm, name: e.target.value});
+            break;
+            
+            case 'subject':
+            setContactForm({ ...contactForm, subject: e.target.value});
+            break;
+            
+            case 'phone':
+            setContactForm({ ...contactForm, phone: e.target.value});
+            break;
+            
+            case 'email':
+            setContactForm({ ...contactForm, emailFrom: e.target.value});
+            break;
+            
+            case 'message':
+            setContactForm({ ...contactForm, message: e.target.value});
+            break;
+
+
+            default:
+            alert('sorry, unknown field');
+            break;
+        }
+    }
+
+
+    const contactSupport = async () => {
+        if (contactForm.name === '' || contactForm.emailFrom === '' || contactForm.message === '') {
+            toast.error('Name, Email and message is required', {
+                position: toast.POSITION.TOP_RIGHT
+            })
+        } else {
+            setState({...state, contactFormLoading: true})
+            try {
+                const res = await http.post('agent/support', contactForm)
+                toast.success('Message sent!', {
+                    position: toast.POSITION.TOP_RIGHT
+                })
+                console.log('support response',res)
+            } catch (error) {
+                toast.error('Sorry, could not send message', {
+                    position: toast.POSITION.TOP_RIGHT
+                })
+                console.log('support message error',error)
+            }
+            setState({...state, contactFormLoading: false})
+        }
     }
 
 
@@ -277,7 +335,7 @@ const PropertyDetails = () => {
                                 </div>
                             </div>
 
-                            <div style={{ margin: '30px 0' }}>
+                            <div style={{ margin: '30px 0' }} className='removeOnMobile'>
                                 <p className={'f20 headerColor boldText pl10  pb30'}>Related Properties</p>
                                 <div className='columnsGrid'>
                                     <PropertyGridCards
@@ -295,8 +353,8 @@ const PropertyDetails = () => {
                         </section>
                         <section>
                             <div className={'membersCard'}>
-                                <p className={'f20 headerColor boldText  pb20'}>{state.agent.role === 'agent' ? 'Agent' : 'Agency'}</p>
-                                <div className={'flex alignCenter'}>
+                                <p className={'f20 headerColor boldText  pb20'}>Contact {state.agent.username}</p>
+                                <div className={'flex alignCenter flexWrap'}>
                                     <div className='agentImageContainer'>
                                         <img src={state.agent.profilePicture ? state.agent.profilePicture.url : Agent} alt='agent' style={{ width: '100%', height: '100%', borderRadius: '50%' }} />
                                     </div>
@@ -306,6 +364,21 @@ const PropertyDetails = () => {
                                         <p className={'f14 regularText headerColor'}>{state.agent.email}</p>
                                     </div>
                                 </div>
+                                <section className='pt30'>
+                                    <CustomInput placeholder={'Name'} value={contactForm.name} onChange={handleInput} name={'name'} />
+
+                                    <CustomInput placeholder={'E-mail'} value={contactForm.emailFrom} onChange={handleInput} name={'email'} />
+
+                                    <CustomInput placeholder={'Subject'} value={contactForm.subject} onChange={handleInput} name={'subject'} />
+
+                                    <CustomInput placeholder={'Phone'} value={contactForm.phone} onChange={handleInput} name={'phone'} />
+
+                                    <CustomTextArea placeholder={'Message'} customStyle={{ height: '200px', textAlign: "start" }} value={contactForm.message} onChange={handleInput} name={'message'} />
+
+                                    <div className='pt20'>
+                                        <CustomButton onClick={contactSupport} color={'#fff'} title={'Send Message'} loading={state.contactFormLoading} customStyle={{ color: '#fff', backgroundColor: '#ff5a5f', borderColor: '#ff5a5f' }} />
+                                    </div>
+                                </section>
                             </div>
                             <LatestPropertyList customStyle={{margin: '30px 0'}} />
                         </section>
