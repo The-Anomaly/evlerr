@@ -170,6 +170,12 @@
   box-shadow: 0 0 5px 5px #eee;
 }
 
+
+.memberSearch{
+  top: 200px;
+}
+
+
 @media screen and (max-width: 1000px) {
   /* .heroSearchContainer {
     bottom: -350px;

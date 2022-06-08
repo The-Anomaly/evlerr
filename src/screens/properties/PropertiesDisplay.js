@@ -21,8 +21,9 @@ const PropertiesDisplay = () => {
     const [state, setState] = useState({
         sortDrop: false, propertyList: [], propertiesXtra: {}, loading: false,
         sortItem: [{ id: 1, name: 'Default' }, { id: 2, name: 'Newest' }, { id: 3, name: 'Oldest' },
-        { id: 4, name: 'Lowest Price' }, { id: 5, name: 'Highest Price' }, { id: 6, name: 'Random' }], filter: 'All', filterDrop: false,
-        selected: 'Default', visible: false, filterItem: [{ id: 1, name: 'All' }, { id: 2, name: 'Rent' }, { id: 2, name: 'Sale' },],
+        { id: 4, name: 'Lowest Price' }, { id: 5, name: 'Highest Price' }, { id: 6, name: 'Random' }], 
+        filter: 'All', filterDrop: false, selected: 'Default', visible: false, 
+        filterItem: [{ id: 1, name: 'All' }, { id: 2, name: 'Rent' }, { id: 3, name: 'Sale' }, { id: 4, name: 'Short stay' },],
     })
     // const { properties } = useSelector(state => state.properties)
 
