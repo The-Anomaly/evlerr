@@ -2,9 +2,7 @@ import React, { useState, useCallback, useEffect } from 'react';
 import Logo from '../../assets/images/logo2.svg';
 import './Nav.css';
 import '../../assets/style/GeneralStyles.css';
-import { BsPlusLg } from 'react-icons/bs';
 import { Link, useNavigate, } from 'react-router-dom';
-import CustomIconButton from '../../utils/CustomIconButton';
 import CustomLink from './CustomLink';
 import { IoMdArrowDropdown } from 'react-icons/io';
 import { AiOutlineUser } from 'react-icons/ai';
@@ -113,7 +111,7 @@ const NavBar = ({ boxShadow, logo }) => {
                                 </p>
                                 <div className={'agentDropDownContentContainer pl10 pr10 pb10 pt10'}>
 
-                                    <ul style={{ height: '100%', flexDirection: 'column' }}>
+                                    <ul style={{ height: '100%', flexDirection: 'column', alignItems: 'flex-start' }}>
 
                                         <li className={'regularText f16'} onMouseEnter={() => { handleSaleHover(true) }} style={{ justifyContent: 'flex-start', padding: '10px' }}>
                                             <p className='flex alignCenter'>
@@ -135,7 +133,7 @@ const NavBar = ({ boxShadow, logo }) => {
 
                                         <li className={'regularText f16'} onMouseEnter={closeSubMenus} style={{ justifyContent: 'flex-start', padding: '10px' }}>
                                             <Link to={'/properties'} className='flex alignCenter'>
-                                                All Projects
+                                                All Properties
                                             </Link>
                                         </li>
                                     </ul>
@@ -282,65 +280,54 @@ const NavBar = ({ boxShadow, logo }) => {
                         </ul>
                     </div >
                     {/* {!state.isMobile && <div id="google_translate_element"></div>} */}
-                    {user ?
-                        <div id='agentdropdown' onClick={toggleAvatarModal}>
-                            <div className='pl10'>
-                                <img src={user.profilePicture ? user.profilePicture.url : defaultAvatar} alt={'agent avatar'} className={'agent-avatar'} />
-                            </div>
-                            <p className={'flex alignCenter navItems'} style={{ padding: '8px' }}>
-                                {user.username}
-                            </p>
-                            <span style={{ marginTop: '5px' }}> <IoMdArrowDropdown size={16} /></span>
-                            <div style={state.isMobile ? !state.showAgentDropdwn ? { display: 'none' } : {} : {}} className={user.role === 'user' ? 'agentDropDownContentContainer userAgent top80' : 'agentDropDownContentContainer top80'}>
-                                <ul className={'flex justifyBetween alignCenter'} style={{ height: '100%' }}>
-                                    <li style={{ display: 'grid', gridTemplateColumns: '100%', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
-                                        {user.role !== 'user' ?
-                                            <>
-                                                <CustomLink to={'/dashboard'}>Dashboard</CustomLink>
-                                                <CustomLink to={'/profile'}>Profile</CustomLink>
-                                                {user.role === 'agency' ? <CustomLink to={'/members'}>Members</CustomLink> : ''}
-                                                <CustomLink to={'/myProperties'}>My Properties</CustomLink>
-                                            </> : ''
-                                        }
-                                        <CustomLink to={'#'} onClick={logoutUser}>Log out {logoutLoading && <Loading />} </CustomLink>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div> :
-                        <div>
-                            <ul id='authLinks'>
-                                <li >
-                                    <AiOutlineUser size={24} color={'#046971'} style={{ marginRight: '5px' }} />
-                                </li>
-                                <li className={'regularText f16'}>
-                                    <CustomLink to={'/login'}>
-                                        Login
-                                    </CustomLink>
-                                </li>
-                                <li className={'regularText f16'} style={{ margin: '0 5px' }}>
-                                    /
-                                </li>
-                                <li className={'regularText f16'}>
-                                    <Link to={'signup'}>
-                                        Register
-                                    </Link>
-                                </li>
-                            </ul>
-                        </div>}
-                    
-
-                    <div className='navItems'>
-                        <Link to={'/submission'}>
-                            <CustomIconButton title={'Submit Property'}
-                                customStyle={{ backgroundColor: '#0c304a', fontSize: '0.7rem', borderRadius: '50px', color: '#fff', padding: '10px 12px', width: '150px' }}
-                                icon={<BsPlusLg size={16} />}
-                            />
-                        </Link>
-
-                    </div>
 
                 </section>
-
+                {user ?
+                    <div id='agentdropdown' onClick={toggleAvatarModal}>
+                        <div className='pl10'>
+                            <img src={user.profilePicture ? user.profilePicture.url : defaultAvatar} alt={'agent avatar'} className={'agent-avatar'} />
+                        </div>
+                        <p className={'flex alignCenter navItems'} style={{ padding: '8px' }}>
+                            {user.username}
+                        </p>
+                        <span style={{ marginTop: '5px' }}> <IoMdArrowDropdown size={16} /></span>
+                        <div style={state.isMobile ? !state.showAgentDropdwn ? { display: 'none' } : {} : {}} className={user.role === 'user' ? 'agentDropDownContentContainer userAgent top80' : 'agentDropDownContentContainer top80'}>
+                            <ul className={'flex justifyBetween alignCenter'} style={{ height: '100%' }}>
+                                <li style={{ display: 'grid', gridTemplateColumns: '100%', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
+                                    {user.role !== 'user' ?
+                                        <>
+                                            <CustomLink to={'/dashboard'}>Dashboard</CustomLink>
+                                            <CustomLink to={'/profile'}>Profile</CustomLink>
+                                            {user.role === 'agency' ? <CustomLink to={'/members'}>Members</CustomLink> : ''}
+                                            <CustomLink to={'/myProperties'}>My Properties</CustomLink>
+                                            <CustomLink to={'/submission'}>Submit Property</CustomLink>
+                                        </> : ''
+                                    }
+                                    <CustomLink to={'#'} onClick={logoutUser}>Log out {logoutLoading && <Loading />} </CustomLink>
+                                </li>
+                            </ul>
+                        </div>
+                    </div> :
+                    <div>
+                        <ul id='authLinks'>
+                            <li >
+                                <AiOutlineUser size={24} color={'#046971'} style={{ marginRight: '5px' }} />
+                            </li>
+                            <li className={'regularText f16'}>
+                                <CustomLink to={'/login'}>
+                                    Login
+                                </CustomLink>
+                            </li>
+                            <li className={'regularText f16'} style={{ margin: '0 5px' }}>
+                                /
+                            </li>
+                            <li className={'regularText f16'}>
+                                <Link to={'signup'}>
+                                    Register
+                                </Link>
+                            </li>
+                        </ul>
+                    </div>}
             </nav >
             {/* {state.isMobile && <div className='pl20' id="google_translate_element"></div>} */}
             {<div id="google_translate_element" style={state.showGT ? { visibility: 'visible' } : { visibility: 'hidden' }}></div>}

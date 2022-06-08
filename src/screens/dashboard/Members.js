@@ -8,11 +8,11 @@ import defaultAvatar from '../../assets/images/defAvatar.jpg'
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import Pagination from '../../utils/Pagination';
-import Loading from '../../utils/Loading';
+import { SpinnerCircularFixed } from "spinners-react";
 
 const Members = () => {
 
-    const [state, setState] = useState({ query: '', loading: false, addAgentLoading: false, fetchedMembers: {}, showSearchModal: false, agents: [], delLoading: false, delModal: false, selectedAgent: '', agentsXtra: {} })
+    const [state, setState] = useState({ query: '', loading: false, searchLoading: false, addAgentLoading: false, fetchedMembers: {}, showSearchModal: false, agents: [], delLoading: false, delModal: false, selectedAgent: '', agentsXtra: {} })
     const user = useSelector((state) => state.auth.userInfo)
     // console.log(user._id)
 
@@ -21,19 +21,18 @@ const Members = () => {
             setState((state) => ({...state, loading: true}))
             try {
                 const res = await http.get('agency/get-members?agencyId='+user._id)
-                console.log('properties ', res)
+                console.log('Members ', res)
                 setState((state) => ({ ...state, loading: false, agents: res.data.docs, agentsXtra: res.data}))
             } catch (error) {
-                // returnError(error)
                 toast.error('Could not fetch members', {
                     position: toast.POSITION.TOP_RIGHT
                 })
                 // setState((state) => ({ ...state, msg: error[0] }))
-                console.log('fetch property error ', error)
+                console.log('fetch member error ', error)
                 setState((state) => ({ ...state, loading: false}))
             }
         })()
-    }, [user])
+    }, [user._id])
     
 
     const paginate = async (page) => {
@@ -57,18 +56,18 @@ const Members = () => {
 
     const searchAgent = async(e) => {
         e.preventDefault()
-        setState({...state, loading: true})
+        setState({...state, searchLoading: true})
         const {query} = state
         const obj = {name: query}
         // console.log(obj)
         try {
             const res = await http.get(`agency/search-members`,obj)
             console.log(res)
-            setState({ ...state, fetchedMembers: res.data, showSearchModal: true, loading: false })
+            setState({ ...state, fetchedMembers: res.data, showSearchModal: true, searchLoading: false })
         } catch (error) {
             console.log(error)
             // alert('request failed')
-            setState({...state, loading: false})
+            setState({...state, searchLoading: false})
         }
 
     }
@@ -84,6 +83,7 @@ const Members = () => {
             toast.success('Member Added successfully', {
                 position: toast.POSITION.TOP_RIGHT
             })
+            paginate(1)
         } catch (error) {
             console.log(error)
             setState({...state, addAgentLoading: false})
@@ -133,7 +133,9 @@ const Members = () => {
     const renderLoading = () => {
         if (state.loading) {
             return (
-                <Loading />
+                <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+                    <SpinnerCircularFixed size={'40px'} color="rgba(255, 90, 95, 1)" secondaryColor="rgba(172, 57, 57, 0.58)" speed={150} />
+                </div>
             )
         }
     }
@@ -168,7 +170,6 @@ const Members = () => {
     
     return (
         <main className={'dashBg pl15 pr15 pt40 h100'}>
-            {renderLoading()}
 
             {/* delete modal */}
             { state.delModal && 
@@ -197,11 +198,12 @@ const Members = () => {
                     <p className={'f20 boldText headerColor pb20'}>All Members</p>
                 </div>
                 <section>
+                    {renderLoading()}
                     {state.agents.map((agent, index) => {
                             const {profilePicture, friendlyAddress, username, phone, email, _id} = agent.memberId
                             return (
                             <MembersRow key={index} agentImage={profilePicture ? profilePicture : defaultAvatar} agentAddress={friendlyAddress} agentName={username} id={_id} toggleDelete={handleDelmodal}
-                                agentNumber={phone} agentMail={email}
+                                agentNumber={phone} agent={agent.memberId} agentMail={email}
                             />)
                         }
                     )}
@@ -220,16 +222,16 @@ const Members = () => {
                         <CustomInput placeholder={'Search...'} onChange={onChangeQuery} name={'name'}/>
                     </div>
                     <div>
-                        <CustomButton loading={state.loading} title={'Add Agent'} onClick={searchAgent} customStyle={{ color: '#fff', backgroundColor: '#ff5a5f', borderColor: '#ff5a5f', width: '80px', marginTop: '10px' }} color={'#fff'} />
+                        <CustomButton loading={state.searchLoading} title={'Add Agent'} onClick={searchAgent} customStyle={{ color: '#fff', backgroundColor: '#ff5a5f', borderColor: '#ff5a5f', width: '80px', marginTop: '10px' }} color={'#fff'} />
                     </div>
                 </form>
-                {state.showSearchModal || state.loading ? 
+                {state.showSearchModal || state.searchLoading ? 
                     <>
                         <div className="modal" style={{ background: 'transparent' }} onClick={() => {setState({...state, showSearchModal: false})}}></div>
-                        <div className="searchDropdown" id='searchModal' style={{ top: '200px', width: '90%', zIndex: 100 }}>
+                        <div className="searchDropdown memberSearch" id='searchModal' style={{ width: '90%' }}>
                             <div>
-                                {state.loading && <p>Loading...</p>}
-                                {state.loading ? '' : searchResult}
+                                {state.searchLoading && <p>Loading...</p>}
+                                {state.searchLoading ? '' : searchResult}
                             </div>
                         </div> 
                     </> : ''}

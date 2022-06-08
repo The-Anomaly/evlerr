@@ -39,6 +39,9 @@ const LatestPropertyList = ({customStyle}) => {
         })()
     }, [dispatch, properties])
     
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    }, [])
 
 
     return (

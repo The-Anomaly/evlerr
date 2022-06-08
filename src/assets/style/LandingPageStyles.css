@@ -47,12 +47,11 @@
 }
 
 .heroContent {
-  max-width: 1170px;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: auto;
+  padding: 0 40px;
   position: relative;
 }
 .heroSearchContainer {
@@ -226,5 +225,10 @@
 
   .citiesGrid .citiesCardContainer{
     margin-bottom: 20px;
+  }
+
+  .memberSearch{
+    top: 170px;
+    left: 0;
   }
 }

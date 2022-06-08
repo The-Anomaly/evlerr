@@ -87,7 +87,7 @@ const FeaturedCarousel = (props) => {
         // console.log(state.value)÷
         console.log(val._id)
         if (val) {
-            navigate('/properties-details', { replace: true, state: { propertyId: val._id } })
+            navigate('/properties-details', { state: { propertyId: val._id } })
         }
 
     }
