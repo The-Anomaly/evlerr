@@ -7,25 +7,27 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux'
 import { SELECT_USER } from '../redux/Types'
 
-const AgentDisplayCard = ({ name, phone, email, fax, web, photo, job, agent, customStyle }) => {
+const AgentDisplayCard = ({ name, phone, email, fax, web, photo, noRedirect, job, agent, customStyle }) => {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
     const redirect = (member) => {
-        dispatch({type: SELECT_USER, payload: member})
-        navigate('/member-details')
+        if (!noRedirect) {
+            dispatch({type: SELECT_USER, payload: member})
+            navigate('/member-details')
+        }
     }
 
   return (
       <>
         <section className='agentFlexCard' style={customStyle}>
-            <section className='agentImg cPointer' onClick={() => {redirect(agent)}}>
+            <section className={noRedirect ? 'agentImg' : 'agentImg cPointer'} onClick={() => {redirect(agent)}}>
                 <img src={photo ? photo.url : avatar} style={{ width: '100%', height: '100%', borderRadius: '6px' }} alt='' />
             </section>
             <section className='agentDetails'>
                 <div style={{ marginBottom: '10px' }}>
-                    <div className='cPointer' onClick={() => {redirect(agent)}}>
+                    <div className={noRedirect ? '' : 'cPointer'} onClick={() => {redirect(agent)}}>
                         <h2 className='f20 boldText'>{name}</h2>
                     </div>
                     {job && <small className='redText'>{job}</small>}
@@ -36,6 +38,7 @@ const AgentDisplayCard = ({ name, phone, email, fax, web, photo, job, agent, cus
                     <p>Email: {email}</p>
                     {web ? <p>Website: {web}</p> : ''}
                 </div>
+                {!noRedirect &&
                 <div className='agentCardFooter' style={{ justifyContent: 'space-between', padding: '15px 15px 0 0' }}>
                     <div className="socialIcons">
                         <Link to={'/'}>
@@ -50,6 +53,7 @@ const AgentDisplayCard = ({ name, phone, email, fax, web, photo, job, agent, cus
                     </div>
                     <div onClick={() => {redirect(agent)}} className='redText cPointer'>View My Listing</div>
                 </div>
+                }
             </section>
         </section>
 

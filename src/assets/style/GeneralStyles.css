@@ -281,6 +281,21 @@
 .mb20{
   margin-bottom: 30px;
 }
+.mb5{
+  margin-bottom: 5;
+}
+
+.mt5{
+  margin-bottom: 5;
+}
+
+.mr5{
+  margin-bottom: 5;
+}
+
+.ml5{
+  margin-bottom: 5;
+}
 
 /* colors */
 .redText {

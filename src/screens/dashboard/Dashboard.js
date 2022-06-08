@@ -4,6 +4,7 @@ import '../../assets/style/DashboardStyles.css';
 import { useEffect } from "react";
 import { BsHouseDoor } from 'react-icons/bs';
 import { useSelector } from 'react-redux';
+import MyPropertiesRows from '../../components/dashboard/MyPropertiesRows';
 
 
 const AgentDashboard = () => {
@@ -42,10 +43,10 @@ const AgentDashboard = () => {
             </section>
 
             <section className={'pt40'}>
-                <DashboardCards>
+                <DashboardCards customStyles={{ display: 'block' }}>
                     <div>
-                        <h2 className={'f22 boldText headerColor pb20'}>Recent Reviews</h2>
-                        <p className={'f14 regularText headerColor'}>No reviews found.</p>
+                        <h2 className={'f22 boldText headerColor pb20'}>Recent Properties</h2>
+                        <MyPropertiesRows sortBy={'newest'} noPagination={true} />
                     </div>
                 </DashboardCards>
             </section>

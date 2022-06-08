@@ -8,10 +8,10 @@ import AgentDisplayCard from '../../utils/AgentDisplayCard';
 import http from '../../Utils';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProperties } from '../../redux/actions/PropertiesAction';
-import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import Pagination from '../../utils/Pagination';
 import { SpinnerCircularFixed } from 'spinners-react';
+import LatestPropertyList from '../../components/properties/LatestPropertyList';
 
 
 
@@ -28,7 +28,6 @@ const AgenciesDisplay = () => {
 
     const properties = useSelector((state) => state.properties.properties)
     const dispatch = useDispatch()
-    const navigate = useNavigate()
     // console.log(properties)
 
     //fetch agents
@@ -110,16 +109,6 @@ const AgenciesDisplay = () => {
         setState((prevState) => ({ ...prevState, visible: false }))
     }
 
-    function selectResourceType(propId) {
-        // setState((prevState) => ({ ...prevState, resourceId: propId._id }))
-        // console.log(state.propIdue)÷
-        // console.log(propId._id)
-        if (propId) {
-            navigate('/properties-details', { state: { propertyId: propId } })
-        }
-
-    }
-
 
     const paginate = async (page) => {
         const order = state.selected === 'Default' ? 'newest' : state.selected
@@ -156,36 +145,7 @@ const AgenciesDisplay = () => {
                         </section>
                         <section className='flex pt20 agentNlatest'>
                             <section className='pr20 latest'>
-                                <div className={'membersCard'}>
-                                    <p className={'f20 headerColor boldText  pb20'}>Latest Properties</p>
-                                    <ul>
-                                        {Object.keys(properties).length !== 0 && properties.docs.map((property, index) => {
-                                            const { propertyTitle, price, bed, bath, homeArea, featuredImage, _id } = property
-
-                                            if (index < 4) {
-                                                return (
-                                                    <li key={index} onClick={() => {selectResourceType(_id)}} className={'flex alignCenter pb20'}>
-                                                        <div className='latestPropertiesImage cPointer'>
-                                                            <img src={featuredImage && featuredImage.url} alt='home' style={{ width: '100%', height: '100%', borderRadius: '6px' }} />
-                                                        </div>
-                                                        <div>
-                                                            <p className={'f16 headerColor boldText cPointer pb10'} onClick={() => {selectResourceType(_id)}}>{propertyTitle}</p>
-                                                            <p className={'f16 boldText  pb10 redText'}>{price}</p>
-                                                            <ul className={'flex alignCenter'}>
-                                                                <li className={'f14 headerColor boldText  pr10'}>Beds: {bed}</li>
-                                                                <li className={'f14 headerColor boldText  pr10'}>Baths: {bath}</li>
-                                                                <li className={'f14 headerColor boldText'}>sqft: {homeArea}</li>
-                                                            </ul>
-                                                        </div>
-                                                    </li>
-
-                                                )
-                                            }
-                                            return false
-                                        })}
-                                    </ul>
-                                </div>
-                                
+                            <LatestPropertyList />
                             </section>
                             <section className='pl20 agent'>
                                 <div>

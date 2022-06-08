@@ -12,7 +12,7 @@ import { SELECT_PROPERTY } from '../../redux/Types'
 import Pagination from '../../utils/Pagination'
 // import { PROPERTIES_SUCCESS } from '../../redux/Types'
 
-const MyPropertiesRows = ({sortBy}) => {
+const MyPropertiesRows = ({sortBy, noPagination}) => {
 
     const [state, setState] = useState({ loading: false, properties: [], propXtra: {}, delLoading: false, resourceId: '', selectedProperty: '', delModal: false, msg: "Loading..." })
     const dispatch = useDispatch()
@@ -198,7 +198,7 @@ const MyPropertiesRows = ({sortBy}) => {
             </section> :
             propertiesList }
 
-            <Pagination paginationObj={state.propXtra} paginator={paginate} />
+            {!noPagination && <Pagination paginationObj={state.propXtra} paginator={paginate} />}
       </>
   )
 }

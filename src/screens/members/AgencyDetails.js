@@ -59,9 +59,9 @@ const AgencyDetails = () => {
     })
     const member = useSelector((state) => state.auth.selectedUser)
     const [active, setActive] = useState(types[0]);
-    const [setData] = useState({
-        _id: ''
-    })
+    // const [setData] = useState({
+    //     _id: ''
+    // })
     // console.log(data)
     const { properties } = useSelector(state => state.properties)
     const dispatch = useDispatch()
@@ -114,9 +114,9 @@ const AgencyDetails = () => {
     }
 
     function selectResourceType(val) {
-        setData((prevState) => ({ ...prevState, _id: val._id }))
+        // setData((prevState) => ({ ...prevState, _id: val._id }))
         // console.log(state.value)÷
-        console.log(val._id)
+        // console.log(val._id)
         if (val) {
             navigate('/properties-details', { replace: true, state: { propertyId: val._id } })
         }
@@ -140,12 +140,12 @@ const AgencyDetails = () => {
                     <section className='flex agentNlatest'>
                         <section className='agent pr20'>
                             <section >
-                                <h1 className='f30 headerColor boldText' style={{ marginBottom: '30px' }}>{member.fullName??member.username}</h1>
+                                <h1 className='f30 headerColor boldText agentHeader' style={{ marginBottom: '30px' }}>{member.fullName??member.username}</h1>
                                 <div>
                                     <div className={'flex justifyBetween alignCenter pb40'}>
                                         {/* <AgencyDetailsCard agentImage={Agency} agentName={'James Fallen'} department={'Sales'} phoneNumber={'932323432'}
                                             email={'jamesfallen@mail.com'} agencyAddress={'333 NW 26th St, Miami'} /> */}
-                                        <AgentDisplayCard customStyle={{ width: '100%' }} name={member.username} phone={member.phone} fax={member.fax} email={member.email} photo={member.profilePicture} />
+                                        <AgentDisplayCard noRedirect={true} customStyle={{ width: '100%' }} job={member.job} web={member.web} name={member.username} phone={member.phone} fax={member.fax} email={member.email} photo={member.profilePicture} />
                                     </div>
                                 </div>
                             </section>
@@ -192,9 +192,14 @@ const AgencyDetails = () => {
                                             {state.propertiesLoading ? <p style={{background: '#FFE089', opacity: '0.7', padding: '15px', borderRadius: '7px'}} className={'f14 regularText'}>Loading...</p> : 
                                             state.properties.docs.length === 0 ? <p style={{background: '#FFE089', opacity: '0.7', padding: '15px', borderRadius: '7px'}} className={'f14 regularText'}>User has not uploaded any properties yet</p> : 
                                             state.properties.docs.map((item, index) => (
-                                                <section className='agentFlexCard'>
+                                                <section key={index} className='agentFlexCard'>
                                                     <section className='agentImg cPointer'>
-                                                        <img src={item.featuredImage ? item.featuredImage.url : Agency} style={{ width: '100%', height: '100%', borderRadius: '6px' }} alt='' />
+                                                        <img src={item.featuredImage ? item.featuredImage.url : Agency}  onClick={() => {selectResourceType(item._id)}} style={{ width: '100%', height: '100%', borderRadius: '6px' }} alt='' />
+                                                        <div className='deets deets-sm mt10 flex'>
+                                                            <p className='mr10'>Bed: {item.bed}</p>
+                                                            <p className='mr10'>Bath: {item.bath}</p>
+                                                            <p>Sqft: {item.homeArea}</p>
+                                                        </div>
                                                     </section>
                                                     <section className='agentDetails'>
                                                         <div style={{ marginBottom: '10px' }}>
@@ -202,19 +207,19 @@ const AgencyDetails = () => {
                                                                 <div>
                                                                     <span style={{ background: '#3E4C66', fontSize: '16px', padding: '1px 8px', color: 'white', borderRadius: '3px' }}>{item.status}</span>
                                                                 </div>
-                                                                <div className="property-price">{item.price}</div>
+                                                                <div className="property-price headerColor">{item.price}</div>
                                                                 
                                                             </div>
-                                                            <small className='redText mt10'>{item.propertyType}</small>
                                                         </div>
-                                                        <div className="property-price mb10">{item.propertyTitle}</div>
-                                                        <p style={{color: '#484848'}}>
+                                                        <small className='redText mt10 mb10'>{item.propertyType}</small>
+                                                        <div onClick={() => {selectResourceType(item._id)}} className="property-price headerColor cPointer mb10">{item.propertyTitle}</div>
+                                                        <p style={{color: '#484848'}} className='mb10 f14'>
                                                             <span className='mr10'>
                                                                 <IoLocationOutline style={{color: '#484848'}} />
                                                             </span>
                                                             {item.friendlyAddress}
                                                         </p>
-                                                        <div className='deets flex'>
+                                                        <div className='deets deets-lg flex'>
                                                             <p className='mr10'>Bed: {item.bed}</p>
                                                             <p className='mr10'>Bath: {item.bath}</p>
                                                             <p>Sqft: {item.homeArea}</p>

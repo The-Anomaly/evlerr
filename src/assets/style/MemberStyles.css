@@ -68,9 +68,17 @@
   width: 33%;
 }
 
+.deets-sm{
+  display: none;
+}
+
 @media screen and (max-width: 1115px) {
   .agentFlexCard .agentDetails{
     width: calc(100% - 175px);
+  }
+
+  .agentHeader{
+    font-size: 1.5rem;
   }
 
   .agentFlexCard .agentImg{
@@ -129,5 +137,18 @@
 
   .agentSection{
     padding: 50px 20px;
+  }
+
+  .deets-sm{
+    display: flex;
+    margin-top: 15px;
+  }
+
+  .deets-lg{
+    display: none;
+  }
+
+  .agentFlexCard{
+    min-height: 170px;
   }
 }
