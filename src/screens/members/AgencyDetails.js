@@ -145,7 +145,7 @@ const AgencyDetails = () => {
                                     <div className={'flex justifyBetween alignCenter pb40'}>
                                         {/* <AgencyDetailsCard agentImage={Agency} agentName={'James Fallen'} department={'Sales'} phoneNumber={'932323432'}
                                             email={'jamesfallen@mail.com'} agencyAddress={'333 NW 26th St, Miami'} /> */}
-                                        <AgentDisplayCard noRedirect={true} customStyle={{ width: '100%' }} job={member.job} web={member.web} name={member.username} phone={member.phone} fax={member.fax} email={member.email} photo={member.profilePicture} />
+                                        <AgentDisplayCard noRedirect={true} customStyle={{ width: '100%' }} job={member.job} web={member.web} name={member.username} phone={member.phone} fax={member.fax} email={member.email} photo={member.profilePicture} socials={member.socials} />
                                     </div>
                                 </div>
                             </section>

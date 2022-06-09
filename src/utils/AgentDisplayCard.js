@@ -1,13 +1,14 @@
 import React from 'react'
 import avatar from '../assets/images/defAvatar.jpg'
-import { AiOutlineTwitter } from 'react-icons/ai'
+import { AiOutlineTwitter, AiFillYoutube, AiOutlineGooglePlus, AiFillRedditCircle  } from 'react-icons/ai'
 import { TiSocialFacebook } from 'react-icons/ti'
+import { FiInstagram } from 'react-icons/fi'
 import { FaLinkedinIn } from 'react-icons/fa'
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux'
 import { SELECT_USER } from '../redux/Types'
 
-const AgentDisplayCard = ({ name, phone, email, fax, web, photo, noRedirect, job, agent, customStyle }) => {
+const AgentDisplayCard = ({ name, phone, email, fax, web, photo, socials, noRedirect, job, agent, customStyle }) => {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -18,6 +19,14 @@ const AgentDisplayCard = ({ name, phone, email, fax, web, photo, noRedirect, job
             navigate('/member-details')
         }
     }
+
+    const twitterIcon = <AiOutlineTwitter className='f18 mr10' />
+    const linkedInIcon = <FaLinkedinIn className='f18 mr10' />
+    const facebookIcon = <TiSocialFacebook className='f18 mr10' />
+    const instaIcon = <FiInstagram className='f18 mr10' />
+    const googlePlusIcon = <AiOutlineGooglePlus className='f18 mr10' />
+    const youtubeIcon = <AiFillYoutube className='f18 mr10' />
+    const redditIcon = <AiFillRedditCircle className='f18 mr10' />
 
   return (
       <>
@@ -38,22 +47,67 @@ const AgentDisplayCard = ({ name, phone, email, fax, web, photo, noRedirect, job
                     <p>Email: {email}</p>
                     {web ? <p>Website: {web}</p> : ''}
                 </div>
-                {!noRedirect &&
                 <div className='agentCardFooter' style={{ justifyContent: 'space-between', padding: '15px 15px 0 0' }}>
                     <div className="socialIcons">
-                        <Link to={'/'}>
-                            <TiSocialFacebook className='f18 mr10' />
-                        </Link>
-                        <Link to={'/'}>
-                            <AiOutlineTwitter className='f18 mr10' />
-                        </Link>
-                        <Link to={'/'}>
-                            <FaLinkedinIn className='f18' />
-                        </Link>
+                        {socials && socials.map((val) => {
+                            switch (val.name) {
+                                case "Twitter":
+                                    return (
+                                        <a href={val.url.indexOf('http') !== -1 ? val.url : 'hhtps://'+val.url} target='_blank'>
+                                            {twitterIcon}
+                                        </a>                                
+                                    )
+                                    
+                                case "Facebook":
+                                    return (
+                                        <a href={val.url.indexOf('http') !== -1 ? val.url : 'hhtps://'+val.url} target='_blank'>
+                                            {facebookIcon}
+                                        </a>                                
+                                    )
+                                    
+                                case "LinkedIn":
+                                    return (
+                                        <a href={val.url.indexOf('http') !== -1 ? val.url : 'hhtps://'+val.url} target='_blank'>
+                                            {linkedInIcon}
+                                        </a>                                
+                                    )
+                                    
+                                case "Google+":
+                                    return (
+                                        <a href={val.url.indexOf('http') !== -1 ? val.url : 'hhtps://'+val.url} target='_blank'>
+                                            {googlePlusIcon}
+                                        </a>
+                                    )
+                                    
+                                case "Youtube":
+                                    return (
+                                        <a href={val.url.indexOf('http') !== -1 ? val.url : 'hhtps://'+val.url} target='_blank'>
+                                            {youtubeIcon}
+                                        </a>
+                                    )
+                                    
+                                case "Instagram":
+                                    return (
+                                        <a href={val.url.indexOf('http') !== -1 ? val.url : 'hhtps://'+val.url} target='_blank'>
+                                            {instaIcon}
+                                        </a>
+                                    )
+
+                                case "Reddit":
+                                    return (
+                                        <a href={val.url.indexOf('http') !== -1 ? val.url : 'hhtps://'+val.url} target='_blank'>
+                                            {redditIcon}
+                                        </a>
+                                    )
+
+                                default:
+                                    break;
+                            }
+                        })}
                     </div>
-                    <div onClick={() => {redirect(agent)}} className='redText cPointer'>View My Listing</div>
+                    {!noRedirect &&
+                    <div onClick={() => {redirect(agent)}} className='redText cPointer'>View My Listing</div>}
                 </div>
-                }
             </section>
         </section>
 

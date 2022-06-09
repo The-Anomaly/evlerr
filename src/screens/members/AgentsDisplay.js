@@ -158,7 +158,7 @@ const AgentsDisplay = () => {
                                 </div>
                                 <Suspense fallback={'Loading...'}>
                                     {state.loading ? renderLoading() : state.agents.map((agent, index) => 
-                                        <AgentDisplayCard key={index} agentId={agent._id} photo={agent.profilePicture} name={agent.username} phone={agent.phone} email={agent.email} fax={agent.fax} web={agent.web} job={agent.job} agent={agent} />
+                                        <AgentDisplayCard key={index} agentId={agent._id} photo={agent.profilePicture} name={agent.username} phone={agent.phone} email={agent.email} fax={agent.fax} web={agent.web} job={agent.job} socials={agent.socials} agent={agent} />
                                     )}
                                     <Pagination paginationObj={state.agentsXtra} paginator={paginate} />
                                 </Suspense>
