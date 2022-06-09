@@ -101,10 +101,10 @@ const NavBar = ({ boxShadow, logo }) => {
             <nav style={{ boxShadow: boxShadow, marginLeft: !logo ? !state.isMobile ? '-300px' : 0 : 0 }} className='navContainer'>
                 {/* <RiMenu4Line className='f30 pr10 navItemResponsive' onClick={toggleShowNav} /> */}
                 <div className='logoContainer' style={{ display: 'flex', alignItems: 'center' }}>
-                    <HiOutlineMenuAlt2 className='pr10 navItemResponsive' style={{ height: '20px', width: '20px' }} onClick={toggleShowNav} />
+                    <HiOutlineMenuAlt2 className='pr10 navItemResponsive' id='logoIcon' onClick={toggleShowNav} />
                     {logo &&
                         <CustomLink to={'/'}>
-                            <img src={Logo} alt='logo' style={{ width: '100px', height: '50px' }} />
+                            <img src={Logo} alt='logo' id='logo' />
                         </CustomLink>}
                 </div>
                 <section className={'pale'}>
@@ -292,7 +292,7 @@ const NavBar = ({ boxShadow, logo }) => {
                         <div className='pl10'>
                             <img src={user.profilePicture ? user.profilePicture.url : defaultAvatar} alt={'agent avatar'} className={'agent-avatar'} />
                         </div>
-                        <p className={'flex alignCenter navItems'} style={{ padding: '8px' }}>
+                        <p className={'flex alignCenter navItems'} style={{ padding: '8px', textTransform: 'capitalize' }}>
                             {user.username}
                         </p>
                         <span style={{ marginTop: '5px' }}> <IoMdArrowDropdown size={16} /></span>
@@ -347,7 +347,7 @@ const NavBar = ({ boxShadow, logo }) => {
                     <div>
                         <ul id='authLinks'>
                             <li >
-                                <AiOutlineUser size={24} color={'#046971'} style={{ marginRight: '5px' }} />
+                                <AiOutlineUser size={24} className='authLinkIcon' color={'#046971'} style={{ marginRight: '5px' }} />
                             </li>
                             <li className={'regularText f16'}>
                                 <CustomLink to={'/login'}>

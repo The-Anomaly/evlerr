@@ -155,7 +155,7 @@ const PropertyDetails = () => {
                 <main>
                     <section className={'pt40 pb40 flex justifyBetween alignCenter pl70 pr70 flexResponsive paddingResponsive flexStart'}>
                         <div className={'pl50 paddingResponsive'}>
-                            <p className={'f32 headerColor boldText pb10'}>{state.property.propertyTitle}</p>
+                            <p className={'f32 headerColor boldText pb10'} style={{ textTransform: 'capitalize' }}>{state.property.propertyTitle}</p>
                             <p className={'f14 headerColor regularText'}>{state.property.friendlyAddress}</p>
                         </div>
                         <div className={'pr50 flex alignCenter flexResponsive paddingResponsive flexStart'}>

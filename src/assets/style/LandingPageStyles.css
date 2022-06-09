@@ -237,4 +237,10 @@
     top: 170px;
     left: 0;
   }
+
+  .selectorBox > div{
+    width: 27px;
+    height: 30px;
+  }
+  
 }

@@ -415,6 +415,16 @@ hr {
 .arrowRightP {
   right: 10px;
 }
+#logo{
+  width: 100px;
+  height: 50px;
+}
+
+#logoIcon{
+  width: 20px;
+  height: 20px;
+}
+
 
 @media screen and (min-width: 280px) and (max-width: 786px) {
   .flexResponsive {
@@ -431,5 +441,17 @@ hr {
 @media screen and (max-width: 763px) {
   .thResponsive, .removeOnMobile{
     display: none;
+  }
+  #logo{
+    width: 60px;
+  }
+  #logoIcon{
+    width: 15px;
+  }
+  #authLinks li{
+    font-size: 14px;
+  }
+  .authLinkIcon{
+    width: 17px;
   }
 }
