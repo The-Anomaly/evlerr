@@ -6,7 +6,7 @@ import { GrLocation } from 'react-icons/gr'
 const PropertyGridCards = ({ background, price, leaseType, type, baths, beds, detailsSubTitle, detailsTitle, location, sqft, years, agentName, agentImage, onClick, onAgentClick }) => {
     return (
         <>
-            <section className='listCardContainer animate__animated animate__fadeIn'>
+            <section className='listCardContainer capitalize animate__animated animate__fadeIn'>
                 <section className={'whiteBg pt10 pl10 pr10'}>
                     <div className={'cardImage'} style={{ backgroundImage: background, }}>
                         <img src={`${background}`} alt='property' loading={'eager'} />

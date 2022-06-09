@@ -7,7 +7,7 @@ import { GrLocation } from 'react-icons/gr'
 const PropertyCards = ({ background, price, leaseType, type, baths, beds, detailsSubTitle, detailsTitle, location, sqft, years, agentName, agentImage, onClick, onAgentClick }) => {
     return (
         <>
-            <section className='cardContainer'>
+            <section className='cardContainer capitalize'>
                 <div className='cardImage' style={{ backgroundImage: background }}>
                     <img src={background} alt='property' loading={'eager'} />
                     <div className='cardImageOverlay'>

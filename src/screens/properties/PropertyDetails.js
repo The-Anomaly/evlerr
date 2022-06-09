@@ -32,7 +32,9 @@ const PropertyDetails = () => {
         value: 10, menuDrop: false, priceValue: { min: 0, max: 8000 }, contactFormLoading: false, loading: true, showImages: false, property: {}, agent: {}
     })
 
-    const [contactForm, setContactForm] = useState({ subject: '', phone: '', message: '', name: '', emailFrom: '', emailtTo: 'bradleycogen@gmail.com' })
+    const [contactForm, setContactForm] = useState({ subject: '', phone: '', message: '', name: '', emailFrom: '', emailtTo: '' })
+
+    const [checkStr, setCheckStr] = useState(false)
 
     const property = useLocation()
     // console.log(property?.state.propertyId);
@@ -95,7 +97,11 @@ const PropertyDetails = () => {
 
     const contactSupport = async () => {
         if (contactForm.name === '' || contactForm.emailFrom === '' || contactForm.message === '') {
-            toast.error('Name, Email and message is required', {
+            toast.error('Name, Email and Message is required', {
+                position: toast.POSITION.TOP_RIGHT
+            })
+        } else if (contactForm.emailtTo === '') {
+            toast.error('Could not update agents email', {
                 position: toast.POSITION.TOP_RIGHT
             })
         } else {
@@ -105,6 +111,7 @@ const PropertyDetails = () => {
                 toast.success('Message sent!', {
                     position: toast.POSITION.TOP_RIGHT
                 })
+                setContactForm({ subject: '', phone: '', message: '', name: '', emailFrom: '', emailtTo: '' })
                 console.log('support response',res)
             } catch (error) {
                 toast.error('Sorry, could not send message', {
@@ -127,6 +134,10 @@ const PropertyDetails = () => {
                 setState((prevState) => ({
                     ...prevState, loading: false, property: data, agent: data.agentId
                 }))
+                setContactForm((prevState) => ({...prevState, emailtTo: data.agentId.email}))
+                if (typeof data.gallery[0] === 'string') {
+                    setCheckStr(true)
+                }
             } catch (error) {
                 console.log('Error ', error)
                 setState((prevState) => ({ ...prevState, loading: false }))
@@ -155,7 +166,7 @@ const PropertyDetails = () => {
                 <main>
                     <section className={'pt40 pb40 flex justifyBetween alignCenter pl70 pr70 flexResponsive paddingResponsive flexStart'}>
                         <div className={'pl50 paddingResponsive'}>
-                            <p className={'f32 headerColor boldText pb10'} style={{ textTransform: 'capitalize' }}>{state.property.propertyTitle}</p>
+                            <p className={'f32 headerColor boldText capitalize pb10'} style={{ textTransform: 'capitalize' }}>{state.property.propertyTitle}</p>
                             <p className={'f14 headerColor regularText'}>{state.property.friendlyAddress}</p>
                         </div>
                         <div className={'pr50 flex alignCenter flexResponsive paddingResponsive flexStart'}>
@@ -176,12 +187,12 @@ const PropertyDetails = () => {
                     </section>
                     <section>
                         <section className='imagesContainerNew'>
-                            {Object.keys(state.property).length ? state.property.gallery.length ?
+                            {Object.keys(state.property).length ? state.property.gallery.length ? !checkStr ?
                             <div className='imagesGrid'>
                                 {slide}
-                            </div> : '' : ''}
+                            </div> : '' : '' : ''}
                             <div className='imagesOverlayNew'>
-                                <CustomButton title={Object.keys(state.property).length ? state.property.gallery.length ?'View Photos' : 'No photos in gallery' : ''} customStyle={{ backgroundColor: '#fff', cursor: 'pointer' }} color={'#ff5a5f'} onClick={showImageGrid} />
+                                <CustomButton title={Object.keys(state.property).length ? !checkStr ? state.property.gallery.length ?'View Photos' : 'No photos in gallery' : 'No photo in gallery' : ''} customStyle={{ backgroundColor: '#fff', cursor: 'pointer' }} color={'#ff5a5f'} onClick={!checkStr ? showImageGrid : ''} />
                             </div>
                         </section>
 
@@ -296,7 +307,7 @@ const PropertyDetails = () => {
                                 <hr />
                                 <div>
                                     <p className={'f20 headerColor boldText pl10 pt30 pb30'}>Attachments</p>
-                                    <div className='doubleGridTemplate'>
+                                    <div className='doubleGridTemplate f14'>
                                         {state.property.attachment && (state.property.attachment.length === 0 && 'No attachments')}
                                         {state.property.attachment && state.property.attachment.map((val, index) => 
                                             <div key={index} className={'flex alignCenter'}>
@@ -316,11 +327,11 @@ const PropertyDetails = () => {
                             </div>
                             <div className={'membersCard '} style={{ margin: '30px 0' }}>
                                 <p className={'f20 headerColor boldText pl10  pb30'}>Amenities</p>
-                                <ul className='tripleGridTemplate'>
+                                <ul className='tripleGridTemplate f14'>
 
                                     {state.property.amenities && (state.property.amenities.length === 0 && 'No amenities')}
                                     {state.property.amenities && state.property.amenities.map((val, index) => 
-                                        <li key={index} className={'f14 regularText headerColor flex alignCenter'}>
+                                        <li key={index} className={'f14 regularText headerColor capitalize flex alignCenter'}>
                                             <MdDone color='#ff5a5f' className={'pr10'} />
                                             {val}
                                         </li>
@@ -331,7 +342,7 @@ const PropertyDetails = () => {
                             <div className={'membersCard '} style={{ margin: '30px 0' }}>
                                 <div className={'flex justifyBetween alignCenter pb30'}>
                                     <p className={'f20 headerColor boldText'}>Location</p>
-                                    <p className={'f16 headerColor regularText flex alignCenter'}><span><GrLocation /></span>  {state.property.friendlyAddress}</p>
+                                    <p className={'f14 headerColor regularText flex alignCenter'}><span><GrLocation className='mr10' /></span>  {state.property.friendlyAddress}</p>
                                 </div>
                                 <div style={{ height: '400px' }}>
                                     <SimpleMap />

@@ -201,7 +201,7 @@ a:hover {
 
 #agentdropdown, #authLinks {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   padding-left: 30px;
   margin-left: 10px;
   height: 45px;

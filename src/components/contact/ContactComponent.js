@@ -7,7 +7,7 @@ import { IoIosArrowForward } from 'react-icons/io';
 const ContactComponent = () => {
     return (
         <>
-            <section className='contactContainer'>
+            <section className='contactContainer paddResponsive20'>
                 <div className='aboutSiteContainer'>
                     <h2 className={'f30 boldText white'}>About Site</h2>
                     <p className={'f16 regularText white'}>

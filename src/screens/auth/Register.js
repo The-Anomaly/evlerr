@@ -146,7 +146,7 @@ const Register = (props) => {
 
                             </div>
 
-                            <Dropdown curSelect={auth.role} textColor={'#555'} options={['agency', 'agent']} setSelect={handleRole} />
+                            <Dropdown curSelect={auth.role} textColor={'#555'} h21={false} options={['agency', 'agent']} setSelect={handleRole} />
 
 
                             <div>

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import ImagePicker from '../../components/dashboard/ImagePicker'
 import CustomButton from '../../utils/CustomButton'
 import CustomInput from '../../utils/CustomInput'
 import CustomInputDrop from '../../utils/CustomInputDrop'
@@ -7,11 +6,11 @@ import SimpleMap from '../../utils/Map'
 import { IoMdArrowDropdown, IoMdArrowDropup } from 'react-icons/io'
 import { useDispatch, useSelector } from 'react-redux'
 import http from '../../Utils'
-import Dropdown from '../../utils/Dropdown'
 import { toast } from 'react-toastify';
 import { UPDATE_USER } from '../../redux/Types'
 import defaultAvatar from '../../assets/images/defAvatar.jpg'
 import CustomTextArea from '../../utils/CustomTextarea'
+import CustomUploadInput from '../../utils/CustomUploadInput'
 
 const Profile = () => {
 
@@ -59,10 +58,6 @@ const Profile = () => {
         const newSocial = formData.socials.slice()
         newSocial[index] = { ...newSocial[index], url: val }
         setFormData({ ...formData, socials: newSocial })
-    }
-
-    const handleLocation = (val) => {
-        setFormData({ ...formData, location: val })
     }
 
     const handleInput = (e) => {
@@ -115,9 +110,11 @@ const Profile = () => {
     }
 
 
-    const uploadProfileImage = async (file) => {
-        const fData = {photo: file}
-        // console.log(fData)
+    const uploadProfileImage = async (e) => {
+        let images = [...e.target.files]
+
+        const fData = {photo: images[0]}
+        console.log(fData)
         // return
         setState({...state, uploadImageLoading: true})
         try {
@@ -191,7 +188,14 @@ const Profile = () => {
                     <div className={'pt30'}>
                     <p className={'f16 boldText black pb10 mb10'}>Featured Image</p>
                         <div>
-                            <ImagePicker uploader={uploadProfileImage} uploadLoading={state.uploadImageLoading} defImage={user.profilePicture ? {data_url: user.profilePicture.url} : {data_url: defaultAvatar}} />
+                            {/* <ImagePicker uploader={uploadProfileImage} uploadLoading={state.uploadImageLoading} defImage={user.profilePicture ? {data_url: user.profilePicture.url} : {data_url: defaultAvatar}} /> */}
+                            { Object.keys(user).length ? (
+                                <span className={'fileUploadContainer mb10'}>
+                                    <button className={'fileDelBtn'}>x</button>
+                                    <img src={user.profilePicture ? user.profilePicture.url : defaultAvatar} alt='user avatar' style={{ maxWidth: '100%', height: '100%' }} />
+                                </span>
+                            ) : ''}
+                            <CustomUploadInput title={'Upload file'} restrict='image/*' id={'featuredImage'} onChange={uploadProfileImage} customStyle={{ backgroundColor: '#f7f7f7', border: '1px solid #ebebeb', width: '150px' }} uploadLoading={state.uploadImageLoading} />
                         </div>
                     </div>
 
@@ -242,8 +246,6 @@ const Profile = () => {
                                 <CustomInput value={'-73.952876'} disabled={true} />
                             </div>
                         </div>
-
-                        <Dropdown label={'Location'} curSelect={formData.location} options={['Atlanta', 'Florida', 'Los Angeles', 'Miami', 'New York', 'Orlando']} setSelect={handleLocation} />
                     </div>
 
                     <div className={'pt30'}>

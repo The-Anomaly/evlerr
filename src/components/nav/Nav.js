@@ -15,10 +15,8 @@ import ResponsiveSideNav from '../modals/ResponsiveSideNav';
 import { HiOutlineMenuAlt2 } from 'react-icons/hi';
 import { SiGoogletranslate } from 'react-icons/si';
 import { IoLayersOutline } from 'react-icons/io5';
-import { GoPackage } from 'react-icons/go';
 import { BsHouseDoor } from 'react-icons/bs';
 import { FaUsers } from 'react-icons/fa';
-import { RiLockPasswordLine } from 'react-icons/ri';
 
 
 const NavBar = ({ boxShadow, logo }) => {

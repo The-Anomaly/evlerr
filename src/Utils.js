@@ -24,12 +24,10 @@ const setTokenIfExists = async options => {
     }
 
     // console.log('token exists')
-    if (!options.headers) {
-        options.headers = {
-            'x-access-token': token.access,
-            'x-refresh-token': token.refresh
-        };
-    }
+    options.headers = {
+        'x-access-token': token.access,
+        'x-refresh-token': token.refresh
+    };
 
     // axios.interceptors.request.use((config) => {
     //     if (token.access) {

@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 import CustomButton from '../../utils/CustomButton'
 import { SELECT_PROPERTY } from '../../redux/Types'
 import Pagination from '../../utils/Pagination'
+import defaultPropImage from '../../assets/images/home.jpeg';
 // import { PROPERTIES_SUCCESS } from '../../redux/Types'
 
 const MyPropertiesRows = ({sortBy, noPagination}) => {
@@ -137,13 +138,13 @@ const MyPropertiesRows = ({sortBy, noPagination}) => {
                         <div onClick={() => selectResourceType(property)} className='cPointer image-wrapper'>
                             <div className="overlay"></div>
                             <span className="property-status">{status}</span>
-                            <img src={featuredImage ? featuredImage.url : ''} alt={''}  />
+                            <img src={featuredImage ? featuredImage.url !== 'string' ? featuredImage.url : defaultPropImage : defaultPropImage} alt={'featured'}  />
                         </div>
                     </li>
                     <li className={'f14 headerColor'}>
                         <div className='flex alignCenter justifyBetween'>
                             <div>
-                                <h3 onClick={() => selectResourceType(property)} className='headerColor cPointer'>{propertyTitle}</h3>
+                                <h3 onClick={() => selectResourceType(property)} className='headerColor capitalize cPointer'>{propertyTitle}</h3>
                                 <div className='my20'>
                                     <IoLocationOutline />
                                     <span className='pl10'>{friendlyAddress}</span>

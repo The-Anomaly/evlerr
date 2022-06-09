@@ -20,8 +20,7 @@ const PropertiesDisplay = () => {
 
     const [state, setState] = useState({
         sortDrop: false, propertyList: [], propertiesXtra: {}, loading: false,
-        sortItem: [{ id: 1, name: 'Default' }, { id: 2, name: 'Newest' }, { id: 3, name: 'Oldest' },
-        { id: 4, name: 'Lowest Price' }, { id: 5, name: 'Highest Price' }, { id: 6, name: 'Random' }], 
+        sortItem: [{ id: 1, name: 'Default' }, { id: 2, name: 'Newest' }, { id: 3, name: 'Oldest' }], 
         filter: 'All', filterDrop: false, selected: 'Default', visible: false, 
         filterItem: [{ id: 1, name: 'All' }, { id: 2, name: 'Rent' }, { id: 3, name: 'Sale' }, { id: 4, name: 'Short stay' },],
     })
@@ -161,7 +160,7 @@ const PropertiesDisplay = () => {
                                 </div> */}
                             </div>
                             <div className={'pt20'}>
-                                <SortCard listCountOffset={(state.propertiesXtra.page*state.propertiesXtra.limit)-(state.propertiesXtra.limit-1)} listCount={state.propertyList.length} result={state.propertiesXtra.totalDocs} onClick={showSortDropDown} dropDown={state.sortDrop} value={state.selected} onClickFilter={showFilterDropDown}
+                                <SortCard remFilterBy={true} listCountOffset={(state.propertiesXtra.page*state.propertiesXtra.limit)-(state.propertiesXtra.limit-1)} listCount={state.propertyList.length} result={state.propertiesXtra.totalDocs} onClick={showSortDropDown} dropDown={state.sortDrop} value={state.selected} onClickFilter={showFilterDropDown}
                                     filterValue={state.filter} filterDropDown={state.filterDrop} filterList={state.filterItem}
                                     selectFilterType={selectFilterType} sortList={state.sortItem} selectSortType={selectSortType}
                                 >

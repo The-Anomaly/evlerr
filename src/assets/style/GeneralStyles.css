@@ -390,6 +390,10 @@ hr {
   margin-bottom: 20px;
 }
 
+.capitalize{
+  text-transform: capitalize;
+}
+
 .arrowLeftP,
 .arrowRightP {
   display: flex;

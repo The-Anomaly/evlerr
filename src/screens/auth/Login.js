@@ -35,8 +35,8 @@ const Login = (props) => {
         }
     }
 
-    const goToHomePage = () => {
-        navigate('/')
+    const goBack = () => {
+        navigate(-1)
     }
 
     const location = useLocation()
@@ -72,7 +72,7 @@ const Login = (props) => {
     return (
         <>
             <section className='containerBackground'>
-                <div className='backArrow' title='Go to HomePage' onClick={goToHomePage}>
+                <div className='backArrow' title='Go to HomePage' onClick={goBack}>
                     <ArrowBackIos />
                 </div>
                 <section className='authContainer'>
@@ -95,16 +95,12 @@ const Login = (props) => {
                             />
 
                             <div className='recoveryContainer'>
-                                <div className='rememberMe'>
-                                    <input type={'checkbox'} prefix='jello' id='checkbox' />
-                                    <label htmlFor='checkbox' className={'f14 regularText'}>Keep me signed in</label>
-                                </div>
                                 <Link to={'/forgotPassword'} className='forgotPassword'>
                                     <p className={'f14 regularText'}>Lost Your Password?</p>
                                 </Link>
                             </div>
 
-                            <div>
+                            <div className='mb20'>
 
                                 <CustomButton title={'Login'} customStyle={{ backgroundColor: '#ff5a5f', marginTop: '20px' }}
                                     color={'#fff'} onClick={submit} loading={auth.loading} />

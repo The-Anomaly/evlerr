@@ -253,7 +253,7 @@ const LandingPage = (props) => {
                             <p className={'regularText f16 headerColor textCenter'}>We only work with the best companies around the globe</p>
                         </div>
 
-                        <section className='agentsGridContainer'>
+                        <section className='agentsGridContainer' style={{ gridRowGap: '15px' }}>
                             {/* <AgentsCard agentName={'Agent Pakulla'} agentRating={'3'} agentRole={'Marketing'} background={Agent} agentClick={goToAgentDetails} />
                             <AgentsCard agentName={'Agent Marlen'} agentRating={'3'} agentRole={'Sales'} background={AgentThree} agentClick={goToAgentDetails} />
                             <AgentsCard agentName={'Agent Jane'} agentRating={'3'} agentRole={'Valuating'} background={AgentTwo} agentClick={goToAgentDetails} />

@@ -4,7 +4,7 @@ import { AiOutlineTwitter, AiFillYoutube, AiOutlineGooglePlus, AiFillRedditCircl
 import { TiSocialFacebook } from 'react-icons/ti'
 import { FiInstagram } from 'react-icons/fi'
 import { FaLinkedinIn } from 'react-icons/fa'
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux'
 import { SELECT_USER } from '../redux/Types'
 
@@ -53,55 +53,55 @@ const AgentDisplayCard = ({ name, phone, email, fax, web, photo, socials, noRedi
                             switch (val.name) {
                                 case "Twitter":
                                     return (
-                                        <a href={val.url.indexOf('http') !== -1 ? val.url : 'hhtps://'+val.url} target='_blank'>
+                                        <a href={val.url.indexOf('http') !== -1 ? val.url : 'hhtps://'+val.url} target='_blank' rel='noreferrer'>
                                             {twitterIcon}
                                         </a>                                
                                     )
                                     
                                 case "Facebook":
                                     return (
-                                        <a href={val.url.indexOf('http') !== -1 ? val.url : 'hhtps://'+val.url} target='_blank'>
+                                        <a href={val.url.indexOf('http') !== -1 ? val.url : 'hhtps://'+val.url} target='_blank' rel='noreferrer'>
                                             {facebookIcon}
                                         </a>                                
                                     )
                                     
                                 case "LinkedIn":
                                     return (
-                                        <a href={val.url.indexOf('http') !== -1 ? val.url : 'hhtps://'+val.url} target='_blank'>
+                                        <a href={val.url.indexOf('http') !== -1 ? val.url : 'hhtps://'+val.url} target='_blank' rel='noreferrer'>
                                             {linkedInIcon}
                                         </a>                                
                                     )
                                     
                                 case "Google+":
                                     return (
-                                        <a href={val.url.indexOf('http') !== -1 ? val.url : 'hhtps://'+val.url} target='_blank'>
+                                        <a href={val.url.indexOf('http') !== -1 ? val.url : 'hhtps://'+val.url} target='_blank' rel='noreferrer'>
                                             {googlePlusIcon}
                                         </a>
                                     )
                                     
                                 case "Youtube":
                                     return (
-                                        <a href={val.url.indexOf('http') !== -1 ? val.url : 'hhtps://'+val.url} target='_blank'>
+                                        <a href={val.url.indexOf('http') !== -1 ? val.url : 'hhtps://'+val.url} target='_blank' rel='noreferrer'>
                                             {youtubeIcon}
                                         </a>
                                     )
                                     
                                 case "Instagram":
                                     return (
-                                        <a href={val.url.indexOf('http') !== -1 ? val.url : 'hhtps://'+val.url} target='_blank'>
+                                        <a href={val.url.indexOf('http') !== -1 ? val.url : 'hhtps://'+val.url} target='_blank' rel='noreferrer'>
                                             {instaIcon}
                                         </a>
                                     )
 
                                 case "Reddit":
                                     return (
-                                        <a href={val.url.indexOf('http') !== -1 ? val.url : 'hhtps://'+val.url} target='_blank'>
+                                        <a href={val.url.indexOf('http') !== -1 ? val.url : 'hhtps://'+val.url} target='_blank' rel='noreferrer'>
                                             {redditIcon}
                                         </a>
                                     )
 
                                 default:
-                                    break;
+                                    return false
                             }
                         })}
                     </div>

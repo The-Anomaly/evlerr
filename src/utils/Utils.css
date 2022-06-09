@@ -27,7 +27,15 @@
   width: 90%;
   color: #484848;
   font-family: "Nunito", sans-serif;
-    font-weight: 400;
+  font-weight: 200;
+  font-size: 14px;
+}
+.selectDropdown{
+  font-weight: 200;
+  font-size: 14px;
+}
+.h21{
+  min-height: 21px;  
 }
 .filterBtnContainer {
   border-radius: 6px;
