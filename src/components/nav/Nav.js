@@ -5,7 +5,7 @@ import '../../assets/style/GeneralStyles.css';
 import { Link, useNavigate, } from 'react-router-dom';
 import CustomLink from './CustomLink';
 import { IoMdArrowDropdown } from 'react-icons/io';
-import { AiOutlineUser } from 'react-icons/ai';
+import { AiOutlineUser, AiOutlineLogout, AiOutlinePlus } from 'react-icons/ai';
 import defaultAvatar from '../../assets/images/defAvatar.jpg'
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '../../redux/actions/AuthActions';
@@ -14,6 +14,11 @@ import Loading from '../../utils/Loading';
 import ResponsiveSideNav from '../modals/ResponsiveSideNav';
 import { HiOutlineMenuAlt2 } from 'react-icons/hi';
 import { SiGoogletranslate } from 'react-icons/si';
+import { IoLayersOutline } from 'react-icons/io5';
+import { GoPackage } from 'react-icons/go';
+import { BsHouseDoor } from 'react-icons/bs';
+import { FaUsers } from 'react-icons/fa';
+import { RiLockPasswordLine } from 'react-icons/ri';
 
 
 const NavBar = ({ boxShadow, logo }) => {
@@ -296,14 +301,45 @@ const NavBar = ({ boxShadow, logo }) => {
                                 <li style={{ display: 'grid', gridTemplateColumns: '100%', justifyContent: 'center', alignItems: 'center', gap: '10px' }}>
                                     {user.role !== 'user' ?
                                         <>
-                                            <CustomLink className='pt10' to={'/dashboard'}>Dashboard</CustomLink>
-                                            <CustomLink className='pt10' to={'/profile'}>Profile</CustomLink>
-                                            {user.role === 'agency' ? <CustomLink className='pt10' to={'/members'}>Members</CustomLink> : ''}
-                                            <CustomLink className='pt10' to={'/myProperties'}>My Properties</CustomLink>
-                                            <CustomLink className='pt10 pb10' to={'/submission'}>Submit Property</CustomLink>
+                                            <div className='flex pt10'>
+                                                <IoLayersOutline className='mr10' /> 
+                                                <CustomLink to={'/dashboard'}>Dashboard</CustomLink>
+                                            </div>
+                                            <div className="flex pt10">
+                                                <AiOutlineUser className='mr10' /> 
+                                                <CustomLink to={'/profile'}>
+                                                    Profile
+                                                </CustomLink>
+                                            </div>
+                                            {user.role === 'agency' ? 
+                                            <div className="flex pt10">
+                                                <FaUsers className='mr10' /> 
+                                                <CustomLink to={'/members'}>
+                                                    Members
+                                                </CustomLink> 
+                                            </div> : ''}
+                                            <div className="flex pt10">
+                                                <BsHouseDoor  className='mr10' /> 
+                                                <CustomLink className='pt10' to={'/myProperties'}>
+                                                    My Properties
+                                                </CustomLink>
+                                            </div>
+                                            <div className="flex pt10">
+                                                <AiOutlinePlus  className='mr10' /> 
+                                                <CustomLink to={'/submission'}>
+                                                    Submit Property
+                                                </CustomLink>
+
+                                            </div>
                                         </> : ''
                                     }
-                                    <CustomLink to={'#'} onClick={logoutUser}>Log out {logoutLoading && <Loading />} </CustomLink>
+                                    <div className="flex pt10">
+                                        <AiOutlineLogout className='mr10' /> 
+                                        <CustomLink to={'#'} onClick={logoutUser}>
+                                            Log out {logoutLoading && <Loading />} 
+                                        </CustomLink>
+
+                                    </div>
                                 </li>
                             </ul>
                         </div>

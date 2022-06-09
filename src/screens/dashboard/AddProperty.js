@@ -436,11 +436,11 @@ const AddProperty = (props) => {
                             { attachment &&  attachment.map((val, index) => 
                             <span key={index} className={'fileUploadContainer mb10'}>
                                 <button className={'fileDelBtn'} onClick={() => {delUpload(index, 'attachment')}}>x</button>
-                                <GrDocumentText style={{ width: '50%', height: '100%' }} />
+                                <GrDocumentText style={{ width: '50%', height: '50%' }} />
                                 {/* <p>{val.publicId}</p> */}
                             </span> 
                             ) }
-                            <CustomUploadInput title={'Upload files'} restrict="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf" onChange={uploadGallery} id={'attachment'} multi={true} uploadLoading={state.attachUploadLoading} customStyle={{ backgroundColor: '#f7f7f7', border: '1px solid #ebebeb', width: '150px' }} />
+                            <CustomUploadInput title={'Upload files'} onChange={uploadGallery} id={'attachment'} multi={true} uploadLoading={state.attachUploadLoading} customStyle={{ backgroundColor: '#f7f7f7', border: '1px solid #ebebeb', width: '150px' }} />
                         </div>
 
                         <div>
