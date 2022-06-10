@@ -13,6 +13,7 @@ import Agent from '../../assets/images/defAvatar.jpg';
 import CustomButton from '../../utils/CustomButton';
 import 'react-input-range/lib/css/index.css';
 import { useLocation } from 'react-router-dom';
+// import { DateTime } from 'luxon';
 import Loading from '../../utils/Loading';
 import http from '../../Utils';
 import { useDispatch } from 'react-redux'
@@ -154,6 +155,10 @@ const PropertyDetails = () => {
     const closeModal = () => {
         setState((prevState) => ({ ...prevState, showImages: false }))
     }
+    
+    // const date = DateTime.fromISO(state.property.createdAt)
+    // const humanReadable = date.toLocaleString(DateTime.DATETIME_MED);
+
 
     const slide = Object.keys(state.property).length ? state.property.gallery.map((val, index) => 
         index < 3 ? <img key={index} src={val.url} style={{ width: '100%', height: '100%' }} alt='poster' /> : ''
@@ -295,6 +300,12 @@ const PropertyDetails = () => {
                                                 {state.property.yearBuilt}
                                             </span>
                                         </li>
+                                        {/* <li className={'flex justifyBetween alignCenter f14 headerColor regularText'}>
+                                            Submitted On:
+                                            <span className={'boldText'}>
+                                                {humanReadable}
+                                            </span>
+                                        </li> */}
                                         <li className={'flex justifyBetween alignCenter f14 headerColor regularText'}>
                                             Property Status:
                                             <span className={'boldText'}>

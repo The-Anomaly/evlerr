@@ -106,7 +106,7 @@ const FeaturedCarousel = (props) => {
                         <PropertyCards
                             type={'Featured'} leaseType={item.status} price={item.price} background={item.featuredImage ? item.featuredImage.url !== 'string' ? item.featuredImage.url : defaultPropImage : defaultPropImage}
                             sqft={'480'} baths={'4'} beds={'4'} location={item.friendlyAddress} detailsSubTitle={item.propertyTitle}
-                            detailsTitle={'Apartment'} onClick={() => selectResourceType(item)} agentImage={item.agentId.profilePicture ? item.agentId.profilePicture.url : avatar} agentName={item.agentId.username} years={'2'}
+                            detailsTitle={'Apartment'} onClick={() => selectResourceType(item)} agentImage={item.agentId.profilePicture ? item.agentId.profilePicture.url : avatar} agentName={item.agentId.username} years={item.createdAt}
                             onAgentClick={goToAgentDetails}
                         />
                     </div>

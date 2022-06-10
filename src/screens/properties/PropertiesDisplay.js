@@ -186,7 +186,7 @@ const PropertiesDisplay = () => {
                                     <PropertyGridCards 
                                         leaseType={item.status} price={item.price} background={item.featuredImage ? item.featuredImage.url !== 'string' ? item.featuredImage.url : defaultPropImage : defaultPropImage}
                                         sqft={item.homeArea} baths={item.bath} beds={item.bed} location={item.friendlyAddress} detailsSubTitle={item.propertyTitle}
-                                        detailsTitle={item.propertyType} years={'2'} agentImage={item.agentId.profilePicture ? item.agentId.profilePicture.url : avatar} agentName={item.agentId.username} onClick={() => selectResourceType(item)}
+                                        detailsTitle={item.propertyType} years={item.createdAt} agentImage={item.agentId.profilePicture ? item.agentId.profilePicture.url : avatar} agentName={item.agentId.username} onClick={() => selectResourceType(item)}
                                         onAgentClick={goToAgentDetails}
                                     />
                                 </div>

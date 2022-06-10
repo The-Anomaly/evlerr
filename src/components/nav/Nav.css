@@ -281,7 +281,7 @@ a:hover {
 
 .submission{
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
 }
 
 @keyframes slideUpFade {

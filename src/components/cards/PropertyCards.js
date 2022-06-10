@@ -2,9 +2,31 @@ import React from 'react';
 import './Cards.css';
 import '../../assets/style/GeneralStyles.css';
 import { GrLocation } from 'react-icons/gr'
+import { DateTime } from "luxon";
 // import Loading from '../../utils/Loading';
 
 const PropertyCards = ({ background, price, leaseType, type, baths, beds, detailsSubTitle, detailsTitle, location, sqft, years, agentName, agentImage, onClick, onAgentClick }) => {
+
+    const date = DateTime.fromISO(years)
+    const now = DateTime.now().toLocal()
+    const dateDiff = now.diff(date, ['years','months','days', 'hours', 'minutes'])
+    
+    const formatDate = () => {
+        if (dateDiff.years) {
+            return dateDiff.years === 1 ? 'Last year' : dateDiff.years+' years ago'
+        } else if (dateDiff.months) {
+            return dateDiff.months === 1 ? 'Last month' : dateDiff.months+' months ago'
+        } else if (dateDiff.days) {
+            return dateDiff.days === 1 ? 'Yesterday' : dateDiff.days+' days ago'
+        } else if (dateDiff.hours) {
+            return dateDiff.hours === 1 ? 'An hour ago' : dateDiff.hours+' hours ago'
+        } else {
+            return 'Just now'
+        }
+
+    }
+
+
     return (
         <>
             <section className='cardContainer capitalize'>
@@ -56,7 +78,7 @@ const PropertyCards = ({ background, price, leaseType, type, baths, beds, detail
                         </div>
                     </div>
                     <div>
-                        <p className={'f14 regularText headerColor pt10 pb10'}>{years} years ago</p>
+                        <p className={'f14 regularText headerColor pt10 pb10'}>{formatDate()}</p>
                     </div>
                 </section>
             </section>
