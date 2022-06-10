@@ -47,7 +47,7 @@ const Layout = ({ children }) => {
                     !state.sidebar ? 
                         <>
                             <TiTimes className='cPointer pr10 menuBtn' style={{ zIndex: 100 }} onClick={toggleSideBar} />
-                            <div className="modal"></div>
+                            <div className="modal" onClick={toggleSideBar}></div>
                         </> 
                         : <AiOutlineUnorderedList className='cPointer pr10 menuBtn' onClick={toggleSideBar} /> 
                     : ''

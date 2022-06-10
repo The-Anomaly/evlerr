@@ -233,3 +233,8 @@ ul.images > li img {
     padding: 50px 20px;
   }
 }
+@media screen and (max-width: 763px) {
+  .tabsCard{
+    margin-top: 10px;
+  }
+}

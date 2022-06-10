@@ -229,7 +229,7 @@ const PropertyDetails = () => {
                     <section className='propertyDetailsLayout'>
                         <section>
                             <div className={'membersCard'}>
-                                <div className={'flex alignCenter'}>
+                                <div className={'flex alignCenter flexWrap'}>
                                     <Tabs title={state.property.propertyType ? state.property.propertyType : 'Apartment'} color={'#ff5a5f'} />
                                     <Tabs title={'Beds: '+(state.property.bed ? state.property.bed : null)} color={'#484848'} />
                                     <Tabs title={'Baths: '+(state.property.bath ? state.property.bath : null)} color={'#484848'} />

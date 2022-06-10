@@ -23,10 +23,10 @@ const SideNav = ({ removeSidebar, isMobile }) => {
 
     return (
         <>
-            <nav className='sideNavContainer' onClick={closeSideBar}>
+            <nav className='sideNavContainer' style={isMobile ? {width: '80%'} : {}} onClick={closeSideBar}>
                 <div className={'pt30 pl30'}>
                     <Link to={'/'}>
-                        <img src={Logo} alt='logo' />
+                        <img src={Logo} style={isMobile ? {width: '150px'} : {}}  alt='logo' />
                     </Link>
                 </div>
                 <ul>
