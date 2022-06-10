@@ -42,7 +42,7 @@ const AgentsDisplay = () => {
                 setState((prevState) => ({...prevState, agents: res.data.docs, agentsXtra: res.data}))
                 console.log(res)
             } catch (error) {
-                toast.error('Sorry, could not gets agents', {
+                toast.error('Sorry, Could not get agents', {
                     position: toast.POSITION.TOP_RIGHT
                 })
                 console.log(error)

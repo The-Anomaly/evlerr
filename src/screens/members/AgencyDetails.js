@@ -118,7 +118,7 @@ const AgencyDetails = () => {
         // console.log(state.value)÷
         // console.log(val._id)
         if (val) {
-            navigate('/properties-details', { replace: true, state: { propertyId: val._id } })
+            navigate('/properties-details', { state: { propertyId: val._id } })
         }
 
     }
@@ -190,11 +190,11 @@ const AgencyDetails = () => {
                                         <section>
 
                                             {state.propertiesLoading ? <p style={{background: '#FFE089', opacity: '0.7', padding: '15px', borderRadius: '7px'}} className={'f14 regularText'}>Loading...</p> : 
-                                            state.properties.docs.length === 0 ? <p style={{background: '#FFE089', opacity: '0.7', padding: '15px', borderRadius: '7px'}} className={'f14 regularText'}>User has not uploaded any properties yet</p> : 
+                                            state.properties.docs.length === 0 ? <p style={{background: '#FFE089', opacity: '0.7', padding: '15px', borderRadius: '7px'}} className={'f14 regularText'}>No property uploaded yet</p> : 
                                             state.properties.docs.map((item, index) => (
                                                 <section key={index} className='agentFlexCard'>
                                                     <section className='agentImg cPointer'>
-                                                        <img src={item.featuredImage ? item.featuredImage.url : Agency}  onClick={() => {selectResourceType(item._id)}} style={{ width: '100%', height: '100%', borderRadius: '6px' }} alt='' />
+                                                        <img src={item.featuredImage ? item.featuredImage.url : Agency}  onClick={() => {selectResourceType(item)}} style={{ width: '100%', height: '100%', borderRadius: '6px' }} alt='' />
                                                         <div className='deets deets-sm mt10 flex'>
                                                             <p className='mr10'>Bed: {item.bed}</p>
                                                             <p className='mr10'>Bath: {item.bath}</p>
@@ -212,7 +212,7 @@ const AgencyDetails = () => {
                                                             </div>
                                                         </div>
                                                         <small className='redText mt10 mb10'>{item.propertyType}</small>
-                                                        <div onClick={() => {selectResourceType(item._id)}} className="property-price headerColor cPointer mb10">{item.propertyTitle}</div>
+                                                        <div onClick={() => {selectResourceType(item)}} className="property-price headerColor cPointer mb10">{item.propertyTitle}</div>
                                                         <p style={{color: '#484848'}} className='mb10 f14'>
                                                             <span className='mr10'>
                                                                 <IoLocationOutline style={{color: '#484848'}} />

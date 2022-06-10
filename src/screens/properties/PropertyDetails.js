@@ -197,7 +197,7 @@ const PropertyDetails = () => {
                                 {slide}
                             </div> : '' : '' : ''}
                             <div className='imagesOverlayNew'>
-                                <CustomButton title={Object.keys(state.property).length ? !checkStr ? state.property.gallery.length ?'View Photos' : 'No photos in gallery' : 'No photo in gallery' : ''} customStyle={{ backgroundColor: '#fff', cursor: 'pointer' }} color={'#ff5a5f'} onClick={!checkStr ? showImageGrid : ''} />
+                                <CustomButton title={Object.keys(state.property).length ? !checkStr ? state.property.gallery.length ?'View Photo' : 'No photo in gallery' : 'No photo in gallery' : ''} customStyle={{ backgroundColor: '#fff', cursor: 'pointer' }} color={'#ff5a5f'} onClick={!checkStr ? showImageGrid : ''} />
                             </div>
                         </section>
 
