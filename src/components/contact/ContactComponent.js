@@ -49,7 +49,7 @@ const ContactComponent = () => {
                     </ul>
                     <div className='subscribeContainer'>
                         <h2 className={'f30 boldText white'}>Subscribe</h2>
-                        <div className='searchInputContainer'>
+                        <div className='searchInputContainer flexWrap'>
                             <input placeholder='Your email' />
                             <button>
                                 <IoIosArrowForward size={16} />

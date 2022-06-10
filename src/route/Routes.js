@@ -63,7 +63,6 @@ const RoutesContainer = () => {
                 <Route path='agencies-display' element={<AgenciesDisplay />} />
                 <Route path='submission' element={<RequireAuth><Submission /></RequireAuth>} />
                 <Route path='add-property' element={<RequireAuth><AddProperty /></RequireAuth>} />
-                <Route path='edit-property' element={<RequireAuth><EditProperty /></RequireAuth>} />
                 <Route path='verified' element={<VerifiedPage />} />
 
 
@@ -73,6 +72,7 @@ const RoutesContainer = () => {
                 <Route element={<Layout />} >
                     <Route path='dashboard' element={<RequireAuth><Dashboard /></RequireAuth>} />
                     <Route path='profile' element={<RequireAuth><Profile /></RequireAuth>} />
+                    <Route path='edit-property' element={<RequireAuth><EditProperty /></RequireAuth>} />
                     <Route path='myProperties' element={<RequireAuth><MyProperties /></RequireAuth>} />
                     <Route path='package' element={<RequireAuth><MyPackage /></RequireAuth>} />
                     <Route path='members' element={<RequireAuth><Members /></RequireAuth>} />

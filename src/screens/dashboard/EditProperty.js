@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import RenderNav from '../../components/nav/RenderNav'
 import CustomInput from '../../utils/CustomInput'
 // import Loading from '../../utils/Loading'
 import '../../assets/style/SubmissionStyles.css';
@@ -297,6 +296,14 @@ const EditProperty = () => {
             toast.error('All required fields cannot be empty', {
                 position: toast.POSITION.TOP_RIGHT
             });
+        } else if (Object.keys(featured).length === 0) {
+            toast.error('Featured image is required', {
+                position: toast.POSITION.TOP_RIGHT
+            });
+        } else if (Object.keys(gallery).length < 3) {
+            toast.error('At least 3 images are required for gallery', {
+                position: toast.POSITION.TOP_RIGHT
+            });
         } else {
             // console.log('submitting')
             // return
@@ -324,193 +331,190 @@ const EditProperty = () => {
 
 
     return (
-        <RenderNav boxShadow={'0px 1px 4px 0px rgb(0 0 0 / 9%)'}>
-            {/* {renderLoading()} */}
-            <main className='submissionContainer'>
+        <main className='submissionContainer'>
 
-                <section>
-                    <div>
-                        <h2 className={'f30 headerColor boldText pb30'}>Edit Property</h2>
-                    </div>
-                    <section className={'membersCard'} >
-                        <p className={'f22 boldText headerColor pb30'}>Basic Information</p>
-                        <div>
-                            <div>
-                                <CustomInput label={'Property Title'} value={state.propertyTitle} onChange={onChangePropertyTitle} name={'propertyTitle'} />
-                            </div>
-                            <div className={'pb30'}>
-                                <Dropdown label={'Type'} curSelect={state.propertyType} options={['Residential', 'Commercial', 'Project']} setSelect={handlePropertyType} />
-                            </div>
-                            <CustomTextArea label={'Property Description'} customStyle={{ height: '200px', textAlign: "start" }} value={state.propertyDescription} onChange={onChangePropertyDescription}
-                                name={'propertyDescription'} />
-                        </div>
-                    </section>
-
-                    <section className={'membersCard'} style={{ marginTop: '30px' }}>
-                        <p className={'f22 boldText headerColor pb30'}>Additional</p>
-
-                        <div className='packagesGrid'>
-                            {/* <CustomInput label={'Property ID'} value={state.propertyId} onChange={onChangePropertyId} name={'propertyId'} /> */}
-
-                            <Dropdown label={'Status'} curSelect={state.status} options={['For Rent', 'For Sale', 'Short Stay']} setSelect={handleStatus} />
-
-                            <CustomInput label={'Rooms'} type={'number'} value={state.rooms} onChange={onChangeRooms} name={'rooms'} />
-                            <CustomInput label={'Beds'} type={'number'} value={state.bed} onChange={onChangeBed} name={'bed'} />
-                            <CustomInput label={'Baths'} type={'number'} value={state.bath} onChange={onChangeBath} name={'bath'} />
-                            <CustomInput label={'Garages'} type={'number'} value={state.garage} onChange={onChangeGarage} name={'garage'} />
-                            <CustomInput label={'Year built'} type={'number'} value={state.yearBuilt} onChange={onChangeYear} name={'yearBuilt'} />
-                            <CustomInput label={'Home area (sqft)'} value={state.homeArea} onChange={onChangeArea} name={'homeArea'} />
-                        </div>
-                    </section>
-
-                    <section className={'membersCard'} style={{ marginTop: '30px' }}>
-                        <p className={'f22 boldText headerColor pb30'}>Price</p>
-
-                        <div className='packagesGrid'>
-                            <CustomInput label={'Price'} type={'number'} value={state.price} onChange={onChangePrice} name={'price'} />
-                            <Dropdown label={'Currency'} curSelect={state.currency} options={['USD', 'EUR', 'CAD', 'TRY']} setSelect={handleCurrency} />
-                            <CustomInput label={'Price Prefix'} value={state.pricePrefix} onChange={onChangePricePrefix} name={'pricePrefix'} subtitle={'Any text shown before price (for example: from).'} />
-                            <CustomInput label={'Price Suffix'} subtitle={'Any text shown after price (for example: per night).'} value={state.priceSuffix} onChange={onChangePriceSuffix} name={'priceSuffix'} />
-                            <CustomInput label={'Price Custom'} subtitle={'Any text instead of price (for example: by agreement). Prefix and Suffix will be ignored.'} value={state.priceCustom} onChange={onChangePriceCustom} name={'priceCustom'} />
-
-                        </div>
-                    </section>
-
-                    <section className={'membersCard'} style={{ marginTop: '30px' }}>
-                        <p className={'f22 boldText headerColor pb30'}>Media</p>
-
-
-                        <div className={'pb30'}>
-                            <p className={'f16 boldText black pb10'}>Featured Image</p>
-                            { featured && (
-                                <span className={'fileUploadContainer mb10'}>
-                                    {/* <button className={'fileDelBtn'}>x</button> */}
-                                    <img src={featured.url} alt='' style={{ maxWidth: '100%', height: '100%' }} />
-                                </span>
-                                    ) }
-                            <CustomUploadInput title={'Upload file'} restrict='image/*'uploadLoading={state.featuredUploadLoading}  id={'featuredImage'} onChange={uploadFeatured} customStyle={{ backgroundColor: '#f7f7f7', border: '1px solid #ebebeb', width: '150px' }} />
-                        </div>
-
-
-                        <div className={'pb30'}>
-                            <p className={'f16 boldText black pb10'}>Gallery</p>
-                            { gallery &&  gallery.map((val, index) =>
-                            <span key={index} className={'fileUploadContainer mb10'}>
-                                <button className={'fileDelBtn'} onClick={() => handleDelmodal(val.publicId, 'gallery', index)}>x</button>
-                                <img id={index} src={val.url} alt='' style={{ maxWidth: '100%', height: '100%' }} />
-                            </span> 
-                            ) }
-                            <CustomUploadInput title={'Upload files'} restrict="image/*" id={'gallery'} onChange={uploadGallery} multi={true} uploadLoading={state.galleryUploadLoading} customStyle={{ backgroundColor: '#f7f7f7', border: '1px solid #ebebeb', width: '150px' }} />
-                            {/* <CustomUploadInput fileState={state} handleState={setState} multi={true} inputName={'gallery'} /> */}
-                        </div>
-
-
-                        <div className={'pb30'}>
-                            <p className={'f16 boldText black pb10'}>Attachments</p>
-                            { attachment &&  attachment.map((val, index) => 
-                            <span key={index} className={'fileUploadContainer mb10'}>
-                                <button className={'fileDelBtn'} onClick={() => handleDelmodal(val.publicId, 'attachment', index)}>x</button>
-                                <GrDocumentText style={{ width: '50%', height: '100%' }} />
-                            </span> 
-                            ) }
-                            <CustomUploadInput title={'Upload files'} restrict="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf"uploadLoading={state.attachUploadLoading}  onChange={uploadGallery} id={'attachment'} multi={true} customStyle={{ backgroundColor: '#f7f7f7', border: '1px solid #ebebeb', width: '150px' }} />
-                        </div>
-
-                        <div>
-                            <CustomInput label={'Video Link'} value={state.videoLink} onChange={onChangeVideoLink} name={'videoLink'} />
-                            {/* <CustomTextArea label={'Virtual Tour'} customStyle={{ height: '200px' }} value={state.bed} onChange={onChangeBed} name={'bed'} /> */}
-                        </div>
-                    </section>
-
-                    <section className={'membersCard'} style={{ marginTop: '30px' }}>
-                        <p className={'f22 boldText headerColor pb30'}>Amenities</p>
-                        <ul className='packagesGrid'>
-                            <li className={'f14 regularText headerColor flex alignCenter'} onClick={toggleAir}>
-                                <span className='checkBoxBorder'>
-                                    {state.air &&
-                                        <MdDone color='#ff5a5f' className={'pr10'} />}
-                                </span>
-                                Air Conditioning
-                            </li>
-                            <li className={'f14 regularText headerColor flex alignCenter'} onClick={toggleBarbeque}>
-                                <span className='checkBoxBorder'>
-                                    {state.barbeque &&
-                                        <MdDone color='#ff5a5f' className={'pr10'} />}
-                                </span>
-                                Barbeque
-                            </li>
-                            <li className={'f14 regularText headerColor flex alignCenter'} onClick={toggleDryer}>
-                                <span className='checkBoxBorder'>
-                                    {state.dryer &&
-                                        <MdDone color='#ff5a5f' className={'pr10'} />}
-                                </span>
-                                Dryer
-                            </li>
-                            <li className={'f14 regularText headerColor flex alignCenter'} onClick={toggleFridge}>
-                                <span className='checkBoxBorder'>
-                                    {state.fridge &&
-                                        <MdDone color='#ff5a5f' className={'pr10'} />}
-                                </span>
-                                Refrigerator
-                            </li>
-                            <li className={'f14 regularText headerColor flex alignCenter'} onClick={toggleSauna}>
-                                <span className='checkBoxBorder'>
-                                    {state.sauna &&
-                                        <MdDone color='#ff5a5f' className={'pr10'} />}
-                                </span>
-                                Sauna
-                            </li>
-                            <li className={'f14 regularText headerColor flex alignCenter'} onClick={toggleTV}>
-                                <span className='checkBoxBorder'>
-                                    {state.tv &&
-                                        <MdDone color='#ff5a5f' className={'pr10'} />}
-                                </span>
-                                TV Cable
-                            </li>
-                            <li className={'f14 regularText headerColor flex alignCenter'} onClick={toggleWasher}>
-                                <span className='checkBoxBorder'>
-                                    {state.washer &&
-                                        <MdDone color='#ff5a5f' className={'pr10'} />}
-                                </span>
-                                Washer
-                            </li>
-                            <li className={'f14 regularText headerColor flex alignCenter'} onClick={toggleWifi}>
-                                <span className='checkBoxBorder'>
-                                    {state.wifi &&
-                                        <MdDone color='#ff5a5f' className={'pr10'} />}
-                                </span>
-                                WiFi
-                            </li>
-                        </ul>
-                    </section>
-
-                </section>
-                <div className={'pt40'}>
-                    <CustomButton title={'Save & Preview'} loading={state.loading} onClick={submit} color={'#fff'} customStyle={{ backgroundColor: '#ff5a5f', width: '120px', }} />
+            <section>
+                <div>
+                    <h2 className={'f30 headerColor boldText pb30'}>Edit Property</h2>
                 </div>
-
-
-                {/* delete modal */}
-                { state.delModal && 
-                <section className='modal' id='modal'>
-                    <div className='animate__animated  animate__slideInDown animate__faster' style={{ background: 'white', width: 'clamp(170px, 400px, 50%)', margin: 'auto', padding: '15px', borderRadius: '5px' }} >
-
-                        <h5>DELETE</h5>
-                        <hr style={{ marginTop: '10px', marginBottom: '20px' }} />
-                        <div className="pb-3 px-5">
-                            <h5 className='f18' style={{ marginTop: '10px' }}>Are you sure?</h5>
-                            <p className='f20' style={{ marginTop: '10px' }}>You can't undo this action</p>
+                <section className={'membersCard'} >
+                    <p className={'f22 boldText headerColor pb30'}>Basic Information</p>
+                    <div>
+                        <div>
+                            <CustomInput label={'Property Title'} value={state.propertyTitle} onChange={onChangePropertyTitle} name={'propertyTitle'} />
                         </div>
-                        <hr  style={{ marginTop: '20px', marginBottom: '10px' }} />
-                        <div className="p10 flex">
-                            <CustomButton title={'CANCEL'} customStyle={{ border: 'none', cursor: 'pointer', padding: '8px', borderRadius: '3px', marginRight: '10px', background: '#EAEAEA' }} color={'#000'} onClick={() => handleDelmodal('')}  />
-                            <CustomButton title={'DELETE'} customStyle={{ border: 'none', cursor: 'pointer', padding: '8px', borderRadius: '3px', background: '#E12D2D', color: 'white' }} color={'#fff'} onClick={() => handleDel(state.selectedPublicId, state.delWhere, state.delIndex)} loading={state.delLoading}  />
+                        <div className={'pb30'}>
+                            <Dropdown label={'Type'} curSelect={state.propertyType} options={['Residential', 'Commercial', 'Project']} setSelect={handlePropertyType} />
                         </div>
+                        <CustomTextArea label={'Property Description'} customStyle={{ height: '200px', textAlign: "start" }} value={state.propertyDescription} onChange={onChangePropertyDescription}
+                            name={'propertyDescription'} />
                     </div>
-                </section>}
+                </section>
 
-            </main>
-        </RenderNav>
+                <section className={'membersCard'} style={{ marginTop: '30px' }}>
+                    <p className={'f22 boldText headerColor pb30'}>Additional</p>
+
+                    <div className='packagesGrid'>
+                        {/* <CustomInput label={'Property ID'} value={state.propertyId} onChange={onChangePropertyId} name={'propertyId'} /> */}
+
+                        <Dropdown label={'Status'} curSelect={state.status} options={['For Rent', 'For Sale', 'Short Stay']} setSelect={handleStatus} />
+
+                        <CustomInput label={'Rooms'} type={'number'} value={state.rooms} onChange={onChangeRooms} name={'rooms'} />
+                        <CustomInput label={'Beds'} type={'number'} value={state.bed} onChange={onChangeBed} name={'bed'} />
+                        <CustomInput label={'Baths'} type={'number'} value={state.bath} onChange={onChangeBath} name={'bath'} />
+                        <CustomInput label={'Garages'} type={'number'} value={state.garage} onChange={onChangeGarage} name={'garage'} />
+                        <CustomInput label={'Year built'} type={'number'} value={state.yearBuilt} onChange={onChangeYear} name={'yearBuilt'} />
+                        <CustomInput label={'Home area (sqft)'} value={state.homeArea} onChange={onChangeArea} name={'homeArea'} />
+                    </div>
+                </section>
+
+                <section className={'membersCard'} style={{ marginTop: '30px' }}>
+                    <p className={'f22 boldText headerColor pb30'}>Price</p>
+
+                    <div className='packagesGrid'>
+                        <CustomInput label={'Price'} type={'number'} value={state.price} onChange={onChangePrice} name={'price'} />
+                        <Dropdown label={'Currency'} curSelect={state.currency} options={['USD', 'EUR', 'CAD', 'TRY']} setSelect={handleCurrency} />
+                        <CustomInput label={'Price Prefix'} value={state.pricePrefix} onChange={onChangePricePrefix} name={'pricePrefix'} subtitle={'Any text shown before price (for example: from).'} />
+                        <CustomInput label={'Price Suffix'} subtitle={'Any text shown after price (for example: per night).'} value={state.priceSuffix} onChange={onChangePriceSuffix} name={'priceSuffix'} />
+                        <CustomInput label={'Price Custom'} subtitle={'Any text instead of price (for example: by agreement). Prefix and Suffix will be ignored.'} value={state.priceCustom} onChange={onChangePriceCustom} name={'priceCustom'} />
+
+                    </div>
+                </section>
+
+                <section className={'membersCard'} style={{ marginTop: '30px' }}>
+                    <p className={'f22 boldText headerColor pb30'}>Media</p>
+
+
+                    <div className={'pb30'}>
+                        <p className={'f16 boldText black pb10'}>Featured Image</p>
+                        { featured && (
+                            <span className={'fileUploadContainer mb10'}>
+                                {/* <button className={'fileDelBtn'}>x</button> */}
+                                <img src={featured.url} alt='' style={{ maxWidth: '100%', height: '100%' }} />
+                            </span>
+                                ) }
+                        <CustomUploadInput title={'Upload file'} restrict='image/*'uploadLoading={state.featuredUploadLoading}  id={'featuredImage'} onChange={uploadFeatured} customStyle={{ backgroundColor: '#f7f7f7', border: '1px solid #ebebeb', width: '150px' }} />
+                    </div>
+
+
+                    <div className={'pb30'}>
+                        <p className={'f16 boldText black pb10'}>Gallery</p>
+                        { gallery &&  gallery.map((val, index) =>
+                        <span key={index} className={'fileUploadContainer mb10'}>
+                            <button className={'fileDelBtn'} onClick={() => handleDelmodal(val.publicId, 'gallery', index)}>x</button>
+                            <img id={index} src={val.url} alt='' style={{ maxWidth: '100%', height: '100%' }} />
+                        </span> 
+                        ) }
+                        <CustomUploadInput title={'Upload files'} restrict="image/*" id={'gallery'} onChange={uploadGallery} multi={true} uploadLoading={state.galleryUploadLoading} customStyle={{ backgroundColor: '#f7f7f7', border: '1px solid #ebebeb', width: '150px' }} />
+                        {/* <CustomUploadInput fileState={state} handleState={setState} multi={true} inputName={'gallery'} /> */}
+                    </div>
+
+
+                    <div className={'pb30'}>
+                        <p className={'f16 boldText black pb10'}>Attachments</p>
+                        { attachment &&  attachment.map((val, index) => 
+                        <span key={index} className={'fileUploadContainer mb10'}>
+                            <button className={'fileDelBtn'} onClick={() => handleDelmodal(val.publicId, 'attachment', index)}>x</button>
+                            <GrDocumentText style={{ width: '50%', height: '100%' }} />
+                        </span> 
+                        ) }
+                        <CustomUploadInput title={'Upload files'} restrict="application/msword, application/vnd.ms-excel, application/vnd.ms-powerpoint, text/plain, application/pdf"uploadLoading={state.attachUploadLoading}  onChange={uploadGallery} id={'attachment'} multi={true} customStyle={{ backgroundColor: '#f7f7f7', border: '1px solid #ebebeb', width: '150px' }} />
+                    </div>
+
+                    <div>
+                        <CustomInput label={'Video Link'} value={state.videoLink} onChange={onChangeVideoLink} name={'videoLink'} />
+                        {/* <CustomTextArea label={'Virtual Tour'} customStyle={{ height: '200px' }} value={state.bed} onChange={onChangeBed} name={'bed'} /> */}
+                    </div>
+                </section>
+
+                <section className={'membersCard'} style={{ marginTop: '30px' }}>
+                    <p className={'f22 boldText headerColor pb30'}>Amenities</p>
+                    <ul className='packagesGrid'>
+                        <li className={'f14 regularText headerColor flex alignCenter'} onClick={toggleAir}>
+                            <span className='checkBoxBorder'>
+                                {state.air &&
+                                    <MdDone color='#ff5a5f' className={'pr10'} />}
+                            </span>
+                            Air Conditioning
+                        </li>
+                        <li className={'f14 regularText headerColor flex alignCenter'} onClick={toggleBarbeque}>
+                            <span className='checkBoxBorder'>
+                                {state.barbeque &&
+                                    <MdDone color='#ff5a5f' className={'pr10'} />}
+                            </span>
+                            Barbeque
+                        </li>
+                        <li className={'f14 regularText headerColor flex alignCenter'} onClick={toggleDryer}>
+                            <span className='checkBoxBorder'>
+                                {state.dryer &&
+                                    <MdDone color='#ff5a5f' className={'pr10'} />}
+                            </span>
+                            Dryer
+                        </li>
+                        <li className={'f14 regularText headerColor flex alignCenter'} onClick={toggleFridge}>
+                            <span className='checkBoxBorder'>
+                                {state.fridge &&
+                                    <MdDone color='#ff5a5f' className={'pr10'} />}
+                            </span>
+                            Refrigerator
+                        </li>
+                        <li className={'f14 regularText headerColor flex alignCenter'} onClick={toggleSauna}>
+                            <span className='checkBoxBorder'>
+                                {state.sauna &&
+                                    <MdDone color='#ff5a5f' className={'pr10'} />}
+                            </span>
+                            Sauna
+                        </li>
+                        <li className={'f14 regularText headerColor flex alignCenter'} onClick={toggleTV}>
+                            <span className='checkBoxBorder'>
+                                {state.tv &&
+                                    <MdDone color='#ff5a5f' className={'pr10'} />}
+                            </span>
+                            TV Cable
+                        </li>
+                        <li className={'f14 regularText headerColor flex alignCenter'} onClick={toggleWasher}>
+                            <span className='checkBoxBorder'>
+                                {state.washer &&
+                                    <MdDone color='#ff5a5f' className={'pr10'} />}
+                            </span>
+                            Washer
+                        </li>
+                        <li className={'f14 regularText headerColor flex alignCenter'} onClick={toggleWifi}>
+                            <span className='checkBoxBorder'>
+                                {state.wifi &&
+                                    <MdDone color='#ff5a5f' className={'pr10'} />}
+                            </span>
+                            WiFi
+                        </li>
+                    </ul>
+                </section>
+
+            </section>
+            <div className={'pt40'}>
+                <CustomButton title={'Save & Preview'} loading={state.loading} onClick={submit} color={'#fff'} customStyle={{ backgroundColor: '#ff5a5f', width: '120px', }} />
+            </div>
+
+
+            {/* delete modal */}
+            { state.delModal && 
+            <section className='modal' id='modal'>
+                <div className='animate__animated  animate__slideInDown animate__faster' style={{ background: 'white', width: 'clamp(170px, 400px, 50%)', margin: 'auto', padding: '15px', borderRadius: '5px' }} >
+
+                    <h5>DELETE</h5>
+                    <hr style={{ marginTop: '10px', marginBottom: '20px' }} />
+                    <div className="pb-3 px-5">
+                        <h5 className='f18' style={{ marginTop: '10px' }}>Are you sure?</h5>
+                        <p className='f20' style={{ marginTop: '10px' }}>You can't undo this action</p>
+                    </div>
+                    <hr  style={{ marginTop: '20px', marginBottom: '10px' }} />
+                    <div className="p10 flex">
+                        <CustomButton title={'CANCEL'} customStyle={{ border: 'none', cursor: 'pointer', padding: '8px', borderRadius: '3px', marginRight: '10px', background: '#EAEAEA' }} color={'#000'} onClick={() => handleDelmodal('')}  />
+                        <CustomButton title={'DELETE'} customStyle={{ border: 'none', cursor: 'pointer', padding: '8px', borderRadius: '3px', background: '#E12D2D', color: 'white' }} color={'#fff'} onClick={() => handleDel(state.selectedPublicId, state.delWhere, state.delIndex)} loading={state.delLoading}  />
+                    </div>
+                </div>
+            </section>}
+
+        </main>
     )
 }
 

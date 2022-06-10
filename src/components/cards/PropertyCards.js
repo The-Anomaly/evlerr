@@ -11,7 +11,7 @@ const PropertyCards = ({ background, price, leaseType, type, baths, beds, detail
                 <div className='cardImage' style={{ backgroundImage: background }}>
                     <img src={background} alt='property' loading={'eager'} />
                     <div className='cardImageOverlay'>
-                        <div className='cardTagContainer'>
+                        <div className='cardTagContainer flexWrap'>
                             {leaseType &&
                                 <div className='cardLeaseTag'>
                                     <p className={'semiBoldText white f14'}>{leaseType}</p>
@@ -46,8 +46,8 @@ const PropertyCards = ({ background, price, leaseType, type, baths, beds, detail
                         </ul>
                     </div>
                 </div>
-                <section className={'cardFooter pt10 pb10 flex justifyBetween alignCenter'}>
-                    <div className={'flex alignCenter'}>
+                <section className={'cardFooter pt10 pb10 flex flexWrap justifyBetween alignCenter'}>
+                    <div className={'flex alignCenter pr10'}>
                         <div className='cardFooterImage'>
                             <img src={agentImage} alt='poster' style={{ width: '100%', height: '100%' }} />
                         </div>
@@ -56,7 +56,7 @@ const PropertyCards = ({ background, price, leaseType, type, baths, beds, detail
                         </div>
                     </div>
                     <div>
-                        <p className={'f14 regularText headerColor'}>{years} years ago</p>
+                        <p className={'f14 regularText headerColor pt10 pb10'}>{years} years ago</p>
                     </div>
                 </section>
             </section>

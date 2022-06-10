@@ -165,14 +165,14 @@ a:hover {
   padding-top: 30px;
 }
 .sideNavContainer li {
-  padding: 20px 0;
+  padding: 10px 0;
   list-style: none;
   width: 100%;
 }
 .sideNavContainer li a {
   display: flex;
   align-items: center;
-  padding-left: 34px;
+  padding: 15px 34px;
   transition: all 0.3s ease-in-out 0s;
 }
 .sideNavContainer li span {
@@ -183,7 +183,6 @@ a:hover {
   color: #fff;
   background: #172133;
   border-left: 2px solid #ff5a5f;
-  padding: 15px 34px;
 }
 .activeSideNavLink {
   color: #fff;
