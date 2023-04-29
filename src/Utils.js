@@ -1,7 +1,7 @@
 /* eslint-disable linebreak-style */
 import qs from 'qs';
 import axios from "axios";
-const apiRootUrl = 'https://evlerr-production.up.railway.app/api/v1'
+const apiRootUrl = 'https://evlerr-9h52.onrender.com/api/v1'
 
 
 const getUserToken = async () => {
